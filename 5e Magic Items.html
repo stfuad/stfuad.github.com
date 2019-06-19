@@ -1,0 +1,56 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>5e Magic Items</title>
+	<link rel="stylesheet" href="stylesheets/jquery-ui.css">
+    <link rel="stylesheet" href="stylesheets/sheet.css">
+</head>
+
+<body>
+
+<table id="itemList">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Rarity</th>
+            <th>Attunement</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<template id="itemRow">
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</template>
+
+<div id="itemDesc"></div>
+
+<script src="scripts/jquery-3.3.1.min.js"></script>
+<script src="scripts/jquery-ui.js"></script>
+<script src="scripts/jquery.tablesorter.min.js"></script>
+<script src="scripts/jquery.tablesorter.widgets.js"></script>
+<script src="scripts/global.js"></script>
+<script src="scripts/items.js"></script>
+<script>
+GetJSON("json/5e Data.min.json");
+
+let items = localStorage.get("Magic Items");
+
+CreateItemsTable(items);
+
+</script>
+
+</body>
+
+</html>
