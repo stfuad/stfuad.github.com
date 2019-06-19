@@ -19,45 +19,11 @@ function CreateCreatureTable(json) {
         td[3].textContent = json[creature]["Challenge"];
         td[4].textContent = json[creature]["Book"];
 
-        let pdfLink = document.createElement('a');
+        /* let pdfLink = document.createElement('a');
         pdfLink.appendChild(document.createTextNode(json[creature]["Page"]));
         pdfLink.href = `pdfs/${json[creature]["Book"]}.pdf#page=${json[creature]["Page"] + 1}`
         pdfLink.target = "_blank";
-        td[5].appendChild(pdfLink);
-
-        tb.appendChild(clone);
-    }
-
-    
-    $("#creatureList").tablesorter({
-        theme: 'jui',
-        headerTemplate : '{content} {icon}',
-        widgets: ['uitheme', 'zebra'],
-        widgetOptions: {
-            zebra: ['even', 'odd']
-        }
-    });
-}
-
-function CreateCreatureTableAlt(json) {
-    let t = document.querySelector("#creatureRow");
-
-    let tb = document.querySelector("tbody");
-
-    for(let creature in json) {
-
-        let creatureJSON = JSON.stringify(json[creature]);
-
-        let creatureSheet = document.createElement("a");
-        creatureSheet.appendChild(document.createTextNode(creature));
-        creatureSheet.href = `javascript:CreateCreatureSheet("${creature}", ${creatureJSON})`;
-
-        let clone = document.importNode(t.content, true);
-        td = clone.querySelectorAll("td");
-        td[0].appendChild(creatureSheet);
-        td[1].textContent = json[creature]["Type"];
-        td[2].textContent = json[creature]["SubType"];
-        td[3].textContent = json[creature]["Challenge"];
+        td[5].appendChild(pdfLink); */
 
         tb.appendChild(clone);
     }
