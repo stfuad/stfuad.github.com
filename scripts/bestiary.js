@@ -40,7 +40,7 @@ function CreateCreatureTable(json) {
 }
 
 function CreateCreatureSheet(name, json) {
-    let div = CreateDiv(name, "draggableSheet", undefined);
+    let div = Div(name, "draggableSheet", undefined);
     
     // Title
 
@@ -48,7 +48,7 @@ function CreateCreatureSheet(name, json) {
 
     // Size, Type, SubType, Alignment
 
-    let stsa = CreateDiv(undefined, undefined, div);
+    let stsa = Div(undefined, undefined, div);
 
     let size = json["Size"];
     let type = json["Type"];
@@ -66,7 +66,7 @@ function CreateCreatureSheet(name, json) {
 
     // Armor Class, Hit Points, Speeds
 
-    let ahs = CreateDiv(undefined, "statBlock", div);
+    let ahs = Div(undefined, "statBlock", div);
 
     ArmorClass(json, ahs);
 
@@ -80,7 +80,7 @@ function CreateCreatureSheet(name, json) {
     
     // Stuff
     
-    let stuff = CreateDiv(undefined, "statBlock", div);
+    let stuff = Div(undefined, "statBlock", div);
 
     KeyValue(json, stuff, true, "Saving Throws", "Skills");
     KeyValue(json, stuff, false, "Damage Vulnerabilities", "Damage Resistances", "Damage Immunities", "Condition Immunities", "Senses", "Languages");
@@ -113,7 +113,7 @@ function CreateCreatureSheet(name, json) {
 }
 
 function ArmorClass(json, parent) {
-    let div = CreateDiv(undefined, undefined, parent);
+    let div = Div(undefined, undefined, parent);
 
     InsertElement("b", "Armor Class ", div);
 
@@ -129,7 +129,7 @@ function ArmorClass(json, parent) {
 }
 
 function HitPoints(json, parent) {
-    let div = CreateDiv(undefined, undefined, parent);
+    let div = Div(undefined, undefined, parent);
 
     let hum = json;
 
@@ -153,7 +153,7 @@ function HitPoints(json, parent) {
 }
 
 function Speeds(json, parent) {
-    let div = CreateDiv(undefined, undefined, parent);
+    let div = Div(undefined, undefined, parent);
 
     InsertElement("b", "Speed  ", div);
 
@@ -210,7 +210,7 @@ function AbilityScores(json, parent) {
 
 function Challenge(json, parent) {
     if(def(json)) {
-        let div = CreateDiv(undefined, undefined, parent);
+        let div = Div(undefined, undefined, parent);
 
         let cr = json["Challenge"];
         let exp = json["Experience"];
@@ -226,7 +226,7 @@ function Properties(json, parent, ...keys) {
         if(def(json[key])) {
             // Create the container
 
-            var div = CreateDiv(undefined, "property", parent);
+            var div = Div(undefined, "property", parent);
 
             // Create the header
             if(key != "Features") {
@@ -236,7 +236,7 @@ function Properties(json, parent, ...keys) {
             // Parse the data
 
             Object.keys(json[key]).forEach(element => {
-                let div2 = CreateDiv(undefined, undefined, div);
+                let div2 = Div(undefined, undefined, div);
 
                 if(element == "Description") {
                     // If the object containers descriptor text
@@ -264,9 +264,9 @@ function Properties(json, parent, ...keys) {
 
                             keys.forEach(item => {
                                 if(item == "Ordered List") {
-                                    CreateList(json[key][element][item], "ol", div2);
+                                    List(json[key][element][item], "ol", div2);
                                 } else if(item == "Unordered List") {
-                                    CreateList(json[key][element][item], "ul", div2);
+                                    List(json[key][element][item], "ul", div2);
                                 } else if(item == "Properties") {
                                     /* let aBonus = json[key][element][item]["Attack Bonus"];
                                     let dBonus = json[key][element][item]["Damage Bonus"]
@@ -282,7 +282,7 @@ function Properties(json, parent, ...keys) {
                                 } else {
                                     // If "item" doesn't meet any of the above criteria
 
-                                    let div3 = CreateDiv(undefined, "subProperty", div);
+                                    let div3 = Div(undefined, "subProperty", div);
 
                                     InsertElement('b', `${item}. `, div3);
                                     Paragraphs(json[key][element][item]["Description"], div3);
@@ -301,10 +301,10 @@ function EnumerateSpells(json, parent) {
 
     let keys = tail(Object.keys(json));
     
-    let div = CreateDiv(undefined, "spellsBlock", parent);
+    let div = Div(undefined, "spellsBlock", parent);
 
     keys.forEach(item => {
-        let div2 = CreateDiv(undefined, undefined, div);
+        let div2 = Div(undefined, undefined, div);
 
         let key = document.createTextNode(`${item}: `);
         div2.appendChild(key);
