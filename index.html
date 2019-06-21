@@ -2,8 +2,11 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>DM's Screen</title>
+
+    <link rel="stylesheet" href="stylesheets/gridLayout.css">
+
     <style>
         body {
             font-family: 'Courier New', Courier, monospace;
@@ -40,33 +43,6 @@
             font-size: 1em;
         }
 
-        #navigation {
-            position: fixed;
-            top: 0px;
-            right: 0px;
-            bottom: 0px;
-            border-left: 1px solid black;
-            padding: 10px;
-            width: 25vw;
-            background-color: white;
-            overflow: auto;
-        }
-
-        #content {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            bottom: 0px;
-            height: auto;
-            width: 70vw;
-            padding: 10px;
-        }
-
-        #navigation a {
-            display: block;
-            text-decoration: none;
-        }
-        
         #armor tr td:nth-last-of-type(1) {
             font-style: italic;
         }
@@ -91,18 +67,24 @@
             text-indent: 1.5em;
         }
     </style>
-
 </head>
 
 <body>
 
-<div id="navigation">
-    <h3>5e DM's Screen</h3>
-    <a href="./5e Bestiary.html" target="_blank">5e Bestiary</a>
-    <a href="./5e Magic Items.html" target="_blank">5e Magic Items</a>
-    <a href="./5e Spells.html" target="_blank">5e Spells</a>
-    <hr>
+<div id="header">
+    <h1>5e DM's Screen</h1>
 </div>
+
+<div id="topNav">
+    <a href="index.html">5e DM's Screen</a>
+    <a href="bestiary.html" target="blank">5e Bestiary</a>
+    <a href="classes.html">5e Classes</a>
+    <a href="magicItems.html" target="blank">5e Magic Items</a>
+    <a href="spells.html" target="blank">5e Spells</a>
+    <a href="spellListByClass.html">5e Spells by Class</a>
+</div>
+
+<div id="pageNav"></div>
 
 <div id="content">
 
@@ -540,7 +522,7 @@
         <p><b>Arcane Focus.</b> An arcane focus is a special item—an orb, a crystal, a rod, a specially constructed staff, a wand-like length of wood, or some similar item—designed to channel the power of arcane spells. A sorcerer, warlock, or wizard can use such an item as a spellcasting focus, as described in chapter 10.</p>
         <p><b>Ball Bearings.</b> As an action, you can spill these tiny metal balls from their pouch to cover a level area 10 feet square. A creature moving across the covered area must succeed on a DC 10 Dexterity saving throw or fall prone. A creature moving through the area at half speed doesn’t need to make the saving throw.</p>
         <p><b>Block and Tackle.</b> A set of pulleys with a cable threaded through them and a hook to attach to objects, a block and tackle allows you to hoist up to four tim es the weight you can normally lift.</p>
-        <p><b>Book.</b> A book might contain poetry, historical accounts, inform ation pertaining to a particular field of lore, diagrams and notes on gnomish contraptions, or just about anything else that can be represented using text or pictures. A book of spells is a spellbook (described later in this section).</p>
+        <p><b>Book.</b> A book might contain poetry, historical accounts, information pertaining to a particular field of lore, diagrams and notes on gnomish contraptions, or just about anything else that can be represented using text or pictures. A book of spells is a spellbook (described later in this section).</p>
         <p><b>Caltrops.</b> As an action, you can spread a single bag of caltrops to cover a 5-foot-square area. Any creature that enters the area must succeed on a DC 15 Dexterity saving throw or stop moving and take 1 piercing damage. Until the creature regains at least 1 hit point, its walking speed is reduced by 10 feet. A creature moving through the area at half speed doesn’t need to make the saving throw.</p>
         <p><b>Candle.</b> For 1 hour, a candle sheds bright light in a 5-foot radius and dim light for an additional 5 feet.</p>
         <p><b>Case, Crossbow Bolt.</b> This wooden case can hold up to twenty crossbow bolts.</p>
@@ -552,7 +534,7 @@
         <p><b>Druidic Focus.</b> A druidic focus might be a sprig of mistletoe or holly, a wand or scepter made of yew or another special wood, a staff drawn whole out of a living tree, or a totem object incorporating feathers, fur, bones, and teeth from sacred animals. A druid can use such an object as a spellcasting focus, as described in chapter 10.</p>
         <p><b>Fishing Tackle.</b> This kit includes a wooden rod, silken line, corkwood bobbers, steel hooks, lead sinkers, velvet lures, and narrow netting.</p>
         <p><b>Healer’s Kit.</b> This kit is a leather pouch containing bandages, salves, and splints. The kit has ten uses. As an action, you can expend one use of the kit to stabilize a creature that has 0 hit points, without needing to make a Wisdom (Medicine) check.</p>
-        <p><b>Holy Symbol.</b> A holy symbol is a representation of a god or pantheon. It might be an amulet depicting a symbol representing a deity, the same sym bol carefully engraved or inlaid as an emblem on a shield, or a tiny box holding a fragment of a sacred relic. Appendix B lists the sym bols com m only associated with many gods in the multiverse. A cleric or paladin can use a holy symbol as a spellcasting focus, as described in chapter 10. To use the symbol in this way, the caster must hold it in hand, w ear it visibly, or bear it on a shield.</p>
+        <p><b>Holy Symbol.</b> A holy symbol is a representation of a god or pantheon. It might be an amulet depicting a symbol representing a deity, the same sym bol carefully engraved or inlaid as an emblem on a shield, or a tiny box holding a fragment of a sacred relic. Appendix B lists the symbols com m only associated with many gods in the multiverse. A cleric or paladin can use a holy symbol as a spellcasting focus, as described in chapter 10. To use the symbol in this way, the caster must hold it in hand, w ear it visibly, or bear it on a shield.</p>
         <p><b>Holy Water.</b> As an action, you can splash the contents of this flask onto a creature within 5 feet of you or throw it up to 20 feet, shattering it on impact. In either case, make a ranged attack against a target creature, treating the holy water as an improvised weapon. If the target is a fiend or undead, it takes 2d6 radiant damage.</p>
         <p>A cleric or paladin may create holy water by performing a special ritual. The ritual takes 1 hour to perform, uses 25 gp worth of powdered silver, and requires the caster to expend a 1st-level spell slot.</p>
         <p><b>Hunting Trap.</b> When you use your action to set it, this trap form s a saw-toothed steel ring that snaps shut when a creature steps on a pressure plate in the center. The trap is affixed by a heavy chain to an immobile object, such as a tree or a spike driven into the ground. A creature that steps on the plate must succeed on a DC 13 Dexterity saving throw or take 1d4 piercing damage and stop moving. Thereafter, until the creature breaks free of the trap, its movement is limited by the length of the chain (typically 3 feet long). A creature can use its action to make a DC 13 Strength check, freeing itself or another creature within its reach on a success. Each failed check deals 1 piercing damage to the trapped creature.</p>
@@ -1620,10 +1602,34 @@
             <li>Attack rolls against the creature have advantage.</li>
             <li>Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature.</li>
         </ul>
-    </div>0
+    </div>
   </div>
 
 <div id="dmg">
+    <div id="wildernessSurvival">
+        <h1>Wilderness Survival</h1>
+
+        <h2>Weather</h2>
+
+        <h3>Extreme Cold</h3>
+        <p>Whenever the temperature is at or below 0 degrees Fahrenheit, a creature exposed to the cold must succeed on a DC 10 Constitution saving throw at the end of each hour or gain one level of exhaustion. Creatures with resistance or immunity to cold damage automatically succeed on the saving throw, as do creatures wearing cold weather gear (thick coats, gloves, and the like) and creatures naturally adapted to cold climates.</p>
+
+        <h3>Extreme Heat</h3>
+        <p>When the temperature is at or above 100 degrees Fahrenheit, a creature exposed to the heat and without access to drinkable water must succeed on a Constitution saving throw at the end of each hour or gain one level of exhaustion. The DC is 5 for the first hour and increases by 1 for each additional hour. Creatures wearing medium or heavy armor, or who are clad in heavy clothing, have disadvantage on the saving throw. Creatures with resistance or immunity to fire damage automatically succeed on the saving throw, as do creatures naturally adapted to hot climates.</p>
+
+        <h3>Strong Wind</h3>
+        <p>A strong wind imposes disadvantage on ranged weapon attack rolls and Wisdom (Perception) checks that rely on hearing. A strong wind also extinguishes open flames, disperses fog, and makes flying by nonmagical means nearly impossible. A flying creature in a strong wind must land at the end of its turn or fall.</p>
+        <p>A strong wind in a desert can create a sandstorm that imposes disadvantage on Wisdom (Perception) checks that rely on sight.</p>
+
+        <h3>Heavy Precipitation</h3>
+        <p>Everything within an area of heavy rain or heavy snowfall is lightly obscured, and creatures in the area have disadvantage on Wisdom (Perception) checks that rely on sight. Heavy rain also extinguishes open flames and imposes disadvantage on Wisdom (Perception) checks that rely on hearing.</p>
+
+        <h2>High Altitude</h2>
+
+        <p>Traveling at altitudes of 10,000 feet or higher above sea level is taxing for a creature that needs to breathe, because of the reduced amount of oxygen in the air. Each hour such a creature spends traveling at high altitude counts as 2 hours for the purpose of determining how long that creature can travel.</p>
+        <p>Breathing creatures can become acclimated to a high altitude by spending 30 days or more at this elevation. Breathing creatures can't become acclimated to elevations above 20,000 feet unless they are native to such environments.</p>
+    </div>
+
     <div id="randomTreasure">
         <h1>Random Treasure</h1>
 
@@ -2243,7 +2249,7 @@
             <tr>
                 <td>79-80</td>
                 <td>3d6 (10) 500 gp gems</td>
-                <td>Roll oncepn Magic Item Table F and 1d4 times on Magic Item Table G.</td>
+                <td>Roll once on Magic Item Table F and 1d4 times on Magic Item Table G.</td>
             </tr>
             <tr>
                 <td>81-82</td>
@@ -2813,7 +2819,7 @@
             </tr>
             <tr>
                 <td>2</td>
-                <td>Silver-plated steellongsword with jet set in hilt</td>
+                <td>Silver-plated steel longsword with jet set in hilt</td>
             </tr>
             <tr>
                 <td>3</td>
@@ -3787,7 +3793,7 @@
             </tr>
             <tr>
                 <td>50</td>
-                <td>Instrument ofthe bards (Cii lyre)</td>
+                <td>Instrument of the bards (Cii lyre)</td>
             </tr>
             <tr>
                 <td>51</td>
@@ -4523,7 +4529,7 @@
             </tr>
         </table>
     </div>
-    
+
     <div id="usingAbilityScores">
         <h1>Using Ability Scores</h1>
         <table id="dmgAbilityChecks">
@@ -4557,30 +4563,31 @@
             <tr><td>Nearly Impossible</td> <td>30</td></tr>
         </table>
     </div>
+    
+    <div id="diseases">
+        <h1>Diseases</h1>
+
+        <h3>Cackle Fever</h3>
+        <p>This disease targets humanoids, although gnomes are strangely immune. While in the grips of this disease, victims frequently succumb to fits of mad laughter, giving the disease its common name and its morbid nickname: "the shrieks."</p>
+        <p>Symptoms manifest 1d4 hours after infection and include fever and disorientation. The infected creature gains one level of exhaustion that can't be removed until the disease is cured.</p>
+        <p>Any event that causes the infected creature great stress-including entering combat, taking damage, experiencing fear, or having a nightmare-forces the creature to make a DC 13 Constitution saving throw. On a failed save, the creature takes 5 (1d10) psychic damage and becomes incapacitated with mad laughter for 1 minute. The creature can repeat the saving throw at the end of its turns, ending the mad laughter and the incapacitated condition on a success.</p>
+        <p>Any event that causes the infected creature great stress-including entering combat, taking damage, experiencing fear, or having a nightmare-forces the creature to make a DC 13 Constitution saving throw. On a failed save, the creature takes 5 (1d10) psychic damage and becomes incapacitated with mad laughter for 1 minute. The creature can repeat the saving throw at the end of its turns, ending the mad laughter and the incapacitated condition on a success.</p>
+        <p>Any humanoid creature that starts its turn within 10 feet of an infected creature in the throes of mad laughter must succeed on a DC 10 Constitution saving throw or also become infected with the disease. Once a creature succeeds on this save, it is immune to the mad laughter of that particular infected creature for 24 hours.</p>
+        <p>At the end of each long rest, an infected creature can make a DC 13 Constitution saving throw. On a successful save, the DC for this save and for the save to avoid an attack of mad laughter drops by 1d6. When the saving throw DC drops to 0, the creature recovers from the disease. A creature that fails three of these saving throws gains a randomly determined form of indefinite madness.</p>
+
+        <h3>Sewer Plague</h3>
+        <p>Sewer plague is a generic term for a broad category of illnesses that incubate in sewers, refuse heaps, and stagnant swamps, and which are sometimes transmitted by creatures that dwell in those areas, such as rats and otyughs.</p>
+        <p>When a humanoid creature is bitten by a creature that carries the disease, or when it comes into contact with filth or offal contaminated by the disease, the creature must succeed on a DC 11 Constitution saving throw or become infected.</p>
+        <p>It takes 1d4 days for sewer plague's symptoms to manifest in an infected creature. Symptoms include fatigue and cramps. The infected creature suffers one level of exhaustion, and it regains only half the normal number of hit points from spending Hit Dice and no hit points from finishing a long rest.</p>
+        <p>At the end of each long rest, an infected creature must make a DC 11 Constitution saving throw. On a failed save, the character gains one level of exhaustion. On a successful save, the character's exhaustion level decreases by one level. If a successful saving throw reduces the infected creature's level of exhaustion below 1, the creature recovers from the disease.</p>
         
-    <div id="wildernessSurvival">
-        <h1>Wilderness Survival</h1>
-
-        <h2>Weather</h2>
-
-        <h3>Extreme Cold</h3>
-        <p>Whenever the temperature is at or below 0 degrees Fahrenheit, a creature exposed to the cold must succeed on a DC 10 Constitution saving throw at the end of each hour or gain one level of exhaustion. Creatures with resistance or immunity to cold damage automatically succeed on the saving throw, as do creatures wearing cold weather gear (thick coats, gloves, and the like) and creatures naturally adapted to cold climates.</p>
-
-        <h3>Extreme Heat</h3>
-        <p>When the temperature is at or above 100 degrees Fahrenheit, a creature exposed to the heat and without access to drinkable water must succeed on a Constitution saving throw at the end of each hour or gain one level of exhaustion. The DC is 5 for the first hour and increases by 1 for each additional hour. Creatures wearing medium or heavy armor, or who are clad in heavy clothing, have disadvantage on the saving throw. Creatures with resistance or immunity to fire damage automatically succeed on the saving throw, as do creatures naturally adapted to hot climates.</p>
-
-        <h3>Strong Wind</h3>
-        <p>A strong wind imposes disadvantage on ranged weapon attack rolls and Wisdom (Perception) checks that rely on hearing. A strong wind also extinguishes open flames, disperses fog, and makes flying by nonmagical means nearly impossible. A flying creature in a strong wind must land at the end of its turn or fall.</p>
-        <p>A strong wind in a desert can create a sandstorm that imposes disadvantage on Wisdom (Perception) checks that rely on sight.</p>
-
-        <h3>Heavy Precipitation</h3>
-        <p>Everything within an area of heavy rain or heavy snowfall is lightly obscured, and creatures in the area have disadvantage on Wisdom (Perception) checks that rely on sight. Heavy rain also extinguishes open flames and imposes disadvantage on Wisdom (Perception) checks that rely on hearing.</p>
-
-        <h2>High Altitude</h2>
-
-        <p>Traveling at altitudes of 10,000 feet or higher above sea level is taxing for a creature that needs to breathe, because of the reduced amount of oxygen in the air. Each hour such a creature spends traveling at high altitude counts as 2 hours for the purpose of determining how long that creature can travel.</p>
-        <p>Breathing creatures can become acclimated to a high altitude by spending 30 days or more at this elevation. Breathing creatures can't become acclimated to elevations above 20,000 feet unless they are native to such environments.</p>
+        <h3>Sight Rot</h3>
+        <p>This painful infection causes bleeding from the eyes and eventually blinds the victim.</p>
+        <p>A beast or humanoid that drinks water tainted by sight rot must succeed on a DC 15 Constitution saving throw or become infected. One day after infection, the creature's vision starts to become blurry. The creature takes a - 1 penalty to attack rolls and ability checks that rely on sight. At the end of each long rest after the symptoms appear, the penalty worsens by 1. When it reaches - 5, the victim is blinded until its sight is restored by magic such as lesser restoration or heal.</p>
+        <p>Sight rot can be cured using a rare flower called Eyebright, which grows in some swamps. Given an hour, a character who has proficiency with an herbalism kit can turn the flower into one dose of ointment. Applied to the eyes before a long rest, one dose of it prevents the disease from worsening after that rest. After three doses, the ointment cures the disease entirely.</p>
     </div>
+	
+	
 </div>
 
 <div id="mm">
@@ -4621,42 +4628,41 @@
 </div>
 
 <script>
-let nav = document.querySelector('#navigation');
+    let nav = document.querySelector('#pageNav');
 
-NavStuff("phb", "Players Handbook", nav);
-NavStuff("dmg", "Dungeon Masters Guide", nav);
-NavStuff("mm", "Monster Manual", nav);
+    NavStuff("phb", "Players Handbook", nav);
+    NavStuff("dmg", "Dungeon Masters Guide", nav);
+    NavStuff("mm", "Monster Manual", nav);
 
-function NavStuff(var1, var2, parent) {
-    let book = document.getElementById(var1).getElementsByTagName('div');
-    let titles = document.getElementById(var1).querySelectorAll('h1')
+    function NavStuff(var1, var2, parent) {
+        let book = document.getElementById(var1).getElementsByTagName('div');
+        let titles = document.getElementById(var1).querySelectorAll('h1')
 
-    let title = document.createElement('h4');
-    title.appendChild(document.createTextNode(var2));
-    parent.appendChild(title);
+        let title = document.createElement('h4');
+        title.appendChild(document.createTextNode(var2));
+        parent.appendChild(title);
 
-    for(var i = 0; i < book.length; i++) {
-        let bookmark = document.createElement('a');
-        bookmark.href = "#" + book[i].id;
-        bookmark.appendChild(document.createTextNode(titles[i].textContent));
+        for(var i = 0; i < book.length; i++) {
+            let bookmark = document.createElement('a');
+            bookmark.href = "#" + book[i].id;
+            bookmark.appendChild(document.createTextNode(titles[i].textContent));
 
-        navigation.appendChild(bookmark);
+            pageNav.appendChild(bookmark);
 
-        let tables = book[i].getElementsByTagName("table");
+            let tables = book[i].getElementsByTagName("table");
 
-        for(let key in tables) {
-            if(tables[key].id !== null && tables[key].id !== undefined && tables[key].id !== "") {
-                let caption = document.getElementById(tables[key].id).querySelector("caption");
-                let subBookmark = document.createElement('a');
+            for(let key in tables) {
+                if(tables[key].id !== null && tables[key].id !== undefined && tables[key].id !== "") {
+                    let caption = document.getElementById(tables[key].id).querySelector("caption");
+                    let subBookmark = document.createElement('a');
 
-                subBookmark.href = `#${tables[key].id}`;
-                subBookmark.appendChild(document.createTextNode(`- ${caption.textContent}`));
-                navigation.appendChild(subBookmark);
+                    subBookmark.href = `#${tables[key].id}`;
+                    subBookmark.appendChild(document.createTextNode(`- ${caption.textContent}`));
+                    pageNav.appendChild(subBookmark);
+                }
             }
         }
     }
-}
-
 </script>
 
 </body>

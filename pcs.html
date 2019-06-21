@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>5e PCs</title>
+	<link rel="stylesheet" href="stylesheets/jquery-ui.css">
+    <link rel="stylesheet" href="stylesheets/sheet.css">
+</head>
+
+<body>
+
+<table id="pcList">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Armor Class</th>
+            <th>passive Perception</th>
+            <th>Player</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<template id="pcRow">
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</template>
+
+<script src="scripts/jquery-3.3.1.min.js"></script>
+<script src="scripts/jquery-ui.js"></script>
+<script src="scripts/jquery.tablesorter.min.js"></script>
+<script src="scripts/jquery.tablesorter.widgets.js"></script>
+<script src="scripts/global.js"></script>
+<script src="scripts/pcs.js"></script>
+<script src="scripts/spells.js"></script>
+
+<script>
+$.getJSON("json/5e Data.all.json", function(json) {
+    localStorage.set('spellsJSON', json["Spells"]);
+    localStorage.set('racesJSON', json["Races"]);
+    localStorage.set('classesJSON', json["Classes"]);
+    localStorage.set('pcsJSON', json["PCs"]);
+
+    CreatePCTable(localStorage.get('pcsJSON'));
+});
+</script>
+
+</body>
+
+</html>

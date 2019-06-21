@@ -19,14 +19,14 @@ function CreateSpellsTable(json) {
         td[3].textContent = CheckMark(json[spell]["Ritual"]);
         td[4].textContent = json[spell]["Level"];
         td[5].textContent = json[spell]["Casting Time"];
-        td[6].textContent = CheckMark(json[spell]["Classes"]["Bard"]);
+        /* td[6].textContent = CheckMark(json[spell]["Classes"]["Bard"]);
         td[7].textContent = CheckMark(json[spell]["Classes"]["Cleric"]);
         td[8].textContent = CheckMark(json[spell]["Classes"]["Druid"]);
         td[9].textContent = CheckMark(json[spell]["Classes"]["Paladin"]);
         td[10].textContent = CheckMark(json[spell]["Classes"]["Ranger"]);
         td[11].textContent = CheckMark(json[spell]["Classes"]["Sorcerer"]);
         td[12].textContent = CheckMark(json[spell]["Classes"]["Warlock"]);
-        td[13].textContent = CheckMark(json[spell]["Classes"]["Wizard"]);
+        td[13].textContent = CheckMark(json[spell]["Classes"]["Wizard"]); */
 
         tb.appendChild(clone);
     }
@@ -43,12 +43,12 @@ function CreateSpellsTable(json) {
 
 function CreateSpellSheet(name, json) {
 
-    let sheet = CreateDiv(name, "spellSheet", undefined);
+    let sheet = Div(name, "spellSheet", undefined);
     
-    let header = CreateDiv("header", undefined, sheet);
-    let stats = CreateDiv("stats", undefined, sheet);
-    let content = CreateDiv("content", undefined, sheet);
-    let footer = CreateDiv("footer", undefined, sheet);
+    let header = Div("header", undefined, sheet);
+    let stats = Div("stats", undefined, sheet);
+    let content = Div("content", undefined, sheet);
+    let footer = Div("footer", undefined, sheet);
 
     // Header
     InsertElement("h3", name, header);
@@ -96,11 +96,11 @@ function CreateSpellSheet(name, json) {
         } else if(key == "Higher Levels") {
             Paragraphs(json[key], content);
         } else if(key.includes("Unordered List")) {
-            CreateList(json[key], "ul", content);
+            List(json[key], "ul", content);
         } else if(key.includes("Ordered List")) {
-            CreateList(json[key], "ol", content);
+            List(json[key], "ol", content);
         } else if(key.includes("Table")) {
-            CreateTable(json[key], undefined, content)
+            Table(json[key], content)
         }
     }
 

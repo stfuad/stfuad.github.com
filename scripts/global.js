@@ -5,6 +5,8 @@ String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
+// LocalStorage
+
 Storage.prototype.set = function(key, value) {
     this.setItem(key, JSON.stringify(value));
 };
@@ -13,13 +15,16 @@ Storage.prototype.get = function(key) {
     return JSON.parse(this.getItem(key));
 };
 
+// JSON
+
 function KeyValue(json, parent, prependPlus, ...keys) {
     keys.forEach(key => {
         if(def(json[key])) {
-            let div = CreateDiv(undefined, undefined, parent);
+            let div = document.createElement('div');
 
-
-            InsertElement('b', `${key} `, div);
+            let b = document.createElement('b');
+            b.appendChild(document.createTextNode(`${key} `))
+            div.appendChild(b);
 
             if(prependPlus) {
                 let array = [];
@@ -36,15 +41,19 @@ function KeyValue(json, parent, prependPlus, ...keys) {
                     div.appendChild(document.createTextNode(json[key]));
                 }
             }
-        }       
+
+            parent.appendChild(div);
+        }
     });
 }
 
-function CreateList(array, listType, parent) {
-    let list = InsertElement(listType, undefined, parent);
+// HTMLElement
+
+function List(array, listType, parent) {
+    let list = document.createElement(listType);
 
     array.forEach(item => {
-        let li = InsertElement('li', undefined, list);
+        let li = document.createElement('li');
 
         if(item.includes("#")) {
             let split = item.split("#");
@@ -57,41 +66,88 @@ function CreateList(array, listType, parent) {
         } else {
             li.appendChild(document.createTextNode(item));
         }
+
+        list.appendChild(li);
     });
+
+    parent.appendChild(list);
+
+    return list;
 }
 
-function CreateTable(json, style, parent) {
-    let table = InsertElement('table', undefined, parent);
+function Table(json, parent) {
+    let table = document.createElement("table");
 
-    if(style !== undefined) {
-        table.className = style;
-    }
+    // Caption
 
     if(json["Title"] != undefined) {
-        InsertElement('caption', json["Title"], table);
+        let caption = document.createElement('caption');
+        caption.appendChild(document.createTextNode(json["Title"]));
+        parent.appendChild(caption);
     }
+
+    // Headers
 
     let row0 = InsertElement('tr', undefined, table);
 
-    json["Headers"].forEach(header => {
-        InsertElement('th', header, row0);
-    });
-
-    json["Rows"].forEach(row => {
-        let rowX = InsertElement('tr', undefined, table);
-
-        for(let key in row) {
-            InsertElement('td', row[key], rowX);
-        }
-    });
-}
-
-function CheckMark(bool) {
-    if(bool === true) {
-        return "\u2713"
-    } else {
-        return ""
+    if(json["Headers"] !== undefined) {
+        json["Headers"].forEach(header => {
+            let th = document.createElement('th');
+            th.appendChild(document.createTextNode(header));
+            table.appendChild(th);
+        });
     }
+
+    table.appendChild(row0);
+
+    // Rows
+
+    if(json["Rows"] !== undefined) {
+
+        // Top Level
+        
+        json["Rows"].forEach(row => {
+            let rowX = document.createElement('tr');
+
+            for(let key in row) {
+                let temp = document.createElement('td');
+
+                if(key == "Spells") {
+                    let spells = JSON.parse(localStorage.getItem("Spells"));
+
+                    let length = row[key].length
+
+                    for(var i = 0; i < length; i++) {
+                        let spell = row[key][i];
+
+                        let spellJSON = JSON.stringify(spells[spell]);
+
+                        let a = document.createElement('a');
+
+                        a.href = `javascript:CreateSpellSheet("${spell}", ${spellJSON})`;
+
+                        if(i > 0) {
+                            a.appendChild(document.createTextNode(`, ${spell}`));
+                        } else {
+                            a.appendChild(document.createTextNode(spell));
+                        }
+
+                        temp.appendChild(a);
+                    }
+                } else {
+                    temp.appendChild(document.createTextNode(row[key]));
+                }
+                
+                rowX.appendChild(temp);
+            }
+
+            table.appendChild(rowX);
+        });
+    }
+    
+    parent.appendChild(table);
+
+    return table;
 }
 
 function InsertElement(element, string, parent) {
@@ -106,7 +162,7 @@ function InsertElement(element, string, parent) {
     return temp;
 }
 
-function CreateDiv(id, style, parent) {
+function Div(id, style, parent) {
     let div = document.createElement('div');
 
     if(id !== undefined) {
@@ -150,26 +206,33 @@ function Paragraphs(array, parent) {
 
             parent.appendChild(p);
         } else {
-            InsertElement("p", line, parent);
+            let p = document.createElement('p');
+            p.appendChild(document.createTextNode(line));
+            parent.appendChild(p);
         }
     });
 }
 
+function CheckMark(bool) {
+    if(bool === true) {
+        return "\u2713"
+    } else {
+        return ""
+    }
+}
+
+// AJAX
+
 function GetJSON(path) {
     let request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            let parsed = JSON.parse(request.responseText);
+    request.onload = function() {
+        let parsed = JSON.parse(request.responseText);
 
-            for(let key in parsed) {
-                localStorage.set(key, parsed[key]);
-            }
+        for(let key in parsed) {
+            localStorage.setItem(key, JSON.stringify(parsed[key]));
         }
     };
     request.open('GET', path, true);
     request.send();
 }
 
-function StoreJSON(key, string) {
-    localStorage.setItem(key, string);
-}

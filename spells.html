@@ -2,27 +2,30 @@
 
 <head>
     <meta charset="UTF-8">
-	<title>5e Bestiary</title>
-	<link rel="stylesheet" href="stylesheets/jquery-ui.css">
-	<link rel="stylesheet" href="stylesheets/sheet.css">
+    <title>5e Spells</title>
+    <link rel="stylesheet" href="stylesheets/jquery-ui.css">
+    <link rel="stylesheet" href="stylesheets/sheet.css">
 </head>
 
 <body>
-<table id="creatureList">
+
+<table id="spellList">
     <thead>
         <tr>
-            <th>Monster</th>
-            <th>Type</th>
-            <th>SubType</th>
-            <th>Challenge Rating</th>
-            <th>Book</th>
-            <!-- <th>Page</th> -->
+            <th>Spell</th>
+            <th>School</th>
+            <th>Cantrip</th>
+            <th>Ritual</th>
+            <th>Level</th>
+            <th>Casting Time</th>
         </tr>
     </thead>
-    <tbody></tbody>
+    <tbody>
+
+    </tbody>
 </table>
 
-<template id="creatureRow">
+<template id="spellRow">
     <tr>
         <td></td>
         <td></td>
@@ -38,15 +41,14 @@
 <script src="scripts/jquery.tablesorter.min.js"></script>
 <script src="scripts/jquery.tablesorter.widgets.js"></script>
 <script src="scripts/global.js"></script>
-<script src="scripts/bestiary.js"></script>
 <script src="scripts/spells.js"></script>
 
 <script>
-    GetJSON("json/5e Data.min.json");
+    GetJSON("json/5e Spells.json");
 
-    let bestiary = localStorage.get("Bestiary");
+    let spells = localStorage.get("Spells");
 
-    CreateCreatureTable(bestiary);
+    CreateSpellsTable(spells);
 </script>
 
 </body>

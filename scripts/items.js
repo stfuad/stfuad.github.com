@@ -32,7 +32,7 @@ function CreateItemsTable(json) {
 }
 
 function CreateItemSheet(name, json) {
-    /* let base = CreateDiv(name, "itemSheet", undefined); */
+    /* let base = Div(name, "itemSheet", undefined); */
     let hum = document.querySelector("#itemDesc");
     hum.innerHTML = "";
 
@@ -40,7 +40,7 @@ function CreateItemSheet(name, json) {
         hum.style.display = "block";
     }
 
-    let header = CreateDiv("header", undefined, hum);
+    let header = Div("header", undefined, hum);
 
     InsertElement('h3', name, header);
 
@@ -65,21 +65,21 @@ function CreateItemSheet(name, json) {
     };
     header.appendChild(deleteButton);
 
-    let content = CreateDiv("content", undefined, hum);
+    let content = Div("content", undefined, hum);
 
     for(let key in json) {
         if(key.includes("Description")) {
             Paragraphs(json[key], content);
         } else if(key.includes("Unordered List")) {
-            CreateList(json[key], "ul", content);
+            List(json[key], "ul", content);
         } else if(key.includes("Ordered List")) {
-            CreateList(json[key], "ol", content);
+            List(json[key], "ol", content);
         } else if(key.includes("Table")) {
-            CreateTable(json[key], undefined, content)
+            Table(json[key], content)
         }
     }
 
-    let footer = CreateDiv("footer", undefined, hum);
+    let footer = Div("footer", undefined, hum);
 
     InsertElement('i', `${json["Book"]}, Pg. ${json["Page"]}`, footer);
 

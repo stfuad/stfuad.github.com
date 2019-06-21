@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <title>5e Spells by Class</title>
+
+        <link rel="stylesheet" href="stylesheets/gridLayout.css">
+
+        <style>
+            body {
+                grid-template-columns: 300px 300px auto;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 1em;
+            }
+
+            a {
+                text-decoration: none; 
+            }
+
+            #header {
+                grid-column: 1/4;
+                grid-row: 1;
+            }
+
+            #list {
+                grid-column: 2;
+                grid-row: 2/4;
+                overflow: auto;
+            }
+
+            #content {
+                grid-column: 3;
+                grid-row: 2/4;
+                overflow: auto;
+            }
+
+            ul {
+                list-style: none;
+            }
+        </style>
+
+        <script src="/scripts/global.js"></script>
+        <script>
+            GetJSON("/json/5e Spell List.json");
+            GetJSON("/json/5e Spells.json");
+        </script>
+    </head>
+
+    <body>
+        <div id="header">
+            <h1>5e Spells by Class</h1>
+        </div>
+
+        <div id="topNav">
+            <a href="index.html">5e DM's Screen</a>
+            <a href="bestiary.html" target="blank">5e Bestiary</a>
+            <a href="classes.html">5e Classes</a>
+            <a href="magicItems.html" target="blank">5e Magic Items</a>
+            <a href="spells.html" target="blank">5e Spells</a>
+            <a href="spellListByClass.html">5e Spells by Class</a>
+        </div>
+
+        <div id="pageNav"></div>
+
+        <div id="list"></div>
+        <div id="content"></div>
+
+        <script>
+            let json = JSON.parse(localStorage.getItem("Spell List"));
+            let spells = JSON.parse(localStorage.getItem("Spells"));
+
+            for(let key in json) {
+                let h2 = InsertElement('h2', key, list);
+
+                let link1 = InsertElement('h3', key, pageNav);
+
+                for(let level in json[key]) {
+                    let length = json[key][level].length;
+
+                    if(length >= 1) {
+                        let h3 = InsertElement('h3', level, list);
+                        h3.id = `${key} ${level}`;
+
+                        let link2 = InsertElement('a', `- ${level}`, pageNav);
+                        link2.href = `#${key} ${level}`;
+
+                        let ul = document.createElement('ul');
+
+                        let sorted = json[key][level].sort();
+
+                        sorted.forEach(element => {
+                            let spellJSON = JSON.stringify(spells[element])
+
+                            let li = InsertElement('li', undefined, ul);
+                            
+                            let a = InsertElement('a', element, li)
+                            a.href = `javascript:Sheet("${element}", ${spellJSON})`;
+                        });
+
+                        list.appendChild(ul);                        
+                    }
+                } 
+            }
+
+            function Sheet(name, json) {
+                let cont = document.querySelector("#content");
+                cont.innerHTML = "";
+
+                let h1 = InsertElement('h1', name, cont);
+
+                // School, cantrip, ritual, level
+                let subTitle = document.createElement('i');
+                cont.appendChild(subTitle);
+
+                let scrl = "";
+
+                let school = json["School"];
+                let cantrip = json["Cantrip"];
+                let ritual = json["Ritual"];
+                let level = json["Level"];
+
+                if(level === 0) {
+                    level = "";
+                } else if(level === 1) {
+                    level = "1st-level";
+                } else if(level === 2) {
+                    level = "2nd-level";
+                } else if(level === 3) {
+                    level = "3rd-level";
+                } else if(level >= 4) {
+                    level = `${level}th-level`;
+                }
+
+                scrl = `${level} ${school}`;
+
+                if(cantrip == true) {
+                    scrl += " cantrip";
+                }
+
+                if(ritual == true) {
+                    scrl += " (ritual)";
+                }
+
+                subTitle.appendChild(document.createTextNode(scrl));
+
+                KeyValue(json, cont, false, "Casting Time", "Range", "Components", "Duration");
+
+                for(let key in json) {
+                    if(key.includes("Description") || key == "Higher Levels") {
+                        Paragraphs(json[key], cont);
+                    } else if(key.includes("Unordered List")) {
+                        List(json[key], "ul", cont);
+                    } else if(key.includes("Ordered List")) {
+                        List(json[key], "ol", cont);
+                    } else if(key.includes("Table")) {
+                        Table(json[key], cont)
+                    }
+                }
+
+                InsertElement("i", `${json["Book"]} Pg. ${json["Page"]}`, cont);
+            }
+        </script>
+    </body>
+</html>
