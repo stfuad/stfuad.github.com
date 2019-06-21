@@ -27,7 +27,7 @@ body > div {
 #pageNav {
     grid-column: 1;
     grid-row: 3;
-    max-height: calc(100vh - 100px);;
+    max-height: calc(100vh - 200px);;
     overflow: auto;
 }
 
