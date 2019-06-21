@@ -8,6 +8,8 @@ body {
 body > div {
     padding: 10px;
     border: 1px solid black;
+    max-height: 350px;
+    overflow: auto;
 }
 
 #header {
