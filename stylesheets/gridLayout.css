@@ -8,8 +8,6 @@ body {
 body > div {
     padding: 10px;
     border: 1px solid black;
-    max-height: 350px;
-    overflow: auto;
 }
 
 #header {
@@ -29,6 +27,7 @@ body > div {
 #pageNav {
     grid-column: 1;
     grid-row: 3;
+    max-height: calc(100vh - 100px);;
     overflow: auto;
 }
 
@@ -40,5 +39,6 @@ body > div {
 #content {
     grid-column: 2;
     grid-row: 2/4;
+    max-height: calc(100vh - 110px);
     overflow: auto;
 }
