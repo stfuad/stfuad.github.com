@@ -58,8 +58,6 @@
                     return response.json();
                 })
                 .then(function(json) {
-                    let json = JSON.parse(localStorage.getItem("Classes"));
-
                     // Root
 
                     for(let level1 in json) {
