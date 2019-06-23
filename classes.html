@@ -30,12 +30,6 @@
                 background-color: aqua;
             }
         </style>
-
-        <script type="module">
-            import {GetJSON} from "./scripts/ajax.js";
-            GetJSON("/json/5e Classes.json");
-        </script>
-
     </head>
 
     <body>
@@ -59,132 +53,139 @@
         
         <script src="scripts/global.js"></script>
         <script>
-            let json = JSON.parse(localStorage.getItem("Classes"));
+            fetch("./json/5e Classes.json")
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(json) {
+                    let json = JSON.parse(localStorage.getItem("Classes"));
 
-            // Root
+                    // Root
 
-            for(let level1 in json) {
-                console.log(`level 1 - ${level1}`);
+                    for(let level1 in json) {
+                        console.log(`level 1 - ${level1}`);
 
-                let content = document.getElementById("content");
+                        let content = document.getElementById("content");
 
-                let className = InsertElement('h1', level1, content);
-                className.id = level1;
+                        let className = InsertElement('h1', level1, content);
+                        className.id = level1;
 
-                let navHeader = InsertElement('h3', level1, pageNav);
+                        let navHeader = InsertElement('h3', level1, pageNav);
 
-                // Table, Class Features, Archetypes
+                        // Table, Class Features, Archetypes
 
-                for(let level2 in json[level1]) {
-                    console.log(`level 2 - ${level2}`);
+                        for(let level2 in json[level1]) {
+                            console.log(`level 2 - ${level2}`);
 
-                    if(!level2.includes("Table")) {
-                        let h1 = InsertElement('h1', level2, content);
-                        h1.id = `${className.id} ${level2}`;
+                            if(!level2.includes("Table")) {
+                                let h1 = InsertElement('h1', level2, content);
+                                h1.id = `${className.id} ${level2}`;
 
-                        let subLink = document.createElement('a');
-                        subLink.href = `#${className.id} ${level2}`;
-                        subLink.appendChild(document.createTextNode(`- ${level2}`));
+                                let subLink = document.createElement('a');
+                                subLink.href = `#${className.id} ${level2}`;
+                                subLink.appendChild(document.createTextNode(`- ${level2}`));
 
-                        pageNav.appendChild(subLink);
-                    }
-
-                    if(level2.includes("Table")) {
-                        Table(json[level1][level2], content);
-                    } else if(level2 == "Eldritch Invocations") {
-                        for(let invocation in json[level1][level2]) {
-                            let h3 = document.createElement('h3');
-                            h3.appendChild(document.createTextNode(invocation));
-                            content.appendChild(h3);
-
-                            if(json[level1][level2][invocation]["Prerequisite"] !== undefined) {
-                                let i = document.createElement('i');
-                                i.appendChild(document.createTextNode(`Prerequisite: ${json[level1][level2][invocation]["Prerequisite"]}`));
-                                content.appendChild(i);
+                                pageNav.appendChild(subLink);
                             }
 
-                            Paragraphs(json[level1][level2][invocation]["Description"], content);
-                        }
-                    } else {
-                        // Next Layer
+                            if(level2.includes("Table")) {
+                                Table(json[level1][level2], content);
+                            } else if(level2 == "Eldritch Invocations") {
+                                for(let invocation in json[level1][level2]) {
+                                    let h3 = document.createElement('h3');
+                                    h3.appendChild(document.createTextNode(invocation));
+                                    content.appendChild(h3);
 
-                        for(let level3 in json[level1][level2]) {
-                            console.log(`level 3 - ${level3}`);
-
-                            let level3JSON = json[level1][level2][level3];
-
-                            if(!level3.includes("Table") && !level3.includes("Description") && !level3.includes("Calc")) {
-                                let h2 = InsertElement('h2', level3, content);
-
-                                let hr = document.createElement('hr');
-                                content.appendChild(hr);
-
-                                if (level2 !== "Class Features") {
-                                    
-                                    h2.id = `${className.id} ${level3}`;
-                                    let subLink = document.createElement('a');
-                                    subLink.href = `#${className.id} ${level3}`;
-                                    subLink.appendChild(document.createTextNode(`-- ${level3}`));
-
-                                    pageNav.appendChild(subLink);
-                                }
-                            }
-
-                            if(Array.isArray(level3JSON)) {
-                                Paragraphs(level3JSON, content);
-                            } else {
-
-                                // Deeper Down...
-
-                                for(let level4 in level3JSON) {
-                                    console.log(`level 4 - ${level4}`)
-
-                                    let level4JSON = json[level1][level2][level3][level4];
-
-                                    if(!level4.includes("Table") && !level4.includes("Description") && !level4.includes("Calc") && !level4.includes("Unordered List")) {
-                                        let h3 = InsertElement('h3', level4, content);
-                                        h3.id = `${level4}`;
+                                    if(json[level1][level2][invocation]["Prerequisite"] !== undefined) {
+                                        let i = document.createElement('i');
+                                        i.appendChild(document.createTextNode(`Prerequisite: ${json[level1][level2][invocation]["Prerequisite"]}`));
+                                        content.appendChild(i);
                                     }
 
-                                    if(level4.includes("Table")) {
-                                        Table(level4JSON, content);
-                                    } else if (level4.includes("Unordered List")) {
-                                        List(level4JSON, 'ul', content)
-                                    } else if (Array.isArray(level4JSON)) {
-                                        Paragraphs(level4JSON, content);
+                                    Paragraphs(json[level1][level2][invocation]["Description"], content);
+                                }
+                            } else {
+                                // Next Layer
+
+                                for(let level3 in json[level1][level2]) {
+                                    console.log(`level 3 - ${level3}`);
+
+                                    let level3JSON = json[level1][level2][level3];
+
+                                    if(!level3.includes("Table") && !level3.includes("Description") && !level3.includes("Calc")) {
+                                        let h2 = InsertElement('h2', level3, content);
+
+                                        let hr = document.createElement('hr');
+                                        content.appendChild(hr);
+
+                                        if (level2 !== "Class Features") {
+                                            
+                                            h2.id = `${className.id} ${level3}`;
+                                            let subLink = document.createElement('a');
+                                            subLink.href = `#${className.id} ${level3}`;
+                                            subLink.appendChild(document.createTextNode(`-- ${level3}`));
+
+                                            pageNav.appendChild(subLink);
+                                        }
+                                    }
+
+                                    if(Array.isArray(level3JSON)) {
+                                        Paragraphs(level3JSON, content);
                                     } else {
 
-                                        // Even Deeper...
+                                        // Deeper Down...
 
-                                        for(let level5 in json[level1][level2][level3][level4]) {
-                                            console.log(`level 5 - ${level5}`);
+                                        for(let level4 in level3JSON) {
+                                            console.log(`level 4 - ${level4}`)
 
-                                            let level5JSON = json[level1][level2][level3][level4][level5];
+                                            let level4JSON = json[level1][level2][level3][level4];
 
-                                            if(!level5.includes("Calc") && !level5.includes("Table") && !level5.includes("Description") && !level5.includes("Unordered List")) {
-                                                let h4 = InsertElement('h4', level5, content);
-                                                h4.id = `${level5}`;
+                                            if(!level4.includes("Table") && !level4.includes("Description") && !level4.includes("Calc") && !level4.includes("Unordered List")) {
+                                                let h3 = InsertElement('h3', level4, content);
+                                                h3.id = `${level4}`;
                                             }
 
-                                            if(level5.includes("Table")) {
-                                                Table(level5JSON, content);
-                                            } else if (level5.includes("Unordered List")) {
-                                                List(level5JSON, 'ul', content);
-                                            } else if (Array.isArray(level5JSON)){
-                                                Paragraphs(level5JSON, content);
+                                            if(level4.includes("Table")) {
+                                                Table(level4JSON, content);
+                                            } else if (level4.includes("Unordered List")) {
+                                                List(level4JSON, 'ul', content)
+                                            } else if (Array.isArray(level4JSON)) {
+                                                Paragraphs(level4JSON, content);
                                             } else {
 
-                                                // Sigh
+                                                // Even Deeper...
 
-                                                for(let level6 in json[level1][level2][level3][level4][level5]) {
-                                                    console.log(`level 6 - ${level6}`);
+                                                for(let level5 in json[level1][level2][level3][level4]) {
+                                                    console.log(`level 5 - ${level5}`);
 
-                                                    let level6JSON = json[level1][level2][level3][level4][level5][level6]
+                                                    let level5JSON = json[level1][level2][level3][level4][level5];
 
-                                                    if(level6.includes("Table")) {
-                                                        Table(level6JSON, content);
+                                                    if(!level5.includes("Calc") && !level5.includes("Table") && !level5.includes("Description") && !level5.includes("Unordered List")) {
+                                                        let h4 = InsertElement('h4', level5, content);
+                                                        h4.id = `${level5}`;
+                                                    }
+
+                                                    if(level5.includes("Table")) {
+                                                        Table(level5JSON, content);
+                                                    } else if (level5.includes("Unordered List")) {
+                                                        List(level5JSON, 'ul', content);
+                                                    } else if (Array.isArray(level5JSON)){
+                                                        Paragraphs(level5JSON, content);
                                                     } else {
-                                                        Paragraphs(level6JSON, content);
+
+                                                        // Sigh
+
+                                                        for(let level6 in json[level1][level2][level3][level4][level5]) {
+                                                            console.log(`level 6 - ${level6}`);
+
+                                                            let level6JSON = json[level1][level2][level3][level4][level5][level6]
+
+                                                            if(level6.includes("Table")) {
+                                                                Table(level6JSON, content);
+                                                            } else {
+                                                                Paragraphs(level6JSON, content);
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -194,8 +195,8 @@
                             }
                         }
                     }
-                }
-            }
+                })
+            
         </script>
 
     </body>
