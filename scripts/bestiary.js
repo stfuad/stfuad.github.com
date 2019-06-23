@@ -17,7 +17,7 @@ function CreateCreatureTable(json) {
         td[1].textContent = json[creature]["Type"];
         td[2].textContent = json[creature]["SubType"];
         td[3].textContent = json[creature]["Challenge"];
-        td[4].textContent = json[creature]["Book"];
+        /* td[4].textContent = json[creature]["Book"]; */
 
         /* let pdfLink = document.createElement('a');
         pdfLink.appendChild(document.createTextNode(json[creature]["Page"]));
