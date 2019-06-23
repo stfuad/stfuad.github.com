@@ -54,10 +54,9 @@
         <script src="scripts/global.js"></script>
         <script>
             fetch("./json/5e Classes.json")
-                .then(function(response) {
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(function(json) {
+                    console.log(json);
                     // Root
 
                     for(let level1 in json) {
