@@ -54,9 +54,16 @@
         <script src="scripts/global.js"></script>
         <script>
             fetch("./json/5e Classes.json")
-                .then(response => JSON.parse(response))
-                .then(json => {
-                    console.log(json);
+                .then(response => {
+                    let parsed = JSON.parse(response);
+
+                    for(let key in parsed) {
+                        localStorage.setItem(key, JSON.stringify(parsed[key]));
+                    }
+                })
+                .then(function() {
+                    let json = localStorage.getItem("Bestiary");
+                    
                     // Root
 
                     for(let level1 in json) {
