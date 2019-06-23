@@ -54,8 +54,8 @@
         <script src="scripts/global.js"></script>
         <script>
             fetch("./json/5e Classes.json")
-                .then(response => response.json())
-                .then(function(json) {
+                .then(response => JSON.parse(response))
+                .then(json => {
                     console.log(json);
                     // Root
 
