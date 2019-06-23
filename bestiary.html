@@ -2,53 +2,68 @@
 
 <head>
     <meta charset="UTF-8">
-	<title>5e Bestiary</title>
-	<link rel="stylesheet" href="stylesheets/jquery-ui.css">
-	<link rel="stylesheet" href="stylesheets/sheet.css">
+    <title>5e Bestiary</title>
+    <link rel="stylesheet" href="./stylesheets/gridLayout.css">
+    <style>
+        body {
+            grid-template-columns: 300px 300px auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+        }
+
+        a {
+            text-decoration: none; 
+        }
+
+        #header {
+            grid-column: 1/4;
+            grid-row: 1;
+        }
+
+        #pageNav {
+            display: none;
+        }
+
+        #list {
+            grid-column: 2;
+            grid-row: 2/4;
+            max-height: calc(100vh - 110px);
+            overflow: auto;
+        }
+
+        #content {
+            grid-column: 3;
+            grid-row: 2/4;
+            overflow: auto;
+        }
+    </style>
+
+    <script type="module" href="./scripts/ajax.js">
+        GetJSON("5e Monsters.min.json");
+    </script>
 </head>
 
 <body>
-<table id="creatureList">
-    <thead>
-        <tr>
-            <th>Monster</th>
-            <th>Type</th>
-            <th>SubType</th>
-            <th>Challenge Rating</th>
-            <!-- <th>Book</th>
-            <th>Page</th> -->
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+<div id="header">
+    <h1>5e Bestiary</h1>
+</div>
 
-<template id="creatureRow">
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <!-- <td></td>
-        <td></td> -->
-    </tr>
-</template>
+<div id="topNav">
+    <a href="./index.html">5e DM's Screen</a>
+    <a href="./bestiary.html" target="blank">5e Bestiary</a>
+    <a href="./classes.html">5e Classes</a>
+    <a href="./magicItems.html" target="blank">5e Magic Items</a>
+    <a href="./spells.html" target="blank">5e Spells</a>
+    <a href="./spellListByClass.html">5e Spells by Class</a>
+</div>
 
-<script src="scripts/jquery-3.3.1.min.js"></script>
-<script src="scripts/jquery-ui.js"></script>
-<script src="scripts/jquery.tablesorter.min.js"></script>
-<script src="scripts/jquery.tablesorter.widgets.js"></script>
-<script src="scripts/global.js"></script>
-<script src="scripts/bestiary.js"></script>
-<script src="scripts/spells.js"></script>
+<div id="pageNav"></div>
+<div id="list"></div>
+<div id="content"></div>
 
 <script>
-    GetJSON("json/5e Data.min.json");
-
-    let bestiary = localStorage.get("Bestiary");
-
-    CreateCreatureTable(bestiary);
+    
 </script>
-
 </body>
 
 </html>

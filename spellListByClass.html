@@ -41,10 +41,8 @@
             }
         </style>
 
-        <script src="/scripts/global.js"></script>
-        <script>
-            GetJSON("/json/5e Spell List.json");
-            GetJSON("/json/5e Spells.json");
+        <script type="module" href="./scripts/ajax.js">
+            GetJSON("./json/5e Spell List.json", "./json/5e Spells.json");
         </script>
     </head>
 
@@ -54,12 +52,12 @@
         </div>
 
         <div id="topNav">
-            <a href="index.html">5e DM's Screen</a>
-            <a href="bestiary.html" target="blank">5e Bestiary</a>
-            <a href="classes.html">5e Classes</a>
-            <a href="magicItems.html" target="blank">5e Magic Items</a>
-            <a href="spells.html" target="blank">5e Spells</a>
-            <a href="spellListByClass.html">5e Spells by Class</a>
+            <a href="./index.html">5e DM's Screen</a>
+            <a href="./bestiary.html" target="blank">5e Bestiary</a>
+            <a href="./classes.html">5e Classes</a>
+            <a href="./magicItems.html" target="blank">5e Magic Items</a>
+            <a href="./spells.html" target="blank">5e Spells</a>
+            <a href="./spellListByClass.html">5e Spells by Class</a>
         </div>
 
         <div id="pageNav"></div>
@@ -67,6 +65,7 @@
         <div id="list"></div>
         <div id="content"></div>
 
+        <script src="./scripts/global.js"></script>
         <script>
             let json = JSON.parse(localStorage.getItem("Spell List"));
             let spells = JSON.parse(localStorage.getItem("Spells"));

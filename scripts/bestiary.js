@@ -1,4 +1,8 @@
-function CreateCreatureTable(json) {
+import {GetJSON} from "./ajax.js";
+
+export function CreateCreatureTable(json) {
+    GetJSON("./json/5e Monsters.min.json")
+
     let t = document.querySelector("#creatureRow");
 
     let tb = document.querySelector("tbody");

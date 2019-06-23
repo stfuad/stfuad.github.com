@@ -112,7 +112,7 @@ function Table(json, parent) {
             for(let key in row) {
                 let temp = document.createElement('td');
 
-                if(key == "Spells") {
+                /* if(key == "Spells") {
                     let spells = JSON.parse(localStorage.getItem("Spells"));
 
                     let length = row[key].length
@@ -136,8 +136,8 @@ function Table(json, parent) {
                     }
                 } else {
                     temp.appendChild(document.createTextNode(row[key]));
-                }
-                
+                } */
+                temp.appendChild(document.createTextNode(row[key]));
                 rowX.appendChild(temp);
             }
 
@@ -220,19 +220,3 @@ function CheckMark(bool) {
         return ""
     }
 }
-
-// AJAX
-
-function GetJSON(path) {
-    let request = new XMLHttpRequest();
-    request.onload = function() {
-        let parsed = JSON.parse(request.responseText);
-
-        for(let key in parsed) {
-            localStorage.setItem(key, JSON.stringify(parsed[key]));
-        }
-    };
-    request.open('GET', path, true);
-    request.send();
-}
-
