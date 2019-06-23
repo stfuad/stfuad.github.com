@@ -11,7 +11,7 @@ export default function GetJSON(...paths) {
             
             
         };
-        request.open('GET', paths, true);
+        request.open('GET', file, true);
         request.send();
     });
 }
