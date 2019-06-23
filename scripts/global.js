@@ -223,7 +223,7 @@ function CheckMark(bool) {
 
 // AJAX
 
-function GetJSON(path) {
+function GetJSON(path, name, callback) {
     let request = new XMLHttpRequest();
     request.onload = function() {
         let parsed = JSON.parse(request.responseText);
@@ -231,6 +231,8 @@ function GetJSON(path) {
         for(let key in parsed) {
             localStorage.setItem(key, JSON.stringify(parsed[key]));
         }
+
+        callback(JSON.parse(localStorage.getItem(name)));
     };
     request.open('GET', path, true);
     request.send();
