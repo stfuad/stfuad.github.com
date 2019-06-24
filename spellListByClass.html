@@ -40,12 +40,6 @@
                 list-style: none;
             }
         </style>
-
-        <script type="module">
-            import {GetJSON} from "./scripts/ajax.js";
-            GetJSON("../json/5e Spell List.json");
-            GetJSON("../json/5e Spells.json")
-        </script>
     </head>
 
     <body>
@@ -53,14 +47,7 @@
             <h1>5e Spells by Class</h1>
         </div>
 
-        <div id="topNav">
-            <a href="./index.html">5e DM's Screen</a>
-            <a href="./bestiary.html" target="blank">5e Bestiary</a>
-            <a href="./classes.html">5e Classes</a>
-            <a href="./magicItems.html" target="blank">5e Magic Items</a>
-            <a href="./spells.html" target="blank">5e Spells</a>
-            <a href="./spellListByClass.html">5e Spells by Class</a>
-        </div>
+        <div id="topNav"></div>
 
         <div id="pageNav"></div>
 
@@ -69,41 +56,57 @@
 
         <script src="./scripts/global.js"></script>
         <script>
-            let json = JSON.parse(localStorage.getItem("Spell List"));
-            let spells = JSON.parse(localStorage.getItem("Spells"));
+            fetch("./topNav.html")
+                .then(response => response.text())
+                .then(data => {
+                    let target = document.querySelector("#topNav");
 
-            for(let key in json) {
-                let h2 = InsertElement('h2', key, list);
-
-                let link1 = InsertElement('h3', key, pageNav);
-
-                for(let level in json[key]) {
-                    let length = json[key][level].length;
-
-                    if(length >= 1) {
-                        let h3 = InsertElement('h3', level, list);
-                        h3.id = `${key} ${level}`;
-
-                        let link2 = InsertElement('a', `- ${level}`, pageNav);
-                        link2.href = `#${key} ${level}`;
-
-                        let ul = document.createElement('ul');
-
-                        let sorted = json[key][level].sort();
-
-                        sorted.forEach(element => {
-                            let spellJSON = JSON.stringify(spells[element])
-
-                            let li = InsertElement('li', undefined, ul);
-                            
-                            let a = InsertElement('a', element, li)
-                            a.href = `javascript:Sheet("${element}", ${spellJSON})`;
-                        });
-
-                        list.appendChild(ul);                        
+                    target.innerHTML = data;
+                })
+            fetch("./json/5e Data.json")
+                .then(response => response.json())
+                .then(json => {
+                    for(let key in json) {
+                        localStorage.setItem(key, JSON.stringify(json[key]));
                     }
-                } 
-            }
+                })
+                .then(() => {
+                    let spellList = JSON.parse(localStorage.getItem("Spell List"));
+                    let spells = JSON.parse(localStorage.getItem("Spells"));
+
+                    for(let key in spellList) {
+                        let h2 = InsertElement('h2', key, list);
+
+                        let link1 = InsertElement('h3', key, pageNav);
+
+                        for(let level in spellList[key]) {
+                            let length = spellList[key][level].length;
+
+                            if(length >= 1) {
+                                let h3 = InsertElement('h3', level, list);
+                                h3.id = `${key} ${level}`;
+
+                                let link2 = InsertElement('a', `- ${level}`, pageNav);
+                                link2.href = `#${key} ${level}`;
+
+                                let ul = document.createElement('ul');
+
+                                let sorted = spellList[key][level].sort();
+
+                                sorted.forEach(element => {
+                                    let spellJSON = JSON.stringify(spells[element])
+
+                                    let li = InsertElement('li', undefined, ul);
+                                    
+                                    let a = InsertElement('a', element, li)
+                                    a.href = `javascript:Sheet("${element}", ${spellJSON})`;
+                                });
+
+                                list.appendChild(ul);                        
+                            }
+                        } 
+                    }
+                })
 
             function Sheet(name, json) {
                 let cont = document.querySelector("#content");

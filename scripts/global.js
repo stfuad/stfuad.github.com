@@ -15,38 +15,6 @@ Storage.prototype.get = function(key) {
     return JSON.parse(this.getItem(key));
 };
 
-// JSON
-
-function KeyValue(json, parent, prependPlus, ...keys) {
-    keys.forEach(key => {
-        if(def(json[key])) {
-            let div = document.createElement('div');
-
-            let b = document.createElement('b');
-            b.appendChild(document.createTextNode(`${key} `))
-            div.appendChild(b);
-
-            if(prependPlus) {
-                let array = [];
-
-                for(let subKey in json[key]) {
-                    array.push(`${subKey} +${json[key][subKey]}`)
-                }
-
-                div.appendChild(document.createTextNode(array.join(', ')))
-            } else {
-                if(Array.isArray(json[key])) {
-                    div.appendChild(document.createTextNode(json[key].join(", ")));
-                } else {
-                    div.appendChild(document.createTextNode(json[key]));
-                }
-            }
-
-            parent.appendChild(div);
-        }
-    });
-}
-
 // HTMLElement
 
 function List(array, listType, parent) {

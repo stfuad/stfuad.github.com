@@ -75,17 +75,8 @@
     <h1>5e DM's Screen</h1>
 </div>
 
-<div id="topNav">
-    <a href="index.html">5e DM's Screen</a>
-    <a href="bestiary.html" target="blank">5e Bestiary</a>
-    <a href="classes.html">5e Classes</a>
-    <a href="magicItems.html" target="blank">5e Magic Items</a>
-    <a href="spells.html" target="blank">5e Spells</a>
-    <a href="spellListByClass.html">5e Spells by Class</a>
-</div>
-
+<div id="topNav"></div>
 <div id="pageNav"></div>
-
 <div id="content">
 
 <div id="phb">
@@ -4628,6 +4619,14 @@
 </div>
 
 <script>
+    fetch("./topNav.html")
+        .then(response => response.text())
+        .then(data => {
+            let target = document.querySelector("#topNav");
+
+            target.innerHTML = data;
+        })
+
     let nav = document.querySelector('#pageNav');
 
     NavStuff("phb", "Players Handbook", nav);

@@ -31,17 +31,32 @@
             overflow: auto;
         }
 
+        #list > a {
+            display: block;
+        }
+
         #content {
             grid-column: 3;
             grid-row: 2/4;
             overflow: auto;
         }
-    </style>
 
-    <script type="module">
-        import {GetJSON} from "./scripts/ajax.js";
-        GetJSON("/json/5e Monsters.min.json");
-    </script>
+        #tabs > span {
+            margin: 10px 10px 10px 0px;
+            padding: 5px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
+        #sheet {
+
+        }
+
+        .tab {
+            background-color: white;
+            border: 0px;
+        }
+    </style>
 </head>
 
 <body>
@@ -49,21 +64,617 @@
     <h1>5e Bestiary</h1>
 </div>
 
-<div id="topNav">
-    <a href="./index.html">5e DM's Screen</a>
-    <a href="./bestiary.html" target="blank">5e Bestiary</a>
-    <a href="./classes.html">5e Classes</a>
-    <a href="./magicItems.html" target="blank">5e Magic Items</a>
-    <a href="./spells.html" target="blank">5e Spells</a>
-    <a href="./spellListByClass.html">5e Spells by Class</a>
-</div>
-
+<div id="topNav"></div>
 <div id="pageNav"></div>
 <div id="list"></div>
-<div id="content"></div>
+<div id="content">
+    <div id="tabs"></div>
+    <div id="sheet"></div>
+</div>
 
+<script src="scripts/global.js"></script>
 <script>
-    
+    fetch("./topNav.html")
+        .then(response => response.text())
+        .then(data => {
+            let target = document.querySelector("#topNav");
+
+            target.innerHTML = data;
+        })
+    fetch("./json/5e Data.json")
+        .then(response => response.json())
+        .then(json => {
+            for(let key in json) {
+                localStorage.setItem(key, JSON.stringify(json[key]));
+            }
+        })
+        .then(() => {
+            let bestiary = JSON.parse(localStorage.getItem("Bestiary"));
+
+            let sorted = Object.keys(bestiary).sort();
+
+            sorted.forEach(element => {
+                let a = InsertElement('a', element, list);
+
+                let string = JSON.stringify(bestiary[element]);
+                a.href = `javascript:Wrapper("${element}", ${string})`;
+            });
+        })
+</script>
+<script>
+    function Wrapper(name, json) {
+        CreateTab(name, json);
+        Sheet(name, json);
+    }
+
+    function CreateTab(name, json) {
+        let target = document.querySelector("#tabs");
+
+        let container = document.createElement('span');
+        container.id = name;
+
+        let button = document.createElement('button');
+        button.textContent = name;
+        button.className = "tab";
+        button.onclick = () => {
+            Sheet(name, json);
+        };
+
+        let close = document.createElement('button');
+        close.textContent = "\u2716";
+        close.className = "tab";
+        close.onclick = () => {
+            let item = document.getElementById(name);
+            item.remove();
+
+            if(target.innerHTML == "") {
+                let target1 = document.getElementById("sheet");
+
+                target1.innerHTML = "";
+            }
+        };
+
+        container.appendChild(button);
+        container.appendChild(close);
+
+        target.appendChild(container);
+    }
+
+    function Sheet(name, json) {
+        sheet.innerHTML = "";
+
+        // Header (Title/Subtitles)
+
+        InsertElement("h2", name, sheet);
+
+        let stsa = Div(undefined, undefined, sheet);
+
+        let size = json["Size"];
+        let type = json["Type"];
+        let subType = json["SubType"];
+        let alignment = json["Alignment"];
+
+        let subTitle = document.createElement('i');
+        if (subType != undefined) {
+            subTitle.appendChild(document.createTextNode(`${size} ${type} (${subType}), ${alignment}`));
+        } else {
+            subTitle.appendChild(document.createTextNode(`${size} ${type}, ${alignment}`));
+        }
+
+        stsa.appendChild(subTitle);
+
+        // Armor Class
+
+        ArmorClass(json, sheet);
+
+        // Hit Points
+
+        HitPoints(json["Hit Dice"], json["Ability Scores"]["Constitution"], sheet);
+
+        // Speed
+
+        Speed(json["Speed"], sheet);
+
+        // Ability Scores
+
+        AbilityScores(json["Ability Scores"], sheet);
+
+        // Skills
+
+        Skills(json, sheet);
+
+        // Saving Throws
+
+        SavingThrows(json, sheet);
+
+        // Damage Vulnerabilities, Damage Resistances, Damage Immunities, Condition Immunities
+        
+        Arrays(json, sheet, "Damage Vulnerabilities", "Damage Resistances", "Damage Immunities", "Condition Immunities");
+        
+        // Senses
+
+        Senses(json, sheet);
+
+        // Languages
+
+        Arrays(json, sheet, "Languages")
+
+        // Challenge
+
+        Challenge(json, sheet);
+
+        // Properties
+
+        Properties(json, sheet, "Features", "Actions", "Actions for Type 1", "Actions for Type 2", "Actions for Type 3", "Reactions", "Legendary Actions");
+
+        // Footer (Book/Page)
+
+        let footer = document.createElement('div');
+        footer.appendChild(document.createTextNode(`${json["Book"]}, Pg. ${json["Page"]}`));
+        sheet.appendChild(footer);
+    }
+
+    function ArmorClass(json, parent) {
+        let div = document.createElement('div');
+
+        let b = document.createElement('b');
+        b.appendChild(document.createTextNode("Armor Class "));
+
+        let ac = "";
+
+        if(def(json["Armor Type"])) {
+            ac = `${json["Armor Class"]} (${json["Armor Type"]})`;
+        } else {
+            ac = json["Armor Class"];
+        }
+        
+        div.appendChild(b);
+        div.appendChild(document.createTextNode(ac));
+        parent.appendChild(div);
+    }
+
+    function HitPoints(hitDice, conMod, parent) {
+        let div = document.createElement('div');
+
+        let split = hitDice.split(/d/);
+
+        let split0 = parseInt(split[0]);
+        let split1 = parseInt(split[1]);
+
+        let modifier = Math.floor((conMod - 10) / 2);
+        let average = (split1 + 1) / 2 * split0 + modifier;
+
+        let max = (split0 * split1) + modifier;
+
+        let b = document.createElement('b');
+
+        b.appendChild(document.createTextNode("Hit Points "));
+
+        div.appendChild(b);
+
+        if(modifier < 0) {
+            div.appendChild(document.createTextNode(`${hitDice} - ${modifier} (Average: ${average}, Max: ${max})`));
+        } else if(modifier === 0) {
+            div.appendChild(document.createTextNode(`${hitDice} (Average: ${average}, Max: ${max})`));
+        } else {
+            div.appendChild(document.createTextNode(`${hitDice} + ${modifier} (Average: ${average}, Max: ${max})`));
+        }
+        
+        parent.appendChild(div);
+    }
+
+    function Speed(json, parent) {
+        let div = document.createElement('div');
+        let b = document.createElement('b');
+
+        b.appendChild(document.createTextNode("Speed "));
+
+        div.appendChild(b);
+        div.appendChild(document.createTextNode(`${json["Walk"]} ft.`));
+
+        if(json["Burrow"] !== 0) {
+            div.appendChild(document.createTextNode(`, burrow ${json["Burrow"]} ft.`));
+        }
+
+        if(json["Climb"] !== 0) {
+            div.appendChild(document.createTextNode(`, climb ${json["Climb"]} ft.`));
+        }
+
+        if(json["Fly"] !== 0) {
+            if(json["Hover"] === true) {
+                div.appendChild(document.createTextNode(`, fly ${json["Fly"]} ft. (hover)`));
+            } else {
+                div.appendChild(document.createTextNode(`, fly ${json["Fly"]} ft.`));
+            }
+        }
+
+        if(json["Swim"] !== 0) {
+            div.appendChild(document.createTextNode(`, swim ${json["Swim"]} ft.`));
+        }
+
+        parent.appendChild(div);
+    }
+
+    function AbilityScores(json, parent) {
+        let table = document.createElement('table');
+        table.className = "statBlock";
+
+        let keys = document.createElement('tr');
+        let values = document.createElement('tr');
+        
+        for(let key in json) {
+            let modifier = Math.floor((json[key] - 10)/2);
+            let th = document.createElement('th');
+
+            let title = "";
+
+            switch(key) {
+                case "Strength":
+                    title = "STR";
+                    break;
+                case "Dexterity":
+                    title = "DEX";
+                    break;
+                case "Constitution":
+                    title = "CON";
+                    break;
+                case "Intelligence":
+                    title = "INT";
+                    break;
+                case "Wisdom":
+                    title = "WIS";
+                    break;
+                case "Charisma":
+                    title = "CHA";
+                    break;
+            }
+
+            th.appendChild(document.createTextNode(title));
+
+            keys.appendChild(th);
+
+            let td = document.createElement('td');
+
+            if(modifier > 0) {
+                td.appendChild(document.createTextNode(`${json[key]} (+${modifier})`))
+            } else {
+                td.appendChild(document.createTextNode(`${json[key]} (${modifier})`))
+            }
+
+            values.appendChild(td);
+        }
+        
+        table.appendChild(keys);
+        table.appendChild(values);
+        parent.appendChild(table);
+    }
+
+    function SavingThrows(json, parent) {
+        let div = document.createElement('div');
+
+        let b = document.createElement('b');
+        b.appendChild(document.createTextNode("Saving Throws "))
+        div.appendChild(b);
+
+        let bool = false;
+
+        let array = [];
+
+        for(let key in json["Saving Throws"]) {
+            if(json["Saving Throws"][key] === true) {
+                bool = true;
+
+                let text = "";
+
+                switch(key) {
+                    case "Strength":
+                        text = "Str";
+                        break;
+                    case "Dexterity":
+                        text = "Dex";
+                        break;
+                    case "Constitution": 
+                        text = "Con";
+                        break;
+                    case "Intelligence": 
+                        text = "Int";
+                        break;
+                    case "Wisdom": 
+                        text = "Wis";
+                        break;
+                    case "Charisma": 
+                        text = "Cha";
+                        break;
+                }
+
+                let total = ProficiencyBonus(json["Challenge"]) + Modifier(json["Ability Scores"][key]);
+
+                array.push(`${text} +${total}`);
+            }
+        }
+
+        div.appendChild(document.createTextNode(array.join(", ")));
+
+        if(bool) {
+            sheet.appendChild(div);
+        }
+    }
+
+    function Skills(json, parent) {
+        let div = document.createElement('div');
+
+        let b = document.createElement('b');
+        b.appendChild(document.createTextNode("Skills "))
+        div.appendChild(b);
+
+        let bool = false;
+
+        let array = [];
+
+        for(let key in json["Skills"]) {
+            if(json["Skills"][key] === true) {
+                bool = true;
+
+                let ability = "";
+
+                if(key == "Athletics") {
+                    ability = "Strength";
+                } else if ((key == "Acrobatics") || (key == "Sleight of Hand") || (key == "Stealth")) {
+                    ability = "Dexterity";
+                } else if ((key == "Arcana") || (key == "History" || (key == "Investigation") || (key == "Nature") || (key == "Religion"))) {
+                    ability = "Intelligence";
+                } else if ((key == "Animal Handling") || (key == "Insight") || (key == "Medicine") || (key == "Perception") || key == "Survival") {
+                    ability = "Wisdom";
+                } else if ((key == "Deception") || (key == "Intimidation") || (key == "Performance") || (key == "Persuasion")) {
+                    ability = "Charisma";
+                }
+
+                let total = ProficiencyBonus(json["Challenge"]) + Modifier(json["Ability Scores"][ability]);
+
+                array.push(`${key} +${total}`);
+            }
+        }
+
+        div.appendChild(document.createTextNode(array.join(", ")));
+
+        if(bool) {
+            sheet.appendChild(div);
+        }
+    }
+
+    function Senses(json, parent) {
+        let array = [];
+
+        let div = document.createElement('div');
+
+        let b = document.createElement('b');
+        b.appendChild(document.createTextNode("Senses "));
+
+        if(json["Senses"]["Blindsight"] > 0) {
+            if(json["Senses"]["Blind"]) {
+                array.push(`blindsight ${json["Senses"]["Blindsight"]} ft. (blind beyond this radius)`);
+            } else {
+                array.push(`blindsight ${json["Senses"]["Blindsight"]} ft.`);
+            }
+            
+        }
+
+        if(json["Senses"]["Darkvision"] > 0) {
+            array.push(`darkvision ${json["Senses"]["Darkvision"]} ft.`);
+        }
+
+        if(json["Senses"]["Tremorsense"] > 0) {
+            array.push(`tremorsense ${json["Senses"]["Tremorsense"]} ft.`);
+        }
+
+        if(json["Senses"]["Truesight"] > 0) {
+            array.push(`truesight ${json["Senses"]["Truesight"]} ft.`);
+        }
+
+        let passivePerception = 0;
+
+        if (json["Skills"]["Perception"] === true) {
+            passivePerception = 10 + ProficiencyBonus(json["Challenge"]) + Modifier(json["Ability Scores"]["Wisdom"]);
+        } else {
+            passivePerception = 10 + Modifier(json["Ability Scores"]["Wisdom"]);
+        }
+
+        array.push(`passive Perception ${passivePerception}`)
+
+        div.appendChild(b);
+        div.appendChild(document.createTextNode(array.join(", ")))
+        parent.appendChild(div);
+    }
+
+    function Challenge(json, parent) {
+        let div = document.createElement('div');
+
+        let b = document.createElement('b');
+        b.appendChild(document.createTextNode("Challenge "));
+
+        div.appendChild(b);
+        div.appendChild(document.createTextNode(`${json["Challenge"]} (${json["Experience"]})`));
+
+        parent.appendChild(div);
+    }
+
+    function Properties(json, parent, ...keys) {
+        keys.forEach(key => {
+            if(def(json[key])) {
+                // Create the container
+
+                var div = Div(undefined, "property", parent);
+
+                // Create the header
+                if(key != "Features") {
+                    InsertElement("h3", key, div);
+                }
+                
+                // Parse the data
+
+                Object.keys(json[key]).forEach(element => {
+                    let div2 = Div(undefined, undefined, div);
+
+                    if(element == "Description") {
+                        // If the object containers descriptor text
+
+                        Paragraphs(json[key][element], div2);
+                    } else  { 
+                        // Create a bold keyword and descriptor text
+
+                        let b = document.createElement('b');
+                        b.appendChild(document.createTextNode(`${element}. `));
+                        div2.appendChild(b);
+
+                        Paragraphs(json[key][element]["Description"], div2);
+
+                        let length = Object.keys(json[key][element]).length;
+
+                        if(length > 1) {
+
+                            // If the keyword contains the word Spellcasting or contains spell abilities
+
+                            if(element.includes("Spellcasting") || element.includes("Shadow Arts")) { 
+                                EnumerateSpells(json[key][element], div2);
+                            } else {
+                                let keys = tail(Object.keys(json[key][element]));
+
+                                keys.forEach(item => {
+                                    if(item == "Ordered List") {
+                                        List(json[key][element][item], "ol", div2);
+                                    } else if(item == "Unordered List") {
+                                        List(json[key][element][item], "ul", div2);
+                                    } else if(item == "Properties") {
+                                        /* let aBonus = json[key][element][item]["Attack Bonus"];
+                                        let dBonus = json[key][element][item]["Damage Bonus"]
+                                        let versatile = json[key][element][item]["Versatile"]
+                                        let roll1 = json[key][element][item]["Roll1"]
+                                        let roll2 = json[key][element][item]["Roll2"]
+                                        let roll3 = json[key][element][item]["Roll3"]
+
+                                        b.className = "clickLink";
+                                        b.onclick = function() {
+                                            RollType(aBonus, dBonus, versatile, roll1, roll2, roll3);
+                                        } */
+                                    } else {
+                                        // If "item" doesn't meet any of the above criteria
+
+                                        let div3 = Div(undefined, "subProperty", div);
+
+                                        InsertElement('b', `${item}. `, div3);
+                                        Paragraphs(json[key][element][item]["Description"], div3);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function EnumerateSpells(json, parent) {
+        let spellJson = localStorage.get("Spells");
+
+        let keys = tail(Object.keys(json));
+        
+        let div = Div(undefined, "spellsBlock", parent);
+
+        keys.forEach(item => {
+            let div2 = Div(undefined, undefined, div);
+
+            let key = document.createTextNode(`${item}: `);
+            div2.appendChild(key);
+
+            let array = json[item];
+
+            for(let i = 0; i < array.length; i++) {
+                let a = document.createElement('a');
+                
+                let name = json[item][i];
+
+                if(name.includes(" (")) {
+
+                    let split = name.split(" (");
+                    let spellObj = JSON.stringify(spellJson[split[0]]);
+                    
+                    if(array.length - 1 != i) {
+                        a.appendChild(document.createTextNode(`${name}, `));
+                    } else {
+                        a.appendChild(document.createTextNode(name));
+                    }
+
+                    a.href = `javascript:CreateSpellSheet("${name}", ${spellObj})`;
+                } else {
+
+                    let spellObj = JSON.stringify(spellJson[name]);
+
+                    if(array.length - 1 != i) {
+                        a.appendChild(document.createTextNode(`${name}, `));
+                    } else {
+                        a.appendChild(document.createTextNode(name));
+                    }
+
+                    a.href = `javascript:CreateSpellSheet("${name}", ${spellObj})`;
+                }
+
+                div2.appendChild(a);
+
+            }
+        });
+    }
+
+    function ProficiencyBonus(cr) {
+        let bonus = 0;
+
+        if(cr == 0) {
+            bonus = 2;
+        } else if(cr == "1/8") {
+            bonus = 2;
+        } else if(cr == "1/4") {
+            bonus = 2;
+        } else if(cr == "1/2") {
+            bonus = 2;
+        } else if(cr < 4) {
+            bonus = 2;
+        } else if(cr < 9) {
+            bonus = 3;
+        } else if(cr < 13) {
+            bonus = 4;
+        } else if(cr < 17) {
+            bonus = 5;
+        } else if(cr < 21) {
+            bonus = 6;
+        } else if(cr < 25) {
+            bonus = 7;
+        } else if(cr < 29) {
+            bonus = 8;
+        } else if(cr < 31) {
+            bonus = 9;
+        }
+
+        return bonus;
+    }
+
+    function Modifier(json) {
+        return Math.floor((json - 10) / 2);
+    }
+
+    function Arrays(json, parent, ...keys) {
+        keys.forEach(key => {
+            if(json[key].length > 0) {
+                let div = document.createElement('div');
+
+                let b = document.createElement('b');
+                b.appendChild(document.createTextNode(`${key} `));
+
+                div.appendChild(b);
+                div.appendChild(document.createTextNode(json[key].join(", ")));
+
+                parent.appendChild(div);
+            }
+        });
+    }
 </script>
 </body>
 
