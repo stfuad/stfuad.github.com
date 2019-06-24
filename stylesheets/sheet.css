@@ -157,10 +157,6 @@ a {
 	width: 100%
 }
 
-.property p:first-of-type {
-	display: inline;
-}
-
 .property div {
 	margin-top: 10px;
 	margin-bottom: 10px;

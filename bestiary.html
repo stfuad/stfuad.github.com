@@ -48,13 +48,46 @@
             border-radius: 5px;
         }
 
-        #sheet {
+        /* Sheet styling */
 
+        div > p:first-of-type {
+            display: inline;
+        }
+
+        #sheetHeader {
+            margin-bottom: 10px;
+        }
+
+        #sheetHeader > h2 {
+            margin-bottom: 0px;
+        }
+
+        #sheetFooter {
+            margin-top: 10px;
+        }
+
+        #upperBlock, #lowerBlock {
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+        }
+
+        .abilityScores {
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         .tab {
             background-color: white;
             border: 0px;
+        }
+
+        .property > div {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .subProperty {
+            margin-left: 22px;
         }
     </style>
 </head>
@@ -145,9 +178,12 @@
 
         // Header (Title/Subtitles)
 
-        InsertElement("h2", name, sheet);
+        let header = document.createElement('div');
+        header.id = "sheetHeader";
 
-        let stsa = Div(undefined, undefined, sheet);
+        InsertElement("h2", name, header);
+
+        let stsa = document.createElement('div');
 
         let size = json["Size"];
         let type = json["Type"];
@@ -163,45 +199,59 @@
 
         stsa.appendChild(subTitle);
 
+        header.appendChild(stsa);
+
+        sheet.appendChild(header);
+
+        let upperBlock = document.createElement('div');
+        upperBlock.id = "upperBlock";
+
         // Armor Class
 
-        ArmorClass(json, sheet);
+        ArmorClass(json, upperBlock);
 
         // Hit Points
 
-        HitPoints(json["Hit Dice"], json["Ability Scores"]["Constitution"], sheet);
+        HitPoints(json["Hit Dice"], json["Ability Scores"]["Constitution"], upperBlock);
 
         // Speed
 
-        Speed(json["Speed"], sheet);
+        Speed(json["Speed"], upperBlock);
+
+        sheet.appendChild(upperBlock);
 
         // Ability Scores
 
         AbilityScores(json["Ability Scores"], sheet);
 
+        let lowerBlock = document.createElement('div');
+        lowerBlock.id = "lowerBlock";
+
         // Skills
 
-        Skills(json, sheet);
+        Skills(json, lowerBlock);
 
         // Saving Throws
 
-        SavingThrows(json, sheet);
+        SavingThrows(json, lowerBlock);
 
         // Damage Vulnerabilities, Damage Resistances, Damage Immunities, Condition Immunities
         
-        Arrays(json, sheet, "Damage Vulnerabilities", "Damage Resistances", "Damage Immunities", "Condition Immunities");
+        Arrays(json, lowerBlock, "Damage Vulnerabilities", "Damage Resistances", "Damage Immunities", "Condition Immunities");
         
         // Senses
 
-        Senses(json, sheet);
+        Senses(json, lowerBlock);
 
         // Languages
 
-        Arrays(json, sheet, "Languages")
+        Arrays(json, lowerBlock, "Languages")
 
         // Challenge
 
-        Challenge(json, sheet);
+        Challenge(json, lowerBlock);
+
+        sheet.appendChild(lowerBlock);
 
         // Properties
 
@@ -210,6 +260,7 @@
         // Footer (Book/Page)
 
         let footer = document.createElement('div');
+        footer.id = "sheetFooter";
         footer.appendChild(document.createTextNode(`${json["Book"]}, Pg. ${json["Page"]}`));
         sheet.appendChild(footer);
     }
@@ -297,7 +348,7 @@
 
     function AbilityScores(json, parent) {
         let table = document.createElement('table');
-        table.className = "statBlock";
+        table.className = "abilityScores";
 
         let keys = document.createElement('tr');
         let values = document.createElement('tr');
@@ -396,7 +447,7 @@
         div.appendChild(document.createTextNode(array.join(", ")));
 
         if(bool) {
-            sheet.appendChild(div);
+            parent.appendChild(div);
         }
     }
 
@@ -438,7 +489,7 @@
         div.appendChild(document.createTextNode(array.join(", ")));
 
         if(bool) {
-            sheet.appendChild(div);
+            parent.appendChild(div);
         }
     }
 
@@ -493,7 +544,7 @@
         b.appendChild(document.createTextNode("Challenge "));
 
         div.appendChild(b);
-        div.appendChild(document.createTextNode(`${json["Challenge"]} (${json["Experience"]})`));
+        div.appendChild(document.createTextNode(`${json["Challenge"]} (${json["Experience"]} XP)`));
 
         parent.appendChild(div);
     }
@@ -526,7 +577,7 @@
                         b.appendChild(document.createTextNode(`${element}. `));
                         div2.appendChild(b);
 
-                        Paragraphs(json[key][element]["Description"], div2);
+                        let p = Paragraphs(json[key][element]["Description"], div2);
 
                         let length = Object.keys(json[key][element]).length;
 
@@ -622,6 +673,10 @@
 
             }
         });
+    }
+
+    function SpellModal(name, json) {
+
     }
 
     function ProficiencyBonus(cr) {
