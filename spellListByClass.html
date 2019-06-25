@@ -149,7 +149,7 @@
 
                 subTitle.appendChild(document.createTextNode(scrl));
 
-                KeyValue(json, cont, false, "Casting Time", "Range", "Components", "Duration");
+                KeyValue(json, cont, "Casting Time", "Range", "Components", "Duration");
 
                 for(let key in json) {
                     if(key.includes("Description") || key == "Higher Levels") {
@@ -163,7 +163,23 @@
                     }
                 }
 
-                InsertElement("i", `${json["Book"]} Pg. ${json["Page"]}`, cont);
+                InsertElement("i", `${json["Book"]}, Pg. ${json["Page"]}`, cont);
+            }
+
+            function KeyValue(json, parent, ...keys) {
+                keys.forEach(key => {
+                    if(def(json[key])) {
+                        let div = document.createElement('div');
+
+                        let b = document.createElement('b');
+                        b.appendChild(document.createTextNode(`${key} `))
+                        div.appendChild(b);
+
+                        div.appendChild(document.createTextNode(json[key]));
+
+                        parent.appendChild(div);
+                    }
+                });
             }
         </script>
     </body>
