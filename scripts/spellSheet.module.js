@@ -1,19 +1,19 @@
-import {Table, List} from "./htmlElements.module.js";
+import {Table, List, Paragraphs} from "./htmlElements.module.js";
 
 export function SpellSheet(name, json, parent) {
     let spell = JSON.parse(json);
 
     let header = document.createElement('div');
-    header.id = "header";
+    header.id = "spellSheetHeader";
 
     let stats = document.createElement('div');
-    stats.id = "stats";
+    stats.id = "spellSheetStats";
 
     let content = document.createElement('div');
-    content.id = "content";
+    content.id = "spellSheetContent";
 
     let footer = document.createElement('div');
-    footer.id = "footer";
+    footer.id = "spellSheetFooter";
 
     // Header
     let h3 = document.createElement('h3');
@@ -86,7 +86,7 @@ function KeyValue(json, parent, ...keys) {
         let div = document.createElement('div');
 
         let b = document.createElement('b');
-        b.appendChild(document.createTextNode(key));
+        b.appendChild(document.createTextNode(`${key} `));
 
         div.appendChild(b);
         div.appendChild(document.createTextNode(json[key]));

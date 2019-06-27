@@ -5,11 +5,11 @@ class SpellModal extends HTMLElement {
         var shadow = this.attachShadow({mode: 'open'});
 
         let div = document.createElement('div');
-        div.id = "wrapper";
+        div.id = "sheet";
 
         let style = document.createElement('style');
         style.textContent = `
-            #wrapper {
+            #sheet {
                 position: fixed;
                 top: 100px;
                 left: 100px;
@@ -21,12 +21,12 @@ class SpellModal extends HTMLElement {
                 padding: 10px;
             }
 
-            #header > h3 {
+            #spellSheetHeader > h3 {
                 margin-top: 0px;
                 margin-bottom: 0px;
             }
 
-            #stats {
+            #spellSheetStats {
                 margin-top: 10px;
                 margin-bottom: 10px;
             }
@@ -39,14 +39,6 @@ class SpellModal extends HTMLElement {
 
         shadow.appendChild(style);
         shadow.appendChild(div);
-
-        let target = document.getElementById(div.id);
-
-        window.onclick = event => {
-            if(event.target === target) {
-                document.body.remove(target);
-            }
-        };
     }
 }
 
