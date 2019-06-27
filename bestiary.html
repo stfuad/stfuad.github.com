@@ -5,6 +5,8 @@
     <title>5e Bestiary</title>
     <link rel="stylesheet" href="./stylesheets/gridLayout.css">
     <style>
+        /* Grid Override */
+
         body {
             grid-template-columns: 300px 300px auto;
             font-family: 'Courier New', Courier, monospace;
@@ -41,6 +43,8 @@
             overflow: auto;
         }
 
+        /* Tabs */
+
         #tabs > span {
             margin: 10px 10px 10px 0px;
             padding: 5px;
@@ -48,11 +52,12 @@
             border-radius: 5px;
         }
 
-        /* Sheet styling */
-
-        div > p:first-of-type {
-            display: inline;
+        .tab {
+            background-color: white;
+            border: 0px;
         }
+
+        /* Creature Sheet styling */
 
         #sheetHeader {
             margin-bottom: 10px;
@@ -76,16 +81,15 @@
             margin-bottom: 10px;
         }
 
-        .tab {
-            background-color: white;
-            border: 0px;
-        }
-
         .property > div {
             margin-top: 10px;
             margin-bottom: 10px;
         }
 
+        .property div > p:first-of-type {
+            display: inline;
+        }
+        
         .property > h3 {
             border-bottom: 1px solid black;
             margin-bottom: 0px;
@@ -110,7 +114,8 @@
     <div id="sheet"></div>
 </div>
 
-<script src="scripts/global.js"></script>
+<script src="./scripts/global.js"></script>
+<script src="./scripts/SpellModal.class.js"></script>
 <script>
     fetch("./topNav.html")
         .then(response => response.text())
@@ -687,7 +692,10 @@
                         a.appendChild(document.createTextNode(name));
                     }
 
-                    a.href = `javascript:CreateSpellSheet("${name}", ${spellObj})`;
+                    a.addEventListener('click', () => {
+                        let modal = new SpellModal(name, spellObj);
+                        document.body.appendChild(modal);
+                    }, false);
                 } else {
 
                     let spellObj = JSON.stringify(spellJson[name]);
@@ -698,18 +706,16 @@
                         a.appendChild(document.createTextNode(name));
                     }
 
-                    a.href = `javascript:CreateSpellSheet("${name}", ${spellObj})`;
+                    a.addEventListener('click', () => {
+                        let modal = new SpellModal(name, spellObj);
+                        document.body.appendChild(modal);
+                    }, false);
                 }
 
                 div2.appendChild(a);
 
             }
         });
-    }
-
-    function SpellModal(name, json) {
-        let div = document.createElement('div');
-        
     }
 
     function ProficiencyBonus(cr) {
