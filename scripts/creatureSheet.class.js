@@ -1,4 +1,4 @@
-class CreatureTabs extends HTMLElement {
+class CreatureSheet extends HTMLElement {
     constructor(name, json) {
         super();
 
@@ -15,4 +15,4 @@ class CreatureTabs extends HTMLElement {
     }
 }
 
-customElements.define('creature-tabs', CreatureTabs);
+customElements.define('creature-sheet', CreatureSheet);

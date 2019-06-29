@@ -2,14 +2,14 @@ class SpellModal extends HTMLElement {
     constructor(name, json) {
         super();
 
-        var shadow = this.attachShadow({mode: 'open'});
+        let shadow = this.attachShadow({mode: 'open'});
 
         let div = document.createElement('div');
-        div.id = "spellSheet";
+        div.id = "spellModal";
 
         let style = document.createElement('style');
         style.textContent = `
-            #spellSheet {
+            #spellModal {
                 position: fixed;
                 top: 100px;
                 left: 100px;
@@ -42,7 +42,7 @@ class SpellModal extends HTMLElement {
 
         import("./spellSheet.module.js")
             .then(module => {
-                module.SpellSheet(name, json, div)
+                module.SpellSheet(name, json, div);
             });
 
         let button = document.createElement('button');

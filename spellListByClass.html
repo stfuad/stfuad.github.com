@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="stylesheets/gridLayout.css">
 
         <style>
+            /* Grid override */
+
             body {
                 grid-template-columns: 300px 300px auto;
                 font-family: 'Courier New', Courier, monospace;
@@ -36,8 +38,18 @@
                 overflow: auto;
             }
 
+            /* Page styling */
+
             ul {
                 list-style: none;
+            }
+
+            li > a {
+                color: blue;
+            }
+
+            li > a:hover {
+                cursor: pointer;
             }
         </style>
     </head>
@@ -54,7 +66,7 @@
         <div id="list"></div>
         <div id="content"></div>
 
-        <script src="./scripts/global.js"></script>
+        <script src="./scripts/spellSheet.class.js"></script>
         <script>
             fetch("./topNav.html")
                 .then(response => response.text())
@@ -75,19 +87,27 @@
                     let spells = JSON.parse(localStorage.getItem("Spells"));
 
                     for(let key in spellList) {
-                        let h2 = InsertElement('h2', key, list);
+                        let h2 = document.createElement('h2');
+                        h2.appendChild(document.createTextNode(key));
+                        list.appendChild(h2);
 
-                        let link1 = InsertElement('h3', key, pageNav);
-
+                        let link1 = document.createElement('h3');
+                        link1.appendChild(document.createTextNode(key));
+                        pageNav.appendChild(link1);
+                        
                         for(let level in spellList[key]) {
                             let length = spellList[key][level].length;
 
                             if(length >= 1) {
-                                let h3 = InsertElement('h3', level, list);
+                                let h3 = document.createElement('h3');
+                                h3.appendChild(document.createTextNode(level));
                                 h3.id = `${key} ${level}`;
+                                list.appendChild(h3);
 
-                                let link2 = InsertElement('a', `- ${level}`, pageNav);
+                                let link2 = document.createElement('a');
+                                link2.appendChild(document.createTextNode(`- ${level}`));
                                 link2.href = `#${key} ${level}`;
+                                pageNav.appendChild(link2);
 
                                 let ul = document.createElement('ul');
 
@@ -96,91 +116,31 @@
                                 sorted.forEach(element => {
                                     let spellJSON = JSON.stringify(spells[element])
 
-                                    let li = InsertElement('li', undefined, ul);
+                                    let li = document.createElement('li');
+                                    let a = document.createElement('a');
+
+                                    a.appendChild(document.createTextNode(element));
+                                    a.addEventListener('click', () => {
+                                        let host = document.getElementById("content");
+                                        let target = document.querySelector("spell-sheet");
+
+                                        if (target !== null) {
+                                            target.remove();
+                                        }
+
+                                        let spellSheet = new SpellSheet(element, spellJSON);
+                                        host.appendChild(spellSheet);
+                                    }, false);
                                     
-                                    let a = InsertElement('a', element, li)
-                                    a.href = `javascript:Sheet("${element}", ${spellJSON})`;
+                                    li.appendChild(a);
+                                    ul.appendChild(li);
                                 });
 
                                 list.appendChild(ul);                        
                             }
-                        } 
-                    }
-                })
-
-            function Sheet(name, json) {
-                let cont = document.querySelector("#content");
-                cont.innerHTML = "";
-
-                let h1 = InsertElement('h1', name, cont);
-
-                // School, cantrip, ritual, level
-                let subTitle = document.createElement('i');
-                cont.appendChild(subTitle);
-
-                let scrl = "";
-
-                let school = json["School"];
-                let cantrip = json["Cantrip"];
-                let ritual = json["Ritual"];
-                let level = json["Level"];
-
-                if(level === 0) {
-                    level = "";
-                } else if(level === 1) {
-                    level = "1st-level";
-                } else if(level === 2) {
-                    level = "2nd-level";
-                } else if(level === 3) {
-                    level = "3rd-level";
-                } else if(level >= 4) {
-                    level = `${level}th-level`;
-                }
-
-                scrl = `${level} ${school}`;
-
-                if(cantrip == true) {
-                    scrl += " cantrip";
-                }
-
-                if(ritual == true) {
-                    scrl += " (ritual)";
-                }
-
-                subTitle.appendChild(document.createTextNode(scrl));
-
-                KeyValue(json, cont, "Casting Time", "Range", "Components", "Duration");
-
-                for(let key in json) {
-                    if(key.includes("Description") || key == "Higher Levels") {
-                        Paragraphs(json[key], cont);
-                    } else if(key.includes("Unordered List")) {
-                        List(json[key], "ul", cont);
-                    } else if(key.includes("Ordered List")) {
-                        List(json[key], "ol", cont);
-                    } else if(key.includes("Table")) {
-                        Table(json[key], cont)
-                    }
-                }
-
-                InsertElement("i", `${json["Book"]}, Pg. ${json["Page"]}`, cont);
-            }
-
-            function KeyValue(json, parent, ...keys) {
-                keys.forEach(key => {
-                    if(def(json[key])) {
-                        let div = document.createElement('div');
-
-                        let b = document.createElement('b');
-                        b.appendChild(document.createTextNode(`${key} `))
-                        div.appendChild(b);
-
-                        div.appendChild(document.createTextNode(json[key]));
-
-                        parent.appendChild(div);
+                        }
                     }
                 });
-            }
         </script>
     </body>
 </html>
