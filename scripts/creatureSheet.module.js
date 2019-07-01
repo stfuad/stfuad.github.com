@@ -430,7 +430,9 @@ function Properties(json, parent, ...properties) {
                                 b.appendChild(document.createTextNode(`${subKey}. `));
                                 div3.appendChild(b);
 
-                                Paragraphs(json[property][key][subKey], div3);
+                                Paragraphs(json[property][key][subKey]["Description"], div3);
+
+                                div.appendChild(div3);
                             }
                         }
                     }
@@ -535,16 +537,18 @@ function Modifier(json) {
 
 function Arrays(json, parent, ...keys) {
     keys.forEach(key => {
-        if(json[key].length > 0) {
-            let div = document.createElement('div');
+        if (json[key] !== undefined) {
+            if(json[key].length > 0) {
+                let div = document.createElement('div');
 
-            let b = document.createElement('b');
-            b.appendChild(document.createTextNode(`${key} `));
+                let b = document.createElement('b');
+                b.appendChild(document.createTextNode(`${key} `));
 
-            div.appendChild(b);
-            div.appendChild(document.createTextNode(json[key].join(", ")));
+                div.appendChild(b);
+                div.appendChild(document.createTextNode(json[key].join(", ")));
 
-            parent.appendChild(div);
+                parent.appendChild(div);
+            }
         }
     });
 }

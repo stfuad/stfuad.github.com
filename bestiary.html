@@ -4,45 +4,15 @@
     <meta charset="UTF-8">
     <title>5e Bestiary</title>
     <link rel="stylesheet" href="./stylesheets/gridLayout.css">
+    <link rel="stylesheet" href="./stylesheets/gridLayout.3column.css">
     <style>
-        /* Grid Override */
-
-        body {
-            grid-template-columns: 300px 300px auto;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1em;
-        }
-
-        a {
-            text-decoration: none; 
-        }
-
-        #header {
-            grid-column: 1/4;
-            grid-row: 1;
-        }
-
-        #pageNav {
-            display: none;
-        }
-
-        #list {
-            grid-column: 2;
-            grid-row: 2/4;
-            max-height: calc(100vh - 110px);
-            overflow: auto;
-        }
-
-        #list > a {
-            display: block;
-        }
-
-        #content {
-            grid-column: 3;
-            grid-row: 2/4;
-        }
-
         /* Tabs */
+        #tabs {
+            position: sticky;
+            top: 0px;
+            left: 0px;
+            background-color: white;
+        }
 
         #tabs > span {
             margin: 10px 10px 10px 0px;
@@ -56,48 +26,13 @@
             border: 0px;
         }
 
-        /* Creature Sheet styling */
-
-        #creatureSheetHeader {
-            margin-bottom: 10px;
-        }
-
-        #creatureSheetHeader > h2 {
-            margin-bottom: 0px;
-        }
-
-        #creatureSheetFooter {
-            margin-top: 10px;
-        }
-
-        #upperBlock, #lowerBlock {
-            border-top: 1px solid black;
-            border-bottom: 1px solid black;
-        }
-
-        .abilityScores {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        .property > div {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        .property div > p:first-of-type {
-            display: inline;
-        }
-        
-        .property > h3 {
-            border-bottom: 1px solid black;
-            margin-bottom: 0px;
-        }
-
-        .subProperty {
-            margin-left: 22px;
+        #sheet {
+            position: relative;
         }
     </style>
+    <script src="./scripts/headerList.class.js"></script>
+    <script src="./scripts/creatureSheet.class.js"></script>
+    <script src="./scripts/SpellModal.class.js"></script>
 </head>
 
 <body>
@@ -113,7 +48,6 @@
     <div id="sheet"></div>
 </div>
 
-<script src="./scripts/SpellModal.class.js"></script>
 <script>
     fetch("./topNav.html")
         .then(response => response.text())
@@ -130,70 +64,15 @@
             }
         })
         .then(() => {
+            let target = document.querySelector("#list");
+
             let bestiary = JSON.parse(localStorage.getItem("Bestiary"));
 
             let sorted = Object.keys(bestiary).sort();
 
-            sorted.forEach(element => {
-                let a = document.createElement('a');
-                a.appendChild(document.createTextNode(element));
-
-                let string = JSON.stringify(bestiary[element]);
-                a.href = `javascript:Wrapper("${element}", ${string})`;
-
-                list.appendChild(a);
-            });
+            let headerList = new HeaderList(bestiary, "creature");
+                target.appendChild(headerList);
         })
-</script>
-<script>
-    function Wrapper(name, json) {
-        CreateTab(name, json);
-
-        sheet.innerHTML = "";
-
-        import("./scripts/creatureSheet.module.js")
-            .then(module => {
-                module.CreatureSheet(name, json, sheet);
-            })
-    }
-
-    function CreateTab(name, json) {
-        let target = document.querySelector("#tabs");
-
-        let container = document.createElement('span');
-        container.id = name;
-
-        let button = document.createElement('button');
-        button.textContent = name;
-        button.className = "tab";
-        button.onclick = () => {
-            sheet.innerHTML = "";
-
-            import("./scripts/creatureSheet.module.js")
-                .then(module => {
-                    module.CreatureSheet(name, json, sheet);
-                })
-        };
-
-        let close = document.createElement('button');
-        close.textContent = "\u2716";
-        close.className = "tab";
-        close.onclick = () => {
-            let item = document.getElementById(name);
-            item.remove();
-
-            if(target.innerHTML == "") {
-                let target1 = document.getElementById("sheet");
-
-                target1.innerHTML = "";
-            }
-        };
-
-        container.appendChild(button);
-        container.appendChild(close);
-
-        target.appendChild(container);
-    }
 </script>
 </body>
 

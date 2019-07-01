@@ -1,8 +1,6 @@
 import {Table, List, Paragraphs} from "./htmlElements.module.js";
 
 export function SpellSheet(name, json, parent) {
-    let spell = JSON.parse(json);
-
     let header = document.createElement('div');
     header.id = "spellSheetHeader";
 
@@ -23,10 +21,10 @@ export function SpellSheet(name, json, parent) {
     
     let scrl = "";
 
-    let school = spell["School"];
-    let cantrip = spell["Cantrip"];
-    let ritual = spell["Ritual"];
-    let level = spell["Level"];
+    let school = json["School"];
+    let cantrip = json["Cantrip"];
+    let ritual = json["Ritual"];
+    let level = json["Level"];
 
     if(level === 0) {
         level = "";
@@ -55,24 +53,24 @@ export function SpellSheet(name, json, parent) {
     header.appendChild(h3);
     header.appendChild(subTitle);
 
-    KeyValue(spell, stats, "Casting Time", "Range", "Components", "Duration");
+    KeyValue(json, stats, "Casting Time", "Range", "Components", "Duration");
 
-    for(let key in spell) {
+    for(let key in json) {
         if(key.includes("Description")) {
-            Paragraphs(spell[key], content);
+            Paragraphs(json[key], content);
         } else if(key == "Higher Levels") {
-            Paragraphs(spell[key], content);
+            Paragraphs(json[key], content);
         } else if(key.includes("Unordered List")) {
-            List(spell[key], "ul", content);
+            List(json[key], "ul", content);
         } else if(key.includes("Ordered List")) {
-            List(spell[key], "ol", content);
+            List(json[key], "ol", content);
         } else if(key.includes("Table")) {
-            Table(spell[key], content)
+            Table(json[key], content)
         }
     }
 
     let i = document.createElement('i');
-    i.appendChild(document.createTextNode(`${spell["Book"]}, Pg. ${spell["Page"]}`));
+    i.appendChild(document.createTextNode(`${json["Book"]}, Pg. ${json["Page"]}`));
     footer.appendChild(i);
 
     parent.appendChild(header);

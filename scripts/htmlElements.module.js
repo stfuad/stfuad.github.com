@@ -37,7 +37,7 @@ export function Table(json, parent) {
 
     // Headers
 
-    let row0 = InsertElement('tr', undefined, table);
+    let row0 = document.createElement('tr');
 
     if(json["Headers"] !== undefined) {
         json["Headers"].forEach(header => {
@@ -100,22 +100,25 @@ export function Table(json, parent) {
 }
 
 export function Paragraphs(array, parent) {
-    array.forEach(line => {
-        if(line.includes('#')) {
-            let split = line.split('#');
+    if (array !== undefined) {
+            array.forEach(line => {
+            if(line.includes('#')) {
+                let split = line.split('#');
 
-            let p = document.createElement('p');
-            let b = document.createElement('b');
+                let p = document.createElement('p');
+                let b = document.createElement('b');
 
-            b.appendChild(document.createTextNode(`${split[0]}. `));
-            p.appendChild(b);
-            p.appendChild(document.createTextNode(split[1]))
+                b.appendChild(document.createTextNode(`${split[0]}. `));
+                p.appendChild(b);
+                p.appendChild(document.createTextNode(split[1]))
 
-            parent.appendChild(p);
-        } else {
-            let p = document.createElement('p');
-            p.appendChild(document.createTextNode(line));
-            parent.appendChild(p);
-        }
-    });
+                parent.appendChild(p);
+            } else {
+                let p = document.createElement('p');
+                p.appendChild(document.createTextNode(line));
+                parent.appendChild(p);
+            }
+        });
+    }
+
 }

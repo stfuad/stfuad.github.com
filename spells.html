@@ -2,55 +2,50 @@
 
 <head>
     <meta charset="UTF-8">
+    
     <title>5e Spells</title>
-    <link rel="stylesheet" href="stylesheets/jquery-ui.css">
-    <link rel="stylesheet" href="stylesheets/sheet.css">
+
+    <link rel="stylesheet" href="./stylesheets/gridLayout.css">
+    <link rel="stylesheet" href="./stylesheets/gridLayout.3column.css">
+
+    <script src="./scripts/headerList.class.js"></script>
+    <script src="./scripts/spellSheet.class.js"></script>
 </head>
 
 <body>
+<div id="header">
+    <h1>5e Spells</h1>
+</div>
 
-<table id="spellList">
-    <thead>
-        <tr>
-            <th>Spell</th>
-            <th>School</th>
-            <th>Cantrip</th>
-            <th>Ritual</th>
-            <th>Level</th>
-            <th>Casting Time</th>
-        </tr>
-    </thead>
-    <tbody>
-
-    </tbody>
-</table>
-
-<template id="spellRow">
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-</template>
-
-<script src="scripts/jquery-3.3.1.min.js"></script>
-<script src="scripts/jquery-ui.js"></script>
-<script src="scripts/jquery.tablesorter.min.js"></script>
-<script src="scripts/jquery.tablesorter.widgets.js"></script>
-<script src="scripts/global.js"></script>
-<script src="scripts/spells.js"></script>
+<div id="topNav"></div>
+<div id="pageNav"></div>
+<div id="list"></div>
+<div id="content"></div>
 
 <script>
-    GetJSON("json/5e Spells.json");
+    fetch("./topNav.html")
+        .then(response => response.text())
+        .then(data => {
+            let target = document.querySelector("#topNav");
 
-    let spells = localStorage.get("Spells");
+            target.innerHTML = data;
+        });
+        fetch("./json/5e Data.json")
+            .then(response => response.json())
+            .then(json => {
+                for(let key in json) {
+                    localStorage.setItem(key, JSON.stringify(json[key]));
+                }
+            })
+            .then(() => {
+                let target = document.querySelector("#list");
 
-    CreateSpellsTable(spells);
+                let spells = JSON.parse(localStorage.getItem("Spells"));
+
+                let headerList = new HeaderList(spells, "spell");
+                target.appendChild(headerList);
+            })
 </script>
-
 </body>
 
 </html>

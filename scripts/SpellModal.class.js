@@ -11,8 +11,9 @@ class SpellModal extends HTMLElement {
         style.textContent = `
             #spellModal {
                 position: fixed;
-                top: 100px;
-                left: 100px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
                 height: auto;
                 max-height: 700px;
                 width: 400px;
@@ -49,7 +50,7 @@ class SpellModal extends HTMLElement {
         button.id = "spellSheetClose";
         button.textContent = "\u2716";
         button.onclick = () => {
-            let item = shadow.getElementById("spellSheet");
+            let item = shadow.getElementById("spellModal");
             item.remove();
         };
 
