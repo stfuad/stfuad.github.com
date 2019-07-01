@@ -33,7 +33,7 @@ function Level2(json, parent, linkTarget) {
             h2.id = `${linkTarget} ${key}`;
             div.appendChild(h2);
 
-            NavigationLink(h2.id, key);
+            NavigationHeader("h4", key);
         }
 
         if (key.includes("Table")) {
@@ -41,14 +41,14 @@ function Level2(json, parent, linkTarget) {
         } else if (key === "Eldritch Invocations") {
             EldritchInvocations(json[key], div);
         } else {
-            Level3(json[key], div);
+            Level3(json[key], div, linkTarget);
         }
 
         parent.appendChild(div);
     }
 }
 
-function Level3(json, parent) {
+function Level3(json, parent, linkTarget) {
     for (let key in json) {
         let div = document.createElement('div');
         div.id = key;
@@ -58,8 +58,13 @@ function Level3(json, parent) {
 
         let h3 = document.createElement('h3');
         h3.appendChild(document.createTextNode(key));
+        h3.id = `${linkTarget} ${key}`;
         div.appendChild(h3);
 
+        if (key !== "Description") {
+            NavigationLink(h3.id, `- ${key}`)
+        }
+        
         if (Array.isArray(json[key])) {
             Paragraphs(json[key], div);
         } else {
