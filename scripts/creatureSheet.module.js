@@ -1,106 +1,70 @@
-import {List, Paragraphs} from "./htmlElements.module.js";
+import {List, Paragraphs, Text, Element, TextElement} from "./htmlElements.module.js";
 
 export function CreatureSheet(name, json, parent) {
 
     // Header (Title/Subtitles)
 
-    let header = document.createElement('div');
+    let header = Element('div', parent);
     header.id = "creatureSheetHeader";
 
-    let h2 = document.createElement('h2');
-    let stsa = document.createElement('div');
+    TextElement('h2', name, header);
 
-    let size = json["Size"];
-    let type = json["Type"];
-    let subType = json["SubType"];
-    let alignment = json["Alignment"];
+    let subTitle = Element('i', header);
 
-    let subTitle = document.createElement('i');
-    if (subType != undefined) {
-        subTitle.appendChild(document.createTextNode(`${size} ${type} (${subType}), ${alignment}`));
+    if (json["SubType"] != undefined) {
+        Text(`${json["Size"]} ${json["Type"]} (${json["SubType"]}), ${json["Alignment"]}`, subTitle);
     } else {
-        subTitle.appendChild(document.createTextNode(`${size} ${type}, ${alignment}`));
+        Text(`${json["Size"]} ${json["Type"]}, ${json["Alignment"]}`, subTitle);
     }
-
-    h2.appendChild(document.createTextNode(name));
-    stsa.appendChild(subTitle);
-
-    header.appendChild(h2);
-    header.appendChild(stsa);
-
-    parent.appendChild(header);
 
     // Upper block
 
-    let upperBlock = document.createElement('div');
+    let upperBlock = Element('div', parent);
     upperBlock.id = "upperBlock";
-
-    // Armor Class
 
     ArmorClass(json, upperBlock);
 
-    // Hit Points
-
     HitPoints(json["Hit Dice"], json["Ability Scores"]["Constitution"], upperBlock);
-
-    // Speed
 
     Speed(json["Speed"], upperBlock);
 
-    parent.appendChild(upperBlock);
-
-    // Ability Scores
+    // Ability Scores block
 
     AbilityScores(json["Ability Scores"], parent);
 
     // Lower block
 
-    let lowerBlock = document.createElement('div');
+    let lowerBlock = Element('div', parent);
     lowerBlock.id = "lowerBlock";
-
-    // Skills
 
     Skills(json, lowerBlock);
 
-    // Saving Throws
-
     SavingThrows(json, lowerBlock);
 
-    // Damage Vulnerabilities, Damage Resistances, Damage Immunities, Condition Immunities
-    
     Arrays(json, lowerBlock, "Damage Vulnerabilities", "Damage Resistances", "Damage Immunities", "Condition Immunities");
     
-    // Senses
-
     Senses(json, lowerBlock);
-
-    // Languages
 
     Arrays(json, lowerBlock, "Languages")
 
-    // Challenge
-
     Challenge(json, lowerBlock);
 
-    parent.appendChild(lowerBlock);
-
-    // Properties
+    // Properties block(s)
 
     Properties(json, parent, "Features", "Actions", "Actions for Type 1", "Actions for Type 2", "Actions for Type 3", "Reactions", "Legendary Actions");
 
     // Footer (Book/Page)
 
-    let footer = document.createElement('div');
+    let footer = Element('div', parent);
     footer.id = "sheetFooter";
-    footer.appendChild(document.createTextNode(`${json["Book"]}, Pg. ${json["Page"]}`));
-    parent.appendChild(footer);
+
+    Text(`${json["Book"]}, Pg. ${json["Page"]}`, footer);
 }
 
 function ArmorClass(json, parent) {
-    let div = document.createElement('div');
+    let div = Element('div', parent);
 
-    let b = document.createElement('b');
-    b.appendChild(document.createTextNode("Armor Class "));
+    TextElement('b', "Armor Class ", div);
 
     let ac = "";
 
@@ -110,13 +74,11 @@ function ArmorClass(json, parent) {
         ac = json["Armor Class"];
     }
     
-    div.appendChild(b);
-    div.appendChild(document.createTextNode(ac));
-    parent.appendChild(div);
+    Text(ac, div);
 }
 
 function HitPoints(hitDice, conMod, parent) {
-    let div = document.createElement('div');
+    let div = Element('div', parent);
 
     let split = hitDice.split(/d/);
 
@@ -124,70 +86,65 @@ function HitPoints(hitDice, conMod, parent) {
     let split1 = parseInt(split[1]);
 
     let modifier = Math.floor((conMod - 10) / 2);
+    
     let average = (split1 + 1) / 2 * split0 + modifier;
-
     let max = (split0 * split1) + modifier;
 
-    let b = document.createElement('b');
+    TextElement('b', "Hit Points ", div);
 
-    b.appendChild(document.createTextNode("Hit Points "));
-
-    div.appendChild(b);
+    let hp = "";
 
     if(modifier < 0) {
-        div.appendChild(document.createTextNode(`${hitDice} - ${modifier} (Average: ${average}, Max: ${max})`));
+        hp = `${hitDice} - ${modifier} (Average: ${average}, Max: ${max})`;
+        div.appendChild(document.createTextNode());
     } else if(modifier === 0) {
-        div.appendChild(document.createTextNode(`${hitDice} (Average: ${average}, Max: ${max})`));
+        hp = `${hitDice} (Average: ${average}, Max: ${max})`
     } else {
-        div.appendChild(document.createTextNode(`${hitDice} + ${modifier} (Average: ${average}, Max: ${max})`));
+        hp = `${hitDice} + ${modifier} (Average: ${average}, Max: ${max})`
     }
-    
-    parent.appendChild(div);
+
+    Text(hp, div);
 }
 
 function Speed(json, parent) {
-    let div = document.createElement('div');
-    let b = document.createElement('b');
+    let div = Element('div', parent);
 
-    b.appendChild(document.createTextNode("Speed "));
+    TextElement('b', "Speed ", div);
 
-    div.appendChild(b);
-    div.appendChild(document.createTextNode(`${json["Walk"]} ft.`));
+    let array = [];
+    array.push(`${json["Walk"]} ft.`);
 
     if(json["Burrow"] !== 0) {
-        div.appendChild(document.createTextNode(`, burrow ${json["Burrow"]} ft.`));
+        array.push(`burrow ${json["Burrow"]} ft.`);
     }
 
     if(json["Climb"] !== 0) {
-        div.appendChild(document.createTextNode(`, climb ${json["Climb"]} ft.`));
+        array.push(`climb ${json["Climb"]} ft.`);
     }
 
     if(json["Fly"] !== 0) {
-        if(json["Hover"] === true) {
-            div.appendChild(document.createTextNode(`, fly ${json["Fly"]} ft. (hover)`));
+        if(json["Hover"]) {
+            array.push(`fly ${json["Fly"]} ft. (hover)`);
         } else {
-            div.appendChild(document.createTextNode(`, fly ${json["Fly"]} ft.`));
+            array.push(`fly ${json["Fly"]} ft.`);
         }
     }
 
     if(json["Swim"] !== 0) {
-        div.appendChild(document.createTextNode(`, swim ${json["Swim"]} ft.`));
+        array.push(`swim ${json["Swim"]} ft.`);
     }
 
-    parent.appendChild(div);
+    Text(array.join(", "), div);
 }
 
 function AbilityScores(json, parent) {
-    let table = document.createElement('table');
+    let table = Element('table', parent);
     table.className = "abilityScores";
 
-    let keys = document.createElement('tr');
-    let values = document.createElement('tr');
+    let keys = Element('tr', table);
+    let values = Element('tr', table);
     
     for(let key in json) {
-        let modifier = Math.floor((json[key] - 10)/2);
-        let th = document.createElement('th');
-
         let title = "";
 
         switch(key) {
@@ -211,32 +168,26 @@ function AbilityScores(json, parent) {
                 break;
         }
 
-        th.appendChild(document.createTextNode(title));
+        TextElement('th', title, keys);
 
-        keys.appendChild(th);
-
-        let td = document.createElement('td');
+        let modifier = Modifier(json[key]);
+        
+        let score = "";
 
         if(modifier > 0) {
-            td.appendChild(document.createTextNode(`${json[key]} (+${modifier})`))
+            score += `${json[key]} (+${modifier})`;
         } else {
-            td.appendChild(document.createTextNode(`${json[key]} (${modifier})`))
+            score += `${json[key]} (${modifier})`;
         }
 
-        values.appendChild(td);
+        TextElement('td', score, values);
     }
-    
-    table.appendChild(keys);
-    table.appendChild(values);
-    parent.appendChild(table);
 }
 
 function SavingThrows(json, parent) {
     let div = document.createElement('div');
 
-    let b = document.createElement('b');
-    b.appendChild(document.createTextNode("Saving Throws "))
-    div.appendChild(b);
+    TextElement('b', "Saving Throws ", div);
 
     let bool = false;
 
@@ -275,7 +226,7 @@ function SavingThrows(json, parent) {
         }
     }
 
-    div.appendChild(document.createTextNode(array.join(", ")));
+    Text(array.join(", "), div);
 
     if(bool) {
         parent.appendChild(div);
@@ -285,9 +236,7 @@ function SavingThrows(json, parent) {
 function Skills(json, parent) {
     let div = document.createElement('div');
 
-    let b = document.createElement('b');
-    b.appendChild(document.createTextNode("Skills "))
-    div.appendChild(b);
+    TextElement('b', "Skills ", div);
 
     let bool = false;
 
@@ -317,7 +266,7 @@ function Skills(json, parent) {
         }
     }
 
-    div.appendChild(document.createTextNode(array.join(", ")));
+    Text(array.join(", "), div);
 
     if(bool) {
         parent.appendChild(div);
@@ -325,12 +274,11 @@ function Skills(json, parent) {
 }
 
 function Senses(json, parent) {
+    let div = Element('div', parent);
+
+    TextElement('b', "Senses ", div);
+
     let array = [];
-
-    let div = document.createElement('div');
-
-    let b = document.createElement('b');
-    b.appendChild(document.createTextNode("Senses "));
 
     if(json["Senses"]["Blindsight"] > 0) {
         if(json["Senses"]["Blind"]) {
@@ -338,7 +286,6 @@ function Senses(json, parent) {
         } else {
             array.push(`blindsight ${json["Senses"]["Blindsight"]} ft.`);
         }
-        
     }
 
     if(json["Senses"]["Darkvision"] > 0) {
@@ -363,21 +310,15 @@ function Senses(json, parent) {
 
     array.push(`passive Perception ${passivePerception}`)
 
-    div.appendChild(b);
-    div.appendChild(document.createTextNode(array.join(", ")))
-    parent.appendChild(div);
+    Text(array.join(", "), div);
 }
 
 function Challenge(json, parent) {
-    let div = document.createElement('div');
+    let div = Element('div', parent);
 
-    let b = document.createElement('b');
-    b.appendChild(document.createTextNode("Challenge "));
+    TextElement('b', "Challenge ", div);
 
-    div.appendChild(b);
-    div.appendChild(document.createTextNode(`${json["Challenge"]} (${json["Experience"]} XP)`));
-
-    parent.appendChild(div);
+    Text(`${json["Challenge"]} (${json["Experience"]} XP)`, div);
 }
 
 function Properties(json, parent, ...properties) {
@@ -385,75 +326,63 @@ function Properties(json, parent, ...properties) {
         if (json[property] !== undefined) {
             // Create the container
 
-            let div = document.createElement('div');
+            let div = Element('div', parent);
             div.className = "property";
 
             // Create the header
             if (property != "Features") {
-                let h3 = document.createElement('h3');
-                h3.appendChild(document.createTextNode(property));
-                div.appendChild(h3);
+                TextElement('h3', property, div);
             }
             
             // Property first level
 
             for (let key in json[property]) {
-                    let div2 = document.createElement('div');
+                console.log(`${property}, key: ${key}`)
+                let div2 = Element('div', div);
 
-                    if (key === "Description") {
-                        Paragraphs(json[property][key], div2);
-                    } else if (key.includes("Spellcasting")){
-                        let b = document.createElement('b');
-                        b.appendChild(document.createTextNode(`${key}. `));
-                        div2.appendChild(b);
+                if (key !== "Description") {
+                    TextElement('b', `${key}. `, div2);
+                }
 
-                        Paragraphs(json[property][key]["Description"], div2);
+                if (key.includes("Spellcasting")){
+                    Paragraphs(json[property][key]["Description"], div2);
 
-                        EnumerateSpells(json[property][key], div2);
-                    } else {
-                        for(let subKey in json[property][key]) {
-                            if (subKey === "Description") {
-                                let b = document.createElement('b');
-                                b.appendChild(document.createTextNode(`${key}. `));
-                                div2.appendChild(b);
+                    Spells(json[property][key], div2);
+                } else if (key === "Description") {
+                    Paragraphs(json[property][key], div2);
+                } else {
+                    for(let subKey in json[property][key]) {
+                        console.log(`${property}, key: ${key}, subKey: ${subKey}`)
+                        if (subKey === "Description") {
+                            Paragraphs(json[property][key][subKey], div2);
+                        } else if (subKey === "Ordered List") {
+                            List(json[property][key][subKey], "ol", div2);
+                        } else if (subKey === "Unordered List") {
+                            List(json[property][key][subKey], "ul", div2);
+                        } else {
+                            let div3 = Element('div', div2);
+                            div3.className = "subProperty";
 
-                                Paragraphs(json[property][key][subKey], div2);
-                            } else if (subKey === "Ordered List") {
-                                List(json[property][key][subKey], "ol", div2);
-                            } else if (subKey === "Unordered List") {
-                                List(json[property][key][subKey], "ul", div2);
-                            } else {
-                                let div3 = document.createElement('div');
-                                div3.className = "subProperty";
+                            TextElement('b', `${subKey}. `, div3);
 
-                                let b = document.createElement('b');
-                                b.appendChild(document.createTextNode(`${subKey}. `));
-                                div3.appendChild(b);
-
-                                Paragraphs(json[property][key][subKey]["Description"], div3);
-
-                                div.appendChild(div3);
-                            }
+                            Paragraphs(json[property][key][subKey]["Description"], div3);
                         }
                     }
-
-                    div.appendChild(div2);
+                }
             }
-
-            parent.appendChild(div);
         }
     });
 }
 
-function EnumerateSpells(json, parent) {
+function Spells(json, parent) {
     let spellJson = JSON.parse(localStorage.getItem("Spells"));
 
-    let div = document.createElement('div');
+    let div = Element('div', parent);
     div.className = "spellsBlock";
 
     for (let key in json) {
         if(key !== "Description") {
-            let div2 = document.createElement('div');
+            let div2 = Element('div', div);
 
             let array = json[key];
             div2.appendChild(document.createTextNode(`${key}: `));
@@ -491,12 +420,8 @@ function EnumerateSpells(json, parent) {
 
                 div2.appendChild(a);
             }
-            
-            div.appendChild(div2);
         }
     }
-
-    parent.appendChild(div);
 }
 
 function ProficiencyBonus(cr) {

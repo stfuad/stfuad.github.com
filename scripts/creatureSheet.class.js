@@ -60,7 +60,6 @@ class CreatureSheet extends HTMLElement {
 
         shadow.appendChild(style);
         shadow.appendChild(div);
-
     }
 }
 

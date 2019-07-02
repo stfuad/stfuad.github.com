@@ -1,65 +1,50 @@
 export function List(array, listType, parent) {
-    let list = document.createElement(listType);
+    let list = Element(listType, parent);
 
     array.forEach(item => {
-        let li = document.createElement('li');
+        let li = Element('li', list);
 
         if(item.includes("#")) {
             let split = item.split("#");
 
-            let b = document.createElement('b');
-            b.appendChild(document.createTextNode(`${split[0]}. `));
-
-            li.appendChild(b);
-            li.appendChild(document.createTextNode(split[1]));
+            TextElement('b', `${split[0]}. `, li);
+            
+            Text(split[1], li);
         } else {
-            li.appendChild(document.createTextNode(item));
+            Text(item, li);
         }
-
-        list.appendChild(li);
     });
-
-    parent.appendChild(list);
 
     return list;
 }
 
 export function Table(json, parent) {
-    let table = document.createElement("table");
+    let table = Element('table', parent);
 
     // Caption
 
     if(json["Title"] != undefined) {
-        let caption = document.createElement('caption');
-        caption.appendChild(document.createTextNode(json["Title"]));
-        parent.appendChild(caption);
+        TextElement('caption', json["Title"], table);
     }
 
     // Headers
 
-    let row0 = document.createElement('tr');
+    let row0 = Element('tr', table);
 
     if(json["Headers"] !== undefined) {
         json["Headers"].forEach(header => {
-            let th = document.createElement('th');
-            th.appendChild(document.createTextNode(header));
-            table.appendChild(th);
+            TextElement('th', header, row0);
         });
     }
-
-    table.appendChild(row0);
-
+    
     // Rows
 
     if(json["Rows"] !== undefined) {
-
-        // Top Level
-        
         json["Rows"].forEach(row => {
-            let rowX = document.createElement('tr');
+            let tr = Element('tr', table);
 
             for(let key in row) {
-                let temp = document.createElement('td');
+                TextElement('td', row[key], tr);
 
                 /* if(key == "Spells") {
                     let spells = JSON.parse(localStorage.getItem("Spells"));
@@ -86,39 +71,48 @@ export function Table(json, parent) {
                 } else {
                     temp.appendChild(document.createTextNode(row[key]));
                 } */
-                temp.appendChild(document.createTextNode(row[key]));
-                rowX.appendChild(temp);
             }
-
-            table.appendChild(rowX);
         });
     }
-    
-    parent.appendChild(table);
 
     return table;
 }
 
 export function Paragraphs(array, parent) {
     if (array !== undefined) {
-            array.forEach(line => {
+        array.forEach(line => {
+            let p = TextElement('p', undefined, parent);
+
             if(line.includes('#')) {
                 let split = line.split('#');
 
-                let p = document.createElement('p');
-                let b = document.createElement('b');
+                TextElement('b', `${split[0]}. `, p);
 
-                b.appendChild(document.createTextNode(`${split[0]}. `));
-                p.appendChild(b);
-                p.appendChild(document.createTextNode(split[1]))
-
-                parent.appendChild(p);
+                Text(split[1], p);
             } else {
-                let p = document.createElement('p');
-                p.appendChild(document.createTextNode(line));
-                parent.appendChild(p);
+                Text(line, p);
             }
         });
     }
+}
 
+export function Text(text, parent) {
+    parent.appendChild(document.createTextNode(text));
+}
+
+export function Element(element, parent) {
+    let temp = document.createElement(element);
+    parent.appendChild(temp);
+
+    return temp;
+}
+
+export function TextElement(element, text, parent) {
+    let temp = Element(element, parent);
+
+    if (text !== undefined) {
+        Text(text, temp);
+    }
+
+    return temp;
 }

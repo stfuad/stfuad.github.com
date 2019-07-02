@@ -1,7 +1,5 @@
 body {
     grid-template-columns: 300px 300px auto;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1em;
 }
 
 a {

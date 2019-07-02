@@ -4,6 +4,8 @@ body {
     grid-template-rows: 57px 125px auto;
     grid-gap: 10px;
     overflow: hidden;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
 }
 
 body > div {

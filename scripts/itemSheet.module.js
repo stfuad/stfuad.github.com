@@ -1,4 +1,4 @@
-import {Paragraphs, List, Table} from "./htmlElements.module.js";
+import {Paragraphs, List, Table, Text, Element, TextElement} from "./htmlElements.module.js";
 
 export function ItemSheet(name, json, parent) {
     let itemHeader = document.createElement('div');

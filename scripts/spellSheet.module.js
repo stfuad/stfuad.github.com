@@ -1,24 +1,21 @@
-import {Table, List, Paragraphs} from "./htmlElements.module.js";
+import {Table, List, Paragraphs, Text, Element, TextElement} from "./htmlElements.module.js";
 
 export function SpellSheet(name, json, parent) {
-    let header = document.createElement('div');
+    let header = Element('div', parent);
     header.id = "spellSheetHeader";
 
-    let stats = document.createElement('div');
+    let stats = Element('div', parent);
     stats.id = "spellSheetStats";
 
-    let content = document.createElement('div');
+    let content = Element('div', parent);
     content.id = "spellSheetContent";
 
-    let footer = document.createElement('div');
+    let footer = Element('div', parent);
     footer.id = "spellSheetFooter";
 
     // Header
-    let h3 = document.createElement('h3');
-    h3.appendChild(document.createTextNode(name));
+    TextElement('h3', name, header);
 
-    let subTitle = document.createElement('i');
-    
     let scrl = "";
 
     let school = json["School"];
@@ -27,18 +24,18 @@ export function SpellSheet(name, json, parent) {
     let level = json["Level"];
 
     if(level === 0) {
-        level = "";
+        scrl = "";
     } else if(level === 1) {
-        level = "1st-level";
+        scrl = "1st-level";
     } else if(level === 2) {
-        level = "2nd-level";
+        scrl = "2nd-level";
     } else if(level === 3) {
-        level = "3rd-level";
+        scrl = "3rd-level";
     } else if(level >= 4) {
-        level = `${level}th-level`;
+        scrl = `${level}th-level`;
     }
 
-    scrl = `${level} ${school}`;
+    scrl += ` ${school}`;
 
     if(cantrip == true) {
         scrl += " cantrip";
@@ -48,10 +45,7 @@ export function SpellSheet(name, json, parent) {
         scrl += " (ritual)";
     }
 
-    subTitle.appendChild(document.createTextNode(scrl));
-
-    header.appendChild(h3);
-    header.appendChild(subTitle);
+    TextElement('i', scrl, header);
 
     KeyValue(json, stats, "Casting Time", "Range", "Components", "Duration");
 
@@ -69,26 +63,14 @@ export function SpellSheet(name, json, parent) {
         }
     }
 
-    let i = document.createElement('i');
-    i.appendChild(document.createTextNode(`${json["Book"]}, Pg. ${json["Page"]}`));
-    footer.appendChild(i);
-
-    parent.appendChild(header);
-    parent.appendChild(stats);
-    parent.appendChild(content);
-    parent.appendChild(footer);
+    TextElement('i', `${json["Book"]}, Pg. ${json["Page"]}`, footer);
 }
 
 function KeyValue(json, parent, ...keys) {
     keys.forEach(key => {
-        let div = document.createElement('div');
+        let div = Element('div', parent);
 
-        let b = document.createElement('b');
-        b.appendChild(document.createTextNode(`${key} `));
-
-        div.appendChild(b);
-        div.appendChild(document.createTextNode(json[key]));
-
-        parent.appendChild(div);
+        TextElement('b', `${key} `, div);
+        Text(json[key], div);
     });
 }
