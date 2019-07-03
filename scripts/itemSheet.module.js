@@ -1,11 +1,9 @@
-import {Paragraphs, List, Table, Text, Element, TextElement} from "./htmlElements.module.js";
+import {Paragraphs, List, Table, Element, TextElement} from "./htmlElements.module.js";
 
 export function ItemSheet(name, json, parent) {
-    let itemHeader = document.createElement('div');
+    let itemHeader = Element('div', parent);
 
-    let h3 = document.createElement('h3');
-    h3.appendChild(document.createTextNode(name));
-    itemHeader.appendChild(h3);
+    TextElement('h3', name, itemHeader);
 
     let subString = `${json["Type"]}, ${json["Rarity"]}`;
 
@@ -17,11 +15,9 @@ export function ItemSheet(name, json, parent) {
         }
     }
 
-    let i = document.createElement('i');
-    i.appendChild(document.createTextNode(subString));
-    itemHeader.appendChild(i);
+    TextElement('i', subString, itemHeader);
 
-    let itemContent = document.createElement('div');
+    let itemContent = Element('div', parent);
 
     for(let key in json) {
         if(key.includes("Description")) {
@@ -35,13 +31,7 @@ export function ItemSheet(name, json, parent) {
         }
     }
 
-    let itemFooter = document.createElement('div');
+    let itemFooter = Element('div', parent);
 
-    let i2 = document.createElement('i');
-    i2.appendChild(document.createTextNode(`${json["Book"]}, Pg. ${json["Page"]}`));
-    itemFooter.appendChild(i2);
-    
-    parent.appendChild(itemHeader);
-    parent.appendChild(itemContent);
-    parent.appendChild(itemFooter);
+    TextElement('i', `${json["Book"]}, Pg. ${json["Page"]}`, itemFooter);
 }

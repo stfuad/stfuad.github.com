@@ -1,4 +1,4 @@
-import {List, Paragraphs, Text, Element, TextElement} from "./htmlElements.module.js";
+import {List, Paragraphs, Text, Element, TextElement, Link} from "./htmlElements.module.js";
 
 export function CreatureSheet(name, json, parent) {
 
@@ -96,7 +96,6 @@ function HitPoints(hitDice, conMod, parent) {
 
     if(modifier < 0) {
         hp = `${hitDice} - ${modifier} (Average: ${average}, Max: ${max})`;
-        div.appendChild(document.createTextNode());
     } else if(modifier === 0) {
         hp = `${hitDice} (Average: ${average}, Max: ${max})`
     } else {
@@ -385,40 +384,40 @@ function Spells(json, parent) {
             let div2 = Element('div', div);
 
             let array = json[key];
-            div2.appendChild(document.createTextNode(`${key}: `));
+
+            Text(`${key}: `, div2);
 
             for (let i = 0; i < array.length; i++) {
-                let a = document.createElement('a');
                 let spellObj;
-
+                let text;
                 let spell = array[i];
 
                 if(spell.includes(" (")) {
                     let split = spell.split(" (");
 
-                    spellObj = JSON.stringify(spellJson[split[0]]);
+                    spellObj = spellJson[split[0]];
                     
                     if(array.length - 1 != i) {
-                        a.appendChild(document.createTextNode(`${spell}, `));
+                        text = `${spell}, `;
                     } else {
-                        a.appendChild(document.createTextNode(spell));
+                        text = spell;
                     }
                 } else {
-                    spellObj = JSON.stringify(spellJson[spell]);
+                    spellObj = spellJson[spell];
     
                     if(array.length - 1 != i) {
-                        a.appendChild(document.createTextNode(`${spell}, `));
+                        text = `${spell}, `;
                     } else {
-                        a.appendChild(document.createTextNode(spell));
+                        text = spell;
                     }
                 }
+
+                let a = Link(text, undefined, div2);
 
                 a.addEventListener('click', () => {
                     let modal = new SpellModal(spell, spellObj);
                     document.body.appendChild(modal);
                 }, false);
-
-                div2.appendChild(a);
             }
         }
     }
@@ -464,15 +463,11 @@ function Arrays(json, parent, ...keys) {
     keys.forEach(key => {
         if (json[key] !== undefined) {
             if(json[key].length > 0) {
-                let div = document.createElement('div');
+                let div = Element('div', parent);
 
-                let b = document.createElement('b');
-                b.appendChild(document.createTextNode(`${key} `));
-
-                div.appendChild(b);
-                div.appendChild(document.createTextNode(json[key].join(", ")));
-
-                parent.appendChild(div);
+                TextElement('b', `${key} `, div);
+                
+                Text(json[key].join(", "), div);
             }
         }
     });

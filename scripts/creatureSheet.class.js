@@ -4,7 +4,6 @@ class CreatureSheet extends HTMLElement {
 
         let shadow = this.attachShadow({mode: 'open'});
 
-        let div = document.createElement('div');
         let style = document.createElement('style');
         style.innerHTML = `
             #creatureSheetHeader {
@@ -52,14 +51,13 @@ class CreatureSheet extends HTMLElement {
                 cursor: pointer;
             }
         `;
+
+        shadow.appendChild(style);
         
         import("./creatureSheet.module.js")
             .then(module => {
-                module.CreatureSheet(name, json, div);
+                module.CreatureSheet(name, json, shadow);
             });
-
-        shadow.appendChild(style);
-        shadow.appendChild(div);
     }
 }
 

@@ -11,7 +11,7 @@ export function Level1(json, parent) {
         h1.id = key;
         div.appendChild(h1);
 
-        NavigationHeader("h3", key);
+        //NavigationHeader("h3", key);
 
         Level2(json[key], div, h1.id);
 
@@ -33,7 +33,7 @@ function Level2(json, parent, linkTarget) {
             h2.id = `${linkTarget} ${key}`;
             div.appendChild(h2);
 
-            NavigationHeader("h4", key);
+            //NavigationHeader("h4", key);
         }
 
         if (key.includes("Table")) {
@@ -62,7 +62,7 @@ function Level3(json, parent, linkTarget) {
         div.appendChild(h3);
 
         if (key !== "Description") {
-            NavigationLink(h3.id, `- ${key}`)
+            //NavigationLink(h3.id, `- ${key}`)
         }
         
         if (Array.isArray(json[key])) {

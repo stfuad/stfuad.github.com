@@ -116,3 +116,15 @@ export function TextElement(element, text, parent) {
 
     return temp;
 }
+
+export function Link(text, href, parent) {
+    let a = Element('a', parent);
+    
+    if (href !== undefined) {
+        a.href = href;
+    }
+    
+    Text(text, a);
+
+    return a;
+}
