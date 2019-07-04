@@ -1,11 +1,8 @@
 import {Table, List, Paragraphs, Text, Element, TextElement} from "./htmlElements.module.js";
 
-export function SpellSheet(name, json, parent) {
+export function Spell(name, json, parent) {
     let header = Element('div', parent);
     header.id = "spellSheetHeader";
-
-    let stats = Element('div', parent);
-    stats.id = "spellSheetStats";
 
     let content = Element('div', parent);
     content.id = "spellSheetContent";
@@ -47,7 +44,7 @@ export function SpellSheet(name, json, parent) {
 
     TextElement('i', scrl, header);
 
-    KeyValue(json, stats, "Casting Time", "Range", "Components", "Duration");
+    KeyValue(json, content, "Casting Time", "Range", "Components", "Duration");
 
     for(let key in json) {
         if(key.includes("Description")) {

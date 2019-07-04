@@ -1,6 +1,6 @@
 import {Paragraphs, List, Table, Element, TextElement} from "./htmlElements.module.js";
 
-export function ItemSheet(name, json, parent) {
+export function Item(name, json, parent) {
     let itemHeader = Element('div', parent);
 
     TextElement('h3', name, itemHeader);

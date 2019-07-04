@@ -1,5 +1,7 @@
-class CreatureSheet extends HTMLElement {
-    constructor(name, json) {
+import {Creature} from "../modules/creature.module.js";
+
+export class CreatureSheet extends HTMLElement {
+    constructor(name) {
         super();
 
         let shadow = this.attachShadow({mode: 'open'});
@@ -52,12 +54,9 @@ class CreatureSheet extends HTMLElement {
             }
         `;
 
+        Creature(name, JSON.parse(localStorage.getItem("Bestiary"))[name], shadow);
+
         shadow.appendChild(style);
-        
-        import("./creatureSheet.module.js")
-            .then(module => {
-                module.CreatureSheet(name, json, shadow);
-            });
     }
 }
 

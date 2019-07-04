@@ -1,10 +1,11 @@
-class ItemSheet extends HTMLElement {
-    constructor(name, json) {
+import {Item} from "../modules/item.module.js";
+
+export class ItemSheet extends HTMLElement {
+    constructor(name) {
         super();
 
         let shadow = this.attachShadow({mode: 'open'});
 
-        let div = document.createElement('div');
         let style = document.createElement('style');
         style.innerHTML = `
             div > h3 {
@@ -12,13 +13,9 @@ class ItemSheet extends HTMLElement {
             }
         `;
 
-        import("./itemSheet.module.js")
-            .then(module => {
-                module.ItemSheet(name, json, div);
-            })
+        Item(name, JSON.parse(localStorage.getItem("Magic Items"))[name], shadow);
 
         shadow.appendChild(style);
-        shadow.appendChild(div);
     }
 }
 

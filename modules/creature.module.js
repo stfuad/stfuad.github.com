@@ -1,6 +1,6 @@
 import {List, Paragraphs, Text, Element, TextElement, Link} from "./htmlElements.module.js";
 
-export function CreatureSheet(name, json, parent) {
+export function Creature(name, json, parent) {
 
     // Header (Title/Subtitles)
 
@@ -336,7 +336,7 @@ function Properties(json, parent, ...properties) {
             // Property first level
 
             for (let key in json[property]) {
-                console.log(`${property}, key: ${key}`)
+                //console.log(`${property}, key: ${key}`)
                 let div2 = Element('div', div);
 
                 if (key !== "Description") {
@@ -351,7 +351,7 @@ function Properties(json, parent, ...properties) {
                     Paragraphs(json[property][key], div2);
                 } else {
                     for(let subKey in json[property][key]) {
-                        console.log(`${property}, key: ${key}, subKey: ${subKey}`)
+                        //console.log(`${property}, key: ${key}, subKey: ${subKey}`)
                         if (subKey === "Description") {
                             Paragraphs(json[property][key][subKey], div2);
                         } else if (subKey === "Ordered List") {

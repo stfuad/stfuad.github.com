@@ -1,5 +1,7 @@
-class SpellModal extends HTMLElement {
-    constructor(name, json) {
+import {Spell} from "../modules/spell.module.js";
+
+export class SpellModal extends HTMLElement {
+    constructor(name) {
         super();
 
         let shadow = this.attachShadow({mode: 'open'});
@@ -41,10 +43,7 @@ class SpellModal extends HTMLElement {
             }
         `;
 
-        import("./spellSheet.module.js")
-            .then(module => {
-                module.SpellSheet(name, json, div);
-            });
+        Spell(name, JSON.parse(localStorage.getItem("Spells"))[name], div);
 
         let button = document.createElement('button');
         button.id = "spellSheetClose";

@@ -109,7 +109,7 @@ function Level5(json, parent) {
         div.id = key;
         div.className = "level5";
 
-        console.log(`Level 5 - ${key}`);
+        //console.log(`Level 5 - ${key}`);
 
         if(!key.includes("Calc") && !key.includes("Table") && !key.includes("Description") && !key.includes("Unordered List")) {
             /* let h5 = document.createElement('h5');
@@ -141,7 +141,7 @@ function Level6(json, parent) {
         div.id = key;
         // div.className = "level6";
         
-        console.log(`Level 6 - ${key}`);
+        //console.log(`Level 6 - ${key}`);
         
         if(key.includes("Table")) {
             Table(json[key], div);
@@ -176,7 +176,7 @@ function EldritchInvocations(json, parent) {
 }
 
 function NavigationHeader(header, text) {
-    let target = document.querySelector("#pageNav");
+    let target = document.querySelector("#bottomNav");
 
     let hX = document.createElement(header);
     hX.appendChild(document.createTextNode(text));
@@ -185,11 +185,11 @@ function NavigationHeader(header, text) {
 }
 
 function NavigationLink(href, text) {
-    let target = document.querySelector("#pageNav");
+    let target1 = document.querySelector("#bottomNav");
+    let target2 = document.querySelector("#content");
 
     let a = document.createElement('a');
     a.appendChild(document.createTextNode(text));
-    a.href = `#${href}`;
 
-    target.appendChild(a);
+    target1.appendChild(a);
 }
