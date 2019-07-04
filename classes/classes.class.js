@@ -96,7 +96,7 @@ export class Classes extends HTMLElement {
                     h2.id = `${linkTarget} ${key}`;
                     div.appendChild(h2);
         
-                    NavigationHeader("h4", key);
+                    NavigationLink(h2.id, key);
                 }
         
                 if (key.includes("Table")) {
@@ -125,7 +125,7 @@ export class Classes extends HTMLElement {
                 div.appendChild(h3);
         
                 if (key !== "Description") {
-                    NavigationLink(h3.id, `- ${key}`)
+                    //NavigationLink(h3.id, `- ${key}`)
                 }
                 
                 if (Array.isArray(json[key])) {
@@ -247,8 +247,15 @@ export class Classes extends HTMLElement {
         
         function NavigationLink(href, text) {
             let target = shadow.querySelector("#list");
+
+            let subCon = shadow.querySelector("#subContent");
+
+            let target2 = subCon.querySelector(`#${href}`);
         
-            Link(text, `#${href}`, target);
+            let a = Link(text, undefined, target);
+            a.addEventListener('click', () => {
+                target2.scrollIntoView();
+            }, false)
         }
     }
 }

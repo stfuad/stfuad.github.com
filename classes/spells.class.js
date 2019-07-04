@@ -36,7 +36,7 @@ export class Spells extends HTMLElement {
                 overflow: auto;
             }
 
-            #list > a {
+            #list > div > a {
                 display: block;
                 white-space: nowrap;
                 overflow: hidden;
