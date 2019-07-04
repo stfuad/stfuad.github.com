@@ -1,4 +1,4 @@
-import {Paragraphs, List, Table} from "./htmlElements.module.js";
+import {Paragraphs, List, Table, Element, TextElement, Link} from "./htmlElements.module.js";
 
 export function Level1(json, parent) {
     for(let key in json) {
@@ -11,7 +11,7 @@ export function Level1(json, parent) {
         h1.id = key;
         div.appendChild(h1);
 
-        //NavigationHeader("h3", key);
+        NavigationHeader("h3", key);
 
         Level2(json[key], div, h1.id);
 
@@ -33,7 +33,7 @@ function Level2(json, parent, linkTarget) {
             h2.id = `${linkTarget} ${key}`;
             div.appendChild(h2);
 
-            //NavigationHeader("h4", key);
+            NavigationHeader("h4", key);
         }
 
         if (key.includes("Table")) {
@@ -62,7 +62,7 @@ function Level3(json, parent, linkTarget) {
         div.appendChild(h3);
 
         if (key !== "Description") {
-            //NavigationLink(h3.id, `- ${key}`)
+            NavigationLink(h3.id, `- ${key}`)
         }
         
         if (Array.isArray(json[key])) {
@@ -176,20 +176,13 @@ function EldritchInvocations(json, parent) {
 }
 
 function NavigationHeader(header, text) {
-    let target = document.querySelector("#bottomNav");
+    let target = document.querySelector("#subContent");
 
-    let hX = document.createElement(header);
-    hX.appendChild(document.createTextNode(text));
-
-    target.appendChild(hX);
+    TextElement(header, text, target);
 }
 
 function NavigationLink(href, text) {
-    let target1 = document.querySelector("#bottomNav");
-    let target2 = document.querySelector("#content");
+    let target = document.querySelector("#subContent");
 
-    let a = document.createElement('a');
-    a.appendChild(document.createTextNode(text));
-
-    target1.appendChild(a);
+    Link(text, href, target);
 }

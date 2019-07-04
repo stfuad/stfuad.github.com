@@ -1,7 +1,7 @@
 import {Creature} from "../modules/creature.module.js";
 
 export class CreatureSheet extends HTMLElement {
-    constructor(name) {
+    constructor(name, json) {
         super();
 
         let shadow = this.attachShadow({mode: 'open'});
@@ -54,7 +54,7 @@ export class CreatureSheet extends HTMLElement {
             }
         `;
 
-        Creature(name, JSON.parse(localStorage.getItem("Bestiary"))[name], shadow);
+        Creature(name, json, shadow);
 
         shadow.appendChild(style);
     }

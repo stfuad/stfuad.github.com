@@ -5,7 +5,7 @@ import {CreatureSheet} from "./creatureSheet.class.js";
 // imports - modules
 
 import {SortByName} from "../modules/sorting.module.js";
-import {Element} from "../modules/htmlElements.module.js";
+import {Element, TextElement, Link} from "../modules/htmlElements.module.js";
 
 export class Bestiary extends HTMLElement {
     constructor() {
@@ -15,11 +15,6 @@ export class Bestiary extends HTMLElement {
 
         let style = Element('style', shadow);
         style.innerHTML = `
-            div {
-                overflow-x: hidden;
-                overflow-y: auto;
-            }
-
             .header {
                 display: block;
                 font-weight: bold;
@@ -29,7 +24,19 @@ export class Bestiary extends HTMLElement {
                 border-bottom: 1px solid black;
             }
 
-            div > a {
+            .grid {
+                display: grid;
+                grid-template-columns: 300px 1fr;
+                grid-template-rows: calc(100vh - 20px);
+                grid-gap: 10px;
+            }
+
+            #list {
+                grid-column: 1;
+                overflow: auto;
+            }
+
+            #list > a {
                 display: block;
                 white-space: nowrap;
                 overflow: hidden;
@@ -39,20 +46,9 @@ export class Bestiary extends HTMLElement {
                 cursor: pointer;
             }
 
-            .grid {
-                display: grid;
-                grid-template-columns: 300px 1fr;
-                grid-template-rows: 1fr;
-                grid-gap: 10px;
-            }
-
-            #list {
-                grid-column: 1;
-                overflow: auto;
-            }
-
             #subContent {
                 grid-column: 2/3;
+                overflow: auto;
             }
         `;
 
@@ -65,7 +61,31 @@ export class Bestiary extends HTMLElement {
         let subContent = Element('div', container);
         subContent.id = "subContent";
 
-        CreateList(SortByName(JSON.parse(localStorage.getItem("Bestiary"))), CreatureSheet, "creature-sheet", list);
+        let bestiary = JSON.parse(localStorage.getItem("Bestiary"));
+        let keys = SortByName(bestiary);
+
+        for (let array in keys) {
+            let div = Element('div', list);
+    
+            let span = TextElement('span', array, div);
+            span.className = "header";
+    
+            keys[array].sort().forEach(item => {
+    
+                let a = Link(item, undefined, div)
+                a.addEventListener('click', () => {
+                    let target = shadow.querySelector("creature-sheet");
+    
+                    if (target !== null) {
+                        target.remove()
+                    }
+                    
+                    subContent.appendChild(new CreatureSheet(item, bestiary[item]));
+                });
+            });
+    
+            list.appendChild(div);
+        }
     }
 }
 

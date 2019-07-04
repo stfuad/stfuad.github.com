@@ -8,8 +8,7 @@
             body {
                 display: grid;
                 grid-template-columns: 300px 300px 1fr;
-                grid-auto-rows: minmax(100vh, max-content);
-                overflow: hidden;
+                grid-template-rows: 100vh;
                 font-family: 'Courier New', Courier, monospace;
                 font-size: 1em;
                 margin: 0px;
@@ -24,6 +23,7 @@
             #content {
                 grid-column: 2/4;
                 overflow: hidden;
+                padding: 10px;
             }
 
         </style>
@@ -42,9 +42,9 @@
                 .then(() => {
                     let nav = document.querySelector("#navigation");
 
-                    import("./classes/onePage.classes.js")
+                    import("./classes/links.class.js")
                         .then(module => {
-                           nav.appendChild(new module.NavLinks());
+                           nav.appendChild(new module.Links());
                         })
                 });
         </script>

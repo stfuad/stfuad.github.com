@@ -5,7 +5,7 @@ import {ItemSheet} from "./itemSheet.class.js";
 // imports - modules
 
 import {SortByName} from "../modules/sorting.module.js";
-import {Element} from "../modules/htmlElements.module.js";
+import {Element, TextElement, Link} from "../modules/htmlElements.module.js";
 
 export class Items extends HTMLElement {
     constructor() {
@@ -15,11 +15,6 @@ export class Items extends HTMLElement {
 
         let style = Element('style', shadow);
         style.innerHTML = `
-            div {
-                overflow-x: hidden;
-                overflow-y: auto;
-            }
-
             .header {
                 display: block;
                 font-weight: bold;
@@ -29,7 +24,19 @@ export class Items extends HTMLElement {
                 border-bottom: 1px solid black;
             }
 
-            div > a {
+            .grid {
+                display: grid;
+                grid-template-columns: 300px 1fr;
+                grid-template-rows: calc(100vh - 20px);
+                grid-gap: 10px;
+            }
+
+            #list {
+                grid-column: 1;
+                overflow: auto;
+            }
+
+            #list > a {
                 display: block;
                 white-space: nowrap;
                 overflow: hidden;
@@ -38,10 +45,48 @@ export class Items extends HTMLElement {
                 color: blue;
                 cursor: pointer;
             }
+
+            #subContent {
+                grid-column: 2/3;
+                overflow: auto;
+            }
         `;
 
-        CreateList(SortByName(JSON.parse(localStorage.getItem("Magic Items"))), ItemSheet, "item-sheet", shadow);
+        let container = Element('div', shadow);
+        container.className = "grid";
+
+        let list = Element('div', container);
+        list.id = "list";
+    
+        let subContent = Element('div', container);
+        subContent.id = "subContent";
+
+        let items = JSON.parse(localStorage.getItem("Magic Items"));
+        let keys = SortByName(items);
+
+        for (let array in keys) {
+            let div = Element('div', list);
+    
+            let span = TextElement('span', array, div);
+            span.className = "header";
+    
+            keys[array].sort().forEach(item => {
+    
+                let a = Link(item, undefined, div)
+                a.addEventListener('click', () => {
+                    let target = shadow.querySelector("item-sheet");
+    
+                    if (target !== null) {
+                        target.remove()
+                    }
+                    
+                    subContent.appendChild(new ItemSheet(item, items[item]));
+                });
+            });
+    
+            list.appendChild(div);
+        }
     }
 }
 
-customElements.define('items-page', MagicItems);
+customElements.define('items-page', Items);

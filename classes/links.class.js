@@ -2,18 +2,16 @@
 
 import {Classes} from "./classes.class.js";
 import {Spells} from "./spells.class.js";
-import {Bestiary} from "./creatures.class.js";
+import {Bestiary} from "./bestiary.class.js";
 import {Items} from "./items.class.js";
 
 // imports - modules
 
-import {SortByName} from "../modules/sorting.module.js";
-import {Level1} from "../modules/classData.module.js";
 import {Element, Link} from "../modules/htmlElements.module.js";
 
 // classes
 
-export class NavLinks extends HTMLElement {
+export class Links extends HTMLElement {
     constructor() {
         super();
 
@@ -71,37 +69,4 @@ export class NavLinks extends HTMLElement {
     }
 }
 
-// functions
-
-function CreateList(json, callback, element, parent) {
-    for (let array in json) {
-        let div = document.createElement('div');
-
-        let span = document.createElement('span');
-        span.className = "header";
-        span.appendChild(document.createTextNode(array));
-        
-        div.appendChild(span);
-
-        json[array].sort().forEach(item => {
-
-            let a = document.createElement('a');
-            a.appendChild(document.createTextNode(item));
-            a.addEventListener('click', () => {
-                let host = document.querySelector("#subContent");
-                let target = host.querySelector(element);
-
-                if (target !== null) {
-                    target.remove()
-                }
-                
-                let sheet = new callback(item);
-                host.appendChild(sheet);
-            });
-
-            div.appendChild(a);
-        });
-
-        parent.appendChild(div);
-    }
-}
+customElements.define('nav-links', Links);
