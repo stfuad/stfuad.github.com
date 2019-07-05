@@ -1,3 +1,9 @@
+// classes
+
+import {SpellModal} from "../classes/spellModal.class.js"
+
+// modules
+
 import {List, Paragraphs, Text, Element, TextElement, Link} from "./htmlElements.module.js";
 
 export function Creature(name, json, parent) {
