@@ -1,0 +1,500 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Initiative Tracker</title>
+        <style>
+            body {
+                display: grid;
+                grid-template-columns: 300px 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr;
+                grid-gap: 10px;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 1em;
+                height: 100vh;
+                margin: 0px;
+            }
+
+            #creatureList {
+                grid-column: 1;
+                grid-row: 1/4;
+                height: calc(100vh - 2px);
+                overflow: auto;
+                border: 1px solid black;
+                margin: 0px;
+                padding: 0px;
+            }
+            #creatureList > .listHeader {
+                height: 20px;
+                background-color: lightblue;
+                text-indent: 1em;
+                border: 1px solid black;
+            }
+
+            #creatureList > .listItem {
+                height: 20px;
+                text-indent: 2em;
+                border: 1px solid black;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor: pointer;
+            }
+
+            #creatureList > .listItem:hover {
+                height: 20px;
+                text-indent: 2em;
+                border: 1px solid black;
+                
+            }
+
+            #tracker {
+                grid-column: 2/3;
+                grid-row: 1/4;
+                height: calc(100vh - 2px);
+                overflow: auto;
+            }
+
+            #tracker > div > button {
+                background-color: white;
+            }
+
+            #trackerHeader > span > h4 {
+                display: inline;
+            }
+
+            #toolbar {
+                padding: 10px;
+            }
+
+            #toolbar > button {
+                padding: 10px 20px 10px 20px;
+            }
+
+            #sheet {
+                grid-column: 3/4;
+                grid-row: 1/4;
+                height: calc(100vh - 2px);
+                overflow: auto;
+            }
+
+            .name {
+                display: inline-block;
+                padding-left: 10px;
+                padding-right: 10px;
+                width: 210px;
+                font-weight: bold;
+            }
+
+            .hp {
+                display: inline-block;
+                padding-left: 10px;
+                padding-right: 10px;
+                width: 80px;
+                font-weight: bold;
+            }
+
+            .init {
+                display: inline-block;
+                padding-left: 10px;
+                padding-right: 10px;
+                width: 50px;
+                font-weight: bold;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="creatureList"></div>
+        <div id="sheet"></div>
+
+        <div id="tracker"></div>
+
+        <script>
+            let host = document.querySelector("#tracker");
+
+            let buttons = document.createElement('div');
+            buttons.id = "toolbar";
+
+            let addPc = document.createElement('button');
+            addPc.appendChild(document.createTextNode("Add PC"));
+            addPc.addEventListener('click', () => {
+                let div = document.createElement('div');
+                div.className = "modal";
+
+                let input1 = document.createElement('input');
+
+                let input2 = document.createElement('input');
+
+
+                host.appendChild(div);
+            }, false);
+
+            buttons.appendChild(addPc);
+
+            let sort = document.createElement('button');
+            sort.appendChild(document.createTextNode("Sort"));
+            sort.addEventListener('click', () => {
+                let target = document.querySelectorAll("creature-listitem");
+
+            }, false);
+
+            buttons.appendChild(sort);
+
+            let clear = document.createElement('button');
+            clear.appendChild(document.createTextNode("Clear"));
+            clear.addEventListener('click', () => {
+                let target = document.querySelectorAll("creature-listitem");
+
+                for (node of target) {
+                    node.remove();
+                }
+            }, false);
+
+            buttons.appendChild(clear);
+
+            host.appendChild(buttons);
+
+            let headers = document.createElement('div');
+            
+            let name = document.createElement('span');
+            name.appendChild(document.createTextNode("Name"));
+            name.className = "name";
+
+            headers.appendChild(name);
+
+            let hp = document.createElement('span');
+            hp.appendChild(document.createTextNode("HP"));
+            hp.className = "hp";
+
+            headers.appendChild(hp);
+
+            let init = document.createElement('span');
+            init.appendChild(document.createTextNode("Initiative"));
+            init.className = "init";
+
+            headers.appendChild(init);
+
+            host.appendChild(headers);
+        </script>
+
+        <script>
+            let bestiary = JSON.parse(localStorage.getItem("Bestiary"));
+
+            import("./modules/sorting.module.js")
+                .then(module => {
+                    let target = document.querySelector("#creatureList");
+
+                    let sorted = module.SortByName(bestiary);
+
+                    for (let array in sorted) {
+                        let listHeader = document.createElement('div');
+                        listHeader.className = "listHeader";
+                        listHeader.appendChild(document.createTextNode(array));
+                        target.appendChild(listHeader);
+
+                        sorted[array].sort().forEach(item => {
+                            let listItem = document.createElement('div');
+                            listItem.className = "listItem";
+                            listItem.appendChild(document.createTextNode(item));
+                            listItem.addEventListener('click', event => {
+                                let target = document.querySelector("#tracker");
+
+                                let creature = new CreatureListItem(item, bestiary[item], event);
+
+                                target.appendChild(creature);
+                            }, false);
+
+                            target.appendChild(listItem);
+                        });
+                    }
+                });
+
+            class CreatureListItem extends HTMLElement {
+                get init() {
+                    return this.hasAttribute('init');
+                }
+
+                set init(val) {
+                    if (val) {
+                        this.setAttribute('init', '');
+                    } else {
+                        this.removeAttribute('init');
+                    }
+                }
+
+                get hp() {
+                    return this.hasAttribute('hp');
+                }
+
+                set hp(val) {
+                    if (val) {
+                        this.setAttribute('hp', '');
+                    } else {
+                        this.removeAttribute('hp');
+                    }
+                }
+
+                static get observedAttributes() {
+                    return ['init', 'hp'];
+                }
+
+                constructor(name, json, event) {
+                    super();
+
+                    let shadow = this.attachShadow({mode: 'open'});
+
+                    let style = document.createElement('style');
+                    style.textContent = `
+                        #container {
+                            border: 1px solid black;
+                            padding: 10px;
+                        }
+
+                        button {
+                            background-color: white;
+                        }
+
+                        .name {
+                            display: inline-block;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            position: relative;
+                            top: 5px;
+                            width: 200px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        .hp {
+                            display: inline-block;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            width: 50px;
+                        }
+
+                        .init {
+                            display: inline-block;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            width: 50px;
+                        }
+
+                        .editButton {
+                        }
+
+                        .closeButton {
+                            float: right;
+                        }
+
+                        .modal {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            height: 65px;
+                            width 200px;
+                            transform: translate(-50%, -50%);
+                            border: 1px solid black;
+                            border-radius: 5px;
+                            padding: 10px;
+                        }
+
+                        .modal > #header > h4 {
+                            margin-top: 0px;
+                            margin-bottom: 0px;
+                        }
+
+                        .modal > #header > i {
+                            font-size: .75em;
+                        }
+                    `;
+
+                    shadow.appendChild(style);
+
+                    let div = document.createElement('div');
+                    div.id = "container";
+
+                    let creatureName = document.createElement('span');
+                    creatureName.appendChild(document.createTextNode(name));
+                    creatureName.addEventListener('click', () => {
+                        import("./classes/creatureSheet.class.js")
+                            .then(module => {
+                                let host = document.querySelector("#sheet");
+                                let target = host.querySelector("creature-sheet");
+    
+                                if (target !== null) {
+                                    target.remove()
+                                }
+
+                                let creature = new module.CreatureSheet(name, json);
+
+                                host.appendChild(creature);
+                            });
+                    }, false);
+                    creatureName.className = "name";
+
+                    div.appendChild(creatureName);
+                    
+                    let conMod = Math.floor((json["Ability Scores"]["Constitution"] - 10) / 2);
+
+                    let hitDice = json["Hit Dice"]
+
+                    let split = hitDice.split(/d/);
+
+                    let split0 = parseInt(split[0]);
+                    let split1 = parseInt(split[1]);
+                    
+                    let average = (split1 + 1) / 2 * split0 + conMod;
+                    let max = (split0 * split1) + conMod;
+
+                    this.setAttribute('hp', max);
+
+                    let creatureHP = document.createElement('span');
+                    creatureHP.appendChild(document.createTextNode(`${this.getAttribute('hp')}`));
+                    creatureHP.className = "hp";
+
+                    div.appendChild(creatureHP);
+
+                    let editHp = document.createElement('button');
+                    editHp.appendChild(document.createTextNode("\u270E"));
+                    editHp.addEventListener('click', () => {
+                        let div = document.createElement('div');
+                        div.className = "modal";
+
+                        let header = document.createElement('div');
+                        header.id = "header";
+
+                        let h4 = document.createElement('h4');
+                        h4.appendChild(document.createTextNode("Modify HP:"))
+                        header.appendChild(h4);
+
+                        let i = document.createElement('i');
+                        i.appendChild(document.createTextNode("To subtract prepend -"))
+                        header.appendChild(i);
+
+                        div.appendChild(header);
+
+                        let input = document.createElement('input');
+
+                        div.appendChild(input);
+
+                        let button = document.createElement('button');
+                        button.appendChild(document.createTextNode("\u270E"));
+                        button.addEventListener('click', () => {
+                            if (isNaN(input.value) || input.value == "") {
+                                alert("Enter a number.");
+                            } else {
+                                this.setAttribute('hp', parseInt(this.getAttribute('hp')) + parseInt(input.value));
+
+                                let attr = shadow.querySelector(".hp");
+                                attr.textContent = this.getAttribute("hp");
+
+                                div.remove();
+                            }
+                        }, false);
+
+                        div.appendChild(button);
+
+                        shadow.appendChild(div);
+                    }, false);
+                    editHp.className = "editButton";
+
+                    div.appendChild(editHp);
+
+                    let dexMod = Math.floor((json["Ability Scores"]["Dexterity"] - 10) / 2);
+                    let roll = Math.floor(Math.random() * 20) + 1;
+
+                    this.setAttribute('init', dexMod + roll);
+
+                    let creatureInit = document.createElement('span');
+                    creatureInit.appendChild(document.createTextNode(`${this.getAttribute('init')}`));
+                    creatureInit.className = "init";
+
+                    div.appendChild(creatureInit);
+                    
+                    let close = document.createElement('button');
+                    close.appendChild(document.createTextNode("\u2716"));
+                    close.addEventListener('click', () => {
+                        this.remove();
+                    }, false);
+                    close.className = "closeButton";
+
+                    div.appendChild(close);
+
+                    shadow.appendChild(div);
+                } 
+            }
+
+            customElements.define('creature-listitem', CreatureListItem);
+
+            class PCListItem extends HTMLElement {
+                constructor(name, init) {
+                    super();
+
+                    let shadow = this.attachShadow({mode: 'open'});
+
+                    let style = document.createElement('style');
+                    style.textContent = `
+                        #container {
+                            border: 1px solid black;
+                            padding: 10px;
+                        }
+
+                        button {
+                            background-color: white;
+                        }
+
+                        .name {
+                            display: inline-block;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            min-width: 200px;
+                        }
+
+                        .init {
+                            display: inline-block;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            width: 50px;
+                        }
+
+                        .closeButton {
+                            float: right;
+                        }
+
+                    `;
+
+                    shadow.appendChild(style);
+
+                    let div = document.createElement('div');
+                    div.id = "container";
+
+                    let pcName = document.createElement('span');
+                    pcName.appendChild(document.createTextNode(name));
+                    pcName.className = "name";
+
+                    div.appendChild(pcName);
+                    
+                    let pcInit = document.createElement('span');
+                    pcInit.appendChild(init);
+                    pcInit.className = "init";
+
+                    div.appendChild(pcInit);
+                    
+                    let close = document.createElement('button');
+                    close.appendChild(document.createTextNode("\u2716"));
+                    close.addEventListener('click', () => {
+                        this.remove();
+                    }, false);
+                    close.className = "closeButton";
+
+                    div.appendChild(close);
+
+                    shadow.appendChild(div);
+                } 
+            }
+
+            customElements.define('pc-listitem', PCListItem);
+        </script>
+    </body>
+</html>

@@ -14,7 +14,7 @@ export class Bestiary extends HTMLElement {
         let shadow = this.attachShadow({mode: 'open'});
 
         let style = Element('style', shadow);
-        style.innerHTML = `
+        style.textContent = `
             .header {
                 display: block;
                 font-weight: bold;

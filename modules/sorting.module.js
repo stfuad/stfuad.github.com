@@ -30,8 +30,6 @@ export function SortByName(json) {
         "Z": []
     }
 
-    // Sort each key into array by first letter
-
     Object.keys(json).forEach(key => {
         if (key.startsWith("A")) {
             obj["A"].push(key);
@@ -91,4 +89,12 @@ export function SortByName(json) {
     // Merge arrays into a json object
 
     return obj;
+}
+
+export function SortByCreatureType(json) {
+
+}
+
+export function SortBySchool(json) {
+
 }

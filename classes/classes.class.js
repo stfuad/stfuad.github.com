@@ -63,40 +63,37 @@ export class Classes extends HTMLElement {
 
         Level1(JSON.parse(localStorage.getItem("Classes")), subContent);
 
+        Navigation();
+
         function Level1(json, parent) {
             for(let key in json) {
                 // console.log(`Level 1 - ${key}`);
-                let div = document.createElement('div');
+                let div = Element('div', parent);
                 div.id = key;
         
-                let h1 = document.createElement('h1');
-                h1.appendChild(document.createTextNode(key));
+                let h1 = TextElement('h1', key, div);
                 h1.id = key;
-                div.appendChild(h1);
         
-                NavigationHeader("h3", key);
+                //TextElement('h3', key, div);
         
                 Level2(json[key], div, h1.id);
-        
-                parent.appendChild(div);
             }
         }
         
         function Level2(json, parent, linkTarget) {
             for (let key in json) {
-                let div = document.createElement('div');
+                let div = Element('div', parent);
                 div.id = key;
                 // div.className = "level2";
         
                 // console.log(`Level 2 - ${key}`);
         
-                if(!key.includes("Table")) {
-                    let h2 = document.createElement('h2');
-                    h2.appendChild(document.createTextNode(key));
+                if(key.includes("Table")) {
+                    let h2 = TextElement('h2', `${linkTarget} ${key}`, div);
                     h2.id = `${linkTarget} ${key}`;
-                    div.appendChild(h2);
-        
-                    NavigationLink(h2.id, key);
+                } else {
+                    let h2 = TextElement('h2', key, div);
+                    h2.id = `${linkTarget} ${key}`;
                 }
         
                 if (key.includes("Table")) {
@@ -106,35 +103,25 @@ export class Classes extends HTMLElement {
                 } else {
                     Level3(json[key], div, linkTarget);
                 }
-        
-                parent.appendChild(div);
             }
         }
         
         function Level3(json, parent, linkTarget) {
             for (let key in json) {
-                let div = document.createElement('div');
+                let div = Element('div', parent);
                 div.id = key;
                 // div.className = "level3";
         
                 // console.log(`Level 3 - ${key}`);
         
-                let h3 = document.createElement('h3');
-                h3.appendChild(document.createTextNode(key));
-                h3.id = `${linkTarget} ${key}`;
-                div.appendChild(h3);
-        
-                if (key !== "Description") {
-                    //NavigationLink(h3.id, `- ${key}`)
-                }
-                
+                let h3 = TextElement('h3', key, div);
+                //h3.id = `${linkTarget} ${key}`;
+
                 if (Array.isArray(json[key])) {
                     Paragraphs(json[key], div);
                 } else {
                     Level4(json[key], div);
                 }
-        
-                parent.appendChild(div);
             }
         }
         
@@ -238,24 +225,28 @@ export class Classes extends HTMLElement {
             }
         }
         
-        function NavigationHeader(header, text) {
-            let target = shadow.querySelector("#list");
-        
-            let temp = TextElement(header, text, target);
-            temp.id = text;
-        }
-        
-        function NavigationLink(href, text) {
+        function Navigation() {
             let target = shadow.querySelector("#list");
 
-            let subCon = shadow.querySelector("#subContent");
+            let h1s = shadow.querySelectorAll('h1');
+            
+            for (let h1 of h1s) {
+                TextElement('h1', h1.textContent, target);
 
-            let target2 = subCon.querySelector(`#${href}`);
-        
-            let a = Link(text, undefined, target);
-            a.addEventListener('click', () => {
-                target2.scrollIntoView();
-            }, false)
+                let target2 = shadow.getElementById(h1.textContent);
+
+                let h2s = target2.querySelectorAll('h2');
+
+                for (let h2 of h2s) {
+                    let a = Link(h2.textContent, undefined, target);
+                    a.addEventListener('click', () => {
+                        let target3 = shadow.getElementById(h2.id);
+
+                        target3.scrollIntoView();
+                    }, false)
+                    
+                }
+            }
         }
     }
 }
