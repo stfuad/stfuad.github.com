@@ -6,7 +6,7 @@
             body {
                 display: grid;
                 grid-template-columns: 300px 500px 1fr;
-                grid-template-rows: 1fr 1fr 1fr;
+                grid-template-rows: 24px 20px 1fr 1fr;
                 grid-gap: 10px;
                 font-family: 'Courier New', Courier, monospace;
                 font-size: 1em;
@@ -16,7 +16,7 @@
 
             #creatureList {
                 grid-column: 1;
-                grid-row: 1/4;
+                grid-row: 1/5;
                 height: calc(100vh - 2px);
                 overflow: auto;
                 border: 1px solid black;
@@ -41,65 +41,60 @@
             }
 
             #creatureList > .listItem:hover {
-                height: 20px;
-                text-indent: 2em;
-                border: 1px solid black;
-                
-            }
-
-            #tracker {
-                grid-column: 2/3;
-                grid-row: 1/4;
-                height: calc(100vh - 2px); 
-                overflow: auto;
-            }
-
-            #tracker > div > button {
-                background-color: white;
-            }
-
-            #trackerHeader > span > h4 {
-                display: inline;
+                background-color: aliceblue;
             }
 
             #toolbar {
-                padding: 10px;
+                grid-column: 2;
+                grid-row: 1;
+                max-height: 24px;
+                border: 1px solid black;
             }
 
             #toolbar > button {
-                padding: 10px 20px 10px 20px;
             }
 
-            #sheet {
-                grid-column: 3/4;
-                grid-row: 1/4;
-                height: calc(100vh - 2px);
-                overflow: auto;
-                padding: 10px;
+            #trackerHeaders {
+                grid-column: 2;
+                grid-row: 2;
+                max-height: 20px;
+                border: 1px solid black;
+            }
+
+            #trackerHeaders > h4 {
+                display: inline-block;
+                padding-left: 10px;
+                padding-right: 10px;
+                margin: 0px;
             }
 
             .name {
-                display: inline-block;
-                padding-left: 10px;
-                padding-right: 10px;
-                width: 210px;
-                font-weight: bold;
+                width: 200px;
             }
 
             .hp {
-                display: inline-block;
-                padding-left: 10px;
-                padding-right: 10px;
-                width: 80px;
-                font-weight: bold;
+                width: 70px;
             }
 
             .init {
-                display: inline-block;
-                padding-left: 10px;
-                padding-right: 10px;
                 width: 50px;
-                font-weight: bold;
+            }
+
+            #tracker {
+                grid-column: 2;
+                grid-row: 3/5;
+                height: calc(100vh - 66px); 
+                overflow: auto;
+                border: 1px solid black;
+            }
+
+            #sheet {
+                grid-column: 3;
+                grid-row: 1/5;
+                height: calc(100vh - 22px);
+                overflow: auto;
+                padding: 10px;
+                border: 1px solid black;
             }
 
         </style>
@@ -108,10 +103,19 @@
         <div id="creatureList"></div>
         <div id="sheet"></div>
 
+        <div id="toolbar">
+            <button type="button">Add PC</button>
+            <button type="button">Clear</button>
+        </div>
+        <div id="trackerHeaders">
+            <h4 class="name">Name</h4>
+            <h4 class="hp">HP</h4>
+            <h4 class="init">Initiative</h4>
+        </div>
         <div id="tracker"></div>
 
         <script>
-            let host = document.querySelector("#tracker");
+            /* let host = document.querySelector("#tracker");
 
             let buttons = document.createElement('div');
             buttons.id = "toolbar";
@@ -193,7 +197,7 @@
 
             headers.appendChild(init);
 
-            host.appendChild(headers);
+            host.appendChild(headers); */
         </script>
 
         <script>
@@ -376,6 +380,7 @@
                     div.appendChild(creatureHP);
 
                     let editHp = document.createElement('button');
+                    editHp.type = "button";
                     editHp.appendChild(document.createTextNode("\u270E"));
                     editHp.addEventListener('click', () => {
                         let div = document.createElement('div');
@@ -399,6 +404,7 @@
                         div.appendChild(input);
 
                         let button = document.createElement('button');
+                        button.type = "button";
                         button.appendChild(document.createTextNode("\u270E"));
                         button.addEventListener('click', () => {
                             if (isNaN(input.value) || input.value == "") {
@@ -417,7 +423,6 @@
 
                         shadow.appendChild(div);
                     }, false);
-                    editHp.className = "editButton";
 
                     div.appendChild(editHp);
 
@@ -432,7 +437,14 @@
 
                     div.appendChild(creatureInit);
                     
+                    let editInit = document.createElement('button');
+                    editInit.type = "button";
+                    editInit.appendChild(document.createTextNode("\u270E"));
+
+                    div.appendChild(editInit);
+
                     let close = document.createElement('button');
+                    close.type = "button";
                     close.appendChild(document.createTextNode("\u2716"));
                     close.addEventListener('click', () => {
                         this.remove();
@@ -448,6 +460,22 @@
             customElements.define('creature-listitem', CreatureListItem);
 
             class PCListItem extends HTMLElement {
+                get init() {
+                    return this.hasAttribute('init');
+                }
+
+                set init(val) {
+                    if (val) {
+                        this.setAttribute('init', '');
+                    } else {
+                        this.removeAttribute('init');
+                    }
+                }
+
+                static get observedAttributes() {
+                    return ['init'];
+                }
+
                 constructor(name, init) {
                     super();
 
