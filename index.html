@@ -28,12 +28,13 @@
 
         </style>
     </head>
-    
+
     <body>
         <div id="navigation"></div>
         <div id="content"></div>
         <script>
             fetch("./json/5e Data.json")
+                .then(response => response.json())
                 .then(json => {
                     console.log(json);
                     for(let key in json) {
