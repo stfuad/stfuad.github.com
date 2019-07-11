@@ -63,8 +63,7 @@ export class Links extends HTMLElement {
                 }
             }
 
-            let temp = new newElement();
-            content.appendChild(temp);
+            content.appendChild(new newElement());
         }
     }
 }

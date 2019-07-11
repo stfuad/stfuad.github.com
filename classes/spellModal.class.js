@@ -49,8 +49,7 @@ export class SpellModal extends HTMLElement {
         button.id = "spellSheetClose";
         button.textContent = "\u2716";
         button.onclick = () => {
-            let item = shadow.getElementById("spellModal");
-            item.remove();
+            this.remove();
         };
 
         div.appendChild(button);

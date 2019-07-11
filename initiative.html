@@ -5,7 +5,7 @@
         <style>
             body {
                 display: grid;
-                grid-template-columns: 300px 1fr 1fr;
+                grid-template-columns: 300px 500px 1fr;
                 grid-template-rows: 1fr 1fr 1fr;
                 grid-gap: 10px;
                 font-family: 'Courier New', Courier, monospace;
@@ -50,7 +50,7 @@
             #tracker {
                 grid-column: 2/3;
                 grid-row: 1/4;
-                height: calc(100vh - 2px);
+                height: calc(100vh - 2px); 
                 overflow: auto;
             }
 
@@ -75,6 +75,7 @@
                 grid-row: 1/4;
                 height: calc(100vh - 2px);
                 overflow: auto;
+                padding: 10px;
             }
 
             .name {
@@ -121,10 +122,28 @@
                 let div = document.createElement('div');
                 div.className = "modal";
 
+                let h41 = document.createElement('h4');
+                h41.appendChild(document.createTextNode("Name:"));
+                div.appendChild(h41);
+
                 let input1 = document.createElement('input');
 
-                let input2 = document.createElement('input');
+                div.appendChild(input1);
 
+                let h42 = document.createElement('h4');
+                h42.appendChild(document.createTextNode("Initiative:"));
+
+                div.appendChild(h42);
+
+                let input2 = document.createElement('input');
+        
+                div.appendChild(input2);
+
+                let button = document.createElement('button');
+                button.appendChild(document.createTextNode("Submit"));
+                button.addEventListener('click', () => {
+                    
+                }, false)
 
                 host.appendChild(div);
             }, false);
@@ -247,11 +266,13 @@
                     style.textContent = `
                         #container {
                             border: 1px solid black;
+                            min-width: 431px;
                             padding: 10px;
                         }
 
                         button {
                             background-color: white;
+                            border: 0px;
                         }
 
                         .name {
@@ -259,8 +280,10 @@
                             padding-left: 10px;
                             padding-right: 10px;
                             position: relative;
-                            top: 5px;
+                            top: 6px;
                             width: 200px;
+                            min-width: 200px;
+                            max-width: 200px;
                             white-space: nowrap;
                             overflow: hidden;
                             text-overflow: ellipsis;
@@ -280,10 +303,9 @@
                             width: 50px;
                         }
 
-                        .editButton {
-                        }
-
                         .closeButton {
+                            position: relative;
+                            top: 4px;
                             float: right;
                         }
 
@@ -292,7 +314,7 @@
                             top: 50%;
                             left: 50%;
                             height: 65px;
-                            width 200px;
+                            width: 200px;
                             transform: translate(-50%, -50%);
                             border: 1px solid black;
                             border-radius: 5px;
@@ -326,9 +348,7 @@
                                     target.remove()
                                 }
 
-                                let creature = new module.CreatureSheet(name, json);
-
-                                host.appendChild(creature);
+                                host.appendChild(new module.CreatureSheet(name, json));
                             });
                     }, false);
                     creatureName.className = "name";
@@ -442,6 +462,7 @@
 
                         button {
                             background-color: white;
+                            border: 0px;
                         }
 
                         .name {
@@ -460,6 +481,7 @@
 
                         .closeButton {
                             float: right;
+                            top: 4px
                         }
 
                     `;
