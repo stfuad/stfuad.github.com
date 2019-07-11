@@ -35,6 +35,7 @@
         <script>
             fetch("./json/5e Data.json")
                 .then(json => {
+                    console.log(json);
                     for(let key in json) {
                         localStorage.setItem(key, JSON.stringify(json[key]));
                     }
