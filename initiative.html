@@ -51,9 +51,6 @@
                 border: 1px solid black;
             }
 
-            #toolbar > button {
-            }
-
             #trackerHeaders {
                 grid-column: 2;
                 grid-row: 2;
@@ -233,6 +230,26 @@
                 });
 
             class CreatureListItem extends HTMLElement {
+                set name(val) {
+                    if (val) {
+                        this.setAttribute('name', '');
+                    } else {
+                        this.removeAttribute('name');
+                    }
+                }
+
+                get name() {
+                    return this.hasAttribute('name');
+                }
+
+                set hp(val) {
+                    if (val) {
+                        this.setAttribute('hp', '');
+                    } else {
+                        this.removeAttribute('hp');
+                    }
+                }
+
                 get init() {
                     return this.hasAttribute('init');
                 }
@@ -249,14 +266,6 @@
                     return this.hasAttribute('hp');
                 }
 
-                set hp(val) {
-                    if (val) {
-                        this.setAttribute('hp', '');
-                    } else {
-                        this.removeAttribute('hp');
-                    }
-                }
-
                 static get observedAttributes() {
                     return ['init', 'hp'];
                 }
@@ -268,97 +277,51 @@
 
                     let style = document.createElement('style');
                     style.textContent = `
-                        #container {
+                        :host {
+                            display: grid;
+                            grid-template-columns: 235px 105px 50px 1fr;
+                            grid-template-rows: 1fr;
                             border: 1px solid black;
-                            min-width: 431px;
-                            padding: 10px;
                         }
 
-                        button {
-                            background-color: white;
+                        input {
                             border: 0px;
                         }
 
-                        .name {
-                            display: inline-block;
-                            padding-left: 10px;
-                            padding-right: 10px;
-                            position: relative;
-                            top: 6px;
-                            width: 200px;
-                            min-width: 200px;
-                            max-width: 200px;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
+                        #name {
+                            grid-column: 1;
+                            text-indent: 1em;
                         }
 
-                        .hp {
-                            display: inline-block;
-                            padding-left: 10px;
-                            padding-right: 10px;
-                            width: 50px;
+                        #hp {
+                            grid-column: 2;
                         }
 
-                        .init {
-                            display: inline-block;
-                            padding-left: 10px;
-                            padding-right: 10px;
-                            width: 50px;
+                        #init {
+                            grid-column: 3;
                         }
 
-                        .closeButton {
-                            position: relative;
-                            top: 4px;
+                        #buttons {
+                            grid-column: 4;
+                        }
+
+                        #buttons > button {
                             float: right;
-                        }
-
-                        .modal {
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            height: 65px;
-                            width: 200px;
-                            transform: translate(-50%, -50%);
-                            border: 1px solid black;
-                            border-radius: 5px;
-                            padding: 10px;
-                        }
-
-                        .modal > #header > h4 {
-                            margin-top: 0px;
-                            margin-bottom: 0px;
-                        }
-
-                        .modal > #header > i {
-                            font-size: .75em;
                         }
                     `;
 
                     shadow.appendChild(style);
 
-                    let div = document.createElement('div');
-                    div.id = "container";
+                    this.setAttribute('name', name);
 
-                    let creatureName = document.createElement('span');
-                    creatureName.appendChild(document.createTextNode(name));
-                    creatureName.addEventListener('click', () => {
-                        import("./classes/creatureSheet.class.js")
-                            .then(module => {
-                                let host = document.querySelector("#sheet");
-                                let target = host.querySelector("creature-sheet");
-    
-                                if (target !== null) {
-                                    target.remove()
-                                }
+                    let creatureName = document.createElement('input');
+                    creatureName.type = "text";
+                    creatureName.value = name;
+                    creatureName.readOnly = true;
+                    creatureName.id = "name";
 
-                                host.appendChild(new module.CreatureSheet(name, json));
-                            });
-                    }, false);
-                    creatureName.className = "name";
+                    shadow.appendChild(creatureName);
 
-                    div.appendChild(creatureName);
-                    
                     let conMod = Math.floor((json["Ability Scores"]["Constitution"] - 10) / 2);
 
                     let hitDice = json["Hit Dice"]
@@ -373,75 +336,65 @@
 
                     this.setAttribute('hp', max);
 
-                    let creatureHP = document.createElement('span');
-                    creatureHP.appendChild(document.createTextNode(`${this.getAttribute('hp')}`));
-                    creatureHP.className = "hp";
+                    let creatureHP = document.createElement('input');
+                    creatureHP.type = "text";
+                    creatureHP.value = this.getAttribute('hp');
+                    creatureHP.readOnly = true;
+                    creatureHP.id = "hp";
 
-                    div.appendChild(creatureHP);
-
-                    let editHp = document.createElement('button');
-                    editHp.type = "button";
-                    editHp.appendChild(document.createTextNode("\u270E"));
-                    editHp.addEventListener('click', () => {
-                        let div = document.createElement('div');
-                        div.className = "modal";
-
-                        let header = document.createElement('div');
-                        header.id = "header";
-
-                        let h4 = document.createElement('h4');
-                        h4.appendChild(document.createTextNode("Modify HP:"))
-                        header.appendChild(h4);
-
-                        let i = document.createElement('i');
-                        i.appendChild(document.createTextNode("To subtract prepend -"))
-                        header.appendChild(i);
-
-                        div.appendChild(header);
-
-                        let input = document.createElement('input');
-
-                        div.appendChild(input);
-
-                        let button = document.createElement('button');
-                        button.type = "button";
-                        button.appendChild(document.createTextNode("\u270E"));
-                        button.addEventListener('click', () => {
-                            if (isNaN(input.value) || input.value == "") {
-                                alert("Enter a number.");
-                            } else {
-                                this.setAttribute('hp', parseInt(this.getAttribute('hp')) + parseInt(input.value));
-
-                                let attr = shadow.querySelector(".hp");
-                                attr.textContent = this.getAttribute("hp");
-
-                                div.remove();
-                            }
-                        }, false);
-
-                        div.appendChild(button);
-
-                        shadow.appendChild(div);
-                    }, false);
-
-                    div.appendChild(editHp);
+                    shadow.appendChild(creatureHP);
 
                     let dexMod = Math.floor((json["Ability Scores"]["Dexterity"] - 10) / 2);
                     let roll = Math.floor(Math.random() * 20) + 1;
 
                     this.setAttribute('init', dexMod + roll);
 
-                    let creatureInit = document.createElement('span');
-                    creatureInit.appendChild(document.createTextNode(`${this.getAttribute('init')}`));
-                    creatureInit.className = "init";
+                    let creatureInit = document.createElement('input');
+                    creatureInit.type = "text";
+                    creatureInit.value = this.getAttribute('init');
+                    creatureInit.readOnly = true;
+                    creatureInit.id = "init";
 
-                    div.appendChild(creatureInit);
-                    
-                    let editInit = document.createElement('button');
-                    editInit.type = "button";
-                    editInit.appendChild(document.createTextNode("\u270E"));
+                    shadow.appendChild(creatureInit);
 
-                    div.appendChild(editInit);
+                    let buttons = document.createElement('div');
+
+                    let view = document.createElement('button');
+                    view.type = "button";
+                    view.appendChild(document.createTextNode("\uD83D\uDCC4"));
+                    view.addEventListener('click', () => {
+                        import("./classes/creatureSheet.class.js")
+                            .then(module => {
+                                let host = document.querySelector("#sheet");
+                                let target = host.querySelector("creature-sheet");
+    
+                                if (target !== null) {
+                                    target.remove()
+                                }
+
+                                host.appendChild(new module.CreatureSheet(name, json));
+                            });
+                    }, false);
+
+                    buttons.appendChild(view);
+
+                    let edit = document.createElement('button');
+                    edit.type = "button";
+                    edit.appendChild(document.createTextNode("\u270E"));
+                    edit.addEventListener('click', () => {
+                        let inputs = shadow.querySelectorAll('input');
+
+                        let store1 = this.getAttribute('name');
+                        for (let node of inputs) {
+                            if (node.readOnly === true) {
+                                node.readOnly = false;
+                            } else if (node.readOnly === false) {
+                                node.readOnly = true;
+                            }
+                        }
+                    }, false);
+
+                    buttons.appendChild(edit);
 
                     let close = document.createElement('button');
                     close.type = "button";
@@ -451,9 +404,9 @@
                     }, false);
                     close.className = "closeButton";
 
-                    div.appendChild(close);
+                    buttons.appendChild(close);
 
-                    shadow.appendChild(div);
+                    shadow.appendChild(buttons);
                 } 
             }
 
