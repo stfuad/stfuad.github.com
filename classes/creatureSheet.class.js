@@ -13,6 +13,7 @@ export class CreatureSheet extends HTMLElement {
             }
 
             #creatureSheetHeader > h2 {
+                margin-top: 0px;
                 margin-bottom: 0px;
             }
 

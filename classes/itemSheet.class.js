@@ -9,6 +9,7 @@ export class ItemSheet extends HTMLElement {
         let style = document.createElement('style');
         style.innerHTML = `
             div > h3 {
+                margin-top: 0px;
                 margin-bottom: 0px;
             }
         `;

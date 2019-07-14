@@ -4,7 +4,7 @@ import {SpellSheet} from "./spellSheet.class.js";
 
 // imports - modules
 
-import {SortByName} from "../modules/sorting.module.js";
+import {SortByName, SortBySchool} from "../modules/sorting.module.js";
 import {Element, TextElement, Link} from "../modules/htmlElements.module.js";
 
 export class Spells extends HTMLElement {
@@ -27,12 +27,18 @@ export class Spells extends HTMLElement {
             .grid {
                 display: grid;
                 grid-template-columns: 300px 1fr;
-                grid-template-rows: calc(100vh - 20px);
+                grid-template-rows: 22px calc(100vh - 42px);
                 grid-gap: 10px;
+            }
+
+            #tabs > button {
+                background-color: white;
+                border-radius: 5px;
             }
 
             #list {
                 grid-column: 1;
+                grid-row: 2;
                 overflow: auto;
             }
 
@@ -47,13 +53,17 @@ export class Spells extends HTMLElement {
             }
 
             #subContent {
-                grid-column: 2/3;
+                grid-column: 2;
+                grid-row: 1/3;
                 overflow: auto;
             }
         `;
 
         let container = Element('div', shadow);
         container.className = "grid";
+
+        let tabs = Element('div', container);
+        tabs.id = "tabs";
 
         let list = Element('div', container);
         list.id = "list";
@@ -62,29 +72,55 @@ export class Spells extends HTMLElement {
         subContent.id = "subContent";
 
         let spells = JSON.parse(localStorage.getItem("Spells"));
-        let keys = SortByName(spells);
 
-        for (let array in keys) {
-            let div = Element('div', list);
-    
-            let span = TextElement('span', array, div);
-            span.className = "header";
-    
-            keys[array].sort().forEach(item => {
-    
-                let a = Link(item, undefined, div)
-                a.addEventListener('click', () => {
-                    let target = shadow.querySelector("spell-sheet");
-    
-                    if (target !== null) {
-                        target.remove()
-                    }
-                    
-                    subContent.appendChild(new SpellSheet(item, spells[item]));
+        let sortedByName = SortByName(spells);
+        let sortedBySchool = SortBySchool(spells);
+
+        let byName = TextElement('button', "by Name", tabs);
+        byName.type = "button";
+        byName.addEventListener('click', () => {
+            list.innerHTML = "";
+            CreateList(sortedByName);
+        }, false);
+
+        let bySchool = TextElement('button', "by School", tabs);
+        bySchool.type = "button";
+        bySchool.addEventListener('click', () => {
+            list.innerHTML = "";
+            CreateList(sortedBySchool);
+        }, false);
+
+        CreateList(sortedByName);
+
+        function CreateList(obj) {
+            for (let array in obj) {
+                let div = Element('div', list);
+        
+                if (obj[array].length > 0) {
+                    let span = TextElement('span', array, div);
+                    span.className = "header";
+                }
+                
+                obj[array].sort().forEach(item => {
+        
+                    let a = Link(item, undefined, div)
+                    a.addEventListener('click', () => {
+                        let target = shadow.querySelector("spell-sheet");
+        
+                        if (target !== null) {
+                            target.remove()
+                        }
+                        
+                        subContent.appendChild(new SpellSheet(item, spells[item]));
+                    });
                 });
-            });
-    
-            list.appendChild(div);
+        
+                list.appendChild(div);
+            }
+        }
+        
+        function CreateClassList(json) {
+            
         }
     }
 }

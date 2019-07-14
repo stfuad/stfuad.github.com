@@ -27,16 +27,22 @@ export class Items extends HTMLElement {
             .grid {
                 display: grid;
                 grid-template-columns: 300px 1fr;
-                grid-template-rows: calc(100vh - 20px);
+                grid-template-rows: 22px calc(100vh - 42px);
                 grid-gap: 10px;
+            }
+
+            #tabs > button {
+                background-color: white;
+                border-radius: 5px;
             }
 
             #list {
                 grid-column: 1;
+                grid-row: 2;
                 overflow: auto;
             }
 
-            #list > div > a{
+            #list > div > a {
                 display: block;
                 white-space: nowrap;
                 overflow: hidden;
@@ -47,13 +53,17 @@ export class Items extends HTMLElement {
             }
 
             #subContent {
-                grid-column: 2/3;
+                grid-column: 2;
+                grid-row: 1/3;
                 overflow: auto;
             }
         `;
 
         let container = Element('div', shadow);
         container.className = "grid";
+
+        let tabs = Element('div', container);
+        tabs.id = "tabs";
 
         let list = Element('div', container);
         list.id = "list";
@@ -62,29 +72,35 @@ export class Items extends HTMLElement {
         subContent.id = "subContent";
 
         let items = JSON.parse(localStorage.getItem("Magic Items"));
-        let keys = SortByName(items);
+        let sortedByName = SortByName(items);
 
-        for (let array in keys) {
-            let div = Element('div', list);
-    
-            let span = TextElement('span', array, div);
-            span.className = "header";
-    
-            keys[array].sort().forEach(item => {
-    
-                let a = Link(item, undefined, div)
-                a.addEventListener('click', () => {
-                    let target = shadow.querySelector("item-sheet");
-    
-                    if (target !== null) {
-                        target.remove()
-                    }
-                    
-                    subContent.appendChild(new ItemSheet(item, items[item]));
+        CreateList(sortedByName);
+
+        function CreateList(obj) {
+            for (let array in obj) {
+                let div = Element('div', list);
+        
+                if (obj[array].length > 0) {
+                    let span = TextElement('span', array, div);
+                    span.className = "header";
+                }
+                
+                obj[array].sort().forEach(item => {
+        
+                    let a = Link(item, undefined, div)
+                    a.addEventListener('click', () => {
+                        let target = shadow.querySelector("item-sheet");
+        
+                        if (target !== null) {
+                            target.remove()
+                        }
+                        
+                        subContent.appendChild(new ItemSheet(item, items[item]));
+                    });
                 });
-            });
-    
-            list.appendChild(div);
+        
+                list.appendChild(div);
+            }
         }
     }
 }
