@@ -68,32 +68,25 @@ export class Classes extends HTMLElement {
         function Level1(json, parent) {
             for(let key in json) {
                 // console.log(`Level 1 - ${key}`);
+
                 let div = Element('div', parent);
                 div.id = key;
         
-                let h1 = TextElement('h1', key, div);
-                h1.id = key;
+                TextElement('h1', key, div);
         
-                //TextElement('h3', key, div);
-        
-                Level2(json[key], div, h1.id);
+                Level2(json[key], div, key);
             }
         }
         
         function Level2(json, parent, linkTarget) {
             for (let key in json) {
-                let div = Element('div', parent);
-                div.id = key;
-                // div.className = "level2";
-        
                 // console.log(`Level 2 - ${key}`);
         
-                if(key.includes("Table")) {
-                    let h2 = TextElement('h2', `${linkTarget} ${key}`, div);
-                    h2.id = `${linkTarget} ${key}`;
-                } else {
-                    let h2 = TextElement('h2', key, div);
-                    h2.id = `${linkTarget} ${key}`;
+                let div = Element('div', parent);
+                div.id = `${linkTarget} ${key}`;
+        
+                if (key !== "Table") {
+                    TextElement('h2', key, div);
                 }
         
                 if (key.includes("Table")) {
@@ -108,14 +101,16 @@ export class Classes extends HTMLElement {
         
         function Level3(json, parent, linkTarget) {
             for (let key in json) {
-                let div = Element('div', parent);
-                div.id = key;
-                // div.className = "level3";
-        
                 // console.log(`Level 3 - ${key}`);
-        
-                let h3 = TextElement('h3', key, div);
-                //h3.id = `${linkTarget} ${key}`;
+
+                let div = Element('div', parent);
+                
+
+                if (key !== "Description") {
+                    div.id = `${linkTarget} ${key}`;
+
+                    TextElement('h3', key, div);
+                }
 
                 if (Array.isArray(json[key])) {
                     Paragraphs(json[key], div);
@@ -226,27 +221,72 @@ export class Classes extends HTMLElement {
         }
         
         function Navigation() {
-            let target = shadow.querySelector("#list");
+            let list = shadow.getElementById("list");
+            let subContent = shadow.getElementById("subContent");
 
-            let h1s = shadow.querySelectorAll('h1');
+            let level1 = subContent.querySelectorAll('h1');
+
+            for (let className of level1) {
+                TextElement('h3', className.textContent, list);
+
+                let level2 = subContent.querySelector(`#${className.textContent}`);
+
+                for (let node of level2.childNodes) {
+                    if (node.id !== "" && node.id !== undefined) {
+                        console.log(`node: ${node.id}`);
+
+                        let split = node.id.split(className.textContent);
+
+                        if (node.id.includes("Table")) {
+                            let a = Link(split[1], undefined, list);
+                            a.addEventListener('click', () => {
+                                let target = subContent.querySelector(`#${node.id}`)
+                                target.scrollIntoView();
+                            }, false)
+                        } else {
+                            console.log(`${split}`)
+
+                            TextElement('h4', split.slice(-1)[0], list);
+                        }
+                        
+                        for (let subNode of node.childNodes) {
+                            console.log(`subNode: ${subNode.id}`);
+
+                            if (subNode.id !== "") {
+                                let split2 = subNode.id.split(className.textContent);
+
+                                let a = Link(split2.slice(-1)[0], undefined, list);
+                                a.addEventListener('click', () => {
+                                    let target = shadow.getElementById(subNode.id);
+                                    target.scrollIntoView();
+                                }, false)
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* let topLevel = shadow.querySelectorAll('h1');
             
-            for (let h1 of h1s) {
-                TextElement('h1', h1.textContent, target);
+            for (let level2 of topLevel) {
+                TextElement('h1', level2.textContent, target);
 
-                let target2 = shadow.getElementById(h1.textContent);
+                let target2 = shadow.getElementById(level2.textContent);
 
                 let h2s = target2.querySelectorAll('h2');
 
                 for (let h2 of h2s) {
+                    let target3 = shadow.getElementById(h2.id);
+
                     let a = Link(h2.textContent, undefined, target);
                     a.addEventListener('click', () => {
-                        let target3 = shadow.getElementById(h2.id);
 
                         target3.scrollIntoView();
                     }, false)
+
                     
                 }
-            }
+            } */
         }
     }
 }
