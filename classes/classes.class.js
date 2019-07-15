@@ -253,11 +253,20 @@ export class Classes extends HTMLElement {
                             if (subNode.id !== "") {
                                 let split2 = subNode.id.split("-");
 
-                                let a = Link(split2[1], undefined, list);
-                                a.addEventListener('click', () => {
-                                    let target = shadow.getElementById(subNode.id);
-                                    target.scrollIntoView();
-                                }, false)
+                                if(node.id.includes("Invocations")) {
+                                    let a = Link(subNode.id, undefined, list);
+                                    a.addEventListener('click', () => {
+                                        let target = shadow.getElementById(subNode.id);
+                                        target.scrollIntoView();
+                                    }, false)
+                                } else {
+                                    let a = Link(split2[1], undefined, list);
+                                    a.addEventListener('click', () => {
+                                        let target = shadow.getElementById(subNode.id);
+                                        target.scrollIntoView();
+                                    }, false)
+                                }
+                                
                             }
                         }
                     }
