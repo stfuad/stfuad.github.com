@@ -83,7 +83,7 @@ export class Classes extends HTMLElement {
                 // console.log(`Level 2 - ${key}`);
         
                 let div = Element('div', parent);
-                div.id = `${linkTarget} ${key}`;
+                div.id = `${linkTarget}-${key}`;
         
                 if (key !== "Table") {
                     TextElement('h2', key, div);
@@ -107,7 +107,7 @@ export class Classes extends HTMLElement {
                 
 
                 if (key !== "Description") {
-                    div.id = `${linkTarget} ${key}`;
+                    div.id = `${linkTarget}-${key}`;
 
                     TextElement('h3', key, div);
                 }
@@ -235,7 +235,7 @@ export class Classes extends HTMLElement {
                     if (node.id !== "" && node.id !== undefined) {
                         console.log(`node: ${node.id}`);
 
-                        let split = node.id.split(className.textContent);
+                        let split = node.id.split("-");
 
                         if (node.id.includes("Table")) {
                             let a = Link(split[1], undefined, list);
@@ -244,18 +244,16 @@ export class Classes extends HTMLElement {
                                 target.scrollIntoView();
                             }, false)
                         } else {
-                            console.log(`${split}`)
-
-                            TextElement('h4', split.slice(-1)[0], list);
+                            TextElement('h4', split[1], list);
                         }
                         
                         for (let subNode of node.childNodes) {
                             console.log(`subNode: ${subNode.id}`);
 
                             if (subNode.id !== "") {
-                                let split2 = subNode.id.split(className.textContent);
+                                let split2 = subNode.id.split("-");
 
-                                let a = Link(split2.slice(-1)[0], undefined, list);
+                                let a = Link(split2[1], undefined, list);
                                 a.addEventListener('click', () => {
                                     let target = shadow.getElementById(subNode.id);
                                     target.scrollIntoView();
@@ -265,28 +263,6 @@ export class Classes extends HTMLElement {
                     }
                 }
             }
-
-            /* let topLevel = shadow.querySelectorAll('h1');
-            
-            for (let level2 of topLevel) {
-                TextElement('h1', level2.textContent, target);
-
-                let target2 = shadow.getElementById(level2.textContent);
-
-                let h2s = target2.querySelectorAll('h2');
-
-                for (let h2 of h2s) {
-                    let target3 = shadow.getElementById(h2.id);
-
-                    let a = Link(h2.textContent, undefined, target);
-                    a.addEventListener('click', () => {
-
-                        target3.scrollIntoView();
-                    }, false)
-
-                    
-                }
-            } */
         }
     }
 }
