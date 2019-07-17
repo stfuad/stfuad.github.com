@@ -93,6 +93,8 @@ export function SortByName(json) {
     return obj;
 }
 
+// creatures
+
 export function SortByType(json) {
     let obj = {
         "Aberration": [],
@@ -256,6 +258,8 @@ export function SortByCR(json) {
     return obj;
 }
 
+// spells
+
 export function SortBySchool(json) {
     let obj = {
         "Abjuration": [],
@@ -294,100 +298,100 @@ export function SortBySchool(json) {
 export function SortByClass(json) {
     let obj = {
         "Bard": {
-            "0": [],
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": []
+            "Cantrips (0 Level)": [],
+            "1st Level": [],
+            "2nd Level": [],
+            "3rd Level": [],
+            "4th Level": [],
+            "5th Level": [],
+            "6th Level": [],
+            "7th Level": [],
+            "8th Level": [],
+            "9th Level": []
         },
         "Cleric": {
-            "0": [],
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": []            
+            "Cantrips (0 Level)": [],
+            "1st Level": [],
+            "2nd Level": [],
+            "3rd Level": [],
+            "4th Level": [],
+            "5th Level": [],
+            "6th Level": [],
+            "7th Level": [],
+            "8th Level": [],
+            "9th Level": []
         },
         "Druid": {
-            "0": [],
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": []            
+            "Cantrips (0 Level)": [],
+            "1st Level": [],
+            "2nd Level": [],
+            "3rd Level": [],
+            "4th Level": [],
+            "5th Level": [],
+            "6th Level": [],
+            "7th Level": [],
+            "8th Level": [],
+            "9th Level": []
         },
         "Paladin": {
-            "0": [],
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": []            
+            "Cantrips (0 Level)": [],
+            "1st Level": [],
+            "2nd Level": [],
+            "3rd Level": [],
+            "4th Level": [],
+            "5th Level": [],
+            "6th Level": [],
+            "7th Level": [],
+            "8th Level": [],
+            "9th Level": []
         },
         "Ranger": {
-            "0": [],
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": []            
+            "Cantrips (0 Level)": [],
+            "1st Level": [],
+            "2nd Level": [],
+            "3rd Level": [],
+            "4th Level": [],
+            "5th Level": [],
+            "6th Level": [],
+            "7th Level": [],
+            "8th Level": [],
+            "9th Level": []
         },
         "Sorcerer": {
-            "0": [],
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": []            
+            "Cantrips (0 Level)": [],
+            "1st Level": [],
+            "2nd Level": [],
+            "3rd Level": [],
+            "4th Level": [],
+            "5th Level": [],
+            "6th Level": [],
+            "7th Level": [],
+            "8th Level": [],
+            "9th Level": []
         },
         "Warlock": {
-            "0": [],
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": []            
+            "Cantrips (0 Level)": [],
+            "1st Level": [],
+            "2nd Level": [],
+            "3rd Level": [],
+            "4th Level": [],
+            "5th Level": [],
+            "6th Level": [],
+            "7th Level": [],
+            "8th Level": [],
+            "9th Level": []
         },
         "Wizard": {
-            "0": [],
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-            "8": [],
-            "9": []            
+            "Cantrips (0 Level)": [],
+            "1st Level": [],
+            "2nd Level": [],
+            "3rd Level": [],
+            "4th Level": [],
+            "5th Level": [],
+            "6th Level": [],
+            "7th Level": [],
+            "8th Level": [],
+            "9th Level": []
         }
     }
 
@@ -397,27 +401,55 @@ export function SortByClass(json) {
         for (let sClass in json[spell]["Classes"]) {
             if (json[spell]["Classes"][sClass] === true) {
                 if (spellLevel === 0) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["Cantrips (0 Level)"].push(spell);
                 } else if (spellLevel === 1) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["1st Level"].push(spell);
                 } else if (spellLevel === 2) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["2nd Level"].push(spell);
                 } else if (spellLevel === 3) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["3rd Level"].push(spell);
                 } else if (spellLevel === 4) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["4th Level"].push(spell);
                 } else if (spellLevel === 5) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["5th Level"].push(spell);
                 } else if (spellLevel === 6) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["6th Level"].push(spell);
                 } else if (spellLevel === 7) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["7th Level"].push(spell);
                 } else if (spellLevel === 8) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["8th Level"].push(spell);
                 } else if (spellLevel === 9) {
-                    obj[sClass][spellLevel].push(spell);
+                    obj[sClass]["9th Level"].push(spell);
                 }
             }
+        }
+    }
+
+    return obj;
+}
+
+// items
+
+export function SortByRarity(json) {
+    let obj = {
+        "Common": [],
+        "Uncommon": [],
+        "Rare": [],
+        "Very Rare": [],
+        "Legendary": []
+    }
+
+    for (let item in json) {
+        if (json[item]["Rarity"] === "common") {
+            obj["Common"].push(item);
+        } else if (json[item]["Rarity"] === "uncommon") {
+            obj["Uncommon"].push(item);
+        } else if (json[item]["Rarity"] === "rare") {
+            obj["Rare"].push(item);
+        } else if (json[item]["Rarity"] === "very rare") {
+            obj["Very Rare"].push(item);
+        } else if (json[item]["Rarity"] === "legendary") {
+            obj["Legendary"].push(item);
         }
     }
 

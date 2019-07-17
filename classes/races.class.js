@@ -58,12 +58,19 @@ export class Races extends HTMLElement {
 
             TextElement('h1', race, level1);
 
+            TextElement('h3', race, list);
+
             for (let var2 in races[race]) {
                 let level2 = Element('div', level1);
                 level2.id = var2;
 
                 TextElement('h2', var2, level2);
                 Element('hr', level2);
+
+                let a = Link(var2, undefined, list);
+                a.addEventListener('click', () => {
+                    level2.scrollIntoView();
+                }, false);
 
                 for (let var3 in races[race][var2]) {
                     let level3 = Element('div', level2);

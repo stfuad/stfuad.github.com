@@ -233,7 +233,7 @@ export class Classes extends HTMLElement {
 
                 for (let node of level2.childNodes) {
                     if (node.id !== "" && node.id !== undefined) {
-                        console.log(`node: ${node.id}`);
+                        //console.log(`node: ${node.id}`);
 
                         let split = node.id.split("-");
 
@@ -248,7 +248,7 @@ export class Classes extends HTMLElement {
                         }
                         
                         for (let subNode of node.childNodes) {
-                            console.log(`subNode: ${subNode.id}`);
+                            //console.log(`subNode: ${subNode.id}`);
 
                             if (subNode.id !== "") {
                                 let split2 = subNode.id.split("-");

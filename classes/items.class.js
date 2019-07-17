@@ -4,7 +4,7 @@ import {ItemSheet} from "./itemSheet.class.js";
 
 // imports - modules
 
-import {SortByName} from "../modules/sorting.module.js";
+import {SortByName, SortByRarity} from "../modules/sorting.module.js";
 import {Element, TextElement, Link} from "../modules/htmlElements.module.js";
 
 export class Items extends HTMLElement {
@@ -72,7 +72,23 @@ export class Items extends HTMLElement {
         subContent.id = "subContent";
 
         let items = JSON.parse(localStorage.getItem("Magic Items"));
+
         let sortedByName = SortByName(items);
+        let sortedByRarity = SortByRarity(items);
+
+        let byName = TextElement('button', "by Name", tabs);
+        byName.type = "button";
+        byName.addEventListener('click', () => {
+            list.innerHTML = "";
+            CreateList(sortedByName);
+        }, false);
+
+        let byRarity = TextElement('button', "by Rarity", tabs);
+        byRarity.type = "button";
+        byRarity.addEventListener('click', () => {
+            list.innerHTML = "";
+            CreateList(sortedByRarity);
+        }, false);
 
         CreateList(sortedByName);
 
