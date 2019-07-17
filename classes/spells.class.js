@@ -4,7 +4,7 @@ import {SpellSheet} from "./spellSheet.class.js";
 
 // imports - modules
 
-import {SortByName, SortBySchool} from "../modules/sorting.module.js";
+import {SortByName, SortBySchool, SortByClass} from "../modules/sorting.module.js";
 import {Element, TextElement, Link} from "../modules/htmlElements.module.js";
 
 export class Spells extends HTMLElement {
@@ -75,6 +75,7 @@ export class Spells extends HTMLElement {
 
         let sortedByName = SortByName(spells);
         let sortedBySchool = SortBySchool(spells);
+        let sortedByClass = SortByClass(spells);
 
         let byName = TextElement('button', "by Name", tabs);
         byName.type = "button";
@@ -88,6 +89,13 @@ export class Spells extends HTMLElement {
         bySchool.addEventListener('click', () => {
             list.innerHTML = "";
             CreateList(sortedBySchool);
+        }, false);
+
+        let byClass = TextElement('button', "by Class", tabs);
+        byClass.type = "button";
+        byClass.addEventListener('click', () => {
+            list.innerHTML = "";
+            CreateClassList(sortedByClass);
         }, false);
 
         CreateList(sortedByName);
@@ -119,8 +127,35 @@ export class Spells extends HTMLElement {
             }
         }
         
-        function CreateClassList(json) {
+        function CreateClassList(obj) {
+            let host = shadow.getElementById("list");
+
+            for (let var1 in obj) {
+                let h2 = TextElement('h2', var1, host);
+                
+                for (let var2 in obj[var1]) {
+                    let div = Element('div', host);
+
+                    if (obj[var1][var2].length > 0) {
+                        let span = TextElement('span', var2, div);
+                        span.className = "header";
+                    }
+                    
+                    obj[var1][var2].sort().forEach(item => {
             
+                        let a = Link(item, undefined, div)
+                        a.addEventListener('click', () => {
+                            let target = shadow.querySelector("spell-sheet");
+            
+                            if (target !== null) {
+                                target.remove()
+                            }
+                            
+                            subContent.appendChild(new SpellSheet(item, spells[item]));
+                        });
+                    });
+                }
+            }
         }
     }
 }

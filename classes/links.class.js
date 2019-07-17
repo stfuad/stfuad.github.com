@@ -1,5 +1,6 @@
 // imports - classes
 
+import {Races} from "./races.class.js";
 import {Classes} from "./classes.class.js";
 import {Spells} from "./spells.class.js";
 import {Bestiary} from "./bestiary.class.js";
@@ -27,6 +28,11 @@ export class Links extends HTMLElement {
             }
         `;
         
+        let races = Link("Races", undefined, shadow);
+        races.addEventListener('click', () => {
+            Check(Races);
+        }, false);
+
         let classes = Link("Classes", undefined, shadow);
         classes.addEventListener('click', () => {
             Check(Classes);

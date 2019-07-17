@@ -1,3 +1,5 @@
+
+
 export function SortByName(json) {
     // Declare empty arrays
 
@@ -289,3 +291,135 @@ export function SortBySchool(json) {
     return obj;
 }
 
+export function SortByClass(json) {
+    let obj = {
+        "Bard": {
+            "0": [],
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []
+        },
+        "Cleric": {
+            "0": [],
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []            
+        },
+        "Druid": {
+            "0": [],
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []            
+        },
+        "Paladin": {
+            "0": [],
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []            
+        },
+        "Ranger": {
+            "0": [],
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []            
+        },
+        "Sorcerer": {
+            "0": [],
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []            
+        },
+        "Warlock": {
+            "0": [],
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []            
+        },
+        "Wizard": {
+            "0": [],
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": []            
+        }
+    }
+
+    for (let spell in json) {
+        let spellLevel = json[spell]["Level"];
+
+        for (let sClass in json[spell]["Classes"]) {
+            if (json[spell]["Classes"][sClass] === true) {
+                if (spellLevel === 0) {
+                    obj[sClass][spellLevel].push(spell);
+                } else if (spellLevel === 1) {
+                    obj[sClass][spellLevel].push(spell);
+                } else if (spellLevel === 2) {
+                    obj[sClass][spellLevel].push(spell);
+                } else if (spellLevel === 3) {
+                    obj[sClass][spellLevel].push(spell);
+                } else if (spellLevel === 4) {
+                    obj[sClass][spellLevel].push(spell);
+                } else if (spellLevel === 5) {
+                    obj[sClass][spellLevel].push(spell);
+                } else if (spellLevel === 6) {
+                    obj[sClass][spellLevel].push(spell);
+                } else if (spellLevel === 7) {
+                    obj[sClass][spellLevel].push(spell);
+                } else if (spellLevel === 8) {
+                    obj[sClass][spellLevel].push(spell);
+                } else if (spellLevel === 9) {
+                    obj[sClass][spellLevel].push(spell);
+                }
+            }
+        }
+    }
+
+    return obj;
+}
