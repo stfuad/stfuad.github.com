@@ -33,6 +33,14 @@
         <div id="navigation"></div>
         <div id="content"></div>
         <script>
+            if(!window.fetch) {
+                alert("fetch not supported")
+            }
+
+            if(!window.localStorage) {
+                alert("localstorage not supported")
+            }
+
             fetch("./json/5e Data.json")
                 .then(response => response.json())
                 .then(json => {
