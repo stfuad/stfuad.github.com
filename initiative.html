@@ -145,7 +145,11 @@
             add.type = 'button';
             add.appendChild(document.createTextNode("Add PC"));
             add.addEventListener('click', () => {
+                let target = document.querySelector("#tracker");
 
+                let pc = new PCListItem();
+
+                target.appendChild(pc);
             }, false);
 
             parent.appendChild(add); 
@@ -154,27 +158,39 @@
             sort.type = 'button';
             sort.appendChild(document.createTextNode("Sort by Initiative"));
             sort.addEventListener('click', () => {
-                let array = [];
-
                 let host = document.getElementById("tracker");
-                let nodes = document.querySelectorAll('creature-listitem');
 
-                for (let node of nodes) {
-                    array.push(node);
+                let array = Array.prototype.slice.call(host.childNodes, 0);
+
+                for (let node of array) {
                     node.remove();
                 }
 
                 let sorted = array.sort( (a, b) => {
-                    return a.getAttribute('init') - b.getAttribute('init');
+                    return parseInt(b.getAttribute('init')) - parseInt(a.getAttribute('init'));
                 });
 
-                sorted.reverse().forEach(element => {
+                sorted.forEach(element => {
                     host.appendChild(element);
                 });
-
             }, false);
 
             parent.appendChild(sort);
+
+            let clear = document.createElement('button');
+            clear.type = 'button';
+            clear.appendChild(document.createTextNode("Clear Tracker"));
+            clear.addEventListener('click', () => {
+                let host = document.getElementById("tracker");
+
+                let array = Array.prototype.slice.call(host.childNodes, 0);
+
+                for (let node of array) {
+                    node.remove();
+                }
+            }, false);
+
+            parent.appendChild(clear);
         </script>
 
         <script>
@@ -368,30 +384,47 @@
                     let creatureName = document.createElement('input');
                     creatureName.type = "text";
                     creatureName.value = this.name;
-                    creatureName.readOnly = true;
                     creatureName.id = "name";
+                    creatureName.addEventListener('change', () => {
+                        this.setAttribute('name', creatureName.value);
+                    }, false);
 
                     shadow.appendChild(creatureName);
 
                     let creatureHP = document.createElement('input');
                     creatureHP.type = "text";
                     creatureHP.value = this.hp;
-                    creatureHP.readOnly = true;
                     creatureHP.id = "hp";
+                    creatureHP.addEventListener('change', () => {
+                        this.setAttribute('hp', creatureHP.value);
+                    }, false);
 
                     shadow.appendChild(creatureHP);
 
                     let creatureInit = document.createElement('input');
                     creatureInit.type = "text";
                     creatureInit.value = this.init;
-                    creatureInit.readOnly = true;
                     creatureInit.id = "init";
+                    creatureInit.addEventListener('change', () => {
+                        this.setAttribute('init', creatureInit.value);
+                    }, false);
 
                     shadow.appendChild(creatureInit);
 
                     // buttons
 
                     let buttons = document.createElement('div');
+                    buttons.id = "buttons";
+
+                    let close = document.createElement('button');
+                    close.type = "button";
+                    close.appendChild(document.createTextNode("\u2716"));
+                    close.addEventListener('click', () => {
+                        this.remove();
+                    }, false);
+                    close.className = "closeButton";
+
+                    buttons.appendChild(close);
 
                     let view = document.createElement('button');
                     view.type = "button";
@@ -412,37 +445,114 @@
 
                     buttons.appendChild(view);
 
-                    let edit = document.createElement('button');
-                    edit.type = "button";
-                    edit.appendChild(document.createTextNode("\u270E"));
-                    edit.addEventListener('click', () => {
-                        let inputs = shadow.querySelectorAll('input');
+                    shadow.appendChild(buttons);
+                }
+            }
 
-                        let store1 = this.getAttribute('name');
-                        for (let node of inputs) {
-                            if (node.readOnly === true) {
-                                node.style.backgroundColor = "lightgray";
-                                node.readOnly = false;
-                            } else if (node.readOnly === false) {
-                                if (node.id === "name") {
-                                    this.setAttribute('name', node.value);
-                                }
-                                
-                                if (node.id === "hp") {
-                                    this.setAttribute('hp', node.value);
-                                }
-                                
-                                if (node.id === "init") {
-                                    this.setAttribute('init', node.value);
-                                }
-                                
-                                node.style.backgroundColor = "white";
-                                node.readOnly = true;
-                            }
+            customElements.define('creature-listitem', CreatureListItem);
+
+            class PCListItem extends HTMLElement {
+                
+                // attributes
+
+                set name(val) {
+                    if (val) {
+                        this.setAttribute('name', '');
+                    } else {
+                        this.removeAttribute('name');
+                    }
+                }
+
+                get name() {
+                    return this.getAttribute('name');
+                }
+
+                set init(val) {
+                    if (val) {
+                        this.setAttribute('init', '');
+                    } else {
+                        this.removeAttribute('init');
+                    }
+                }
+
+                get init() {
+                    return this.getAttribute('init');
+                }
+
+                static get observedAttributes() {
+                    return ['name', 'init', 'hp'];
+                }
+
+                constructor() {
+                    super();
+
+                    this.setAttribute('name', "Player Character");
+                    this.setAttribute('init', 0);
+
+                    let shadow = this.attachShadow({mode: 'open'});
+
+                    let style = document.createElement('style');
+                    style.textContent = `
+                        :host {
+                            display: grid;
+                            grid-template-columns: 235px 105px 50px 1fr;
+                            grid-template-rows: 1fr;
+                            border: 1px solid black;
                         }
+
+                        input {
+                            border: 0px;
+                        }
+
+                        #name {
+                            grid-column: 1/3;
+                            text-indent: 1em;
+                        }
+
+                        #init {
+                            grid-column: 3;
+                        }
+
+                        #buttons {
+                            grid-column: 4;
+                        }
+
+                        #buttons button {
+                            background-color: white;
+                            border-radius: 5px;
+                            text-align: right;
+                            float: right;
+                        }
+                    `;
+
+                    shadow.appendChild(style);
+
+                    // inputs
+
+                    let pcName = document.createElement('input');
+                    pcName.type = "text";
+                    pcName.value = this.name;
+                    pcName.id = "name";
+                    pcName.addEventListener('change', () => {
+                        this.setAttribute('name', pcName.value);
                     }, false);
 
-                    buttons.appendChild(edit);
+                    shadow.appendChild(pcName);
+
+                    let pcInit = document.createElement('input');
+                    pcInit.type = "text";
+                    pcInit.value = this.init;
+                    pcInit.id = "init";
+                    pcInit.addEventListener('change', () => {
+                        this.setAttribute('init', pcInit.value);
+                    }, false);
+
+                    shadow.appendChild(pcInit);
+
+                    // buttons
+
+                    let buttons = document.createElement('div');
+                    buttons.id = "buttons";
 
                     let close = document.createElement('button');
                     close.type = "button";
@@ -458,7 +568,7 @@
                 }
             }
 
-            customElements.define('creature-listitem', CreatureListItem);        
+            customElements.define('pc-listitem', PCListItem);
         </script>
     </body>
 </html>
