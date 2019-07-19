@@ -40,13 +40,13 @@
                         localStorage.setItem(key, JSON.stringify(json[key]));
                     }
                 })
-                .then(() => {
+                .then(() => ({
                     let nav = document.querySelector("#navigation");
 
                     import("./classes/links.class.js")
                         .then(module => {
                            nav.appendChild(new module.Links());
-                        })
+                        }))
                 });
         </script>
     </body>
