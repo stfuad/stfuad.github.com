@@ -34,19 +34,19 @@
         <div id="content"></div>
         <script>
             fetch("./json/5e Data.json")
-                .then((response) => (response.json()))
+                .then(response => response.json())
                 .then(json => {
                     for(let key in json) {
                         localStorage.setItem(key, JSON.stringify(json[key]));
                     }
                 })
-                .then(() => ({
+                .then(() => {
                     let nav = document.querySelector("#navigation");
 
                     import("./classes/links.class.js")
                         .then(module => {
                            nav.appendChild(new module.Links());
-                        }))
+                        })
                 });
         </script>
     </body>
