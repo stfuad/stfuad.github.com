@@ -37,8 +37,17 @@ export class Races extends HTMLElement {
                 overflow: auto;
             }
 
+            #subContent div {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
             b + p {
                 display: inline;
+            }
+
+            table {
+                width: 100%;
             }
         `;
 
@@ -83,6 +92,8 @@ export class Races extends HTMLElement {
                         } else {
                             Paragraphs(races[race][var2][var3], level3);
                         }
+                    } else if (var3.includes("Table")) {
+                        Table(races[race][var2][var3], level3);
                     } else {
                         TextElement('h3', var3, level3);
 

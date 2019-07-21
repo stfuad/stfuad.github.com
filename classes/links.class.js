@@ -38,6 +38,8 @@ export class Links extends HTMLElement {
             Check(Classes);
         }, false);
 
+        Element('hr', shadow);
+
         let bestiary = Link("Bestiary", undefined, shadow);
         bestiary.addEventListener('click', () => {
             Check(Bestiary);

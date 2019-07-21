@@ -1,19 +1,27 @@
+import {SpellModal} from "../classes/spellModal.class.js";
+
 export function List(array, listType, parent) {
-    let list = Element(listType, parent);
+    let list = document.createElement(listType);
 
     array.forEach(item => {
-        let li = Element('li', list);
+        let li = document.createElement('li');
 
         if(item.includes("#")) {
             let split = item.split("#");
 
-            TextElement('b', `${split[0]}. `, li);
-            
-            Text(split[1], li);
+            let b = document.createElement('b');
+            b.appendChild(document.createTextNode(`${split[0]}. `));
+            li.appendChild(b);
+
+            li.appendChild(document.createTextNode(split[1]));
         } else {
             Text(item, li);
         }
+
+        list.appendChild(li);
     });
+
+    parent.appendChild(list);
 
     return list;
 }
@@ -24,7 +32,9 @@ export function Table(json, parent) {
     // Caption
 
     if(json["Title"] != undefined) {
-        TextElement('caption', json["Title"], table);
+        let caption = Element('caption', table);
+
+        Text(json["Title"], caption);
     }
 
     // Headers
@@ -33,7 +43,9 @@ export function Table(json, parent) {
 
     if(json["Headers"] !== undefined) {
         json["Headers"].forEach(header => {
-            TextElement('th', header, row0);
+            let th = Element('th', row0);
+
+            Text(header, th);
         });
     }
     
@@ -44,9 +56,9 @@ export function Table(json, parent) {
             let tr = Element('tr', table);
 
             for(let key in row) {
-                TextElement('td', row[key], tr);
+                let td = Element('td', tr);
 
-                /* if(key == "Spells") {
+                if(key === "Spell" || key === "Spells" || key === "Circle Spells") {
                     let spells = JSON.parse(localStorage.getItem("Spells"));
 
                     let length = row[key].length
@@ -54,23 +66,21 @@ export function Table(json, parent) {
                     for(var i = 0; i < length; i++) {
                         let spell = row[key][i];
 
-                        let spellJSON = JSON.stringify(spells[spell]);
-
-                        let a = document.createElement('a');
-
-                        a.href = `javascript:CreateSpellSheet("${spell}", ${spellJSON})`;
-
                         if(i > 0) {
-                            a.appendChild(document.createTextNode(`, ${spell}`));
+                            let a = Link(`, ${spell}`, undefined, td);
+                            a.addEventListener('click', () => {
+                                parent.appendChild(new SpellModal(spell, spells[spell]));
+                            }, false);
                         } else {
-                            a.appendChild(document.createTextNode(spell));
+                            let a = Link(spell, undefined, td);
+                            a.addEventListener('click', () => {
+                                parent.appendChild(new SpellModal(spell, spells[spell]));
+                            }, false);
                         }
-
-                        temp.appendChild(a);
                     }
                 } else {
-                    temp.appendChild(document.createTextNode(row[key]));
-                } */
+                    Text(row[key], td);
+                }
             }
         });
     }
@@ -81,17 +91,29 @@ export function Table(json, parent) {
 export function Paragraphs(array, parent) {
     if (array !== undefined) {
         array.forEach(line => {
-            let p = TextElement('p', undefined, parent);
+            let p = document.createElement('p');
 
             if(line.includes('#')) {
                 let split = line.split('#');
 
-                TextElement('b', `${split[0]}. `, p);
+                let b = document.createElement('b');
+                b.appendChild(document.createTextNode(`${split[0]}. `));
+                p.appendChild(b);
 
-                Text(split[1], p);
+                p.appendChild(document.createTextNode(split[1]));
+            } else if (line.includes('=')) {
+                let split = line.split('=');
+
+                let b = document.createElement('b');
+                b.appendChild(document.createTextNode(`${split[0]} `));
+                p.appendChild(b);
+
+                p.appendChild(document.createTextNode(`= ${split[1]} `));
             } else {
-                Text(line, p);
+                p.appendChild(document.createTextNode(line));
             }
+
+            parent.appendChild(p);
         });
     }
 }
@@ -105,6 +127,15 @@ export function Element(element, parent) {
     parent.appendChild(temp);
 
     return temp;
+}
+
+export function Header(element, text, parent) {
+    let header = document.createElement(element);
+    header.appendChild(document.createTextNode(text));
+
+    parent.appendChild(header);
+
+    return header;
 }
 
 export function TextElement(element, text, parent) {

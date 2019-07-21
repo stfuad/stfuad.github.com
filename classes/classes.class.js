@@ -2,7 +2,7 @@
 
 // imports - modules
 
-import {Paragraphs, List, Table, Element, TextElement, Link} from "../modules/htmlElements.module.js";
+import {Paragraphs, List, Table, Element, Header, Text, Link} from "../modules/htmlElements.module.js";
 
 export class Classes extends HTMLElement {
     constructor() {
@@ -20,15 +20,16 @@ export class Classes extends HTMLElement {
                 text-align: left;
             }
 
-            .level5 p:first-of-type {
-                display: inline;
-            }
-
             .grid {
                 display: grid;
                 grid-template-columns: 300px 1fr;
                 grid-template-rows: calc(100vh - 20px);
                 grid-gap: 10px;
+            }
+
+            a {
+                color: blue;
+                cursor: pointer;
             }
 
             #list {
@@ -42,13 +43,43 @@ export class Classes extends HTMLElement {
                 overflow: hidden;
                 text-indent: 1em;
                 text-overflow: ellipsis;
-                color: blue;
-                cursor: pointer;
             }
 
             #subContent {
                 grid-column: 2/3;
                 overflow: auto;
+            }
+
+            #subContent div > b + p {
+                display: inline;
+            }
+
+            #subContent h1 {
+                margin-top: 0px;
+            }
+
+            #subContent h3 {
+                border-bottom: 1px solid black;
+            }
+
+            .level2 {
+                background-color: #d6eaf8 ;
+            }
+
+            .level3 {
+                background-color: #85c1e9;
+            }
+
+            .level4 {
+                background-color: #3498db;
+            }
+
+            .level5 {
+                background-color: #2874a6;
+            }
+
+            .level6 {
+                background-color: red;
             }
         `;
 
@@ -61,212 +92,161 @@ export class Classes extends HTMLElement {
         let subContent = Element('div', container);
         subContent.id = "subContent";
 
-        Level1(JSON.parse(localStorage.getItem("Classes")), subContent);
+        let json = JSON.parse(localStorage.getItem("Classes"));
 
-        Navigation();
+        for(let className in json) {
+            //console.log(`Level 1 - ${className}`);
 
-        function Level1(json, parent) {
-            for(let key in json) {
-                // console.log(`Level 1 - ${key}`);
+            let level1 = Element('div', subContent);
+            //level1.id = className;
+            //level1.className = "level1";
 
-                let div = Element('div', parent);
-                div.id = key;
+            // subContent Header
+            Header('h1', className, level1);
+
+            // list Header
+            Header('h3', className, list);
+            
+            let jsonLevel2;
+
+            for (let key in json[className]) {
+                jsonLevel2 = json[className][key];
+                //console.log(`Level 2 - ${key}`);
         
-                TextElement('h1', key, div);
-        
-                Level2(json[key], div, key);
-            }
-        }
-        
-        function Level2(json, parent, linkTarget) {
-            for (let key in json) {
-                // console.log(`Level 2 - ${key}`);
-        
-                let div = Element('div', parent);
-                div.id = `${linkTarget}-${key}`;
+                let level2 = Element('div', level1);
+                level2.id = `${className}-${key}`;
+                //level2.className = "level2";
         
                 if (key !== "Table") {
-                    TextElement('h2', key, div);
+                    // subContent Header
+                    Header('h2', key, level2);
+
+                    // list Header
+                    Header('h4', key, list);
                 }
         
-                if (key.includes("Table")) {
-                    Table(json[key], div);
+                if (key === "Table") {
+                    let a = Link("Table", undefined, list);
+                    a.addEventListener('click', () => {
+                        let target = shadow.getElementById(level2.id);
+                        target.scrollIntoView();
+                    }, false);
+
+                    Table(jsonLevel2, level2);
                 } else if (key === "Eldritch Invocations") {
-                    EldritchInvocations(json[key], div);
-                } else {
-                    Level3(json[key], div, linkTarget);
-                }
-            }
-        }
-        
-        function Level3(json, parent, linkTarget) {
-            for (let key in json) {
-                // console.log(`Level 3 - ${key}`);
+                    for(let invocation in jsonLevel2) {
+                        //console.log(`Invocation - ${invocation}`)
 
-                let div = Element('div', parent);
-                
-
-                if (key !== "Description") {
-                    div.id = `${linkTarget}-${key}`;
-
-                    TextElement('h3', key, div);
-                }
-
-                if (Array.isArray(json[key])) {
-                    Paragraphs(json[key], div);
-                } else {
-                    Level4(json[key], div);
-                }
-            }
-        }
-        
-        function Level4(json, parent) {
-            for (let key in json) {
-                let div = document.createElement('div');
-                div.id = key;
-                // div.className = "level3";
-        
-                // console.log(`Level 4 - ${key}`);
-        
-                if(!key.includes("Table") && !key.includes("Description") && !key.includes("Calc") && !key.includes("Unordered List")) {
-                    let h4 = document.createElement('h4');
-                    h4.appendChild(document.createTextNode(key));
-                    div.appendChild(h4);
-                }
-        
-                if(key.includes("Table")) {
-                    Table(json[key], div);
-                } else if (key.includes("Unordered List")) {
-                    List(json[key], 'ul', div)
-                } else if (Array.isArray(json[key])) {
-                    Paragraphs(json[key], div);
-                } else {
-                    Level5(json[key], div);
-                }
-        
-                parent.appendChild(div);
-            }
-        }
-        
-        function Level5(json, parent) {
-            for(let key in json) {
-                let div = document.createElement('div');
-                div.id = key;
-                div.className = "level5";
-        
-                //console.log(`Level 5 - ${key}`);
-        
-                if(!key.includes("Calc") && !key.includes("Table") && !key.includes("Description") && !key.includes("Unordered List")) {
-                    /* let h5 = document.createElement('h5');
-                    h5.appendChild(document.createTextNode(key));
-                    parent.appendChild(h5); */
-        
-                    let b = document.createElement('b');
-                    b.appendChild(document.createTextNode(`${key}. `));
-                    div.appendChild(b);
-                }
-        
-                if(key.includes("Table")) {
-                    Table(json[key], div);
-                } else if (key.includes("Unordered List")) {
-                    List(json[key], 'ul', div);
-                } else if (Array.isArray(json[key])){
-                    Paragraphs(json[key], div);
-                } else {
-                    Level6(json[key], div);
-                }
-        
-                parent.appendChild(div);
-            }
-        }
-        
-        function Level6(json, parent) {
-            for(let key in json) {
-                let div = document.createElement('div');
-                div.id = key;
-                // div.className = "level6";
-                
-                //console.log(`Level 6 - ${key}`);
-                
-                if(key.includes("Table")) {
-                    Table(json[key], div);
-                } else {
-                    Paragraphs(json[key], div);
-                }
-        
-                parent.appendChild(div);
-            }
-        }
-        
-        function EldritchInvocations(json, parent) {
-            for(let invocation in json) {
-                let div = document.createElement('div');
-                div.id = invocation;
-                div.className = "invocation";
-        
-                let h3 = document.createElement('h3');
-                h3.appendChild(document.createTextNode(invocation));
-                div.appendChild(h3);
-        
-                if(json[invocation]["Prerequisite"] !== undefined) {
-                    let i = document.createElement('i');
-                    i.appendChild(document.createTextNode(`Prerequisite: ${json[invocation]["Prerequisite"]}`));
-                    div.appendChild(i);
-                }
-        
-                Paragraphs(json[invocation]["Description"], div);
-                
-                parent.appendChild(div);
-            }
-        }
-        
-        function Navigation() {
-            let list = shadow.getElementById("list");
-            let subContent = shadow.getElementById("subContent");
-
-            let level1 = subContent.querySelectorAll('h1');
-
-            for (let className of level1) {
-                TextElement('h3', className.textContent, list);
-
-                let level2 = subContent.querySelector(`#${className.textContent}`);
-
-                for (let node of level2.childNodes) {
-                    if (node.id !== "" && node.id !== undefined) {
-                        //console.log(`node: ${node.id}`);
-
-                        let split = node.id.split("-");
-
-                        if (node.id.includes("Table")) {
-                            let a = Link(split[1], undefined, list);
-                            a.addEventListener('click', () => {
-                                let target = subContent.querySelector(`#${node.id}`)
-                                target.scrollIntoView();
-                            }, false)
-                        } else {
-                            TextElement('h4', split[1], list);
-                        }
+                        let div = Element('div', level2);
+                        div.id = invocation;
+                        //div.className = "invocation";
                         
-                        for (let subNode of node.childNodes) {
-                            //console.log(`subNode: ${subNode.id}`);
+                        let a = Link(invocation, undefined, list);
+                        a.addEventListener('click', () => {
+                            let target = shadow.getElementById(div.id);
+                            target.scrollIntoView();
+                        }, false);
 
-                            if (subNode.id !== "") {
-                                let split2 = subNode.id.split("-");
+                        Header('h3', invocation, div);
+                
+                        if(jsonLevel2[invocation]["Prerequisite"] !== undefined) {
+                            let i = Element('i', div);
+                            i.appendChild(document.createTextNode(`Prerequisite: ${jsonLevel2[invocation]["Prerequisite"]}`));
+                        }
+                
+                        Paragraphs(jsonLevel2[invocation]["Description"], div);
+                    }
+                } else {
+                    let jsonLevel3;
 
-                                if(node.id.includes("Invocations")) {
-                                    let a = Link(subNode.id, undefined, list);
-                                    a.addEventListener('click', () => {
-                                        let target = shadow.getElementById(subNode.id);
-                                        target.scrollIntoView();
-                                    }, false)
-                                } else {
-                                    let a = Link(split2[1], undefined, list);
-                                    a.addEventListener('click', () => {
-                                        let target = shadow.getElementById(subNode.id);
-                                        target.scrollIntoView();
-                                    }, false)
-                                }
+                    for (let key2 in jsonLevel2) {
+                        jsonLevel3 = jsonLevel2[key2];
+                        //console.log(`Level 3 - ${key2}`);
+        
+                        let level3 = Element('div', level2);
+                        level3.id = `${className}-${key2}`;
+                        //level3.className = "level3";
+        
+                        let a = Link(key2, undefined, list);
+                        a.addEventListener('click', () => {
+                            let target = shadow.getElementById(level3.id);
+                            target.scrollIntoView();
+                        }, false);
+
+                        if (key !== "Description") {
+                            Header('h3', key2, level3);
+                        }
+        
+                        if (Array.isArray(jsonLevel3)) {
+                            Paragraphs(jsonLevel3, level3);
+                        } else {
+                            let jsonLevel4;
+
+                            for (let key3 in jsonLevel3) {
+                                jsonLevel4 = jsonLevel3[key3];
+                                // console.log(`Level 4 - ${key3}`);
                                 
+                                /* let level4 = document.createElement('div');
+                                //level4.className = "level4"; */
+
+                                if(!key3.includes("Table") && !key3.includes("Description") && !key3.includes("Unordered List")) {
+                                    Header('h4', key3, level3);
+                                }
+                        
+                                if(key3.includes("Table")) {
+                                    Table(jsonLevel4, level3);
+                                } else if (key3.includes("Unordered List")) {
+                                    List(jsonLevel4, 'ul', level3);
+                                } else if (Array.isArray(jsonLevel4)) {
+                                    Paragraphs(jsonLevel4, level3);
+                                } else {
+                                    let jsonLevel5;
+
+                                    for(let key4 in jsonLevel4) {
+                                        jsonLevel5 = jsonLevel4[key4];
+
+                                        let level5 = document.createElement('div');
+                                        //level5.className = "level5";
+
+                                        //console.log(`Level 5 - ${className} - ${key3} - ${key4}`);
+                                
+                                        if(key4.includes("Table")) {
+                                            Table(jsonLevel5, level5);
+                                        } else if (key4.includes("Unordered List")) {
+                                            List(jsonLevel5, 'ul', level5);
+                                        } else if (Array.isArray(jsonLevel5)){
+                                            if(!key4.includes("Description")) {
+                                                let b = Element('b', level5);
+                                                b.appendChild(document.createTextNode(`${key4}. `));
+                                            }
+                                                    
+                                            Paragraphs(jsonLevel5, level5);
+                                        } else {
+                                            let jsonLevel6;
+
+                                            for (let key5 in jsonLevel5) {
+                                                jsonLevel6 = jsonLevel5[key5];
+
+                                                //console.log(`Level 6 - ${className} - ${key4} - ${key5}`);
+                                                
+                                                if (key5.includes("Table")) {
+                                                    Table(jsonLevel6, level5);
+                                                } else if (key5 === "Unordered List") {
+                                                    List(jsonLevel6, 'ul', level5);
+                                                } else {
+                                                    let b = Element('b', level5);
+                                                    b.appendChild(document.createTextNode(`${key4}. `));
+                                
+                                                    Paragraphs(jsonLevel6, level5);
+                                                }
+                                            }
+                                        }
+
+                                        level3.appendChild(level5);
+                                    }
+                                }
+
+                                /* level3.appendChild(level4); */
                             }
                         }
                     }
