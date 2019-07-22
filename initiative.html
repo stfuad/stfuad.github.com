@@ -143,13 +143,24 @@
 
             let add = document.createElement('button');
             add.type = 'button';
-            add.appendChild(document.createTextNode("Add PC"));
+            add.appendChild(document.createTextNode("Add PCs"));
             add.addEventListener('click', () => {
                 let target = document.querySelector("#tracker");
 
-                let pc = new PCListItem();
+                let pcs = []
 
-                target.appendChild(pc);
+                pcs.push(new PCListItem("AJ"));
+                pcs.push(new PCListItem("Ben"));
+                pcs.push(new PCListItem("Dan"));
+                pcs.push(new PCListItem("Jerry"));
+                pcs.push(new PCListItem("Kyle"));
+                pcs.push(new PCListItem("Sean"));
+                pcs.push(new PCListItem("Steve"));
+
+                pcs.forEach(element => {
+                    target.appendChild(element);
+                });
+                
             }, false);
 
             parent.appendChild(add); 
@@ -483,10 +494,12 @@
                     return ['name', 'init', 'hp'];
                 }
 
-                constructor() {
+                constructor(name) {
                     super();
 
-                    this.setAttribute('name', "Player Character");
+                    
+                    this.setAttribute('name', name);
+                    
                     this.setAttribute('init', 0);
 
                     let shadow = this.attachShadow({mode: 'open'});
