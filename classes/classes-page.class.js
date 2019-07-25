@@ -115,7 +115,7 @@ export class Classes extends HTMLElement {
         
                 let level2 = Element('div', level1);
                 level2.id = `${className}-${key}`;
-                level2.className = "level2";
+                //level2.className = "level2";
         
                 if (key !== "Table") {
                     // subContent Header
@@ -165,7 +165,7 @@ export class Classes extends HTMLElement {
         
                         let level3 = Element('div', level2);
                         level3.id = `${className}-${key2}`;
-                        level3.className = "level3";
+                        //level3.className = "level3";
         
                         let a = Link(key2, undefined, list);
                         a.addEventListener('click', () => {

@@ -1,9 +1,9 @@
-import {Paragraphs, List, Table, Element, TextElement} from "./htmlElements.module.js";
+import {Paragraphs, List, Table, Element, TextElement, Header} from "./htmlElements.module.js";
 
 export function Item(name, json, parent) {
     let itemHeader = Element('div', parent);
 
-    TextElement('h3', name, itemHeader);
+    Header('h3', name, itemHeader);
 
     let subString = `${json["Type"]}, ${json["Rarity"]}`;
 

@@ -4,7 +4,7 @@ import {SpellModal} from "../classes/spellModal.class.js"
 
 // modules
 
-import {List, Paragraphs, Text, Element, TextElement, Link} from "./htmlElements.module.js";
+import {List, Paragraphs, ParagraphsPrependBold, BoldKeyValue, Text, Element, TextElement, Header, Link} from "./htmlElements.module.js";
 
 export function Creature(name, json, parent) {
 
@@ -13,7 +13,7 @@ export function Creature(name, json, parent) {
     let header = Element('div', parent);
     header.id = "creatureSheetHeader";
 
-    TextElement('h2', name, header);
+    Header('h2', name, header);
 
     let subTitle = Element('i', header);
 
@@ -70,9 +70,7 @@ export function Creature(name, json, parent) {
 function ArmorClass(json, parent) {
     let div = Element('div', parent);
 
-    TextElement('b', "Armor Class ", div);
-
-    let ac = "";
+    let ac;
 
     if(json["Armor Type"] !== undefined) {
         ac = `${json["Armor Class"]} (${json["Armor Type"]})`;
@@ -80,7 +78,7 @@ function ArmorClass(json, parent) {
         ac = json["Armor Class"];
     }
     
-    Text(ac, div);
+    BoldKeyValue("Armor Class", ac, div);
 }
 
 function HitPoints(hitDice, conMod, parent) {
@@ -96,9 +94,7 @@ function HitPoints(hitDice, conMod, parent) {
     let average = (split1 + 1) / 2 * split0 + modifier;
     let max = (split0 * split1) + modifier;
 
-    TextElement('b', "Hit Points ", div);
-
-    let hp = "";
+    let hp;
 
     if(modifier < 0) {
         hp = `${hitDice} - ${modifier} (Average: ${average}, Max: ${max})`;
@@ -108,15 +104,14 @@ function HitPoints(hitDice, conMod, parent) {
         hp = `${hitDice} + ${modifier} (Average: ${average}, Max: ${max})`
     }
 
-    Text(hp, div);
+    BoldKeyValue("Hit Points", hp, div);
 }
 
 function Speed(json, parent) {
     let div = Element('div', parent);
 
-    TextElement('b', "Speed ", div);
-
     let array = [];
+
     array.push(`${json["Walk"]} ft.`);
 
     if(json["Burrow"] !== 0) {
@@ -139,7 +134,7 @@ function Speed(json, parent) {
         array.push(`swim ${json["Swim"]} ft.`);
     }
 
-    Text(array.join(", "), div);
+    BoldKeyValue("Speed", array.join(", "), div);
 }
 
 function AbilityScores(json, parent) {
@@ -192,8 +187,6 @@ function AbilityScores(json, parent) {
 function SavingThrows(json, parent) {
     let div = document.createElement('div');
 
-    TextElement('b', "Saving Throws ", div);
-
     let bool = false;
 
     let array = [];
@@ -231,7 +224,7 @@ function SavingThrows(json, parent) {
         }
     }
 
-    Text(array.join(", "), div);
+    BoldKeyValue("Saving Throws", array.join(", "), div);
 
     if(bool) {
         parent.appendChild(div);
@@ -240,8 +233,6 @@ function SavingThrows(json, parent) {
 
 function Skills(json, parent) {
     let div = document.createElement('div');
-
-    TextElement('b', "Skills ", div);
 
     let bool = false;
 
@@ -271,7 +262,7 @@ function Skills(json, parent) {
         }
     }
 
-    Text(array.join(", "), div);
+    BoldKeyValue("Skills", array.join(", "), div);
 
     if(bool) {
         parent.appendChild(div);
@@ -280,8 +271,6 @@ function Skills(json, parent) {
 
 function Senses(json, parent) {
     let div = Element('div', parent);
-
-    TextElement('b', "Senses ", div);
 
     let array = [];
 
@@ -315,15 +304,13 @@ function Senses(json, parent) {
 
     array.push(`passive Perception ${passivePerception}`)
 
-    Text(array.join(", "), div);
+    BoldKeyValue("Senses", array.join(", "), div);
 }
 
 function Challenge(json, parent) {
     let div = Element('div', parent);
 
-    TextElement('b', "Challenge ", div);
-
-    Text(`${json["Challenge"]} (${json["Experience"]} XP)`, div);
+    BoldKeyValue("Challenge", `${json["Challenge"]} (${json["Experience"]} XP)`, div);
 }
 
 function Properties(json, parent, ...properties) {
@@ -336,7 +323,7 @@ function Properties(json, parent, ...properties) {
 
             // Create the header
             if (property != "Features") {
-                TextElement('h3', property, div);
+                Header('h3', property, div);
             }
             
             // Property first level
@@ -345,12 +332,8 @@ function Properties(json, parent, ...properties) {
                 //console.log(`${property}, key: ${key}`)
                 let div2 = Element('div', div);
 
-                if (key !== "Description") {
-                    TextElement('b', `${key}. `, div2);
-                }
-
                 if (key.includes("Spellcasting")){
-                    Paragraphs(json[property][key]["Description"], div2);
+                    ParagraphsPrependBold(key, json[property][key]["Description"], div2);
 
                     Spells(json[property][key], div2);
                 } else if (key === "Description") {
@@ -359,7 +342,7 @@ function Properties(json, parent, ...properties) {
                     for(let subKey in json[property][key]) {
                         //console.log(`${property}, key: ${key}, subKey: ${subKey}`)
                         if (subKey === "Description") {
-                            Paragraphs(json[property][key][subKey], div2);
+                            ParagraphsPrependBold(key, json[property][key][subKey], div2);
                         } else if (subKey === "Ordered List") {
                             List(json[property][key][subKey], "ol", div2);
                         } else if (subKey === "Unordered List") {
@@ -368,9 +351,9 @@ function Properties(json, parent, ...properties) {
                             let div3 = Element('div', div2);
                             div3.className = "subProperty";
 
-                            TextElement('b', `${subKey}. `, div3);
-
-                            Paragraphs(json[property][key][subKey]["Description"], div3);
+                            if (subKey !== "Properties") {
+                                ParagraphsPrependBold(subKey, json[property][key][subKey]["Description"], div3);
+                            }
                         }
                     }
                 }
@@ -419,7 +402,6 @@ function Spells(json, parent) {
                 }
 
                 let a = Link(text, undefined, div2);
-
                 a.addEventListener('click', () => {
                     let modal = new SpellModal(spell, spellObj);
                     document.body.appendChild(modal);
@@ -471,9 +453,7 @@ function Arrays(json, parent, ...keys) {
             if(json[key].length > 0) {
                 let div = Element('div', parent);
 
-                TextElement('b', `${key} `, div);
-                
-                Text(json[key].join(", "), div);
+                BoldKeyValue(key, json[key].join(", "), div);
             }
         }
     });

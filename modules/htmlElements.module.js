@@ -202,3 +202,11 @@ export function Link(text, href, parent) {
 
     return a;
 }
+
+export function BoldKeyValue(key, value, parent) {
+    let b = document.createElement('b');
+    b.appendChild(document.createTextNode(`${key} `));
+
+    parent.appendChild(b);
+    parent.appendChild(document.createTextNode(value));
+}
