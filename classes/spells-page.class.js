@@ -5,7 +5,7 @@ import {SpellSheet} from "./spellSheet.class.js";
 // imports - modules
 
 import {SortByName, SortBySchool, SortByClass} from "../modules/sorting.module.js";
-import {Element, TextElement, Link} from "../modules/htmlElements.module.js";
+import {Element, Button, Header, Link} from "../modules/htmlElements.module.js";
 
 export class Spells extends HTMLElement {
     constructor() {
@@ -77,22 +77,19 @@ export class Spells extends HTMLElement {
         let sortedBySchool = SortBySchool(spells);
         let sortedByClass = SortByClass(spells);
 
-        let byName = TextElement('button', "by Name", tabs);
-        byName.type = "button";
+        let byName = Button("by Name", tabs);
         byName.addEventListener('click', () => {
             list.innerHTML = "";
             CreateList(sortedByName);
         }, false);
 
-        let bySchool = TextElement('button', "by School", tabs);
-        bySchool.type = "button";
+        let bySchool = Button("by School", tabs);
         bySchool.addEventListener('click', () => {
             list.innerHTML = "";
             CreateList(sortedBySchool);
         }, false);
 
-        let byClass = TextElement('button', "by Class", tabs);
-        byClass.type = "button";
+        let byClass = Button("by Class", tabs);
         byClass.addEventListener('click', () => {
             list.innerHTML = "";
             CreateClassList(sortedByClass);
@@ -105,7 +102,8 @@ export class Spells extends HTMLElement {
                 let div = Element('div', list);
         
                 if (obj[array].length > 0) {
-                    let span = TextElement('span', array, div);
+                    let span = Element('span', div);
+                    span.appendChild(document.createTextNode(array));
                     span.className = "header";
                 }
                 
@@ -131,13 +129,14 @@ export class Spells extends HTMLElement {
             let host = shadow.getElementById("list");
 
             for (let var1 in obj) {
-                let h2 = TextElement('h2', var1, host);
+                Header('h2', var1, host);
                 
                 for (let var2 in obj[var1]) {
                     let div = Element('div', host);
 
                     if (obj[var1][var2].length > 0) {
-                        let span = TextElement('span', var2, div);
+                        let span = Element('span', div);
+                        span.appendChild(document.createTextNode(array));
                         span.className = "header";
                     }
                     

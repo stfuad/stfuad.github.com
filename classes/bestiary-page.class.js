@@ -5,7 +5,7 @@ import {CreatureSheet} from "./creatureSheet.class.js";
 // imports - modules
 
 import {SortByName, SortByType, SortByCR} from "../modules/sorting.module.js";
-import {Element, TextElement, Link} from "../modules/htmlElements.module.js";
+import {Element, Button, Link} from "../modules/htmlElements.module.js";
 
 export class Bestiary extends HTMLElement {
     constructor() {
@@ -79,22 +79,19 @@ export class Bestiary extends HTMLElement {
 
         // buttons
 
-        let byName = TextElement('button', "by Name", tabs);
-        byName.type = "button";
+        let byName = Button("by Name", tabs);
         byName.addEventListener('click', () => {
             list.innerHTML = "";
             CreateList(sortedByName);
         }, false);
 
-        let byType = TextElement('button', "by Type", tabs);
-        byType.type = "button";
+        let byType = Button("by Type", tabs);
         byType.addEventListener('click', () => {
             list.innerHTML = "";
             CreateList(sortedByType);
         }, false);
 
-        let byCR = TextElement('button', "by CR", tabs);
-        byCR.type = "button";
+        let byCR = Button("by CR", tabs);
         byCR.addEventListener('click', () => {
             list.innerHTML = "";
             CreateList(sortedByCR);
@@ -107,7 +104,8 @@ export class Bestiary extends HTMLElement {
                 let div = Element('div', list);
         
                 if (obj[array].length > 0) {
-                    let span = TextElement('span', array, div);
+                    let span = Element('span', div);
+                    span.appendChild(document.createTextNode(array));
                     span.className = "header";
                 }
                 

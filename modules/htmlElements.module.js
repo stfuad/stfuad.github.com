@@ -88,8 +88,9 @@ export function Table(json, parent) {
     return table;
 }
 
-export function Paragraphs(array, parent) {
-    if (array !== undefined) {
+function ParaParaParagraphs(array) {
+        let temp = [];
+
         array.forEach(line => {
             let p = document.createElement('p');
 
@@ -113,9 +114,41 @@ export function Paragraphs(array, parent) {
                 p.appendChild(document.createTextNode(line));
             }
 
-            parent.appendChild(p);
+            temp.push(p);
         });
-    }
+
+        return temp;
+}
+
+export function Paragraphs(array, parent) {
+    let temp = ParaParaParagraphs(array);
+
+    temp.forEach(element => {
+        parent.appendChild(element);
+    });
+}
+
+export function ParagraphsPrependBold(key, array, parent) {
+    let temp = ParaParaParagraphs(array);
+
+    let text = temp[0].textContent;
+
+    let p = document.createElement('p');
+
+    let b = document.createElement('b');
+    b.appendChild(document.createTextNode(`${key}. `));
+
+    p.appendChild(b);
+
+    p.appendChild(document.createTextNode(text));
+
+    temp.shift();
+
+    temp.unshift(p);
+
+    temp.forEach(element => {
+        parent.appendChild(element);
+    });
 }
 
 export function Text(text, parent) {
@@ -136,6 +169,16 @@ export function Header(element, text, parent) {
     parent.appendChild(header);
 
     return header;
+}
+
+export function Button(text, parent) {
+    let button = document.createElement('button');
+    button.appendChild(document.createTextNode(text));
+    button.type = 'button';
+
+    parent.appendChild(button);
+
+    return button;
 }
 
 export function TextElement(element, text, parent) {

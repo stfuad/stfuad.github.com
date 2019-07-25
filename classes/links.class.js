@@ -1,10 +1,11 @@
 // imports - classes
 
-import {Races} from "./races.class.js";
-import {Classes} from "./classes.class.js";
-import {Spells} from "./spells.class.js";
-import {Bestiary} from "./bestiary.class.js";
-import {Items} from "./items.class.js";
+import {Races} from "./races-page.class.js";
+import {Classes} from "./classes-page.class.js";
+import {Feats} from "./feats-page.class.js";
+import {Spells} from "./spells-page.class.js";
+import {Bestiary} from "./bestiary-page.class.js";
+import {Items} from "./items-page.class.js";
 
 // imports - modules
 
@@ -28,37 +29,64 @@ export class Links extends HTMLElement {
             }
         `;
         
-        let races = Link("Races", undefined, shadow);
+        let races = document.createElement('a');
+        races.appendChild(document.createTextNode("Races"));
         races.addEventListener('click', () => {
             Check(Races);
         }, false);
 
-        let classes = Link("Classes", undefined, shadow);
+        shadow.appendChild(races);
+
+        let classes = document.createElement('a');
+        classes.appendChild(document.createTextNode("Classes"));
         classes.addEventListener('click', () => {
             Check(Classes);
         }, false);
 
-        Element('hr', shadow);
+        shadow.appendChild(classes);
 
-        let bestiary = Link("Bestiary", undefined, shadow);
+        let feats = document.createElement('a');
+        feats.appendChild(document.createTextNode("Feats"));
+        feats.addEventListener('click', () => {
+            Check(Feats);
+        }, false);
+
+        shadow.appendChild(feats);
+
+        shadow.appendChild(document.createElement('hr'));
+
+        let bestiary = document.createElement('a');
+        bestiary.appendChild(document.createTextNode("Bestiary"));
         bestiary.addEventListener('click', () => {
             Check(Bestiary);
         }, false);
 
-        let spells = Link("Spells", undefined, shadow);
+        shadow.appendChild(bestiary);
+
+        let spells = document.createElement('a');
+        spells.appendChild(document.createTextNode("Spells"));
         spells.addEventListener('click', () => {
             Check(Spells);
         }, false);
 
-        let magicItems = Link("Magic Items", undefined, shadow);
+        shadow.appendChild(spells);
+
+        let magicItems = document.createElement('a');
+        magicItems.appendChild(document.createTextNode("Magic Items"));
         magicItems.addEventListener('click', () => {
             Check(Items);
         }, false);
 
-        Element('hr', shadow);
+        shadow.appendChild(magicItems);
 
-        let initiative = Link("Initiative Tracker", "./initiative.html", shadow);
+        shadow.appendChild(document.createElement('hr'));
+
+        let initiative = document.createElement('a');
+        initiative.appendChild(document.createTextNode("Initiative Tracker"));
+        initiative.href = "./initiative.html";
         initiative.target = "_blank";
+
+        shadow.appendChild(initiative);
 
         shadow.appendChild(style);
 

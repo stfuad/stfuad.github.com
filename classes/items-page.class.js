@@ -5,7 +5,7 @@ import {ItemSheet} from "./itemSheet.class.js";
 // imports - modules
 
 import {SortByName, SortByRarity} from "../modules/sorting.module.js";
-import {Element, TextElement, Link} from "../modules/htmlElements.module.js";
+import {Element, Button, Link} from "../modules/htmlElements.module.js";
 
 export class Items extends HTMLElement {
     constructor() {
@@ -76,15 +76,13 @@ export class Items extends HTMLElement {
         let sortedByName = SortByName(items);
         let sortedByRarity = SortByRarity(items);
 
-        let byName = TextElement('button', "by Name", tabs);
-        byName.type = "button";
+        let byName = Button("by Name", tabs);
         byName.addEventListener('click', () => {
             list.innerHTML = "";
             CreateList(sortedByName);
         }, false);
 
-        let byRarity = TextElement('button', "by Rarity", tabs);
-        byRarity.type = "button";
+        let byRarity = Button("by Rarity", tabs);
         byRarity.addEventListener('click', () => {
             list.innerHTML = "";
             CreateList(sortedByRarity);
@@ -97,7 +95,8 @@ export class Items extends HTMLElement {
                 let div = Element('div', list);
         
                 if (obj[array].length > 0) {
-                    let span = TextElement('span', array, div);
+                    let span = Element('span', div);
+                    span.appendChild(document.createTextNode(array));
                     span.className = "header";
                 }
                 

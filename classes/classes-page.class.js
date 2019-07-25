@@ -2,7 +2,7 @@
 
 // imports - modules
 
-import {Paragraphs, List, Table, Element, Header, Text, Link} from "../modules/htmlElements.module.js";
+import {Paragraphs, ParagraphsPrependBold, List, Table, Element, Header, Link} from "../modules/htmlElements.module.js";
 
 export class Classes extends HTMLElement {
     constructor() {
@@ -98,7 +98,7 @@ export class Classes extends HTMLElement {
             //console.log(`Level 1 - ${className}`);
 
             let level1 = Element('div', subContent);
-            //level1.id = className;
+            level1.id = className;
             //level1.className = "level1";
 
             // subContent Header
@@ -115,7 +115,7 @@ export class Classes extends HTMLElement {
         
                 let level2 = Element('div', level1);
                 level2.id = `${className}-${key}`;
-                //level2.className = "level2";
+                level2.className = "level2";
         
                 if (key !== "Table") {
                     // subContent Header
@@ -165,7 +165,7 @@ export class Classes extends HTMLElement {
         
                         let level3 = Element('div', level2);
                         level3.id = `${className}-${key2}`;
-                        //level3.className = "level3";
+                        level3.className = "level3";
         
                         let a = Link(key2, undefined, list);
                         a.addEventListener('click', () => {
@@ -184,10 +184,11 @@ export class Classes extends HTMLElement {
 
                             for (let key3 in jsonLevel3) {
                                 jsonLevel4 = jsonLevel3[key3];
+
                                 // console.log(`Level 4 - ${key3}`);
                                 
-                                /* let level4 = document.createElement('div');
-                                //level4.className = "level4"; */
+                                /* let level4 = Element('div', level3);
+                                level4.className = "level4"; */
 
                                 if(!key3.includes("Table") && !key3.includes("Description") && !key3.includes("Unordered List")) {
                                     Header('h4', key3, level3);
@@ -205,22 +206,21 @@ export class Classes extends HTMLElement {
                                     for(let key4 in jsonLevel4) {
                                         jsonLevel5 = jsonLevel4[key4];
 
-                                        let level5 = document.createElement('div');
-                                        //level5.className = "level5";
+                                        /* let level5 = Element('div', level3);
+                                        level5.className = "level5"; */
 
                                         //console.log(`Level 5 - ${className} - ${key3} - ${key4}`);
                                 
                                         if(key4.includes("Table")) {
-                                            Table(jsonLevel5, level5);
+                                            Table(jsonLevel5, level3);
                                         } else if (key4.includes("Unordered List")) {
-                                            List(jsonLevel5, 'ul', level5);
+                                            List(jsonLevel5, 'ul', level3);
                                         } else if (Array.isArray(jsonLevel5)){
                                             if(!key4.includes("Description")) {
-                                                let b = Element('b', level5);
-                                                b.appendChild(document.createTextNode(`${key4}. `));
+                                                ParagraphsPrependBold(key4, jsonLevel5, level3);
+                                            } else {
+                                                Paragraphs(jsonLevel5, level3);
                                             }
-                                                    
-                                            Paragraphs(jsonLevel5, level5);
                                         } else {
                                             let jsonLevel6;
 
@@ -230,23 +230,16 @@ export class Classes extends HTMLElement {
                                                 //console.log(`Level 6 - ${className} - ${key4} - ${key5}`);
                                                 
                                                 if (key5.includes("Table")) {
-                                                    Table(jsonLevel6, level5);
+                                                    Table(jsonLevel6, level3);
                                                 } else if (key5 === "Unordered List") {
-                                                    List(jsonLevel6, 'ul', level5);
+                                                    List(jsonLevel6, 'ul', level3);
                                                 } else {
-                                                    let b = Element('b', level5);
-                                                    b.appendChild(document.createTextNode(`${key4}. `));
-                                
-                                                    Paragraphs(jsonLevel6, level5);
+                                                    ParagraphsPrependBold(key5, jsonLevel6, level3);
                                                 }
                                             }
                                         }
-
-                                        level3.appendChild(level5);
                                     }
                                 }
-
-                                /* level3.appendChild(level4); */
                             }
                         }
                     }
