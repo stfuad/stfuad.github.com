@@ -1,6 +1,6 @@
 // modules
 
-import {Paragraphs, List, Table, Element, TextElement, Link} from "../modules/htmlElements.module.js";
+import {Paragraphs, List, Table, Element, Header, Link} from "../modules/htmlElements.module.js";
 
 export class Feats extends HTMLElement {
     constructor() {
@@ -67,6 +67,36 @@ export class Feats extends HTMLElement {
         container.appendChild(subContent);
         
         shadow.appendChild(container);
+
+        let feats = JSON.parse(localStorage.getItem("Feats"));
+
+        let sorted = Object.keys(feats).sort();
+
+        for (let feat in feats) {
+            let header = Header('h2', feat, subContent);
+            header.id = feat;
+
+            if (feats[feat]["Prerequisite"] !== undefined) {
+                let i = Element('i', subContent);
+                i.appendChild(document.createTextNode(`Prerequisite: ${feats[feat]["Prerequisite"]}`));
+            }
+
+            Paragraphs(feats[feat]["Description"], subContent);
+
+            if (feats[feat]["Unordered List"] !== undefined) {
+                List(feats[feat]["Unordered List"], 'ul', subContent);
+            }
+
+            let a = Link(feat, undefined, list);
+            a.addEventListener('click', () => {
+                let target = shadow.getElementById(feat);
+
+                target.scrollIntoView();
+            }, false);
+
+            let footer = Element('i', subContent);
+            footer.appendChild(document.createTextNode(`${feats[feat]["Book"]}, Pg. ${feats[feat]["Page"]}`));
+        }
     }
 }
 

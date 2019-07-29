@@ -1,4 +1,4 @@
-import {Table, List, Paragraphs, Text, Element, TextElement} from "./htmlElements.module.js";
+import {Table, List, Paragraphs, Text, Element, TextElement, Header, BoldKeyValue} from "./htmlElements.module.js";
 
 export function Spell(name, json, parent) {
     let header = Element('div', parent);
@@ -11,7 +11,7 @@ export function Spell(name, json, parent) {
     footer.id = "spellSheetFooter";
 
     // Header
-    TextElement('h3', name, header);
+    Header('h3', name, header);
 
     let scrl = "";
 
@@ -67,7 +67,6 @@ function KeyValue(json, parent, ...keys) {
     keys.forEach(key => {
         let div = Element('div', parent);
 
-        TextElement('b', `${key} `, div);
-        Text(json[key], div);
+        BoldKeyValue(key, json[key], div);
     });
 }

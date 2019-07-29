@@ -83,80 +83,88 @@ export class Races extends HTMLElement {
 
         let races = JSON.parse(localStorage.getItem('Races'));
 
-        for (let race in races) {
-            let level1 = Element('div', subContent);
-            level1.id = race;
+        let racesSorted = Object.keys(races).sort();
 
-            Header('h1', race, level1);
+        racesSorted.forEach(race => {
+            let raceContainer = Element('div', subContent);
+            raceContainer.id = race;
+
+            Header('h1', race, raceContainer);
 
             Header('h3', race, list);
 
-            let level2Json;
+            for (let category in races[race]) {
 
-            for (let var2 in races[race]) {
-                level2Json = races[race][var2];
+                let categoryContainer = Element('div', raceContainer);
+                categoryContainer.id = category;
+                //categoryContainer.className = "level2";
 
-                let level2 = Element('div', level1);
-                level2.id = var2;
-                //level2.className = "level2";
+                Header('h2', category, categoryContainer);
 
-                Header('h2', var2, level2);
+                if (category.includes("Traits")) {
+                    let cfLink = Link(category, undefined, list);
+                    cfLink.addEventListener('click', () => {
+                        level2.scrollIntoView();
+                    }, false);
+                } else {
+                    Header('h4', category, list);
+                }
 
-                let listLink = Link(var2, undefined, list);
-                listLink.addEventListener('click', () => {
-                    level2.scrollIntoView();
-                }, false);
+                if (category.includes("Traits")) {
+                    let json;
 
-                let level3Json;
+                    for (let trait in races[race][category]) {
+                        json = races[race][category][trait];
 
-                for (let var3 in level2Json) {
-                    level3Json = level2Json[var3];
-
-                    if (Array.isArray(level3Json)) {
-                        if (var3 !== "Description") {
-                            ParagraphsPrependBold(var3, level3Json, level2);
+                        if (trait.includes("Table")) {
+                            Table(json, categoryContainer);
                         } else {
-                            Paragraphs(level3Json, level2);
+                            ParagraphsPrependBold(trait, json, categoryContainer);
                         }
-                    } else if (var3.includes("Table")) {
-                        Table(level3Json, level2);
-                    } else {
-                        let h3 = document.createElement('h3');
-                        h3.appendChild(document.createTextNode(var3));
-            
-                        level2.appendChild(h3);
-            
-                        let level4Json;
+                    }
+                }
 
-                        for (let var4 in level3Json) {
-                            level4Json = level3Json[var4];
+                // due to the way the json is structured you need to perform a recursive like function. If the key is for an array check using Array.isArray() otherwise go one level deeper using for ... in ...
 
-                            if (Array.isArray(level4Json)) {
-                                if (var4 !== "Description") {
-                                    ParagraphsPrependBold(var4, level4Json, level2);
+                if (category === "Sub Races") {
+                    let subRacesSorted = Object.keys(races[race][category]).filter(word => word !== "Description").sort();
+
+                    if (races[race][category]["Description"] !== undefined) {
+                        Paragraphs(races[race][category]["Description"], categoryContainer);
+                    }
+
+                    subRacesSorted.forEach(subRace => {
+                        let h3 = Header('h3', subRace, categoryContainer);
+                        h3.id = `${race}-${subRace}`;
+                        
+                        let srLink = Link(subRace, undefined, list);
+                        srLink.addEventListener('click', () => {
+                            let target = shadow.getElementById(h3.id);
+
+                            target.scrollIntoView();
+                        }, false);
+
+                        for (let trait in races[race][category][subRace]) {
+                            if (Array.isArray(races[race][category][subRace][trait])) {
+                                if (trait === "Description") {
+                                    Paragraphs(races[race][category][subRace][trait], categoryContainer);
                                 } else {
-                                    Paragraphs(level4Json, level2);
+                                    ParagraphsPrependBold(trait, races[race][category][subRace][trait], categoryContainer);
                                 }
                             } else {
-                                let level5Json;
-
-                                for (let var5 in level4Json) {
-                                    level5Json = level4Json[var5];
-
-                                    if (var5 === "Description") {
-                                        ParagraphsPrependBold(var4, level5Json, level2);
-                                    } else if (var5 !== "Description") {
-                                        ParagraphsPrependBold(var5, level5Json, level2);
+                                for (let subTrait in races[race][category][subRace][trait]) {
+                                    if (subTrait === "Description") {
+                                        ParagraphsPrependBold(trait, races[race][category][subRace][trait][subTrait], categoryContainer);
                                     } else {
-                                        Paragraphs(level5Json, level2);
+                                        ParagraphsPrependBold(subTrait, races[race][category][subRace][trait][subTrait], categoryContainer);
                                     }
                                 }
                             }
                         }
-                    }
+                    });
                 }
             }
-        }
+        });
     }
 }
 
