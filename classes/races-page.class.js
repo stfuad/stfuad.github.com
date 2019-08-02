@@ -99,69 +99,110 @@ export class Races extends HTMLElement {
                 categoryContainer.id = category;
                 //categoryContainer.className = "level2";
 
-                Header('h2', category, categoryContainer);
+                if (category !== "Books") {
+                    Header('h2', category, categoryContainer);
 
-                if (category.includes("Traits")) {
-                    let cfLink = Link(category, undefined, list);
-                    cfLink.addEventListener('click', () => {
-                        level2.scrollIntoView();
-                    }, false);
-                } else {
-                    Header('h4', category, list);
-                }
-
-                if (category.includes("Traits")) {
-                    let json;
-
-                    for (let trait in races[race][category]) {
-                        json = races[race][category][trait];
-
-                        if (trait.includes("Table")) {
-                            Table(json, categoryContainer);
-                        } else {
-                            ParagraphsPrependBold(trait, json, categoryContainer);
-                        }
-                    }
-                }
-
-                // due to the way the json is structured you need to perform a recursive like function. If the key is for an array check using Array.isArray() otherwise go one level deeper using for ... in ...
-
-                if (category === "Sub Races") {
-                    let subRacesSorted = Object.keys(races[race][category]).filter(word => word !== "Description").sort();
-
-                    if (races[race][category]["Description"] !== undefined) {
-                        Paragraphs(races[race][category]["Description"], categoryContainer);
-                    }
-
-                    subRacesSorted.forEach(subRace => {
-                        let h3 = Header('h3', subRace, categoryContainer);
-                        h3.id = `${race}-${subRace}`;
-                        
-                        let srLink = Link(subRace, undefined, list);
-                        srLink.addEventListener('click', () => {
-                            let target = shadow.getElementById(h3.id);
-
-                            target.scrollIntoView();
+                    if (category.includes("Traits")) {
+                        let cfLink = Link(category, undefined, list);
+                        cfLink.addEventListener('click', () => {
+                            categoryContainer.scrollIntoView();
                         }, false);
+                    } else {
+                        Header('h4', category, list);
+                    }
 
-                        for (let trait in races[race][category][subRace]) {
-                            if (Array.isArray(races[race][category][subRace][trait])) {
-                                if (trait === "Description") {
-                                    Paragraphs(races[race][category][subRace][trait], categoryContainer);
-                                } else {
-                                    ParagraphsPrependBold(trait, races[race][category][subRace][trait], categoryContainer);
-                                }
+                    if (category.includes("Traits")) {
+                        let json;
+
+                        for (let trait in races[race][category]) {
+                            json = races[race][category][trait];
+
+                            if (Array.isArray(json)) {
+                                ParagraphsPrependBold(trait, json, categoryContainer);
                             } else {
-                                for (let subTrait in races[race][category][subRace][trait]) {
-                                    if (subTrait === "Description") {
-                                        ParagraphsPrependBold(trait, races[race][category][subRace][trait][subTrait], categoryContainer);
-                                    } else {
-                                        ParagraphsPrependBold(subTrait, races[race][category][subRace][trait][subTrait], categoryContainer);
+                                if (trait.includes("Table")) {
+                                    Table(json, categoryContainer);
+                                } else {
+                                    let subJson;
+
+                                    for (let subTrait in json) {
+                                        subJson = json[subTrait];
+
+                                        if (Array.isArray(subJson)) {
+                                            if (subTrait === "Description") {
+                                                ParagraphsPrependBold(trait, subJson, categoryContainer);
+                                            } else if (subTrait === "Description-cont") {
+                                                Paragraphs(subJson, categoryContainer);
+                                            } else {
+                                                ParagraphsPrependBold(subTrait, subJson, categoryContainer);
+                                            }
+                                        }
                                     }
                                 }
                             }
+                            
                         }
-                    });
+                    }
+
+                    // due to the way the json is structured you need to perform a recursive like function. If the key is for an array check using Array.isArray() otherwise go one level deeper using for ... in ...
+
+                    if (category === "Sub Races" || category === "Creeds") {
+                        let subRacesSorted = Object.keys(races[race][category]).filter(word => word !== "Description").sort();
+
+                        if (races[race][category]["Description"] !== undefined) {
+                            Paragraphs(races[race][category]["Description"], categoryContainer);
+                        }
+
+                        subRacesSorted.forEach(subRace => {
+                            let h3 = Header('h3', subRace, categoryContainer);
+                            h3.id = `${race}-${subRace}`;
+                            
+                            let srLink = Link(subRace, undefined, list);
+                            srLink.addEventListener('click', () => {
+                                let target = shadow.getElementById(h3.id);
+
+                                target.scrollIntoView();
+                            }, false);
+
+                            // Sub Race, Creeds... keys
+
+                            for (let trait in races[race][category][subRace]) {
+                                if (Array.isArray(races[race][category][subRace][trait])) {
+                                    if (trait.includes("Description")) {
+                                        Paragraphs(races[race][category][subRace][trait], categoryContainer);
+                                    } else {
+                                        ParagraphsPrependBold(trait, races[race][category][subRace][trait], categoryContainer);
+                                    }
+                                } else {
+                                    for (let subTrait in races[race][category][subRace][trait]) {
+                                        if (Array.isArray(races[race][category][subRace][trait][subTrait])) {
+                                            if (subTrait === "Description") {
+                                                ParagraphsPrependBold(trait, races[race][category][subRace][trait][subTrait], categoryContainer);
+                                            } else if (subTrait === "Description-cont") {
+                                                Paragraphs(subJson, categoryContainer);
+                                            } else {
+                                                ParagraphsPrependBold(subTrait, races[race][category][subRace][trait][subTrait], categoryContainer);
+                                            }
+                                        } else {
+                                            // Tribes, Nations... keys
+
+                                            Header('h4', subTrait, categoryContainer);
+
+                                            for (let subSub in races[race][category][subRace][trait][subTrait]) {
+                                                let shorten = races[race][category][subRace][trait][subTrait][subSub];
+
+                                                if (subSub === "Description") {
+                                                    Paragraphs(shorten, categoryContainer);
+                                                } else {
+                                                    ParagraphsPrependBold(subSub, shorten, categoryContainer);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
                 }
             }
         });

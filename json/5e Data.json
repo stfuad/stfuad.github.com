@@ -1,5 +1,336 @@
 {
 	"Races": {
+		"Aarakocra": {
+			"Aarakocra Traits": {
+				"Ability Score Increase": [
+					"Your Dexterity score increases by 2, and your wisdom score increases by 1."
+				],
+				"Age": [
+					"Aaracokra reach roach maturity by age 3. Compared to humans, aarakocra don't usually live longer than 30 years."
+				],
+				"Alignment": [
+					"Most aarakocra are good and rarely choose sides when it comes to law and chaos. Tribal leaders and warriors might be lawful, while explorers and adventurers might tend toward chaotic."
+				],
+				"Size": [
+					"Aarakocra are about 5 feet tall. They have thin lightweight bodies that weigh between 80 and 100 pounds. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 25 feet."
+				],
+				"Flight": [
+					"You have a flying speed of 50 feet. To use this speed, you can't be wearing medium or heavy armor."
+				],
+				"Talons": [
+					"You are proficient with your unarmed strikes, which deal 1d4 slashing damage on a hit."
+				],
+				"Language": [
+					"You can speak, read, and write Common, Aarakocra, and Auran"
+				]
+			},
+			"Books": [
+				"Elemental Evil Players Companion"
+			]
+		},
+		"Aasimar": {
+			"Aasimar Traits": {
+				"Ability Score Increase": [
+					"Your Charisma score increases by 2."
+				],
+				"Age": [
+					"Aasimar mature at the same rate as humans, but they can live up to 160 years."
+				],
+				"Alignment": [
+					"Imbued with celestial power, most aasimar are good. Outcast aasimar are most often neutral or even evil."
+				],
+				"Size": [
+					"Aasimar have the same range of height and weight as humans."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Darkvision": [
+					"Blessed with a radiant soul, your vision can easily cut through darkness. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+				],
+				"Celestial Resistance": [
+					"You have resistance to necrotic damage and radiant damage."
+				],
+				"Healing Hands": [
+					"As an action, you can touch a creature and cause it to regain a number of hit points equal to your level. Once you use this trait, you can't use it again until you finish a long rest."
+				],
+				"Light Bearer": [
+					"You know the light cantrip. Charisma is your spellcasting ability for it."
+				],
+				"Languages": [
+					"You can speak, read, and write Common and Celestial."
+				]
+			},
+			"Sub Races": {
+				"Protector Aasimar": {
+					"Description": [
+						"Protector aasimar are charged by the powers of good to guard the weak, to strike at evil wherever it arises, and to stand vigilant against the darkness. From a young age, a protector aasimar receives advice and directives that urge to stand against evil."
+					],
+					"Ability Score Increase": [
+						"Your Wisdom score increases by 1."
+					],
+					"Radiant Soul": [
+						"Starting at 3rd level, you can use your action to unleash the divine energy within yourself, causing your eyes to glimmer and two luminous, incorporeal wings to sprout from your back.",
+						"Your transformation lasts for 1 minute or until you end it as a bonus action. During it, you have a flying speed of 30 feet, and once on each of your turns, you can deal extra radiant damage to one target when you deal damage to it with an attack or a spell. The extra radiant damage equals your level.",
+						"Once you use this trait, you can't use it again until you finish a long rest."
+					]
+				},
+				"Scourge Aasimar": {
+					"Description": [
+						"Scourge aasimar are imbued with a divine energy that blazes intensely within them. It feeds a powerful desire to destroy evil-a desire that is, at its best, unflinching and, at its worst, all-consuming. Many scourge aasimar wear masks to block out the world and focus on containing this power, unmasking themselves only in battle."
+					],
+					"Ability Score Increase": [
+						"Your Constitution score increases by 1."
+					],
+					"Radiant Consumption": [
+						"Starting at 3rd level, you can use your action to unleash the divine energy within yourself, causing a searing light to radiate from you, pour out of your eyes and mouth, and threaten to char you.",
+						"Your transformation lasts for 1 minute or until you end it as a bonus action. During it, you shed bright light in a 10-foot radius and dim light for an additional 10 feet, and at the end of each of your turns, you and each creature within 10 feet of you take radiant damage equal to half your level (rounded up). In addition, once on each of your turns, you can deal extra radiant damage to one target when you deal damage to it with an attack or a spell. The extra radiant damage equals your level.",
+						"Once you use this trait, you can't use it again until you finish a long rest."
+					]
+				},
+				"Fallen Aasimar": {
+					"Description": [
+						"An aasimar who was touched by dark powers as a youth or who turns to evil in early adulthood can become one of the fallen-a group of aasimar whose inner light has been replaced by shadow."
+					],
+					"Ability Score Increase": [
+						"Your Strength score increases by 1."
+					],
+					"Necrotic Shroud": [
+						"Starting at 3rd level, you can use your action to unleash the divine energy within yourself, causing your eyes to turn into pools of darkness and two skeletal, ghostly, flightless wings to sprout from your back. The instant you transform, other creatures within 10 feet of you that can see you must each succeed on a Charisma saving throw (DC 8 + your proficiency bonus + your Charisma modifier) or become frightened of you until the end of your next turn.",
+						"Your transformation lasts for 1 minute or until you end it as a bonus action. During it, once on each of your turns, you can deal extra necrotic damage to one target when you deal damage to it with an attack or a spell. The extra necrotic damage equals your level.",
+						"Once you use this trait, you can't use it again until you finish a long rest."
+					]
+				}
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
+		},
+		"Aven": {
+			"Aven Traits": {
+				"Ability Score Increase": [
+					"Your Dexterity score increases by 2."
+				],
+				"Age": [
+					"Like humans, aven reach adulthood in their late teens and can live into their 80s."
+				],
+				"Alignment": [
+					"Most aven lean toward some form of neutrality."
+				],
+				"Size": [
+					"Aven stand from 5 to 6 feet tall, but their bodies are slender and their bones are partially hollow to facilitate their flight. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 25 feet. You have a flying speed of 30 feet. You can’t use your flying speed while you wear medium or heavy armor. (If your campaign uses the variant rule for encumbrance, you can’t use your flying speed if you are encumbered.)"
+				],
+				"Languages": [
+					"You can speak, read, and write Aven and Common."
+				]
+			},
+			"Sub Races": {
+				"Ibis-Headed Aven": {
+					"Ability Score Increase": [
+						"Your Intelligence score increases by 1."
+					],
+					"Kefnet's Blessing": [
+						"You can add half your proficiency bonus, rounded down, to any Intelligence check you make that doesn’t already include your proficiency bonus."
+					]
+
+				},
+				"Hawk-Headed Aven": {
+					"Ability Score Increase": [
+						"Your Wisdom score increases by 2."
+					],
+					"Hawkeyed": [
+						"You can add half your proficiency bonus, rounded down, to any Intelligence check you make that doesn’t already include your proficiency bonus."
+					]
+				}
+			},
+			"Books": [
+				"Plane Shift Amonkhet",
+				"Plane Shift Dominaria"
+			]
+		},
+		"Bugbear": {
+			"Bugbear Traits": {
+				"Ability Score Increase": [
+					"Your Strength score increases by 2, and your Dexterity score increases by 1."
+				],
+				"Age": [
+					"Bugbears reach adulthood at age 16 and live up to 80 years."
+				],
+				"Alignment": [
+					"Bugbears endure a harsh existence that demands each of them to remain self-sufficient, even at the expense of their fellows. They tend to be chaotic evil."
+				],
+				"Size": [
+					"Bugbears are between 6 and 8 feet tall and weigh between 250 and 350 pounds. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common and Goblin."
+				],
+				"Darkvision": [
+					"You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+				],
+				"Long-Limbed": [
+					"When you make a melee attack on your turn, your reach for it is 5 feet greater than normal."
+				],
+				"Powerful Build": [
+					"You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift."
+				],
+				"Sneaky": [
+					"You are proficient in the Stealth skill."
+				],
+				"Surprise Attack": [
+					"If you surprise a creature and hit it with an attack on your first turn in combat, the attack deals an extra 2d6 damage to it. You can use this trait only once per combat."
+				]
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
+		},
+		"Centaur": {
+			"Centaur Traits": {
+				"Ability Score Increase": [
+					"Your Strength score increases by 2, and your Wisdom score increases by 1."
+				],
+				"Age": [
+					"Centaurs mature and age at about the same rate as humans"
+				],
+				"Alignment": [
+					"Centaurs are inclined toward neutrality. Those who join the Selesnya are more often neutral good, while those who join the Gruul are typically chaotic neutral."
+				],
+				"Size": [
+					"Centaurs stand between 6 and 7 feet tall, with their equine bodies reaching about 4 feet at the withers. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 40 feet."
+				],
+				"Fey": [
+					"Your creature type is fey, rather than humanoid."
+				],
+				"Charge": [
+					"If you move at least 30 feet straight toward a target and then hit it with a melee weapon attack on the same turn, you can immediately follow that attack with a bonus action, making one attack against the target with your hooves."
+				],
+				"Hooves": [
+					"Your hooves are natural melee weapons, which you can use to make unarmed strikes. If you hit with them, you deal bludgeoning damage equal to 1d4 + your Strength modifier, instead of the bludgeoning damage normal for an unarmed strike."
+				],
+				"Equine Build": [
+					"You count as one size larger when determining your carrying capacity and the weight you can push or drag.",
+					"In addition, any climb that requires hands and feet is especially difficult for you because of your equine legs. When you make such a climb, each foot of movement costs you 4 extra feet, instead of the normal 1 extra foot."
+				],
+				"Survivor": [
+					"You have proficiency in one of the following skills of your choice: Animal Handling, Medicine, Nature, or Survival."
+				],
+				"Languages": [
+					"You can speak, read, and write Common and Sylvan. Sylvan is widely spoken in the Selesnya Conclave, for it is rich in vocabulary to describe natural phenomena and spiritual forces."
+				]
+			},
+			"Books": [
+				"Guildmaster's Guide to Ravnica"
+			]
+		},
+		"Dragonborn": {
+			"Dragonborn Traits": {
+				"Ability Score Increase": [
+					"Your Strength score increases by 2, and your Charisma score increases by 1."
+				],
+				"Age": [
+					"Young dragonborn grow quickly. They walk hours after hatching, attain the size and development of a 10-year-old human child by the age of 3, and reach adulthood by 15. They live to be around 80."
+				],
+				"Alignment": [
+					"Dragonborn tend to extremes, making a conscious choice for one side or the other in the cosmic war between good and evil (represented by Bahamut and Tiamat, respectively). Most dragonborn are good, but those who side with Tiamat can be terrible villains."
+				],
+				"Size": [
+					"Dragonborn are taller and heavier than humans, standing well over 6 feet tall and averaging almost 250 pounds. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Draconic Ancestry Table": {
+					"Title": "Draconic Ancestry",
+					"Headers": [
+						"Dragon",
+						"Damage Type",
+						"Breath Weapon"
+					],
+					"Rows": [
+						{
+							"Dragon": "Black",
+							"Damage Type": "Acid",
+							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
+						},
+						{
+							"Dragon": "Blue",
+							"Damage Type": "Lightning",
+							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
+						},
+						{
+							"Dragon": "Brass",
+							"Damage Type": "Fire",
+							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
+						},
+						{
+							"Dragon": "Bronze",
+							"Damage Type": "Lightning",
+							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
+						},
+						{
+							"Dragon": "Copper",
+							"Damage Type": "Acid",
+							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
+						},
+						{
+							"Dragon": "Gold",
+							"Damage Type": "Fire",
+							"Breath Weapon": "15 ft. cone (Dex. save)"
+						},
+						{
+							"Dragon": "Green",
+							"Damage Type": "Poison",
+							"Breath Weapon": "15 ft. cone (Con. save)"
+						},
+						{
+							"Dragon": "Red",
+							"Damage Type": "Fire",
+							"Breath Weapon": "15 ft. cone (Dex. save)"
+						},
+						{
+							"Dragon": "Silver",
+							"Damage Type": "Cold",
+							"Breath Weapon": "15 ft. cone (Con. save)"
+						},
+						{
+							"Dragon": "White",
+							"Damage Type": "Cold",
+							"Breath Weapon": "15 ft. cone (Con. save)"
+						}
+					]
+				},
+				"Draconic Ancestry": [
+					"You have draconic ancestry. Choose one type of dragon from the Draconic ANcestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table."
+				],
+				"Breath Weapon": [
+					"You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation.",
+					"When you use your breath weapon, each creature in the area of the exhalation must make a saving throw. the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save. and half as much damage on a successful one. The damage increases to 3d6 at 6th level. 4d6 at 11th level, and 5d6 at 16th level.",
+					"After you use your breath weapon, you can't use it again until you complete a short or long rest."
+				],
+				"Damage Resistance": [
+					"You have resistance to the damage type associated with your draconic ancestry."
+				],
+				"Languages": [
+					"You can speak. read, and write Common and Draconic. Draconic is thought to be one of the oldest languages and is often used in the study of magic. The language sounds harsh to most other creatures and includes numerous hard consonants and sibilants."
+				]
+			},
+			"Books": [
+				"Player's Handbook"
+			]
+		},
 		"Dwarf": {
 			"Dwarf Traits": {
 				"Ability Score Increase": [
@@ -83,7 +414,12 @@
 						"You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack or whatever you are trying to perceive is in direct sunlight."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Elemental Evil Players Companion",
+				"Mordenkainen's Tome of Foes",
+				"Sword Coast Adventurer's Guide"
+			]
 		},
 		"Elf": {
 			"Elf Traits": {
@@ -241,328 +577,78 @@
 						"As a bonus action, you can magically teleport up to 30 feet to an unoccupied space you can see. Once you use this trait, you can't do so again until you finish a long rest.",
 						"Starting at 3rd-level, you also gain resistance to all damage when you teleport using this trait. The resistance lasts until the start of your next turn. During that time, you appear ghostly and translucent."
 					]
-				}
-			}
-		},
-		"Halfling": {
-			"Halfling Traits": {
-				"Ability Score Increase": [
-					"Your Dexterity score increases by 2."
-				],
-				"Age": [
-					"A halfling reaches adulthood at the age of 20 and generally lives into the middle of his or her second century."
-				],
-				"Alignment": [
-					"Most halflings are lawful good. As a rule, they are good-hearted and kind, hate to see others in pain, and have no tolerance for oppression. They are also very orderly and traditional, leaning heavily on the support of their community and the comfort of their old ways."
-				],
-				"Size": [
-					"Halflings average about 3 feet tall and weigh about 40 pounds. Your size is small."
-				],
-				"Speed": [
-					"Your base walking speed is 25 feet."
-				],
-				"Lucky": [
-					"When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll."
-				],
-				"Brave": [
-					"You have advantage on saving throws against being frightened."
-				],
-				"Halfling Nimbleness": [
-					"You can move through the space of any creature that is of a size larger than yours."
-				],
-				"Languages": [
-					"You can speak, read and write Common and Halfling. The halfling language isn't secret, but halflings are loath to share it with others. They write very little, so they don't have a rich body of literature. Their oral tradition, however is very strong. Almost all halflings speak Common to converse with the people in whose lands they dwell or through which they are traveling."
-				]
-			},
-			"Sub Races": {
-				"Lightfoot": {
-					"Description": [
-						"As a lightfoot halfling, you can easily hide from notice, even using other people as cover. You're inclined to be affable, and get along well with others. In the Forgotten Realms, lightfoot halflings have spread the farthest and thus are the most common variety.",
-						"Lightfoots are more prone to wanderlust than other halflings, and often dwell alongside other races or take up a nomadic life. In the world of Greyhawk, these halflings are called hairfeet or tallfellows."
-					],
-					"Ability Score Increase": [
-						"Your Charisma score increases by 1."
-					],
-					"Naturally Stealthy": [
-						"You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you."
-					]
 				},
-				"Stout": {
+				"Zendikar": {
 					"Description": [
-						"As a stout halfling, you're hardier than average and have some resistance to poison. Some say that stouts have dwarven blood. In the Forgotten Realms, these halflings are called stronghearts, and they're most common in the south."
+						"The elves of Zendikar have much in common with the elves of other worlds.",
+						"Instead of adding an additional ability score, all ability scores are replaced. You lose the Trance feature and may choose a nation."
 					],
 					"Ability Score Increase": [
-						"Your Constitution score increases by 1."
+						"Your Wisdom score increases by 2."
 					],
-					"Stout Resilience": [
-						"You have advantage on saving throws against poison, and you have resistance against poison damage."
-					]
-				}
-			}
-		},
-		"Human": {
-			"Human Traits": {
-				"Ability Score Increase": [
-					"Your Ability scores each increase by 1."
-				],
-				"Age": [
-					"Humans reach adulthood in their late teens and live less than a century."
-				],
-				"Alignment": [
-					"Humans vary widely in height and build, from barely 5 feet to well over 6 feet tall. Regardless of your position in that range your size is medium."
-				],
-				"Speed": [
-					"Your base walking speed is 30 feet."
-				],
-				"Languages": [
-					"You can speak, read, and write Common and one extra language of your choice. Humans typically learn the languages of other peoples they deal with, including obscure dialects. They are fond of sprinkling their speech with words borrowed from other tongues: Orc curses, Elvish musical expressions, Dwarvish military phrases, and so on."
-				]
-			},
-			"Variant Human Traits": {
-				"Ability Score Increase": [
-					"Two different ability scores of your choice increase by 1."
-				],
-				"Skills": [
-					"You gain proficiency in one skill of your choice."
-				],
-				"Feat": [
-					"You gain one feat of your choice."
-				]
-			}
-		},
-		"Aarakocra": {
-			"Aarakocra Traits": {
-				"Ability Score Increase": [
-					"Your Dexterity score increases by 2, and your wisdom score increases by 1."
-				],
-				"Age": [
-					"Aaracokra reach roach maturity by age 3. Compared to humans, aarakocra don't usually live longer than 30 years."
-				],
-				"Alignment": [
-					"Most aarakocra are good and rarely choose sides when it comes to law and chaos. Tribal leaders and warriors might be lawful, while explorers and adventurers might tend toward chaotic."
-				],
-				"Size": [
-					"Aarakocra are about 5 feet tall. They have thin lightweight bodies that weigh between 80 and 100 pounds. Your size is Medium."
-				],
-				"Speed": [
-					"Your base walking speed is 25 feet."
-				],
-				"Flight": [
-					"You have a flying speed of 50 feet. To use this speed, you can't be wearing medium or heavy armor."
-				],
-				"Talons": [
-					"You are proficient with your unarmed strikes, which deal 1d4 slashing damage on a hit."
-				],
-				"Language": [
-					"You can speak, read, and write Common, Aarakocra, and Auran"
-				]
-			}
-		},
-		"Aasimar": {
-			"Aasimar Traits": {
-				"Ability Score Increase": [
-					"Your Charisma score increases by 2."
-				],
-				"Age": [
-					"Aasimar mature at the same rate as humans, but they can live up to 160 years."
-				],
-				"Alignment": [
-					"Imbued with celestial power, most aasimar are good. Outcast aasimar are most often neutral or even evil."
-				],
-				"Size": [
-					"Aasimar have the same range of height and weight as humans."
-				],
-				"Speed": [
-					"Your base walking speed is 30 feet."
-				],
-				"Darkvision": [
-					"Blessed with a radiant soul, your vision can easily cut through darkness. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
-				],
-				"Celestial Resistance": [
-					"You have resistance to necrotic damage and radiant damage."
-				],
-				"Healing Hands": [
-					"As an action, you can touch a creature and cause it to regain a number of hit points equal to your level. Once you use this trait, you can't use it again until you finish a long rest."
-				],
-				"Light Bearer": [
-					"You know the light cantrip. Charisma is your spellcasting ability for it."
-				],
-				"Languages": [
-					"You can speak, read, and write Common and Celestial."
-				]
-			},
-			"Sub Races": {
-				"Protector Aasimar": {
-					"Description": [
-						"Protector aasimar are charged by the powers of good to guard the weak, to strike at evil wherever it arises, and to stand vigilant against the darkness. From a young age, a protector aasimar receives advice and directives that urge to stand against evil."
-					],
-					"Ability Score Increase": [
-						"Your Wisdom score increases by 1."
-					],
-					"Radiant Soul": [
-						"Starting at 3rd level, you can use your action to unleash the divine energy within yourself, causing your eyes to glimmer and two luminous, incorporeal wings to sprout from your back.",
-						"Your transformation lasts for 1 minute or until you end it as a bonus action. During it, you have a flying speed of 30 feet, and once on each of your turns, you can deal extra radiant damage to one target when you deal damage to it with an attack or a spell. The extra radiant damage equals your level.",
-						"Once you use this trait, you can't use it again until you finish a long rest."
-					]
-				},
-				"Scourge Aasimar": {
-					"Description": [
-						"Scourge aasimar are imbued with a divine energy that blazes intensely within them. It feeds a powerful desire to destroy evil-a desire that is, at its best, unflinching and, at its worst, all-consuming. Many scourge aasimar wear masks to block out the world and focus on containing this power, unmasking themselves only in battle."
-					],
-					"Ability Score Increase": [
-						"Your Constitution score increases by 1."
-					],
-					"Radiant Consumption": [
-						"Starting at 3rd level, you can use your action to unleash the divine energy within yourself, causing a searing light to radiate from you, pour out of your eyes and mouth, and threaten to char you.",
-						"Your transformation lasts for 1 minute or until you end it as a bonus action. During it, you shed bright light in a 10-foot radius and dim light for an additional 10 feet, and at the end of each of your turns, you and each creature within 10 feet of you take radiant damage equal to half your level (rounded up). In addition, once on each of your turns, you can deal extra radiant damage to one target when you deal damage to it with an attack or a spell. The extra radiant damage equals your level.",
-						"Once you use this trait, you can't use it again until you finish a long rest."
-					]
-				},
-				"Fallen Aasimar": {
-					"Description": [
-						"An aasimar who was touched by dark powers as a youth or who turns to evil in early adulthood can become one of the fallen-a group of aasimar whose inner light has been replaced by shadow."
-					],
-					"Ability Score Increase": [
-						"Your Strength score increases by 1."
-					],
-					"Necrotic Shroud": [
-						"Starting at 3rd level, you can use your action to unleash the divine energy within yourself, causing your eyes to turn into pools of darkness and two skeletal, ghostly, flightless wings to sprout from your back. The instant you transform, other creatures within 10 feet of you that can see you must each succeed on a Charisma saving throw (DC 8 + your proficiency bonus + your Charisma modifier) or become frightened of you until the end of your next turn.",
-						"Your transformation lasts for 1 minute or until you end it as a bonus action. During it, once on each of your turns, you can deal extra necrotic damage to one target when you deal damage to it with an attack or a spell. The extra necrotic damage equals your level.",
-						"Once you use this trait, you can't use it again until you finish a long rest."
-					]
-				}
-			}
-		},
-		"Centaur": {
-			"Centaur Traits": {
-				"Ability Score Increase": [
-					"Your Strength score increases by 2, and your Wisdom score increases by 1."
-				],
-				"Age": [
-					"Centaurs mature and age at about the same rate as humans"
-				],
-				"Alignment": [
-					"Centaurs are inclined toward neutrality. Those who join the Selesnya are more often neutral good, while those who join the Gruul are typically chaotic neutral."
-				],
-				"Size": [
-					"Centaurs stand between 6 and 7 feet tall, with their equine bodies reaching about 4 feet at the withers. Your size is Medium."
-				],
-				"Speed": [
-					"Your base walking speed is 40 feet."
-				],
-				"Fey": [
-					"Your creature type is fey, rather than humanoid."
-				],
-				"Charge": [
-					"If you move at least 30 feet straight toward a target and then hit it with a melee weapon attack on the same turn, you can immediately follow that attack with a bonus action, making one attack against the target with your hooves."
-				],
-				"Hooves": [
-					"Your hooves are natural melee weapons, which you can use to make unarmed strikes. If you hit with them, you deal bludgeoning damage equal to 1d4 + your Strength modifier, instead of the bludgeoning damage normal for an unarmed strike."
-				],
-				"Equine Build": [
-					"You count as one size larger when determining your carrying capacity and the weight you can push or drag.",
-					"In addition, any climb that requires hands and feet is especially difficult for you because of your equine legs. When you make such a climb, each foot of movement costs you 4 extra feet, instead of the normal 1 extra foot."
-				],
-				"Survivor": [
-					"You have proficiency in one of the following skills of your choice: Animal Handling, Medicine, Nature, or Survival."
-				],
-				"Languages": [
-					"You can speak, read, and write Common and Sylvan. Sylvan is widely spoken in the Selesnya Conclave, for it is rich in vocabulary to describe natural phenomena and spiritual forces."
-				]
-			}
-		},
-		"Dragonborn": {
-			"Dragonborn Traits": {
-				"Ability Score Increase": [
-					"Your Strength score increases by 2, and your Charisma score increases by 1."
-				],
-				"Age": [
-					"Young dragonborn grow quickly. They walk hours after hatching, attain the size and development of a 10-year-old human child by the age of 3, and reach adulthood by 15. They live to be around 80."
-				],
-				"Alignment": [
-					"Dragonborn tend to extremes, making a conscious choice for one side or the other in the cosmic war between good and evil (represented by Bahamut and Tiamat, respectively). Most dragonborn are good, but those who side with Tiamat can be terrible villains."
-				],
-				"Size": [
-					"Dragonborn are taller and heavier than humans, standing well over 6 feet tall and averaging almost 250 pounds. Your size is Medium."
-				],
-				"Speed": [
-					"Your base walking speed is 30 feet."
-				],
-				"Draconic Ancestry Table": {
-					"Title": "Draconic Ancestry",
-					"Headers": [
-						"Dragon",
-						"Damage Type",
-						"Breath Weapon"
-					],
-					"Rows": [
-						{
-							"Dragon": "Black",
-							"Damage Type": "Acid",
-							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
+					"Nations": {
+						"Description": [
+							"Ancient divides that arose as the elven people migrated across Zendikar resulted in three main elf nations: the Tajuru, the Mul Daya, and the Joraga. Choose one of these nations."
+						],
+						"Tajuru Nation": {
+							"Description": [
+								"The Tajuru nation is the largest of the three main elven nations, concentrated in Murasa and spread across other parts of Zendikar as hundreds of far-flung clans. Tajuru elves are the most open to people of other races, seeing their skills and perspectives as valuable new tools for survival. The Tajuru are also more open to new lifestyles, be it living in a mountaintop citadel or roaming grassy plains."
+							],
+							"Ability Score Increase": [
+								"Your Charisma score increases by 1."
+							],
+							"Skill Versatility": [
+								"You gain proficiency in any combination of two skills or tools of your choice."
+							]
 						},
-						{
-							"Dragon": "Blue",
-							"Damage Type": "Lightning",
-							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
+						"Joraga Nation": {
+							"Description": [
+								"The elves of the imperious Joraga nation of Bala Ged have little respect for any other race of Zendikar—or even for other elves. The survival of their nation and its traditions is the Joraga elves’ only goal, and they view the influence of others as a weakness. The Joraga eschew the goods and habits of others, even avoiding the pathways blazed by the Tajuru when possible. Many view the nomadic Joraga clans as little more than bands of roving murderers, but a complex culture hides behind those clans’ aggressive exterior"
+							],
+							"Ability Score Increase": [
+								"Your Dexterity score increases by 1."
+							],
+							"Elf Weapon Training": [
+								"You have proficiency with the longsword, shortsword, shortbow, and longbow."
+							],
+							"Fleet of Foot": [
+								"Your base walking speed increases to 35 feet."
+							],
+							"Mask of the Wild": [
+								"You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena."
+							]
 						},
-						{
-							"Dragon": "Brass",
-							"Damage Type": "Fire",
-							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
-						},
-						{
-							"Dragon": "Bronze",
-							"Damage Type": "Lightning",
-							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
-						},
-						{
-							"Dragon": "Copper",
-							"Damage Type": "Acid",
-							"Breath Weapon": "5 by 30 ft. line (Dex. save)"
-						},
-						{
-							"Dragon": "Gold",
-							"Damage Type": "Fire",
-							"Breath Weapon": "15 ft. cone (Dex. save)"
-						},
-						{
-							"Dragon": "Green",
-							"Damage Type": "Poison",
-							"Breath Weapon": "15 ft. cone (Con. save)"
-						},
-						{
-							"Dragon": "Red",
-							"Damage Type": "Fire",
-							"Breath Weapon": "15 ft. cone (Dex. save)"
-						},
-						{
-							"Dragon": "Silver",
-							"Damage Type": "Cold",
-							"Breath Weapon": "15 ft. cone (Con. save)"
-						},
-						{
-							"Dragon": "White",
-							"Damage Type": "Cold",
-							"Breath Weapon": "15 ft. cone (Con. save)"
+						"Mul Daya Nation": {
+							"Description": [
+								"Elves of the Mul Daya nation of Bala Ged are set apart from other elves by their relationship with the spirits of their elven ancestors. To the Mul Daya, the spirit world and the mortal realm are different only in terms of their tangibility. Death and the spirits of the dead are as much a part of the lives of the Mul Daya as is the natural world. This is not a macabre sentiment to the elves; they simply view it as the truest sense of the natural order.",
+								"Mul Daya elves can often be recognized by their face painting and tattooing. Many Mul Daya decorate their skins with an enwrapping vine motif, and make use of poisons and acids collected at great cost from strange creatures and plants in the depths of Kazandu."
+							],
+							"Ability Score Increase": [
+								"Your Strength score increases by 1."
+							],
+							"Superior Darkvision": [
+								"Your darkvision has a radius of 120 feet."
+							],
+							"Sunlight Sensitivity": [
+								"You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight."
+							],
+							"Mul Daya Magic": [
+								"You know the chill touch cantrip. When you reach 3rd level, you can cast the hex spell once with this trait and regain the ability to do so when you finish a long rest. When you reach 5th level, you can cast the darkness spell once with this trait and regain the ability to do so when you finish a long rest. Wisdom is your spellcasting ability for these spells."
+							],
+							"Elf Weapon Training": [
+								"You have proficiency with the longsword, shortsword, shortbow, and longbow."
+							]
 						}
-					]
-				},
-				"Draconic Ancestry": [
-					"You have draconic ancestry. Choose one type of dragon from the Draconic ANcestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table."
-				],
-				"Breath Weapon": [
-					"You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation.",
-					"When you use your breath weapon, each creature in the area of the exhalation must make a saving throw. the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save. and half as much damage on a successful one. The damage increases to 3d6 at 6th level. 4d6 at 11th level, and 5d6 at 16th level.",
-					"After you use your breath weapon, you can't use it again until you complete a short or long rest."
-				],
-				"Damage Resistance": [
-					"You have resistance to the damage type associated with your draconic ancestry."
-				],
-				"Languages": [
-					"You can speak. read, and write Common and Draconic. Draconic is thought to be one of the oldest languages and is often used in the study of magic. The language sounds harsh to most other creatures and includes numerous hard consonants and sibilants."
-				]
-			}
+					}
+					
+				}
+			},
+			"Books": [
+				"Elemental Evil Players Companion",
+				"Mordenkainen's Tome of Foes",
+				"Plane Shift Zendikar",
+				"Player's Handbook"
+			]
 		},
 		"Firbolg": {
 			"Firbolg Traits": {
@@ -596,7 +682,10 @@
 				"Languages": [
 					"You can speak, read, and write Common, Elvish, and Giant."
 				]
-			}
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
 		},
 		"Genasi": {
 			"Genasi Traits": {
@@ -689,7 +778,10 @@
 						"You know the shape water cantrip (see chapter 2). When you reach 3rd level, you can cast the create or destroy water spell as a 2nd-level spell once with this trait, and you regain the ability to cast it this way when you finish a long rest. Constitution is your spellcasting ability for these spells."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Elemental Evil Players Companion"
+			]
 		},
 		"Gith": {
 			"Gith Traits": {
@@ -748,7 +840,10 @@
 						"Wisdom is your spellcasting ability for these spells. When you cast them with this trait, they don't require comonents."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Mordenkainen's Tome of Foes"
+			]
 		},
 		"Gnome": {
 			"Gnome Traits": {
@@ -837,7 +932,11 @@
 						"You can speak, read, and write Undercommon."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Elemental Evil Players Companion",
+				"Player's Handbook"
+			]
 		},
 		"Goblin": {
 			"Goblin Traits": {
@@ -848,7 +947,7 @@
 					"Goblins reach adulthood around age 8. They age noticeably faster than humans, and though few goblins live to old age, the most cautious rarely live longer than 60 years."
 				],
 				"Alignment": [
-					"Most of the goblins of Ravnica are chaotic, with no inclination toward good or evil."
+					"Most goblins are chaotic, with no inclination toward good or evil."
 				],
 				"Size": [
 					"Goblins are between 3 and 4 feet tall and weigh between 40 and 80 pounds. Your size is Small."
@@ -859,16 +958,81 @@
 				"Darkvision": [
 					"You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray"
 				],
+				"Languages": [
+					"You can speak, read, and write Common and Goblin."
+				],
 				"Fury of the Small": [
 					"When you damage a creature with an attack or a spell and the creature's size is larger than yours, you can cause the attack or spell to deal extra damage to the creature. The extra damage equals your level. Once you use this trait, you can't use it again until you finish a short or long rest."
 				],
 				"Nimble Escape": [
 					"You can take the Disengage or Hide action as a bonus action on each of your turns."
-				],
-				"Languages": [
-					"You can speak, read, and write Common and Goblin. In Ravnica, Goblin is a simplistic language with a limited vocabulary and fluid rules of grammar, unsuited for any sophisticated conversation."
 				]
-			}
+			},
+			"Sub Races": {
+				"Ixalan": {
+					"Description": [
+						"Instead of adding an additional ability score, all ability scores are replaced. Fury of the Small and Nimble Escape are replaced by Agile Climber. Your walking speed drops to 25 feet."
+					],
+					"Ability Score Increase": [
+						"Your Dexterity score increases by 2"
+					],
+					"Speed": [
+						"Your base walking speed is 30 feet."
+					],
+					"Agile Climber": [
+						"You have a climbing speed of 25 feet. You can’t use your climbing speed while you wear medium or heavy armor. (If your campaign uses the variant rule for encumbrance, you can’t use your climbing speed if you are encumbered.)"
+					]
+				},
+				"Zendikar": {
+					"Description": [
+						"Instead of adding an additional ability score, all ability scores are replaced. Fury of the Small and Nimble Escape are replaced by Grit. Your walking speed drops to 25 feet. You may also choose a tribal feature."
+					],
+					"Ability Score Increase": [
+						"Your Constitution score increases by 2."
+					],
+					"Speed": [
+						"Your base walking speed is 30 feet."
+					],
+					"Grit": [
+						"You have resistance to fire damage and psychic damage. In addition, when you are wearing no armor, your AC is equal to 11 + your Dexterity modifier."
+					],
+					"Tribes": {
+						"Description": [
+							"Most goblins on Zendikar belong to one of three tribes: the Grotag, the Lavastep, and the Tuktuk. Choose one of these tribes."
+						],
+						"Grotag Tribe": {
+							"Description": [
+								"Smaller and weaker than their cousins, and with larger hands and feet, goblins of the Grotag tribe attempt to live by their wits—though seldom with much success. When a Grotag goblin has the bright idea of trying to tame fleshpiercer mites, at least a few others will be willing to follow that goblin into a nest—usually to predictably horrible results. But though the Grotag seem to have a never-ending supply of bad ideas, and a horrible ratio of bad ideas to good, the Grotag likewise seem to have a never-ending supply of Grotag. As such, by trial and error (and more error), these goblins have stumbled across a great deal of knowledge useful for surviving the deep places of Zendikar, and for dealing with the creatures that live there. The Grotag imagine themselves to have a sort of empathy with beasts, and they lose hundreds of goblins each year to ill-advised attempts at monster taming. But, every now and again, one of these efforts is successful."
+							],
+							"Grotag Tamer": [
+								"You have proficiency in the Animal Handling skill."
+							]
+						},
+						"Lavastep Tribe": {
+							"Description": [
+								"The Lavastep tribe is the most industrious of the goblin tribes, and possesses much hard-won knowledge of the geothermal activity in Akoum. More so than members of the other tribes, the Lavastep goblins build surprisingly effective equipment out of the crystal shards and veins of strange metals that occasionally boil up to the surface. The most warlike of their kind, Lavastep goblins frequently harass the kor, elves, and humans of Akoum."
+							],
+							"Lavastep Grit": [
+								"You have advantage on Dexterity (Stealth) checks made to hide in rocky or subterranean environments."
+							]
+						},
+						"Tuktuk Tribe": {
+							"Description": [
+								"Among the goblins, the Tuktuk are most likely to hire themselves out as ruin guides to other races. Of course, their usual plan is to help find something of value, steal it, trigger a trap intentionally, and then run."
+							],
+							"Tuktuk Cunning": [
+								"You have proficiency with thieves' tools."
+							]
+						}
+					}
+				}
+			},
+			"Books": [
+				"Guildmaster's Guide to Ravnica",
+				"Plane Shift Ixalan",
+				"Plane Shift Zendikar",
+				"Volo's Guide to Monsters"
+			]
 		},
 		"Goliath": {
 			"Goliath Traits": {
@@ -902,7 +1066,11 @@
 				"Languages": [
 					"You can speak, read, and write Common and Giant."
 				]
-			}
+			},
+			"Books": [
+				"Elemental Evil Players Companion",
+				"Volo's Guide to Monsters"
+			]
 		},
 		"Grung": {
 			"Grung Traits": {
@@ -943,7 +1111,10 @@
 				"Languages": [
 					"You can speak, read, and write Grung."
 				]
-			}
+			},
+			"Books": [
+				"One Grung Above"
+			]
 		},
 		"Half-Elf": {
 			"Half-Elf Traits": {
@@ -974,7 +1145,69 @@
 				"Languages": [
 					"You can speak, read, and write Common, Elvish, and one extra language of your choice."
 				]
-			}
+			},
+			"Books": [
+				"Player's Handbook"
+			]
+		},
+		"Halfling": {
+			"Halfling Traits": {
+				"Ability Score Increase": [
+					"Your Dexterity score increases by 2."
+				],
+				"Age": [
+					"A halfling reaches adulthood at the age of 20 and generally lives into the middle of his or her second century."
+				],
+				"Alignment": [
+					"Most halflings are lawful good. As a rule, they are good-hearted and kind, hate to see others in pain, and have no tolerance for oppression. They are also very orderly and traditional, leaning heavily on the support of their community and the comfort of their old ways."
+				],
+				"Size": [
+					"Halflings average about 3 feet tall and weigh about 40 pounds. Your size is small."
+				],
+				"Speed": [
+					"Your base walking speed is 25 feet."
+				],
+				"Lucky": [
+					"When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll."
+				],
+				"Brave": [
+					"You have advantage on saving throws against being frightened."
+				],
+				"Halfling Nimbleness": [
+					"You can move through the space of any creature that is of a size larger than yours."
+				],
+				"Languages": [
+					"You can speak, read and write Common and Halfling. The halfling language isn't secret, but halflings are loath to share it with others. They write very little, so they don't have a rich body of literature. Their oral tradition, however is very strong. Almost all halflings speak Common to converse with the people in whose lands they dwell or through which they are traveling."
+				]
+			},
+			"Sub Races": {
+				"Lightfoot": {
+					"Description": [
+						"As a lightfoot halfling, you can easily hide from notice, even using other people as cover. You're inclined to be affable, and get along well with others. In the Forgotten Realms, lightfoot halflings have spread the farthest and thus are the most common variety.",
+						"Lightfoots are more prone to wanderlust than other halflings, and often dwell alongside other races or take up a nomadic life. In the world of Greyhawk, these halflings are called hairfeet or tallfellows."
+					],
+					"Ability Score Increase": [
+						"Your Charisma score increases by 1."
+					],
+					"Naturally Stealthy": [
+						"You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you."
+					]
+				},
+				"Stout": {
+					"Description": [
+						"As a stout halfling, you're hardier than average and have some resistance to poison. Some say that stouts have dwarven blood. In the Forgotten Realms, these halflings are called stronghearts, and they're most common in the south."
+					],
+					"Ability Score Increase": [
+						"Your Constitution score increases by 1."
+					],
+					"Stout Resilience": [
+						"You have advantage on saving throws against poison, and you have resistance against poison damage."
+					]
+				}
+			},
+			"Books": [
+				"Player's Handbook"
+			]
 		},
 		"Half-Orc": {
 			"Half-Orc Traits": {
@@ -1005,7 +1238,116 @@
 				"Languages": [
 					"You can speak, read, and write Common and Orc. Orc is harsh, grating language with hard consonants. It has no script of its own but is written in the Dwarvish script."
 				]
-			}
+			},
+			"Books": [
+				"Player's Handbook"
+			]
+		},
+		"Hobgoblin": {
+			"Hobgoblin Traits": {
+				"Ability Score Increase": [
+					"Your Constitution score increases by 2, and your Intelligence score increases by 1."
+				],
+				"Age": [
+					"Hobgoblins mature at the same rate as humans and have lifespans similar in length to theirs."
+				],
+				"Alignment": [
+					"Hobgoblin society is built on fidelity to a rigid, unforgiving code of conduct. As such, they tend toward lawful evil."
+				],
+				"Size": [
+					"Hobgoblins are between 5 and 6 feet tall and weigh between 150 and 200 pounds. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common and Goblin."
+				],
+				"Darkvision": [
+					"You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+				],
+				"Martial Training": [
+					"You are proficient with two martial weapons of your choice and with light armor."
+				],
+				"Saving Face": [
+					"Hobgoblins are careful not to show weakness in front of their allies, for fear of losing status. If you miss with an attack roll or fail an ability check or a saving throw, you can gain a bonus to the roll equal to the number of allies you can see within 30 feet of you (maximum bonus of +5). Once you use this trait, you can't use it again until you finish a short or long rest."
+				]
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
+		},
+		"Human": {
+			"Human Traits": {
+				"Ability Score Increase": [
+					"Your Ability scores each increase by 1."
+				],
+				"Age": [
+					"Humans reach adulthood in their late teens and live less than a century."
+				],
+				"Alignment": [
+					"Humans tend toward no particular alignment."
+				],
+				"Size": [
+					"Humans vary widely in height and build, from barely 5 feet to well over 6 feet tall. Regardless of your position in that range, your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common and one extra language of your choice."
+				]
+			},
+			"Variant Human Traits": {
+				"Ability Score Increase": [
+					"Two different ability scores of your choice increase by 1."
+				],
+				"Skills": [
+					"You gain proficiency in one skill of your choice."
+				],
+				"Feat": [
+					"You gain one feat of your choice."
+				]
+			},
+			"Sub Races": {
+				"Keldon":{
+					"Description": [
+						"The people of Keld are human, but they are like no other humans anywhere. Nearly all adults stand over six feet tall, and heights above seven feet are not uncommon. They are massively muscled and have gray skin, ranging from an ashy gray-white to a deeper bluegray. The typical Keldon’s hairline points sharply down in the middle of the forehead and at either temple, but recedes elsewhere—sometimes dramatically. Keldons are remarkably resistant to the cold of their homeland, baring skin even in near-freezing temperatures without discomfort.",
+						"Keldons value self-reliance, strength, and courage above all else. Anything that is the product of their own labor is a fine thing. Anything else is treated with a healthy dose of skepticism. At best, they are a proud, pragmatic, passionate people, and their loyalty is fierce once earned. At worst, they can be reckless, hot-tempered, and violent—and no small number of Keldons still consider these qualities virtues rather than vices.",
+						"Because of their many exploits as both conquerors and mercenaries, Keldons appear in the legends and histories of other peoples across the world. Sometimes these tales are exaggerated—but many that sound exaggerated are not.",
+						"Instead of adding an additional ability score, all ability scores are replaced."
+					],
+					"Ability Score Increase": [
+						"Your Strength score increases by 2, and your Constitution score increases by 1."
+					],
+					"Age": [
+						"Keldons reach adulthood in their late teens and live less than a century."
+					],
+					"Alignment": [
+						"Keldons tend toward chaotic alignments, and many walk a fine line between good and evil."
+					],
+					"Size": [
+						"Keldons are taller and heavier than the human norms of other cultures, standing almost universally above 6 feet tall and reaching heights above 7 feet. Your size is Medium."
+					],
+					"Languages": [
+						"You can speak, read, and write Common and Keldon."
+					],
+					"Natural Athlete": [
+						"You have proficiency in the Athletics skill."
+					],
+					"Keldon Resilience": [
+						"You have proficiency in Strength saving throws."
+					],
+					"Icehave Born": [
+						"You are naturally adapted to cold climates, as described in chapter 5 of the Dungeon Master’s Guide."
+					]
+				}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Plane Shift Dominaria"
+			]
+
 		},
 		"Kenku": {
 			"Kenuku Traits": {
@@ -1036,7 +1378,112 @@
 				"Languages": [
 					"You can read and write Common and Auran, but you can speak only by using your Mimicry trait."
 				]
-			}
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
+		},
+		"Khenra": {
+			"Khenra Traits": {
+				"Ability Score Increase": [
+					"Your Dexterity score increases by 2, and your Strength score increases by 1."
+				],
+				"Age": [
+					"Khenra mature quickly, reaching adulthood in their early teens. Khenra initiates are usually the youngest in a crop, completing the trials by their late teens. Even without a violent death, they rarely live past 60."
+				],
+				"Alignment": [
+					"Most khenra lean toward chaotic alignments. They have no particular inclination toward good or evil."
+				],
+				"Size": [
+					"Khenra have similar builds to humans. Your size is Medium"
+				],
+				"Speed": [
+					"Your base walking speed is 35 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Aven and Common."
+				],
+				"Khenra Weapon Training": [
+					"You have proficiency with the khopesh, spear, and javelin."
+				],
+				"Khenra Twins": [
+					"If your twin is alive and you can see your twin, whenever you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll. If your twin is dead (or if you were born without a twin), you can’t be frightened."
+				]
+			},
+			"Books": [
+				"Plane Shift Amonkhet"
+			]
+		},
+		"Kobold": {
+			"Kobold Traits": {
+				"Ability Score Increase": [
+					"Your Dexterity score increases by 2, and your Strength score is reduced by 2."
+				],
+				"Age": [
+					"Kobolds reach adulthood at age 6 and can live up to 120 years but rarely do so."
+				],
+				"Alignment": [
+					"Kobolds are fundamentally selfish, making them evil, but their reliance on the strength of their group makes them trend toward law."
+				],
+				"Size": [
+					"Kobolds are between 2 and 3 feet tall and weigh between 25 and 35 pounds. Your size is Small."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common and Draconic."
+				],
+				"Darkvision": [
+					"You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+				],
+				"Grovel, Cower, and Beg": [
+					"As an action on your turn, you can cower pathetically to distract nearby foes. Until the end of your next turn, your allies gain advantage on attack rolls against enemies within 10 feet of you that can see you. Once you use this trait, you can't use it again until you finish a short or long rest."
+				],
+				"Pack Tactics": [
+					"You have advantage on an attack roll against a creature if at least one of your allies is within 5 feet of the creature and the ally isn't incapacitated."
+				],
+				"Sunlight Sensitivity": [
+					"You have disadvantage on attack rolls and on Wisdom (Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight."
+				]
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
+		},
+		"Kor": {
+			"Kor Traits": {
+				"Ability Score Increase": [
+					"Your Dexterity score increases by 2, and your Wisdom score increases by 1."
+				],
+				"Age": [
+					"Kor mature at the same rate as humans and live about as long."
+				],
+				"Alignment": [
+					"Most kor are lawful good, with a strong dedication to community and the traditions of their ancestors."
+				],
+				"Size": [
+					"Kor average nearly 6 feet tall, but are much lighter and more slender than humans. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet. You also have a climbing speed of 30 feet as long as you are not encumbered or wearing heavy armor."
+				],
+				"Languages": [
+					"You can speak, read, and write Common, and communicate in the silent speech of the kor."
+				],
+				"Kor Climbing": [
+					"You have proficiency in the Athletics and Acrobatics skills."
+				],
+				"Lucky": [
+					"When you roll a 1 on the d20 for an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll."
+				],
+				"Brave": [
+					"You have advantage on saving throws against being frightened."
+				]
+			},
+			"Books": [
+				"Plane Shift Zendikar"
+			]
 		},
 		"Lizardfolk": {
 			"Lizardfolk Traits": {
@@ -1070,7 +1517,10 @@
 				"Natural Armor": [
 					"You have tough, scaly skin. When you aren't wearing armor, your AC is 13 + your Dexterity modifier. You can use your natural armor to determine your AC if the armor you wear would leave you with a lower AC. A shield's benefits apply as normal while you use your natural armor."
 				]
-			}
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
 		},
 		"Loxodon": {
 			"Loxodon Traits": {
@@ -1108,12 +1558,121 @@
 				"Languages": [
 					"You can speak, read, and write Common and Loxodon."
 				]
-			}
+			},
+			"Books": [
+				"Guildmaster's Guide to Ravnica"
+			]
+		},
+		"Merfolk": {
+			"Merfolk Traits": {
+				"Ability Score Increase": [
+					"Your Charisma score increases by 1."
+				],
+				"Age": [
+					"Merfolk mature at the same rate humans do and reach adulthood around the age of 20. They live considerably longer than humans, though, often reaching well over 100 years."
+				],
+				"Alignment": [
+					"Most merfolk are neutral, living in close harmony with nature."
+				],
+				"Size": [
+					"Merfolk are significantly taller than most humans, standing between seven and eight feet tall and averaging about 300 pounds. Your size is Medium."
+				],
+				"Amphibious": [
+					"Your base walking speed is 30 feet. You also have a swimming speed of 30 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common (if it exists in your campaign), Merfolk and one additional language of your choice."
+				]
+			},
+			"Sub Races": {
+				"Blue Merfolk": {
+					"Description": [
+						"Blue merfolk often have burgundy or magenta on their faces and chests, with lighter shades of blue and purple elsewhere. Their eyes are red, orange, or blue, and their long, thin, and elegant fins resemble scarves or veils of fine fabric. They swim easily, even upstream, and clamber over rocks and through rapids with ease. They prefer to dwell in shallow waters, but spend a fair amount of time on land as well."
+					],
+					"Ability Score Increase": [
+						"Your Intelligence score increases by 2."
+					],
+					"Lore of the Waters": [
+						"You gain proficiency in History and Nature."
+					],
+					"Cantrip": [
+						"You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it."
+					]
+				},
+				"Green Merfolk": {
+					"Description": [
+						"Green merfolk generally have yellow chests and pale green faces, shading to dark blues and purples on their backs and limbs. The patterns on their skin suggest the colors of the tree frogs common in the rain forest, as do their eyes of orange, lime green, or sky blue. Their fins are relatively short and thick. They climb trees with ease, move through undergrowth unhindered, and often wield magic to shape vines and branches to their will."
+					],
+					"Ability Score Increase": [
+						"Your Wisdom score increases by 2."
+					],
+					"Mask of the Wild": [
+						"You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena."
+					],
+					"Cantrip": [
+						"You know one cantrip of your choice from the druid spell list. Wisdom is your spellcasting ability for it."
+					]
+				}
+			},
+			"Creeds": {
+				"Description": [
+					"In Zendikar merfolk upon reaching adulthood choose a creed. Creeds effectivly replace sub races."
+				],
+				"Emeria (Wind) Creed": {
+					"Description": [
+						"Merfolk who followed Emeria’s creed seek wisdom and truth in the Wind Realm, exploring the mystical forces—rather than natural causes—behind historical events. They are evasive and intentionally enigmatic in their interactions with others, and are often described as manipulative and deceptive."
+					],
+					"Ability Score Increase": [
+						"Your Wisdom score increases by 2."
+					],
+					"Wind Creed Manipulation": [
+						"You have proficiency in the Deception and Persuasion skills."
+					],
+					"Cantrip": [
+						"You know one cantrip of your choice from the druid spell list. Wisdom is your spellcasting ability for it."
+					]
+				},
+				"Ula (Water) Creed": {
+					"Description": [
+						"Ula-creed merfolk emphasize intellectual pursuits, stressing hard evidence and reason over passion. They are analytical scholars, chroniclers, explorers, and navigators who pride themselves on being blunt and straightforward."
+					],
+					"Ability Score Increase": [
+						"Your Intelligence score increases by 2."
+					],
+					"Water Creed Navigation": [
+						"You have proficiency with navigator’s tools and in the Survival skill."
+					],
+					"Cantrip": [
+						"You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it."
+					]
+				},
+				"Cosi Creed": {
+					"Description": [
+						"No merfolk will openly admit to following the creed of the trickster, but those who do view Cosi as an ally who can grant them control over the chaotic forces of the world."
+					],
+					"Ability Score Increase": [
+						"Your Charisma score increases by an additional 1 (for a total of 2), and your Intelligence score increases by 1."
+					],
+					"Creed of the Trickster": [
+						"You have proficiency in the Sleight of Hand and Stealth skills."
+					],
+					"Cantrip": [
+						"You know one cantrip of your choice from the bard spell list. Charisma is your spellcasting ability for it."
+					]
+				}
+			},
+			"Books": [
+				"Plane Shift Ixalan",
+				"Plane Shift Zendikar"
+			]
 		},
 		"Minotaur": {
 			"Minotaur Traits": {
 				"Ability Score Increase": [
 					"Your Strength score increases by 2, and your Constitution score increases by 1."
+				],
+				"Age": [
+					"Minotaurs develop more slowly than humans, reaching full maturity around the age of 20. They typically become acolytes at around 8 or 9 years old, making them among the older members of their crops. Once they reach maturity, though, minotaurs age quickly, rushing headlong through the trials (as they do all aspects of life) to complete them before they pass their peak. A minotaur allowed to die of old age would rarely live beyond 40."
 				],
 				"Alignment": [
 					"Most minotaurs who join the Boros Legion lean toward lawful alignments, while those associated with the Cult of Rakdos or the Gruul Clans tend toward chaotic alignments."
@@ -1139,12 +1698,106 @@
 				"Languages": [
 					"You can speak, read, and write Common and Minotaur."
 				]
-			}
+			},
+			"Books": [
+				"Guildmaster's Guide to Ravnica"
+			]
+		},
+		"Naga": {
+			"Naga Traits": {
+				"Ability Score Increase": [
+					"Your Constitution score increases by 2, and your Intelligence score increases by 1."
+				],
+				"Age": [
+					"Like humans, naga reach adulthood in their late teens. They show no signs of aging beyond that point except for growing larger, so in theory, a naga could live well over a century."
+				],
+				"Alignment": [
+					"Most naga are either neutral or neutral evil in alignment."
+				],
+				"Size": [
+					"Naga stand about 5 feet tall when upright, but the total length of their bodies, head to tail, ranges from 10 to as much as 20 feet. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common and Naga."
+				],
+				"Speed Burst": [
+					"By lowering your body to the ground and propelling yourself with your arms, you can move more quickly for a time. As a bonus action on your turn, if you have both hands free, you can increase your walking speed by 5 feet until the end of your turn."
+				],
+				"Natural Weapons": [
+					"Your fanged maw and constricting serpentine body are natural weapons, which you can use to make unarmed strikes. If you hit with your bite, you deal piercing damage equal to 1d4 + your Strength modifier, and your target must make a Constitution saving throw (DC 8 + your proficiency bonus + your Constitution modifier). On a failed save, the target takes 1d4 poison damage.",
+					"If you hit with your constrict attack, you deal bludgeoning damage equal to 1d6 + your Strength modifier, and the target is grappled (escape DC 8 + your proficiency bonus + your Strength modifier). Until this grapple ends, the target is restrained, and you can’t constrict another target."
+				],
+				"Poison Immunity": [
+					"You are immune to poison damage and can’t be poisoned."
+				],
+				"Poison Affinity": [
+					"You gain proficiency with the poisoner’s kit."
+				]
+			},
+			"Books": [
+				"Plane Shift Amonkhet"
+			]
+		},
+		"Orc": {
+			"Orc Traits": {
+				"Ability Score Increase": [
+					"Your Strength score increases by 2, your Constitution score increases by 1, and your Intelligence score is reduced by 2."
+				],
+				"Age": [
+					"Orcs mature a little faster than humans, reaching adulthood around age 14. They age noticeably faster and rarely live longer than 75 years."
+				],
+				"Alignment": [
+					"Orcs are vicious raiders, who believe that the world should be theirs. They also respect strength above all else and believe the strong must bully the weak to ensure that weakness does not spread like a disease. They are usually chaotic evil."
+				],
+				"Size": [
+					"Orcs are usually over 6 feet tall and weigh between 230 and 280 pounds. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common and Orc."
+				],
+				"Darkvision": [
+					"You have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can’t discern color in darkness, only shades of gray."
+				],
+				"Menacing": [
+					"You gain proficiency in the Intimidation skill."
+				],
+				"Aggressive": [
+					"As a bonus action, you can move up to your speed toward an enemy of your choice that you can see or hear. You must end this move closer to the enemy than you started."
+				],
+				"Powerful Build": [
+					"You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift."
+				]
+			},
+			"Sub Races": {
+				"Ixalan": {
+					"Description": [
+						"Instead of adding an additional ability score, all ability scores are replaced. Aggressive and Powerful build are replaced with Relentless Endurance and Savage Attacks."
+					],
+					"Ability Score Increase": [
+						"Your Strength score increases by 2, and your Constitution score increases by 1."
+					],
+					"Relentless Endurance": [
+						"When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can’t use this feature again until you finish a long rest."
+					],
+					"Savage Attacks": [
+						"When you score a critical hit with a melee weapon attack, you can roll one of the weapon’s damage dice one additional time and add it to the extra damage of the critical hit."
+					]
+				}
+			},
+			"Books": [
+				"Plane Shift Ixalan"
+			]
 		},
 		"Simic Hybrid": {
 			"Simic Hybrid Traits": {
 				"Ability Score Increase": [
-					"Your Constitution score increases by 2, and one other ability score ofyour choice increases by 1."
+					"Your Constitution score increases by 2, and one other ability score of your choice increases by 1."
 				],
 				"Age": [
 					"Hybrids begin their lives as adult humans, elves, or vedalken. They age at a slightly accelerated rate, so their maximum life spans are probably reduced somewhat. The Guardian Project has not been operating long enough to observe the full effect of this phenomenon."
@@ -1169,7 +1822,7 @@
 						"Your body has been altered to incorporate certain animal characteristics. You choose one animal enhancement now and a second enhancement at 5th level.",
 						"At 1st level, choose one of the following options:"
 					],
-					"Mantra GLide": [
+					"Mantra Glide": [
 						"You have ray-like fins that you can use as wings to slow your fall or allow you to glide. When you fall and aren't incapacitated, you can subtract up to 100 feet from the fall when calculating falling damage, and you can move up to 2 feet horizontally for every 1 foot you descend."
 					],
 					"Nimble Climber": [
@@ -1191,7 +1844,38 @@
 						"As an action, you can spray acid from glands in your mouth, targeting one creature or object you can see within 30 feet of you. The target takes 2d10 acid damage unless it succeeds on a Dexterity saving throw against a DC equal to 8 + your Constitution modifier + your proficiency bonus. This damage increases by 1d10 when you reach 11th level (3d10) and 17th level (4d10). You can use this trait a number of times equal to your Consitution modifier (minimum of once), and you regain all expended uses of it when you finish a long rest."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Guildmaster's Guide to Ravnica"
+			]
+		},
+		"Siren": {
+			"Siren Traits": {
+				"Ability Score Increase": [
+					"Your Charisma score increases by 2."
+				],
+				"Alignment": [
+					"Most sirens lean toward chaotic alignment, cherishing the freedom and independence that comes from joining a pirate crew."
+				],
+				"Size": [
+					"Sirens stand about 5 to 6 feet tall, but their bodies are slender and their bones partially hollow to facilitate their flight. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 25 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common (if it exists in your campaign) and Siren."
+				],
+				"Flight": [
+					"You have a flying speed of 30 feet. You can’t use your flying speed while you wear medium or heavy armor. (If your campaign uses the variant rule for encumbrance, you can’t use your flying speed if you are encumbered.)"
+				],
+				"Siren's Song": [
+					"You know the friends cantrip and can cast it without material components."
+				]
+			},
+			"Books": [
+				"Plane Shift Ixalan"
+			]
 		},
 		"Tabaxi": {
 			"Tabaxi Traits": {
@@ -1225,7 +1909,10 @@
 				"Languages": [
 					"You can speak, read, and write Common and one other language of your choice."
 				]
-			}
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
 		},
 		"Tiefling": {
 			"Tiefling Traits": {
@@ -1361,7 +2048,10 @@
 						"You know the thaumaturgy cantrip. When you reach 3rd level, you can cast the searing smite spell as a 2nd-level spell once with this trait and regain the ability to do so when you finish a long rest. When you reach 5th level, you can cast the branding smite spell once with this trait and regain the ability to do so when you finish a long rest. Charisma is your spellcasting ability for these spells."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook"
+			]
 		},
 		"Tortle": {
 			"Tortle Traits": {
@@ -1395,7 +2085,10 @@
 				"Languages": [
 					"You can speak, read, and write Aquan and Common."
 				]
-			}
+			},
+			"Books": [
+				"The Tortle Package"
+			]
 		},
 		"Triton": {
 			"Triton Traits": {
@@ -1409,7 +2102,7 @@
 					"Tritons tend toward lawful good. As guardians of the darkest reaches of the sea, their culture pushes them toward order and benevolence."
 				],
 				"Size": [
-					"Tritons are slightly sli'orter than humans, averaging about 5 feet tall. Your size is Medium."
+					"Tritons are slightly shorter than humans, averaging about 5 feet tall. Your size is Medium."
 				],
 				"Speed": [
 					"Your base walking speed is 30 feet, and you have a swimming speed of 30 feet."
@@ -1429,7 +2122,60 @@
 				"Lansuages": [
 					"You can speak, read, and write Common and Primordial."
 				]
-			}
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
+		},
+		"Vampire": {
+			"Vampire Traits": {
+				"Ability Score Increase": [
+					"Your Charisma score increases by 2."
+				],
+				"Age": [
+					"Vampires don’t mature and age in the same way that other races do."
+				],
+				"Alignment": [
+					"Vampires might not have an innate tendency toward evil, but many of them end up there. Evil or not, their strict hierarchies incline them toward a lawful alignment."
+				],
+				"Size": [
+					"Vampires are the same size and build as humans. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common (if it exists in your campaign) and Vampire."
+				],
+				"Vampiric Resistance": [
+					"You have resistance to necrotic damage."
+				],
+				"Bloodthirst": [
+					"You can drain blood and life energy from a willing creature, or one that is grappled by you, incapacitated, or restrained. Make a melee attack against the target. If you hit, you deal 1 piercing damage and 1d6 necrotic damage. The target’s hit point maximum is reduced by an amount equal to the necrotic damage taken, and you regain hit points equal to that amount. The reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0."
+				]
+			},
+			"Sub Races": {
+				"Ixalan": {
+					"Ability Score Increase": [
+						"Your Wisdom score increases by 1."
+					],
+					"Feast of Blood": [
+						"When you drain blood with your Bloodthirst ability, you experience a surge of vitality. Your speed increases by 10 feet, and you gain advantage on Strength and Dexterity checks and saving throws for 1 minute."
+					]
+				},
+				"Zendikar": {
+					"Ability Score Increase": [
+						"Your Intelligence score increases by 1."
+					],
+					"Null Transformation": [
+						"A humanoid killed with your Bloodthirst ability becomes a null (see \"A Zendikar Bestiary\")."
+					]
+				}
+			},
+			"Books": [
+				"Plane Shift Ixalan",
+				"Plane Shift Zendikar"
+			]
 		},
 		"Vedalken": {
 			"Vedalken Traits": {
@@ -1461,7 +2207,47 @@
 				"Languages": [
 					"You can speak, read, and write Common, Vedalken, and one other language of your choice."
 				]
-			}
+			},
+			"Books": [
+				"Guildmaster's Guide to Ravnica"
+			]
+		},
+		"Yuan-Ti Pureblood": {
+			"Yuan-Ti Pureblood Traits": {
+				"Ability Score Increase": [
+					"Your Charisma score increases by 2, and your Intelligence score increases by 1."
+				],
+				"Age": [
+					"Purebloods mature at the same rate as humans and have lifespans similar in length to theirs."
+				],
+				"Alignment": [
+					"Purebloods are devoid of emotion and see others as tools to manipulate. They care little for law or chaos and are typically neutral evil."
+				],
+				"Size": [
+					"Purebloods match humans in average size and weight. Your size is Medium."
+				],
+				"Speed": [
+					"Your base walking speed is 30 feet."
+				],
+				"Languages": [
+					"You can speak, read, and write Common, Abyssal, and Draconic."
+				],
+				"Darkvision": [
+					"You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+				],
+				"Innate Spellcasting": [
+					"You know the poison spray cantrip. You can cast animal friendship an unlimited number of times with this trait, but you can target only snakes with it. Starting at 3rd level, you can also cast suggestion with this trait. Once you cast it, you can't do so again until you finish a long rest. Charisma is your spellcasting ability for these spells."
+				],
+				"Magic Resistance": [
+					"You have advantage on saving throws against spells and other magical effects."
+				],
+				"Poison Immunity": [
+					"You are immune to poison damage and the poisoned condition."
+				]
+			},
+			"Books": [
+				"Volo's Guide to Monsters"
+			]
 		}
 	},
 	"Classes": {
@@ -1890,7 +2676,12 @@
 						"Starting at 14th level, when a creature within 5 feet of you hits you with a melee attack, the attacker takes 3 piercing damage if you are raging, aren't incapacitated, and are wearing spiked armor."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Bard": {
 			"Table": {
@@ -2437,7 +3228,12 @@
 						"When the effect ends, the creature has no understanding of why it held you in such fear. Once you use this feature, you can't use it again until you finish a long rest."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Cleric": {
 			"Table": {
@@ -3295,7 +4091,7 @@
 							{
 								"Cleric Level": "5th",
 								"Spells": [
-									"Crusader’S Mantle",
+									"Crusader’s Mantle",
 									"Spirit Guardians"
 								]
 							},
@@ -3667,8 +4463,287 @@
 					"Order's Wrath": [
 						"Starting at 17th level, enemies you designate for destruction wilt under the combined efforts of you and your allies. If you deal your Divine Strike damage to a creature on your turn, you can curse that creature until the start of your next turn. The next time one of your allies hits the cursed creature with an attack, the target also takes 2d8 psychic damage, and the curse ends. You can curse a creature in this way only once per turn."
 					]
+				},
+				"Solidarity Domain": {
+					"Description": [
+						"Oketra is charged with expounding upon this teaching of the God-Pharaoh, instilling in every initiate the virtue of solidarity. She forges each group of children into a crop of acolytes with just one purpose: to be judged worthy of a glorious afterlife. And she instills in each crop the ability to unite in a single action in pursuit of that purpose. She is fond of poetic imagery to communicate her ideals."
+					],
+					"Solidarity Domain Spells Table": {
+						"Title": "Solidarity Domain Spells",
+						"Headers": [
+							"Cleric Level",
+							"Spells"
+						],
+						"Rows": [
+							{
+								"Cleric Level": "1st",
+								"Spells": [
+									"Bless",
+									"Guiding Bolt"
+								]
+							},
+							{
+								"Cleric Level": "3rd",
+								"Spells": [
+									"Aid",
+									"Warding Bond"
+								]
+							},
+							{
+								"Cleric Level": "5th",
+								"Spells": [
+									"Beacon of Hope",
+									"Crusader’s Mantle"
+								]
+							},
+							{
+								"Cleric Level": "7th",
+								"Spells": [
+									"Aura of Life",
+									"Guardian of Faith"
+								]
+							},
+							{
+								"Cleric Level": "9th",
+								"Spells": [
+									"Circle of Power",
+									"Mass Cure Wounds"
+								]
+							}
+						]
+					},
+					"Bonus Proficiency": [
+						"When you choose this domain at 1st level, you gain proficiency with heavy armor."
+					],
+					"Solidarity's Action": [
+						"Also at 1st level, when you take the Help action to aid an ally’s attack, you can make one weapon attack as a bonus action. You can use this feature a number of times equal to your Wisdom modifier (minimum of once). You regain expended uses when you finish a long rest."
+					],
+					"Channel Divinity: Preserve Life": [
+						"Starting at 2nd level, you can use your Channel Divinity to heal the badly injured. As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can’t use this feature on an undead or a construct."
+					],
+					"Channel Divinity: Oketra's Blessing": [
+						"At 6th level, when a creature within 30 feet of you makes an attack roll, you can use your reaction to grant that creature a +10 bonus to the roll, using your Channel Divinity. You make this choice after you see the roll, but before the DM says whether the attack hits or misses."
+					],
+					"Divine Strike": [
+						"At 8th level, you gain the ability to infuse your weapon strikes with divine energy. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 damage of the same type dealt by the weapon to the target. When you reach 14th level, the extra damage increases to 2d8."
+					],
+					"Supreme Healing": [
+						"Starting at 17th level, when you would normally roll one or more dice to restore hit points with a spell, you instead use the highest number possible for each die. For example, instead of restoring 2d6 hit points to a creature, you restore 12."
+					]
+				},
+				"Strength Domain": {
+					"Description": [
+						"It falls to Rhonas to instill this teaching in those who would enter the afterlife—but to his mind, the words themselves don’t matter. Strength can’t be taught. It must be built through practice and training. Rhonas demonstrates his teachings by his example, rather than by giving his students any kind of academic instruction. He welcomes the people of Naktamun to stand by the Hekma and watch him as he storms into the desert to battle the greatest horrors. He encourages them to observe his indomitable strength, for though they will never equal it, they can aspire to mimicry. He invites them to scrutinize every move and practice what they see."
+					],
+					"Strength Domain Spells Table": {
+						"Title": "Strength Domain Spells",
+						"Headers": [
+							"Cleric Level",
+							"Spells"
+						],
+						"Rows": [
+							{
+								"Cleric Level": "1st",
+								"Spells": [
+									"Divine Favor",
+									"Shield of Faith"
+								]
+							},
+							{
+								"Cleric Level": "3rd",
+								"Spells": [
+									"Enhance Ability",
+									"Protection from Poison"
+								]
+							},
+							{
+								"Cleric Level": "5th",
+								"Spells": [
+									"Haste",
+									"Protection from Energy"
+								]
+							},
+							{
+								"Cleric Level": "7th",
+								"Spells": [
+									"Dominate Beast",
+									"Stoneskin"
+								]
+							},
+							{
+								"Cleric Level": "9th",
+								"Spells": [
+									"Destructive Wave",
+									"Insect Plague"
+								]
+							}
+						]
+					},
+					"Acolyte of Strength": [
+						"At 1st level, you learn one druid cantrip of your choice. You also gain proficiency in one of the following skills of your choice: Animal Handling, Athletics, Nature, or Survival."
+					],
+					"Bonus Proficiency": [
+						"Also at 1st level, you gain proficiency with heavy armor."
+					],
+					"Channel Divinity: Feat of Strength": [
+						"At 2nd level, you can use your Channel Divinity to enhance your physical might. When you make an attack roll, ability check, or saving throw using Strength, you can use your Channel Divinity to gain a +10 bonus to the roll. You make this choice after you see the roll, but before the DM says whether the roll succeeds or fails."
+					],
+					"Channel Divinity: Rhona's Blessing": [
+						"At 6th level, when a creature within 30 feet of you makes an attack roll, ability check, or saving throw using Strength, you can use your reaction to grant that creature a +10 bonus to the roll, using your Channel Divinity. You make this choice after you see the roll, but before the DM says whether the roll succeeds or fail."
+					],
+					"Divine Strike": [
+						"At 8th level, you gain the ability to infuse your weapon strikes with divine energy. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 damage of the same type dealt by the weapon to the target. When you reach 14th level, the extra damage increases to 2d8."
+					],
+					"Avatar of Battle": [
+						"At 17th level, you gain resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks."
+					]
+				},
+				"Ambition Domain": {
+					"Description": [
+						"Bontu has fully embraced this dictum, and though she expends little effort in teaching it, she surely leads by example. Her viziers subtly plant the seeds that flower into the ambition the God-Pharaoh desires. Through insinuation, they remind acolytes and initiates alike that achieving one’s place in the afterlife at the expense of others is not shameful, but is proof of the initiate’s determination and drive. Nothing is more important than that drive, they suggest—not the bonds of a crop, not friendship or love. Not even devotion to a deity."
+					],
+					"Ambition Domain Spells Table": {
+						"Title": "Ambition Domain Spells",
+						"Headers": [
+							"Cleric Level",
+							"Spells"
+						],
+						"Rows": [
+							{
+								"Cleric Level": "1st",
+								"Spells": [
+									"Bane",
+									"Disguise Self"
+								]
+							},
+							{
+								"Cleric Level": "3rd",
+								"Spells": [
+									"Mirror Image",
+									"Ray of Enfeeblement"
+								]
+							},
+							{
+								"Cleric Level": "5th",
+								"Spells": [
+									"Bestow Curse",
+									"Vampiric Touch"
+								]
+							},
+							{
+								"Cleric Level": "7th",
+								"Spells": [
+									"Death Ward",
+									"Dimension Door"
+								]
+							},
+							{
+								"Cleric Level": "9th",
+								"Spells": [
+									"Dominate Person",
+									"Modify Memory"
+								]
+							}
+						]
+					},
+					"Warding Flare": [
+						"When you choose this domain at 1st level, you can interpose divine light between yourself and an attacking enemy. When you are attacked by a creature within 30 feet of you that you can see, you can use your reaction to impose disadvantage on the attack roll, causing light to flare before the attacker before it hits or misses. An attacker that can’t be blinded is immune to this feature.",
+						"You can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest."
+					],
+					"Channel Divinity: Invoke Duplicity": [
+						"Starting at 2nd level, you can use your Channel Divinity to create an illusory duplicate of yourself",
+						"As an action, you create a perfect illusion of yourself that lasts for 1 minute, or until you lose your concentration (as if you were concentrating on a spell). The illusion appears in an unoccupied space that you can see within 30 feet of you. As a bonus action on your turn, you can move the illusion up to 30 feet to a space you can see, but it must remain within 120 feet of you.",
+						"For the duration, you can cast spells as though you were in the illusion’s space, but you must use your own senses. Additionally, when both you and your illusion are within 5 feet of a creature that can see the illusion, you have advantage on attack rolls against that creature, given how distracting the illusion is to the target."
+					],
+					"Channel Divinity: Cloak of Shadows": [
+						"Starting at 6th level, you can use your Channel Divinity to vanish. As an action, you become invisible until the end of your next turn. You become visible if you attack or cast a spell."
+					],
+					"Potent Spellcasting": [
+						"Starting at 8th level, you add your Wisdom modifier to the damage you deal with any cleric cantrip."
+					],
+					"Improved Duplicity": [
+						"At 17th level, you can create up to four duplicates of yourself, instead of one, when you use Invoke Duplicity. As a bonus action on your turn, you can move any number of them up to 30 feet, to a maximum range of 120 feet."
+					]
+				},
+				"Zeal Domain": {
+					"Description": [
+						"The God-Pharaoh expects those he welcomes into the afterlife to desire it above all other pleasures and achievements, and for them to show their dedication, passion, and fervor through their actions. Hazoret is charged with cultivating this zeal in the initiates who come under her care, and she has undertaken the task with appropriate enthusiasm. She recognizes, however, that the best way to teach zeal is by demonstrating it."
+					],
+					"Zeal Domain Spells Table": {
+						"Title": "Zeal Domain Spells",
+						"Headers": [
+							"Cleric Level",
+							"Spells"
+						],
+						"Rows": [
+							{
+								"Cleric Level": "1st",
+								"Spells": [
+									"Searing Smite",
+									"Thunderous Smite"
+								]
+							},
+							{
+								"Cleric Level": "3rd",
+								"Spells": [
+									"Magic Weapon",
+									"Shatter"
+								]
+							},
+							{
+								"Cleric Level": "5th",
+								"Spells": [
+									"Haste",
+									"Fireball"
+								]
+							},
+							{
+								"Cleric Level": "7th",
+								"Spells": [
+									"Fire Shield (warm shield only)",
+									"Freedom of Movement"
+								]
+							},
+							{
+								"Cleric Level": "9th",
+								"Spells": [
+									"Destructive Wave",
+									"Flame Strike"
+								]
+							}
+						]
+					},
+					"Bonus Proficiencies": [
+						"At 1st level, you gain proficiency with martial weapons and heavy armor."
+					],
+					"Priest of Zeal": [
+						"From 1st level, Hazoret delivers bolts of inspiration to you while you are engaged in battle. When you use the Attack action, you can make one weapon attack as a bonus action.",
+						"You can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest."
+					],
+					"Channel Divinity: Consuming Fervor": [
+						"Starting at 2nd level, you can use your Channel Divinity to channel your zeal into unchecked ferocity.",
+						"When you roll fire or thunder damage, you can use your Channel Divinity to deal maximum damage instead of rolling."
+					],
+					"Rsounding Strike": [
+						"At 6th level, when you deal thunder damage to a Large or smaller creature, you can also push it up to 10 feet away from you."
+					],
+					"Divine Strike": [
+						"At 8th level, you gain the ability to infuse your weapon strikes with divine energy. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 damage of the same type dealt by the weapon to the target. When you reach 14th level, the extra damage increases to 2d8."
+					],
+					"Blaze of Glory": [
+						"Starting at 17th level, you can delay death for an instant to perform a final heroic act.",
+						"When you are reduced to 0 hit points by an attacker you can see, even if you would be killed outright, you can use your reaction to move up to your speed toward the attacker and make one melee weapon attack against it, as long as the movement brings it within your reach. You make this attack with advantage. If the attack hits, the creature takes an extra 5d10 fire damage and an extra 5d10 damage of the weapon’s type. You then fall unconscious and begin making death saving throws as normal, or you die if the damage you took would have killed you outright.",
+						"Once you use this feature, you can’t use it again until you finish a long rest."
+					]
 				}
-			}
+			},
+			"Books": [
+				"Guildmaster's Guide to Ravnica",
+				"Plane Shift Amonkhet",
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Druid": {
 			"Table": {
@@ -4572,7 +5647,13 @@
 						"At 14th level, the fungal spores in your body alter you: you can't be blinded, deafened, frightened, or poisoned, and any critical hit against you counts as a normal hit instead, unless you're incapacitated."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Guildmaster's Guide to Ravnica",
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Fighter": {
 			"Table": {
@@ -5187,7 +6268,12 @@
 						"Once you use this feature, you can't use it again until you finish a long rest."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Monk": {
 			"Table": {
@@ -5675,7 +6761,12 @@
 						"Starting at 17th level, your touch can channel the energy of death into a creature. As an action, you touch one creature within 5 feet of you, and you expend 1 to 10 ki points. The target must make a Constitution saving throw, and it takes 2d10 necrotic damage per ki point spent on a failed save, or half as much damage on a successful one."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Paladin": {
 			"Table": {
@@ -6585,7 +7676,12 @@
 						]
 					}
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Ranger": {
 			"Table": {
@@ -7165,7 +8261,12 @@
 						"At 15th level, you gain the ability to counterattack when your prey tries to sabotage you. If the target of your Slayer's Prey forces you to make a saving throw, you can use your reaction to make one weapon attack against the quarry. You make this attack immediately before making the saving throw. If your attack hits, your save automatically succeeds, in addition to the attack's normal effects."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Rogue": {
 			"Table": {
@@ -7713,7 +8814,12 @@
 						"Beginning at 17th level, your mastery of the blade lets you turn failure into success in combat. If you miss with an attack roll, you can roll it again with advantage. Once you do so, you can't use this feature again until you finish a short or long rest."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Sorcerer": {
 			"Table": {
@@ -8659,7 +9765,12 @@
 						"You also gain a magical flying speed of 60 feet. As an action, you can reduce your flying speed to 30 feet for 1 hour and choose a number of creatures within 30 feet of you equal to 3 + your Charisma modifier. The chosen creatures gain a magical flying speed of 30 feet for 1 hour. Once you reduce your flying speed in this way, you can't do so again until you finish a short or long rest."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Warlock": {
 			"Table": {
@@ -9636,7 +10747,12 @@
 						"You can see the true form of any shapechanger or creature concealed by illusion or transmutation magic while the creature is within 30 feet of you and within line of sight."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		},
 		"Wizard": {
 			"Table": {
@@ -10283,7 +11399,12 @@
 						"Starting at 14th level, you add your Intelligence modifier (minimum of +1) to the damage of your melee weapon attacks while your Bladesong is active."
 					]
 				}
-			}
+			},
+			"Books": [
+				"Player's Handbook",
+				"Sword Coast Adventurer's Guide",
+				"Xanathar's Guide to Everything"
+			]
 		}
 	},
 	"Feats": {
@@ -10932,6 +12053,14 @@
             ],
             "Book": "Xanathar's Guide to Everything",
             "Page": 75
+        },
+        "Vampiric Exultation": {
+            "Prerequisite": "Vampire (Ixalan)",
+            "Description": [
+                "As an action, you can transform the lower half of your body into an inky black vapor, allowing you to float through the air. While transformed, you have a flying speed of 30 feet. You can maintain this form for up to 10 minutes. Once you use this ability, you can’t use it again until you finish a short or long rest."
+            ],
+            "Book": "Plane Shift Ixalan",
+            "Page": 14
         }
     },
     "Spells": {
@@ -13592,7 +14721,7 @@
 			"Duration":"Concentration, up to 10 minutes",
 			"Description":[
 				"Magical darkness spreads from a point you choose within range to fill a 15-foot-radius sphere for the duration. The darkness spreads around corners. A creature with darkvision can’t see through this darkness, and nonmagical light can’t illuminate it.",
-				"If the point you choose is on an object you are holding or one that isn’t being worn or carried, the darkness emanates from the object and moves with it. Completely covering the source of the darkness with an opaque object, such as a bow l or a helm, blocks the darkness.",
+				"If the point you choose is on an object you are holding or one that isn’t being worn or carried, the darkness emanates from the object and moves with it. Completely covering the source of the darkness with an opaque object, such as a bowl or a helm, blocks the darkness.",
 				"If any of this spell’s area overlaps with an area of light created by a spell of 2nd level or lower, the spell that created the light is dispelled."
 			],
 			"Book":"Players Handbook",
@@ -16161,7 +17290,7 @@
 			"Level":6,
 			"Casting Time":"10 minutes",
 			"Range":"30 feet",
-			"Components":"V, S, M (a gem-encrusted bow l worth at least 1,000 gp, which the spell consumes)",
+			"Components":"V, S, M (a gem-encrusted bowl worth at least 1,000 gp, which the spell consumes)",
 			"Duration":"Instantaneous",
 			"Description":[
 				"You bring forth a great feast, including magnificent food and drink. The feast takes 1 hour to consume and disappears at the end of that time, and the beneficial effects don’t set in until this hour is over. Up to twelve creatures can partake of the feast.",
@@ -24249,6 +25378,33 @@
 				"Sorcerer": true,
 				"Warlock": true,
 				"Wizard": true
+			}
+		},
+		"Encode Thoughts": {
+			"School": "Enchantment",
+			"Cantrip": true,
+			"Ritual": false,
+			"Level": 0,
+			"Casting Time": "1 action",
+			"Range": "Self",
+			"Components": "S",
+			"Duration": "Up to 8 hours",
+			"Description": [
+				"Putting a finger to your head, you pull a memory, an idea, or a message from your mind and transform it into a tangible string of glowing energy called a thought strand, which persists for the duration or until you cast this spell again. The thought strand appears in an unoccupied space within 5 feet of you as a Tiny, weightless, semisolid object that can be held and carried like a ribbon. It is otherwise stationary.",
+				"If you cast this spell while concentrating on a spell or an ability that allows you to read or manipulate the thoughts of others (such as detect thoughts or modify memory), you can transform the thoughts or memories you read, rather than your own, into a thought strand.",
+				"Casting this spell while holding a thought strand allows you to instantly receive whatever memory. idea, or message the thought strand contains. (Casting detect thoughts on the strand has the same effect.)"
+			],
+			"Book": "Guildmaster's Guide to Ravnica",
+			"Page": 47,
+			"Classes": {
+				"Bard": false,
+				"Cleric": false,
+				"Druid": false,
+				"Paladin": false,
+				"Ranger": false,
+				"Sorcerer": false,
+				"Warlock": false,
+				"Wizard": false
 			}
 		}
 	},
@@ -116769,7 +117925,7 @@
 						"Rows": [
 							{
 								"d8": 1,
-								"Major Adaptation": "Acidic Skin# Any creature that touches the krasis or hits it with a melee attack while within 5 feet of it takes 2 (1d4) acid damage (category 1), 4 (1d8) acid damage (category 2), or 6 (1 d12) acid damage (category 3)."
+								"Major Adaptation": "Acidic Skin# Any creature that touches the krasis or hits it with a melee attack while within 5 feet of it takes 2 (1d4) acid damage (category 1), 4 (1d8) acid damage (category 2), or 6 (1d12) acid damage (category 3)."
 							},
 							{
 								"d8": 2,
@@ -116963,7 +118119,7 @@
 						"Rows": [
 							{
 								"d8": 1,
-								"Major Adaptation": "Acidic Skin# Any creature that touches the krasis or hits it with a melee attack while within 5 feet of it takes 2 (1d4) acid damage (category 1), 4 (1d8) acid damage (category 2), or 6 (1 d12) acid damage (category 3)."
+								"Major Adaptation": "Acidic Skin# Any creature that touches the krasis or hits it with a melee attack while within 5 feet of it takes 2 (1d4) acid damage (category 1), 4 (1d8) acid damage (category 2), or 6 (1d12) acid damage (category 3)."
 							},
 							{
 								"d8": 2,
@@ -117157,7 +118313,7 @@
 						"Rows": [
 							{
 								"d8": 1,
-								"Major Adaptation": "Acidic Skin# Any creature that touches the krasis or hits it with a melee attack while within 5 feet of it takes 2 (1d4) acid damage (category 1), 4 (1d8) acid damage (category 2), or 6 (1 d12) acid damage (category 3)."
+								"Major Adaptation": "Acidic Skin# Any creature that touches the krasis or hits it with a melee attack while within 5 feet of it takes 2 (1d4) acid damage (category 1), 4 (1d8) acid damage (category 2), or 6 (1d12) acid damage (category 3)."
 							},
 							{
 								"d8": 2,
@@ -123692,6 +124848,1987 @@
 			},
 			"Book": "Guildmaster's Guide to Ravnica",
 			"Page": 256
+		},
+		"Homarid": {
+			"Size": "Medium",
+			"Type": "monstrosity",
+			"Alignment": "chaotic evil",
+			"Armor Class": 14,
+			"Armor Type": "natural armor",
+			"Hit Dice": "8d8",
+			"Speed": {
+				"Walk": 20,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 30,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 13,
+				"Dexterity": 8,
+				"Constitution": 13,
+				"Intelligence": 9,
+				"Wisdom": 14,
+				"Charisma": 10
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": false,
+				"Wisdom": false,
+				"Charisma": false
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": true,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+
+			],
+			"Damage Resistances": [
+
+			],
+			"Damage Immunities": [
+                
+			],
+			"Condition Immunities": [
+                
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 60,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+				"Homarid"
+			],
+			"Challenge": 1,
+			"Experience": 200,
+			"Features": {
+				"Amphibious": {
+					"Description": [
+						"The homarid can breathe air and water."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The homarid makes two claw attacks"
+					]
+				},
+				"Claw": {
+					"Description": [
+						"Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 5 (1d8 + 1) slashing damage, and the target is grappled (escape DC 11). The homarid has two claws, each of which can grapple only one target."
+					]
+				}
+			},
+			"Book": "Plane Shift Dominaria",
+			"Page": 15
+		},
+		"Kavu Predator": {
+			"Size": "Large",
+			"Type": "beast",
+			"Alignment": "unaligned",
+			"Armor Class": 15,
+			"Armor Type": "natural armor",
+			"Hit Dice": "10d10",
+			"Speed": {
+				"Walk": 30,
+				"Burrow": 0,
+				"Climb": 30,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 18,
+				"Dexterity": 12,
+				"Constitution": 15,
+				"Intelligence": 6,
+				"Wisdom": 14,
+				"Charisma": 8
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": false,
+				"Wisdom": false,
+				"Charisma": false
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": true,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+
+			],
+			"Damage Resistances": [
+
+			],
+			"Damage Immunities": [
+                
+			],
+			"Condition Immunities": [
+                
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 60,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+				"understands Elvish"
+			],
+			"Challenge": 2,
+			"Experience": 450,
+			"Features": {
+				"Pounce": {
+					"Description": [
+						"If the kavu moves at least 20 feet straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the kavu can make one bite attack against it as a bonus action."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The kavu makes two claw attacks."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 9 (1d10 + 4) piercing damage."
+					]
+				},
+				"Claw": {
+					"Description": [
+						"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 7 (1d6 + 4) slashing damage."
+					]
+				}
+			},
+			"Book": "Plane Shift Dominaria",
+			"Page": 24
+		},
+		"Steel Leaf Kavu": {
+			"Size": "Large",
+			"Type": "beast",
+			"Alignment": "unaligned",
+			"Armor Class": 16,
+			"Armor Type": "natural armor",
+			"Hit Dice": "15d10",
+			"Speed": {
+				"Walk": 4,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 20,
+				"Dexterity": 12,
+				"Constitution": 18,
+				"Intelligence": 6,
+				"Wisdom": 14,
+				"Charisma": 8
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": false,
+				"Wisdom": false,
+				"Charisma": false
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+
+			],
+			"Damage Resistances": [
+
+			],
+			"Damage Immunities": [
+                
+			],
+			"Condition Immunities": [
+                
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 60,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+				"understands Elvish"
+			],
+			"Challenge": 4,
+			"Experience": 1100,
+			"Features": {
+				"Raking Charge": {
+					"Description": [
+						"If the kavu moves at least 20 feet straight toward a creature and then hits it with a bite attack on the same turn, that target must succeed on a DC 15 Strength saving throw or be knocked prone. If the target is prone, the kavu can make one rend attack against it as a bonus action."
+					]
+				}
+			},
+			"Actions": {
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 14 (2d8 + 5) piercing damage."
+					]
+				},
+				"Rend": {
+					"Description": [
+						"Melee Weapon Attack: +7 to hit, reach 5 ft., one prone creature. Hit: 23 (4d8 + 5) slashing damage."
+					]
+				}
+			},
+			"Book": "Plane Shift Dominaria",
+			"Page": 15
+		},
+		"Criosphinx": {
+			"Size": "Large",
+			"Type": "monstrosity",
+			"Alignment": "neutral",
+			"Armor Class": 18,
+			"Armor Type": "natural armor",
+			"Hit Dice": "24d10",
+			"Speed": {
+				"Walk": 30,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 60,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 18,
+				"Dexterity": 15,
+				"Constitution": 18,
+				"Intelligence": 16,
+				"Wisdom": 16,
+				"Charisma": 16
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": false,
+				"Wisdom": false,
+				"Charisma": false
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": true,
+				"Athletics": false,
+				"Deception": false,
+				"History": true,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": true,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+
+			],
+			"Damage Resistances": [
+				"bludgeoning, piercing, and slashing from nonmagical attacks"
+			],
+			"Damage Immunities": [
+                "psychic"
+			],
+			"Condition Immunities": [
+				"charmed",
+				"frightened"
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 120,
+				"Blind": false
+			},
+			"Languages": [
+				"understands Common",
+				"Sphinx"
+			],
+			"Challenge": 13,
+			"Experience": 10000,
+			"Features": {
+				"Inscrutable": {
+					"Description": [
+						"The sphinx is immune to any effect that would sense its emotions or read its thoughts, as well as any divination spell that it refuses. Wisdom (Insight) checks made to ascertain the sphinx’s intentions or sincerity have disadvantage."
+					]
+				},
+				"Magic Weapons": {
+					"Description": [
+						"The sphinx’s weapon attacks are magical."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The sphinx makes a ram attack and two claw attacks."
+					]
+				},
+				"Ram": {
+					"Description": [
+						"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 17 (3d8 + 4) bludgeoning damage."
+					]
+				},
+				"Claw": {
+					"Description": [
+						"Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) slashing damage."
+					]
+				}
+			},
+			"Legendary Actions": {
+				"Description": [
+					"The sphinx can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. The sphinx regains spent legendary actions at the start of its turn."
+				],
+				"Ram Attack": {
+					"Description": [
+						"The sphinx makes one ram attack."
+					]
+				},
+				"Teleport (Costs 2 Actions)": {
+					"Description": [
+						"The sphinx magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see."
+					]
+				}
+			},
+			"Book": "Plane Shift Amonkhet",
+			"Page": 32
+		},
+		"Manticore, Heart-Piercer": {
+			"Size": "Large",
+			"Type": "monstrosity",
+			"Alignment": "chaotic evil",
+			"Armor Class": 15,
+			"Armor Type": "natural armor",
+			"Hit Dice": "16d10",
+			"Speed": {
+				"Walk": 50,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 19,
+				"Dexterity": 14,
+				"Constitution": 16,
+				"Intelligence": 5,
+				"Wisdom": 12,
+				"Charisma": 6
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": false,
+				"Wisdom": false,
+				"Charisma": false
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+		
+			],
+			"Damage Immunities": [
+				
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 60,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 5,
+			"Experience": 1800,
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The manticore makes two attacks, one with its bite and one with its claws."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 11 (2d6 + 4) piercing damage."
+					]
+				},
+				"Claws": {
+					"Description": [
+						"Melee Weapon Attack: +7 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) slashing damage."
+					]
+				},
+				"Stinger": {
+					"Description": [
+						"Melee Weapon Attack: +7 to hit, reach 10 ft., one target. Hit: 11 (2d6 + 4) piercing damage. The target must make a DC 14 Constitution saving throw, taking 24 (7d6) poison damage on a failed save, or half as much damage on a successful one."
+					]
+				}
+			},
+			"Book": "Plane Shift Dominaria",
+			"Page": 15
+		},
+		"Serpopard": {
+			"Size": "Large",
+			"Type": "beast",
+			"Alignment": "unaligned",
+			"Armor Class": 12,
+			"Hit Dice": "7d10",
+			"Speed": {
+				"Walk": 40,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 18,
+				"Dexterity": 14,
+				"Constitution": 15,
+				"Intelligence": 3,
+				"Wisdom": 12,
+				"Charisma": 8
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": false,
+				"Wisdom": false,
+				"Charisma": false
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": true,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+		
+			],
+			"Damage Immunities": [
+				
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 3,
+			"Experience": 700,
+			"Features": {
+				"Keen Smell": {
+					"Description": [
+						"The serpopard has advantage on Wisdom (Perception) checks that rely on smell."
+					]
+				},
+				"Pounce": {
+					"Description": [
+						"If the serpopard moves at least 20 feet straight toward a creature and then hits it with a claw attack on the same turn, that target must succeed on a DC 14 Strength saving throw or be knocked prone. If the target is prone, the serpopard can make one bite attack against it as a bonus action."
+					]
+				}
+			},
+			"Actions": {
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 9 (1d10 + 4) piercing damage, and the target must make a DC 14 Constitution saving throw, taking 10 (3d6) poison damage on a failed save, or half as much damage on a successful one."
+					]
+				}
+			},
+			"Book": "Plane Shift Dominaria",
+			"Page": 37
+		},
+		"Frilled Death Spitter": {
+			"Size": "Small",
+			"Type": "beast",
+			"Alignment": "unaligned",
+			"Armor Class": 13,
+			"Hit Dice": "4d6",
+			"Speed": {
+				"Walk": 40,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 12,
+				"Dexterity": 16,
+				"Constitution": 13,
+				"Intelligence": 4,
+				"Wisdom": 12,
+				"Charisma": 6
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": false,
+				"Wisdom": false,
+				"Charisma": false
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+		
+			],
+			"Damage Immunities": [
+				
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": "1/2",
+			"Experience": 100,
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The deathspitter makes three attacks: one with its bite and two with its claws."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) piercing damage."
+					]
+				},
+				"Claw": {
+					"Description": [
+						"Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 6 (1d6 + 3) slashing damage."
+					]
+				},
+				"Spit Poison": {
+					"Description": [
+						"Ranged Weapon Attack: +5 to hit, range 15/30 ft., one target. Hit: The target must make a DC 13 Constitution saving throw, taking 18 (4d8) poison damage on a failed save, or half as much damage on a successful one. In addition, a creature that fails its saving throw is blinded until the end of the deathspitter’s next turn."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 30
+		},
+		"Gisath, Sun's Avatar": {
+			"Size": "Gargantuan",
+			"Type": "beast",
+			"Alignment": "unaligned",
+			"Armor Class": 16,
+			"Armor Type": "natural armor",
+			"Hit Dice": "14d20",
+			"Speed": {
+				"Walk": 40,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 24,
+				"Dexterity": 12,
+				"Constitution": 18,
+				"Intelligence": 12,
+				"Wisdom": 16,
+				"Charisma": 6
+			},
+			"Saving Throws": {
+				"Strength": true,
+				"Dexterity": false,
+				"Constitution": true,
+				"Intelligence": false,
+				"Wisdom": true,
+				"Charisma": true
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+		
+			],
+			"Damage Immunities": [
+				
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 10,
+			"Experience": 5900,
+			"Features": {
+				"Legendary Resistance (3/Day)": {
+					"Description": [
+						"If Gishath fails a saving throw, it can choose to succeed instead."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"Gishath makes two attacks: one with its bite and one with its stomp or tail. It can’t make both attacks against the same target."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +11 to hit, reach 15 ft., one target. Hit: 39 (5d12 + 7) piercing damage. If the target is a Large or smaller creature, it must succeed on a DC 19 Dexterity saving throw or it is grappled (escape DC 19). Until this grapple ends, the target is restrained, and Gishath can’t bite another target."
+					]
+				},
+				"Swallow": {
+					"Description": [
+						"Gishath makes one bite attack against a Large or smaller creature it is grappling. If the attack hits, that creature takes the bite's damage and is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside Gishath, and it takes 21 (6d6) acid damage at the start of each of Gishath’s turns.",
+						"If Gishath takes 30 damage or more on a single turn from a creature inside it, it must succeed on a DC 18 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of it. If Gishath dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone."
+					]
+				},
+				"Stomp": {
+					"Description": [
+						"Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 29 (5d8 + 7) bludgeoning damage, and the target must succeed on a DC 19 Strength saving throw or be knocked prone."
+					]
+				},
+				"Tail": {
+					"Description": [
+						"Melee Weapon Attack: +11 to hit, reach 15 ft., one target. Hit: 25 (4d8 + 7) bludgeoning damage."
+					]
+				}
+			},
+			"Legendary Actions": {
+				"Description": [
+					"Gishath can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. Gishath regains spent legendary actions at the start of its turn."
+				],
+				"Attack": {
+					"Description": [
+						"Gishath makes one stomp or tail attack."
+					]
+				},
+				"Roar (Costs 2 Actions)": {
+					"Description": [
+						"Each creature that is within 120 feet of Gishath and can hear it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature’s saving throw is successful or the effect ends for it, the creature is immune to Gishath’s Roar for the next 24 hours."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 32
+		},
+		"Zetalpa, Primal Dawn": {
+			"Size": "Gargantuan",
+			"Type": "monstrosity",
+			"SubType": "titan",
+			"Alignment": "unaligned",
+			"Armor Class": 25,
+			"Armor Type": "natural armor",
+			"Hit Dice": "33d20",
+			"Speed": {
+				"Walk": 20,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 60,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 30,
+				"Dexterity": 11,
+				"Constitution": 30,
+				"Intelligence": 3,
+				"Wisdom": 11,
+				"Charisma": 11
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": true,
+				"Wisdom": true,
+				"Charisma": true
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": false,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+				"radiant"
+			],
+			"Damage Immunities": [
+				"fire",
+				"poison",
+				"bludgeoning, piercing, and slashing from nonmagical attacks"
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 120,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 30,
+			"Experience": 155000,
+			"Features": {
+				"Legendary Resistance (3/Day)": {
+					"Description": [
+						"If the elder dinosaur fails a saving throw, it can choose to succeed instead."
+					]
+				},
+				"Magic Resistance": {
+					"Description": [
+						"The elder dinosaur has advantage on saving throws against spells and other magical effects."
+					]
+				},
+				"Siege Monster": {
+					"Description": [
+						"The elder dinosaur deals double damage to objects and structures."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The elder dinosaur can use its Frightful Presence. It then makes five attacks: one with its bite, two with its claws, and two with its wings. It can use its Swallow instead of its bite."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 10 ft., one target. Hit: 36 (4d12 + 10) piercing damage. If the target is a creature, it is grappled (escape DC 20). Until this grapple ends, the target is restrained, and the elder dinosaur can’t bite another target."
+					]
+				},
+				"Claw": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 15 ft., one target. Hit: 28 (4d8 + 10) slashing damage."
+					]
+				},
+				"Wing": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 20 ft., one target. Hit: 28 (4d8 + 10) bludgeoning damage."
+					]
+				},
+				"Frightful Presence": {
+					"Description": [
+						"Each creature of the elder dinosaur’s choice within 120 feet of it and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with disadvantage if the elder dinosaur is within line of sight, ending the effect on itself on a success. If a creature’s saving throw is successful or the effect ends for it, the creature is immune to the elder dinosaur’s Frightful Presence for the next 24 hours."
+					]
+				},
+				"Swallow": {
+					"Description": [
+						"The elder dinosaur makes one bite attack against a Large or smaller creature it is grappling. If the attack hits, that creature takes the bite’s damage, the target is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the elder dinosaur, and it takes 56 (16d6) acid damage at the start of each of the elder dinosaur’s turns.",
+						"If the elder dinosaur takes 60 damage or more on a single turn from a creature inside it, it must succeed on a DC 20 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of it. If the elder dinosaur dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone."
+					]
+				}
+			},
+			"Legendary Actions": {
+				"Description": [
+					"The elder dinosaur can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. The elder dinosaur regains spent legendary actions at the start of its turn."
+				],
+				"Attack": {
+					"Description": [
+						"The elder dinosaur makes one claw attack, tail attack, wing attack, or flipper attack."
+					]
+				},
+				"Move": {
+					"Description": [
+						"The elder dinosaur moves up to half its speed."
+					]
+				},
+				"Chomp (Costs 2 Actions)": {
+					"Description": [
+						"The elder dinosaur makes one bite attack or uses its Swallow."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 34
+		},
+		"Nezahal, Primal Tide": {
+			"Size": "Gargantuan",
+			"Type": "monstrosity",
+			"SubType": "titan",
+			"Alignment": "unaligned",
+			"Armor Class": 25,
+			"Armor Type": "natural armor",
+			"Hit Dice": "33d20",
+			"Speed": {
+				"Walk": 20,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 60,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 30,
+				"Dexterity": 11,
+				"Constitution": 30,
+				"Intelligence": 3,
+				"Wisdom": 11,
+				"Charisma": 11
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": true,
+				"Wisdom": true,
+				"Charisma": true
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": false,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+		
+			],
+			"Damage Immunities": [
+				"fire",
+				"poison",
+				"bludgeoning, piercing, and slashing from nonmagical attacks"
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 120,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 30,
+			"Experience": 155000,
+			"Features": {
+				"Hold Breath": {
+					"Description": [
+						"The elder dinosaur can hold its breath for 4 hours."
+					]
+				},
+				"Legendary Resistance (3/Day)": {
+					"Description": [
+						"If the elder dinosaur fails a saving throw, it can choose to succeed instead."
+					]
+				},
+				"Magic Resistance": {
+					"Description": [
+						"The elder dinosaur has advantage on saving throws against spells and other magical effects."
+					]
+				},
+				"Siege Monster": {
+					"Description": [
+						"The elder dinosaur deals double damage to objects and structures."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The elder dinosaur can use its Frightful Presence. It then makes five attacks: one with its bite and four with its flippers. No two flipper attacks can target the same creature. It can use its Swallow instead of its bite."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 10 ft., one target. Hit: 36 (4d12 + 10) piercing damage. If the target is a creature, it is grappled (escape DC 20). Until this grapple ends, the target is restrained, and the elder dinosaur can’t bite another target."
+					]
+				},
+				"Flipper": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 5 ft., one target. Hit: 28 (4d8 + 10) bludgeoning damage."
+					]
+				},
+				"Frightful Presence": {
+					"Description": [
+						"Each creature of the elder dinosaur’s choice within 120 feet of it and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with disadvantage if the elder dinosaur is within line of sight, ending the effect on itself on a success. If a creature’s saving throw is successful or the effect ends for it, the creature is immune to the elder dinosaur’s Frightful Presence for the next 24 hours."
+					]
+				},
+				"Swallow": {
+					"Description": [
+						"The elder dinosaur makes one bite attack against a Large or smaller creature it is grappling. If the attack hits, that creature takes the bite’s damage, the target is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the elder dinosaur, and it takes 56 (16d6) acid damage at the start of each of the elder dinosaur’s turns.",
+						"If the elder dinosaur takes 60 damage or more on a single turn from a creature inside it, it must succeed on a DC 20 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of it. If the elder dinosaur dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone."
+					]
+				}
+			},
+			"Legendary Actions": {
+				"Description": [
+					"The elder dinosaur can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. The elder dinosaur regains spent legendary actions at the start of its turn."
+				],
+				"Attack": {
+					"Description": [
+						"The elder dinosaur makes one claw attack, tail attack, wing attack, or flipper attack."
+					]
+				},
+				"Move": {
+					"Description": [
+						"The elder dinosaur moves up to half its speed."
+					]
+				},
+				"Chomp (Costs 2 Actions)": {
+					"Description": [
+						"The elder dinosaur makes one bite attack or uses its Swallow."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 34
+		},
+		"Etali, Primal Storm": {
+			"Size": "Gargantuan",
+			"Type": "monstrosity",
+			"SubType": "titan",
+			"Alignment": "unaligned",
+			"Armor Class": 25,
+			"Armor Type": "natural armor",
+			"Hit Dice": "33d20",
+			"Speed": {
+				"Walk": 40,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 30,
+				"Dexterity": 11,
+				"Constitution": 30,
+				"Intelligence": 3,
+				"Wisdom": 11,
+				"Charisma": 11
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": true,
+				"Wisdom": true,
+				"Charisma": true
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": false,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+		
+			],
+			"Damage Immunities": [
+				"fire",
+				"poison",
+				"bludgeoning, piercing, and slashing from nonmagical attacks"
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 120,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 30,
+			"Experience": 155000,
+			"Features": {
+				"Lightning Storm": {
+					"Description": [
+						"The elder dinosaur is always accompanied by a raging thunderstorm similar to the effect of a call lightning spell. A storm cloud in the shape of a cylinder that is 10 feet tall with a 60-foot radius instantly forms 100 feet in the air over the elder dinosaur when it is angered or becomes violent, as long as it is outdoors. On each of its turns, as an action, the elder dinosaur can choose a point it can see within 120 feet of it. A bolt of lightning flashes down from the cloud to that point. Each creature within 10 feet of that point must make a DC 20 Dexterity saving throw, taking 21 (6d6) lightning damage on a failed save, or half as much damage on a successful one."
+					]
+				},
+				"Legendary Resistance (3/Day)": {
+					"Description": [
+						"If the elder dinosaur fails a saving throw, it can choose to succeed instead."
+					]
+				},
+				"Magic Resistance": {
+					"Description": [
+						"The elder dinosaur has advantage on saving throws against spells and other magical effects."
+					]
+				},
+				"Siege Monster": {
+					"Description": [
+						"The elder dinosaur deals double damage to objects and structures."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The elder dinosaur can use its Frightful Presence and call down two lightning strikes from its Lightning Storm. It then makes three attacks: one with its bite and two with its claws."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 10 ft., one target. Hit: 36 (4d12 + 10) piercing damage. If the target is a creature, it is grappled (escape DC 20). Until this grapple ends, the target is restrained, and the elder dinosaur can’t bite another target."
+					]
+				},
+				"Claw": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 15 ft., one target. Hit: 28 (4d8 + 10) slashing damage."
+					]
+				},
+				"Frightful Presence": {
+					"Description": [
+						"Each creature of the elder dinosaur’s choice within 120 feet of it and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with disadvantage if the elder dinosaur is within line of sight, ending the effect on itself on a success. If a creature’s saving throw is successful or the effect ends for it, the creature is immune to the elder dinosaur’s Frightful Presence for the next 24 hours."
+					]
+				},
+				"Swallow": {
+					"Description": [
+						"The elder dinosaur makes one bite attack against a Large or smaller creature it is grappling. If the attack hits, that creature takes the bite’s damage, the target is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the elder dinosaur, and it takes 56 (16d6) acid damage at the start of each of the elder dinosaur’s turns.",
+						"If the elder dinosaur takes 60 damage or more on a single turn from a creature inside it, it must succeed on a DC 20 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of it. If the elder dinosaur dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone."
+					]
+				}
+			},
+			"Legendary Actions": {
+				"Description": [
+					"The elder dinosaur can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. The elder dinosaur regains spent legendary actions at the start of its turn."
+				],
+				"Attack": {
+					"Description": [
+						"The elder dinosaur makes one claw attack, tail attack, wing attack, or flipper attack."
+					]
+				},
+				"Move": {
+					"Description": [
+						"The elder dinosaur moves up to half its speed."
+					]
+				},
+				"Chomp (Costs 2 Actions)": {
+					"Description": [
+						"The elder dinosaur makes one bite attack or uses its Swallow."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 34
+		},
+		"Tetzimoc, Primal Death": {
+			"Size": "Gargantuan",
+			"Type": "monstrosity",
+			"SubType": "titan",
+			"Alignment": "unaligned",
+			"Armor Class": 25,
+			"Armor Type": "natural armor",
+			"Hit Dice": "33d20",
+			"Speed": {
+				"Walk": 40,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 30,
+				"Dexterity": 11,
+				"Constitution": 30,
+				"Intelligence": 3,
+				"Wisdom": 11,
+				"Charisma": 11
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": true,
+				"Wisdom": true,
+				"Charisma": true
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": false,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+		
+			],
+			"Damage Immunities": [
+				"fire",
+				"poison",
+				"bludgeoning, piercing, and slashing from nonmagical attacks"
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 120,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 30,
+			"Experience": 155000,
+			"Features": {
+				"Spiny Carapace": {
+					"Description": [
+						"The elder dinosaur is covered in an armored carapace bristling with thick, sharp spines. Any creature that hits or misses Tetzimoc with a melee attack takes 7 (2d6) piercing damage."
+					]
+				},
+				"Tail Spike Regrowth": {
+					"Description": [
+						"The elder dinosaur has forty tail spikes. Used spikes regrow when the elder dinosaur finishes a long rest."
+					]
+				},
+				"Legendary Resistance (3/Day)": {
+					"Description": [
+						"If the elder dinosaur fails a saving throw, it can choose to succeed instead."
+					]
+				},
+				"Magic Resistance": {
+					"Description": [
+						"The elder dinosaur has advantage on saving throws against spells and other magical effects."
+					]
+				},
+				"Siege Monster": {
+					"Description": [
+						"The elder dinosaur deals double damage to objects and structures."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The elder dinosaur can use its Frightful Presence. It then makes five attacks: one with its bite, two with its claws, one with its horns, and one with its tail. It can use its tail spikes in place of any or all of those attacks, and it can use its Swallow instead of its bite."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 10 ft., one target. Hit: 36 (4d12 + 10) piercing damage. If the target is a creature, it is grappled (escape DC 20). Until this grapple ends, the target is restrained, and the elder dinosaur can’t bite another target."
+					]
+				},
+				"Claw": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 15 ft., one target. Hit: 28 (4d8 + 10) slashing damage."
+					]
+				},
+				"Horns": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 10 ft., one target. Hit: 32 (4d10 + 10) piercing damage."
+					]
+				},
+				"Tail": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 20 ft., one target. Hit: 24 (4d6 + 10) piercing damage. If the target is a creature, it must succeed on a DC 20 Strength saving throw or be knocked prone."
+					]
+				},
+				"Tail Spikes": {
+					"Description": [
+						"Ranged Weapon Attack: +9 to hit, range 100/300 ft., two targets. Hit: 7 (2d6) piercing damage."
+					]
+				},
+				"Frightful Presence": {
+					"Description": [
+						"Each creature of the elder dinosaur’s choice within 120 feet of it and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with disadvantage if the elder dinosaur is within line of sight, ending the effect on itself on a success. If a creature’s saving throw is successful or the effect ends for it, the creature is immune to the elder dinosaur’s Frightful Presence for the next 24 hours."
+					]
+				},
+				"Swallow": {
+					"Description": [
+						"The elder dinosaur makes one bite attack against a Large or smaller creature it is grappling. If the attack hits, that creature takes the bite’s damage, the target is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the elder dinosaur, and it takes 56 (16d6) acid damage at the start of each of the elder dinosaur’s turns.",
+						"If the elder dinosaur takes 60 damage or more on a single turn from a creature inside it, it must succeed on a DC 20 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of it. If the elder dinosaur dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone."
+					]
+				}
+			},
+			"Legendary Actions": {
+				"Description": [
+					"The elder dinosaur can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. The elder dinosaur regains spent legendary actions at the start of its turn."
+				],
+				"Attack": {
+					"Description": [
+						"The elder dinosaur makes one claw attack, tail attack, wing attack, or flipper attack."
+					]
+				},
+				"Move": {
+					"Description": [
+						"The elder dinosaur moves up to half its speed."
+					]
+				},
+				"Chomp (Costs 2 Actions)": {
+					"Description": [
+						"The elder dinosaur makes one bite attack or uses its Swallow."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 34
+		},
+		"Ghalta, Primal Hunter": {
+			"Size": "Gargantuan",
+			"Type": "monstrosity",
+			"SubType": "titan",
+			"Alignment": "unaligned",
+			"Armor Class": 25,
+			"Armor Type": "natural armor",
+			"Hit Dice": "33d20",
+			"Speed": {
+				"Walk": 40,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 30,
+				"Dexterity": 11,
+				"Constitution": 30,
+				"Intelligence": 3,
+				"Wisdom": 11,
+				"Charisma": 11
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": true,
+				"Wisdom": true,
+				"Charisma": true
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": false,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+		
+			],
+			"Damage Immunities": [
+				"fire",
+				"poison",
+				"bludgeoning, piercing, and slashing from nonmagical attacks"
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 120,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 30,
+			"Experience": 155000,
+			"Features": {
+				"Legendary Resistance (3/Day)": {
+					"Description": [
+						"If the elder dinosaur fails a saving throw, it can choose to succeed instead."
+					]
+				},
+				"Magic Resistance": {
+					"Description": [
+						"The elder dinosaur has advantage on saving throws against spells and other magical effects."
+					]
+				},
+				"Siege Monster": {
+					"Description": [
+						"The elder dinosaur deals double damage to objects and structures."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The elder dinosaur can use its Frightful Presence. It then makes three attacks: one with its bite, one with its stomp, and one with its tail. It can use its Swallow instead of its bite."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 10 ft., one target. Hit: 62 (8d12 + 10) piercing damage. If the target is a creature, it is grappled (escape DC 20). Until this grapple ends, the target is restrained, and the elder dinosaur can’t bite another target."
+					]
+				},
+				"Stomp": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 5 ft., one target. Hit: 46 (8d8 + 10) bludgeoning damage."
+					]
+				},
+				"Tail": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 20 ft., one target. Hit: 38 (8d6 + 10) bludgeoning damage. If the target is a creature, it must succeed on a DC 20 Strength saving throw or be knocked prone."
+					]
+				},
+				"Frightful Presence": {
+					"Description": [
+						"Each creature of the elder dinosaur’s choice within 120 feet of it and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with disadvantage if the elder dinosaur is within line of sight, ending the effect on itself on a success. If a creature’s saving throw is successful or the effect ends for it, the creature is immune to the elder dinosaur’s Frightful Presence for the next 24 hours."
+					]
+				},
+				"Swallow": {
+					"Description": [
+						"The elder dinosaur makes one bite attack against a Large or smaller creature it is grappling. If the attack hits, that creature takes the bite’s damage, the target is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the elder dinosaur, and it takes 56 (16d6) acid damage at the start of each of the elder dinosaur’s turns.",
+						"If the elder dinosaur takes 60 damage or more on a single turn from a creature inside it, it must succeed on a DC 20 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of it. If the elder dinosaur dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone."
+					]
+				}
+			},
+			"Legendary Actions": {
+				"Description": [
+					"The elder dinosaur can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. The elder dinosaur regains spent legendary actions at the start of its turn."
+				],
+				"Attack": {
+					"Description": [
+						"The elder dinosaur makes one claw attack, tail attack, wing attack, or flipper attack."
+					]
+				},
+				"Move": {
+					"Description": [
+						"The elder dinosaur moves up to half its speed."
+					]
+				},
+				"Chomp (Costs 2 Actions)": {
+					"Description": [
+						"The elder dinosaur makes one bite attack or uses its Swallow."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 34
+		},
+		"Zacma, Primal Calamity": {
+			"Size": "Gargantuan",
+			"Type": "monstrosity",
+			"SubType": "titan",
+			"Alignment": "unaligned",
+			"Armor Class": 25,
+			"Armor Type": "natural armor",
+			"Hit Dice": "33d20",
+			"Speed": {
+				"Walk": 40,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 30,
+				"Dexterity": 11,
+				"Constitution": 30,
+				"Intelligence": 3,
+				"Wisdom": 11,
+				"Charisma": 11
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": true,
+				"Wisdom": true,
+				"Charisma": true
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": false,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+		
+			],
+			"Damage Immunities": [
+				"fire",
+				"poison",
+				"bludgeoning, piercing, and slashing from nonmagical attacks"
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 120,
+				"Darkvision": 0,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 30,
+			"Experience": 155000,
+			"Features": {
+				"Legendary Resistance (3/Day)": {
+					"Description": [
+						"If the elder dinosaur fails a saving throw, it can choose to succeed instead."
+					]
+				},
+				"Magic Resistance": {
+					"Description": [
+						"The elder dinosaur has advantage on saving throws against spells and other magical effects."
+					]
+				},
+				"Siege Monster": {
+					"Description": [
+						"The elder dinosaur deals double damage to objects and structures."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The elder dinosaur can use its Frightful Presence. It then makes five attacks: three with its bite, one with its stomp, and one with its tail. It can use its Swallow instead of a bite."
+					]
+				},
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 10 ft., one target. Hit: 36 (4d12 + 10) piercing damage. If the target is a creature, it is grappled (escape DC 20). Until this grapple ends, the target is restrained. If the elder dinosaur has three targets restrained in this way, it can’t bite another target."
+					]
+				},
+				"Stomp": {
+					"Description": [
+						"Melee Weapon Attack: +19 to hit, reach 5 ft., one target. Hit: 46 (8d8 + 10) bludgeoning damage."
+					]
+				},
+				"Frightful Presence": {
+					"Description": [
+						"Each creature of the elder dinosaur’s choice within 120 feet of it and aware of it must succeed on a DC 17 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, with disadvantage if the elder dinosaur is within line of sight, ending the effect on itself on a success. If a creature’s saving throw is successful or the effect ends for it, the creature is immune to the elder dinosaur’s Frightful Presence for the next 24 hours."
+					]
+				},
+				"Swallow": {
+					"Description": [
+						"The elder dinosaur makes one bite attack against a Large or smaller creature it is grappling. If the attack hits, that creature takes the bite’s damage, the target is swallowed, and the grapple ends. While swallowed, the creature is blinded and restrained, it has total cover against attacks and other effects outside the elder dinosaur, and it takes 56 (16d6) acid damage at the start of each of the elder dinosaur’s turns.",
+						"If the elder dinosaur takes 60 damage or more on a single turn from a creature inside it, it must succeed on a DC 20 Constitution saving throw at the end of that turn or regurgitate all swallowed creatures, which fall prone in a space within 10 feet of it. If the elder dinosaur dies, a swallowed creature is no longer restrained by it and can escape from the corpse by using 20 feet of movement, exiting prone."
+					]
+				}
+			},
+			"Legendary Actions": {
+				"Description": [
+					"The elder dinosaur can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature’s turn. The elder dinosaur regains spent legendary actions at the start of its turn."
+				],
+				"Attack": {
+					"Description": [
+						"The elder dinosaur makes one claw attack, tail attack, wing attack, or flipper attack."
+					]
+				},
+				"Move": {
+					"Description": [
+						"The elder dinosaur moves up to half its speed."
+					]
+				},
+				"Chomp (Costs 2 Actions)": {
+					"Description": [
+						"The elder dinosaur makes one bite attack or uses its Swallow."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 34
+		},
+		"Sunbird": {
+			"Size": "Gargantuan",
+			"Type": "monstrosity",
+			"Alignment": "unaligned",
+			"Armor Class": 17,
+			"Armor Type": "natural armor",
+			"Hit Dice": "18d20",
+			"Speed": {
+				"Walk": 20,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 120,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 28,
+				"Dexterity": 10,
+				"Constitution": 20,
+				"Intelligence": 13,
+				"Wisdom": 14,
+				"Charisma": 15
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": true,
+				"Constitution": true,
+				"Intelligence": false,
+				"Wisdom": true,
+				"Charisma": true
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": false,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+				"bludgeoning, piercing, and slashing from nonmagical attacks"
+			],
+			"Damage Immunities": [
+				"fire"
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 120,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+				"Giant Owl",
+				"understands Common but can’t speak it"
+			],
+			"Challenge": 13,
+			"Experience": 10000,
+			"Features": {
+				"Death Throes": {
+					"Description": [
+						"When the sunbird dies, it explodes, and each creature within 30 feet of it must make a DC 18 Dexterity saving throw, taking 42 (12d6) fire damage on a failed save, or half as much damage on a successful one. The explosion ignites flammable objects in that area that aren’t being worn or carried. The sunbird’s body turns to ash, but an egg is left where the sunbird was."
+					]
+				},
+				"Fire Aura": {
+					"Description": [
+						"At the start of each of the sunbird’s turns, each creature within 5 feet of it takes 11 (2d10) fire damage, and flammable objects in the area that aren’t being worn or carried ignite. A creature that touches the sunbird or hits it with a melee attack while within 5 feet of it takes 11 (2d10) fire damage. The aura also sheds bright light in a 60-foot radius and dim light for an additional 60 feet."
+					]
+				},
+				"Flyby": {
+					"Description": [
+						"The sunbird doesn’t provoke opportunity attacks when it flies out of an enemy’s reach."
+					]
+				},
+				"Keen Hearing and Sight": {
+					"Description": [
+						"The sunbird has advantage on Wisdom (Perception) checks that rely on hearing or sight."
+					]
+				}
+			},
+			"Actions": {
+				"Multiattack": {
+					"Description": [
+						"The sunbird makes two talon attacks."
+					]
+				},
+				"Talon": {
+					"Description": [
+						"Melee Weapon Attack: +14 to hit, reach 5 ft., one target. Hit: 16 (2d6 + 9) slashing damage plus 14 (4d6) fire damage, and the target is grappled (escape DC 18). Until this grapple ends, the target is restrained, and the sunbird can’t attack another target with that talon. A grappled creature takes 11 (2d10) fire damage at the start of each of the sunbird’s turns."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 35
+		},
+		"Chupacabra": {
+			"Size": "Medium",
+			"Type": "monstrosity",
+			"Alignment": "neutral evil",
+			"Armor Class": 14,
+			"Armor Type": "natural armor",
+			"Hit Dice": "6d8",
+			"Speed": {
+				"Walk": 30,
+				"Burrow": 0,
+				"Climb": 0,
+				"Fly": 0,
+				"Swim": 0,
+				"Hover": false
+			},
+			"Ability Scores": {
+				"Strength": 15,
+				"Dexterity": 14,
+				"Constitution": 16,
+				"Intelligence": 6,
+				"Wisdom": 13,
+				"Charisma": 9
+			},
+			"Saving Throws": {
+				"Strength": false,
+				"Dexterity": false,
+				"Constitution": false,
+				"Intelligence": false,
+				"Wisdom": false,
+				"Charisma": false
+			},
+			"Skills": {
+				"Acrobatics": false,
+				"Animal Handling": false,
+				"Arcana": false,
+				"Athletics": false,
+				"Deception": false,
+				"History": false,
+				"Insight": false,
+				"Intimidation": false,
+				"Investigation": false,
+				"Medicine": false,
+				"Nature": false,
+				"Perception": true,
+				"Performance": false,
+				"Persuasion": false,
+				"Religion": false,
+				"Sleight of Hand": false,
+				"Stealth": true,
+				"Survival":  false
+			},
+			"Damage Vulnerabilities": [
+		
+			],
+			"Damage Resistances": [
+				"bludgeoning, piercing, and slashing from nonmagical attacks"
+			],
+			"Damage Immunities": [
+				
+			],
+			"Condition Immunities": [
+				
+			],
+			"Senses": {
+				"Blindsight": 0,
+				"Darkvision": 120,
+				"Tremorsense": 0,
+				"Truesight": 0,
+				"Blind": false
+			},
+			"Languages": [
+			
+			],
+			"Challenge": 3,
+			"Experience": 700,
+			"Features": {
+				"Sunlight Sensitivity": {
+					"Description": [
+						"While in sunlight, the chupacabra has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+					]
+				}
+			},
+			"Actions": {
+				"Bite": {
+					"Description": [
+						"Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 7 (2d4 + 2) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+					]
+				},
+				"Drain Blood": {
+					"Description": [
+						"Melee Weapon Attack: +4 to hit, reach 5 ft., one creature that is prone, incapacitated, or restrained. Hit: 5 (1d6 + 2) necrotic damage. Additionally, the target’s hit point maximum is reduced by an amount equal to the damage taken, and the chupacabra regains hit points equal to that amount. The reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0."
+					]
+				}
+			},
+			"Reactions": {
+				"Pin": {
+					"Description": [
+						"If a creature within 5 feet of the chupacabra stands up, the chupacabra can use its reaction to make a bite attack."
+					]
+				}
+			},
+			"Book": "Plane Shift Ixalan",
+			"Page": 37
 		}
 	}
 }

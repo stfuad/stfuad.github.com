@@ -4,7 +4,7 @@ import {SpellModal} from "../classes/spellModal.class.js"
 
 // modules
 
-import {List, Paragraphs, ParagraphsPrependBold, BoldKeyValue, Text, Element, TextElement, Header, Link} from "./htmlElements.module.js";
+import {Table, List, Paragraphs, ParagraphsPrependBold, BoldKeyValue, Text, Element, TextElement, Header, Link} from "./htmlElements.module.js";
 
 export function Creature(name, json, parent) {
 
@@ -347,6 +347,8 @@ function Properties(json, parent, ...properties) {
                             List(json[property][key][subKey], "ol", div2);
                         } else if (subKey === "Unordered List") {
                             List(json[property][key][subKey], "ul", div2);
+                        } else if (subKey.includes("Table")) {
+                            Table(json[property][key][subKey], div2);
                         } else {
                             let div3 = Element('div', div2);
                             div3.className = "subProperty";
@@ -391,6 +393,12 @@ function Spells(json, parent) {
                     } else {
                         text = spell;
                     }
+
+                    let a = Link(text, undefined, div2);
+                    a.addEventListener('click', () => {
+                        let modal = new SpellModal(split[0], spellObj);
+                        document.body.appendChild(modal);
+                    }, false);
                 } else {
                     spellObj = spellJson[spell];
     
@@ -399,13 +407,13 @@ function Spells(json, parent) {
                     } else {
                         text = spell;
                     }
+                    
+                    let a = Link(text, undefined, div2);
+                    a.addEventListener('click', () => {
+                        let modal = new SpellModal(spell, spellObj);
+                        document.body.appendChild(modal);
+                    }, false);
                 }
-
-                let a = Link(text, undefined, div2);
-                a.addEventListener('click', () => {
-                    let modal = new SpellModal(spell, spellObj);
-                    document.body.appendChild(modal);
-                }, false);
             }
         }
     }

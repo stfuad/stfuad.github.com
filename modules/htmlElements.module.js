@@ -79,7 +79,16 @@ export function Table(json, parent) {
                         }
                     }
                 } else {
-                    Text(row[key], td);
+                    if (typeof(row[key]) === "string" && row[key].includes("#")) {
+                        let split = row[key].split("#");
+
+                        let b = Element('b', td);
+                        Text(`${split[0]}. `, b);
+
+                        Text(split[1], td);
+                    } else {
+                        Text(row[key], td);
+                    }
                 }
             }
         });
@@ -157,6 +166,7 @@ export function Text(text, parent) {
 
 export function Element(element, parent) {
     let temp = document.createElement(element);
+
     parent.appendChild(temp);
 
     return temp;

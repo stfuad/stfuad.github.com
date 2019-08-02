@@ -117,124 +117,126 @@ export class Classes extends HTMLElement {
                 level2.id = `${className}-${key}`;
                 //level2.className = "level2";
         
-                if (key !== "Table") {
-                    // subContent Header
-                    Header('h2', key, level2);
+                if (key !== "Books") {
+                    if (key !== "Table") {
+                        // subContent Header
+                        Header('h2', key, level2);
 
-                    // list Header
-                    Header('h4', key, list);
-                }
-        
-                if (key === "Table") {
-                    let a = Link("Table", undefined, list);
-                    a.addEventListener('click', () => {
-                        let target = shadow.getElementById(level2.id);
-                        target.scrollIntoView();
-                    }, false);
-
-                    Table(jsonLevel2, level2);
-                } else if (key === "Eldritch Invocations") {
-                    for(let invocation in jsonLevel2) {
-                        //console.log(`Invocation - ${invocation}`)
-
-                        let div = Element('div', level2);
-                        div.id = invocation;
-                        //div.className = "invocation";
-                        
-                        let a = Link(invocation, undefined, list);
-                        a.addEventListener('click', () => {
-                            let target = shadow.getElementById(div.id);
-                            target.scrollIntoView();
-                        }, false);
-
-                        Header('h3', invocation, div);
-                
-                        if(jsonLevel2[invocation]["Prerequisite"] !== undefined) {
-                            let i = Element('i', div);
-                            i.appendChild(document.createTextNode(`Prerequisite: ${jsonLevel2[invocation]["Prerequisite"]}`));
-                        }
-                
-                        Paragraphs(jsonLevel2[invocation]["Description"], div);
+                        // list Header
+                        Header('h4', key, list);
                     }
-                } else {
-                    let jsonLevel3;
-
-                    for (let key2 in jsonLevel2) {
-                        jsonLevel3 = jsonLevel2[key2];
-                        //console.log(`Level 3 - ${key2}`);
-        
-                        let level3 = Element('div', level2);
-                        level3.id = `${className}-${key2}`;
-                        //level3.className = "level3";
-        
-                        let a = Link(key2, undefined, list);
+            
+                    if (key === "Table") {
+                        let a = Link("Table", undefined, list);
                         a.addEventListener('click', () => {
-                            let target = shadow.getElementById(level3.id);
+                            let target = shadow.getElementById(level2.id);
                             target.scrollIntoView();
                         }, false);
 
-                        if (key !== "Description") {
-                            Header('h3', key2, level3);
+                        Table(jsonLevel2, level2);
+                    } else if (key === "Eldritch Invocations") {
+                        for(let invocation in jsonLevel2) {
+                            //console.log(`Invocation - ${invocation}`)
+
+                            let div = Element('div', level2);
+                            div.id = invocation;
+                            //div.className = "invocation";
+                            
+                            let a = Link(invocation, undefined, list);
+                            a.addEventListener('click', () => {
+                                let target = shadow.getElementById(div.id);
+                                target.scrollIntoView();
+                            }, false);
+
+                            Header('h3', invocation, div);
+                    
+                            if(jsonLevel2[invocation]["Prerequisite"] !== undefined) {
+                                let i = Element('i', div);
+                                i.appendChild(document.createTextNode(`Prerequisite: ${jsonLevel2[invocation]["Prerequisite"]}`));
+                            }
+                    
+                            Paragraphs(jsonLevel2[invocation]["Description"], div);
                         }
-        
-                        if (Array.isArray(jsonLevel3)) {
-                            Paragraphs(jsonLevel3, level3);
-                        } else {
-                            let jsonLevel4;
+                    } else {
+                        let jsonLevel3;
 
-                            for (let key3 in jsonLevel3) {
-                                jsonLevel4 = jsonLevel3[key3];
+                        for (let key2 in jsonLevel2) {
+                            jsonLevel3 = jsonLevel2[key2];
+                            //console.log(`Level 3 - ${key2}`);
+            
+                            let level3 = Element('div', level2);
+                            level3.id = `${className}-${key2}`;
+                            //level3.className = "level3";
+            
+                            let a = Link(key2, undefined, list);
+                            a.addEventListener('click', () => {
+                                let target = shadow.getElementById(level3.id);
+                                target.scrollIntoView();
+                            }, false);
 
-                                // console.log(`Level 4 - ${key3}`);
-                                
-                                /* let level4 = Element('div', level3);
-                                level4.className = "level4"; */
+                            if (key !== "Description") {
+                                Header('h3', key2, level3);
+                            }
+            
+                            if (Array.isArray(jsonLevel3)) {
+                                Paragraphs(jsonLevel3, level3);
+                            } else {
+                                let jsonLevel4;
 
-                                if(!key3.includes("Table") && !key3.includes("Description") && !key3.includes("Unordered List")) {
-                                    Header('h4', key3, level3);
-                                }
-                        
-                                if(key3.includes("Table")) {
-                                    Table(jsonLevel4, level3);
-                                } else if (key3.includes("Unordered List")) {
-                                    List(jsonLevel4, 'ul', level3);
-                                } else if (Array.isArray(jsonLevel4)) {
-                                    Paragraphs(jsonLevel4, level3);
-                                } else {
-                                    let jsonLevel5;
+                                for (let key3 in jsonLevel3) {
+                                    jsonLevel4 = jsonLevel3[key3];
 
-                                    for(let key4 in jsonLevel4) {
-                                        jsonLevel5 = jsonLevel4[key4];
+                                    // console.log(`Level 4 - ${key3}`);
+                                    
+                                    /* let level4 = Element('div', level3);
+                                    level4.className = "level4"; */
 
-                                        /* let level5 = Element('div', level3);
-                                        level5.className = "level5"; */
+                                    if(!key3.includes("Table") && !key3.includes("Description") && !key3.includes("Unordered List")) {
+                                        Header('h4', key3, level3);
+                                    }
+                            
+                                    if(key3.includes("Table")) {
+                                        Table(jsonLevel4, level3);
+                                    } else if (key3.includes("Unordered List")) {
+                                        List(jsonLevel4, 'ul', level3);
+                                    } else if (Array.isArray(jsonLevel4)) {
+                                        Paragraphs(jsonLevel4, level3);
+                                    } else {
+                                        let jsonLevel5;
 
-                                        //console.log(`Level 5 - ${className} - ${key3} - ${key4}`);
-                                
-                                        if(key4.includes("Table")) {
-                                            Table(jsonLevel5, level3);
-                                        } else if (key4.includes("Unordered List")) {
-                                            List(jsonLevel5, 'ul', level3);
-                                        } else if (Array.isArray(jsonLevel5)){
-                                            if(!key4.includes("Description")) {
-                                                ParagraphsPrependBold(key4, jsonLevel5, level3);
-                                            } else {
-                                                Paragraphs(jsonLevel5, level3);
-                                            }
-                                        } else {
-                                            let jsonLevel6;
+                                        for(let key4 in jsonLevel4) {
+                                            jsonLevel5 = jsonLevel4[key4];
 
-                                            for (let key5 in jsonLevel5) {
-                                                jsonLevel6 = jsonLevel5[key5];
+                                            /* let level5 = Element('div', level3);
+                                            level5.className = "level5"; */
 
-                                                //console.log(`Level 6 - ${className} - ${key4} - ${key5}`);
-                                                
-                                                if (key5.includes("Table")) {
-                                                    Table(jsonLevel6, level3);
-                                                } else if (key5 === "Unordered List") {
-                                                    List(jsonLevel6, 'ul', level3);
+                                            //console.log(`Level 5 - ${className} - ${key3} - ${key4}`);
+                                    
+                                            if(key4.includes("Table")) {
+                                                Table(jsonLevel5, level3);
+                                            } else if (key4.includes("Unordered List")) {
+                                                List(jsonLevel5, 'ul', level3);
+                                            } else if (Array.isArray(jsonLevel5)){
+                                                if(!key4.includes("Description")) {
+                                                    ParagraphsPrependBold(key4, jsonLevel5, level3);
                                                 } else {
-                                                    ParagraphsPrependBold(key5, jsonLevel6, level3);
+                                                    Paragraphs(jsonLevel5, level3);
+                                                }
+                                            } else {
+                                                let jsonLevel6;
+
+                                                for (let key5 in jsonLevel5) {
+                                                    jsonLevel6 = jsonLevel5[key5];
+
+                                                    //console.log(`Level 6 - ${className} - ${key4} - ${key5}`);
+                                                    
+                                                    if (key5.includes("Table")) {
+                                                        Table(jsonLevel6, level3);
+                                                    } else if (key5 === "Unordered List") {
+                                                        List(jsonLevel6, 'ul', level3);
+                                                    } else {
+                                                        ParagraphsPrependBold(key5, jsonLevel6, level3);
+                                                    }
                                                 }
                                             }
                                         }

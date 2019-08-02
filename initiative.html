@@ -212,9 +212,9 @@
                     let tabs = document.getElementById("tabs");
                     let list = document.getElementById("list");
 
-                    let sortedByName = module.SortByName(bestiary);
-                    let sortedByType = module.SortByType(bestiary);
-                    let sortedByCR = module.SortByCR(bestiary);
+                    let sortedByName = module.ByName(bestiary);
+                    let sortedByType = module.ByType(bestiary);
+                    let sortedByCR = module.ByCR(bestiary);
 
                     let byName = document.createElement('button');
                     byName.type = "button";

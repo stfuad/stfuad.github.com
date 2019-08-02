@@ -1,6 +1,6 @@
 
 
-export function SortByName(json) {
+export function ByName(json) {
     // Declare empty arrays
 
     let obj = {
@@ -93,9 +93,25 @@ export function SortByName(json) {
     return obj;
 }
 
+export function ByBook(json) {
+    let obj = {}
+
+    for (let creature in json) {
+        let book = json[creature]["Book"];
+
+        if (!obj.hasOwnProperty(book)) {
+            obj[book] = [];
+        }
+
+        obj[book].push(creature);
+    }
+
+    return obj;
+}
+
 // creatures
 
-export function SortByType(json) {
+export function ByType(json) {
     let obj = {
         "Aberration": [],
         "Beast": [],
@@ -148,7 +164,7 @@ export function SortByType(json) {
     return obj;
 }
 
-export function SortByCR(json) {
+export function ByCR(json) {
     let obj = {
         "Zero": [],
         "One-Quarter": [],
@@ -260,7 +276,7 @@ export function SortByCR(json) {
 
 // spells
 
-export function SortBySchool(json) {
+export function BySchool(json) {
     let obj = {
         "Abjuration": [],
         "Conjuration": [],
@@ -295,7 +311,7 @@ export function SortBySchool(json) {
     return obj;
 }
 
-export function SortByClass(json) {
+export function ByClass(json) {
     let obj = {
         "Bard": {
             "Cantrips (0 Level)": [],
@@ -430,7 +446,7 @@ export function SortByClass(json) {
 
 // items
 
-export function SortByRarity(json) {
+export function ByRarity(json) {
     let obj = {
         "Common": [],
         "Uncommon": [],

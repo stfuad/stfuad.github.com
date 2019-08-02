@@ -4,7 +4,7 @@ import {CreatureSheet} from "./creatureSheet.class.js";
 
 // imports - modules
 
-import {SortByName, SortByType, SortByCR} from "../modules/sorting.module.js";
+import {SortByName, SortByType, SortByCR, SortByBook} from "../modules/sorting.module.js";
 import {Element, Button, Link} from "../modules/htmlElements.module.js";
 
 export class Bestiary extends HTMLElement {
@@ -76,6 +76,7 @@ export class Bestiary extends HTMLElement {
         let sortedByName = SortByName(bestiary);
         let sortedByType = SortByType(bestiary);
         let sortedByCR = SortByCR(bestiary);
+        let sortedByBook = SortByBook(bestiary);
 
         // buttons
 
@@ -95,6 +96,12 @@ export class Bestiary extends HTMLElement {
         byCR.addEventListener('click', () => {
             list.innerHTML = "";
             CreateList(sortedByCR);
+        }, false);
+
+        let byBook = Button("by Book", tabs);
+        byBook.addEventListener('click', () => {
+            list.innerHTML = "";
+            CreateList(sortedByBook);
         }, false);
 
         CreateList(sortedByName);
