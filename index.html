@@ -66,6 +66,10 @@
             Supports dynamic ES module import(): ${supportsDynamicImport()}
           `
           document.body.appendChild(el);
+
+          if (window.customElements) {
+              alert("custom af");
+          }
           </script>
 
         <script>
