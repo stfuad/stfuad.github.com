@@ -70,6 +70,13 @@
           if (window.customElements) {
               alert("custom af");
           }
+
+          try {
+              new Function('fetch("")');
+              alert(true);
+            } catch (err) {
+                alert(false);
+            }
           </script>
 
         <script>
