@@ -38,10 +38,14 @@
             el.textContent = `
             Supports ES module static import: ${supportsStaticImport()}
             Supports dynamic ES module import(): ${supportsDynamicImport()}
-            `
+            `;
             document.body.appendChild(el);
 
             if (window.customElements) {
+                alert("custom af");
+            }
+
+            if (window.localStorage) {
                 alert("custom af");
             }
 
