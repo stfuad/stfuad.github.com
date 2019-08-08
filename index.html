@@ -2,8 +2,10 @@
 
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta charset='utf-8'>
+
         <title>stfuad.cc</title>
+
         <style>
             body {
                 display: grid;
@@ -11,7 +13,7 @@
                 width: 100vw;
                 grid-template-columns: 200px 1fr;
                 grid-template-rows: 1fr;
-                grid-template-areas: "nav content";
+                grid-template-areas: 'nav content';
                 font-family: 'Courier New', Courier, monospace;
                 font-size: 1em;
                 margin: 0px;
@@ -23,35 +25,88 @@
                 padding: 10px;
             }
 
+            #navigation a {
+                display: block;
+                color: blue;
+                cursor: pointer;
+                text-decoration: none;
+            }
+
+            #navigation div {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
             #content {
                 grid-area: content;
-                overflow: hidden;
-                padding: 10px;
+                overflow: none;
             }
 
         </style>
-    </head>
 
-    <body>
-        <div id="navigation"></div>
-        <div id="content"></div>
-        
         <script>
-            fetch("./json/5e Data.json")
+            fetch('./json/5e Data.json')
                 .then(response => response.json())
                 .then(json => {
                     for(let key in json) {
                         localStorage.setItem(key, JSON.stringify(json[key]));
                     }
-                })
-                .then(() => {
-                    let nav = document.querySelector("#navigation");
-
-                    import("./classes/links.class.js")
-                        .then(module => {
-                           nav.appendChild(new module.Links());
-                        })
                 });
+        </script>
+    </head>
+
+    <body>
+        <div id='navigation'>
+            <div>
+                <a id="races">Races</a>
+                <a id="classes">Classes</a>
+                <a id="feats">Feats</a>
+            </div>
+            <div>
+                <a id="bestiary">Bestiary</a>
+                <a id="spells">Spells</a>
+                <a id="magicItems">Magic Items</a>
+            </div>
+            <div>
+                <a href='./initiative.html' target='_blank'>Initiative Tracker</a>
+            </div>
+        </div>
+
+        <div id='content'></div>
+        
+        <script>
+            import('./classes/pages.classes.js')
+                .then((page) => {
+                    let races = document.getElementById("races");
+                    races.onclick = () => Check(page.Races);
+
+                    let classes = document.getElementById("classes");
+                    classes.onclick = () => Check(page.Classes);
+
+                    let feats = document.getElementById("feats");
+                    feats.onclick = () => Check(page.Feats);
+                    
+                    let bestiary = document.getElementById("bestiary");
+                    bestiary.onclick = () => Check(page.Bestiary);
+
+                    let spells = document.getElementById("spells");
+                    spells.onclick = () => Check(page.Spells);
+
+                    let magicItems = document.getElementById("magicItems");
+                    magicItems.onclick = () => Check(page.Items);
+                });
+
+            function Check(newElement) {
+                let content = document.querySelector('#content');
+
+                if (content.childElementCount > 0) {
+                    while (content.firstChild) {
+                        content.firstChild.remove();
+                    }
+                }
+
+                content.appendChild(new newElement());
+            }
         </script>
     </body>
 </html>
