@@ -805,7 +805,7 @@ export class Spells extends HTMLElement {
         
         let shadow = this.attachShadow({mode: 'open'});
 
-        let style = Element('style', shadow);
+        let style = document.createElement('style');
         style.innerHTML = `
             .header {
                 display: block;
@@ -816,7 +816,7 @@ export class Spells extends HTMLElement {
                 border-bottom: 1px solid black;
             }
 
-            .grid {
+            :host {
                 display: grid;
                 grid-template-columns: 300px 1fr;
                 grid-template-rows: 22px calc(100vh - 42px);
@@ -851,17 +851,22 @@ export class Spells extends HTMLElement {
             }
         `;
 
-        let container = Element('div', shadow);
-        container.className = "grid";
+        shadow.appendChild(style);
 
-        let tabs = Element('div', container);
+        let tabs = document.createElement('div');
         tabs.id = "tabs";
 
-        let list = Element('div', container);
+        shadow.appendChild(tabs);
+
+        let list = document.createElement('div');
         list.id = "list";
     
-        let subContent = Element('div', container);
+        shadow.appendChild(list);
+
+        let subContent = document.createElement('div');
         subContent.id = "subContent";
+
+        shadow.appendChild(subContent);
 
         let spells = JSON.parse(localStorage.getItem("Spells"));
 
@@ -869,40 +874,60 @@ export class Spells extends HTMLElement {
         let sortedBySchool = sort.BySchool(spells);
         let sortedByClass = sort.ByClass(spells);
 
-        let byName = Button("by Name", tabs);
-        byName.addEventListener('click', () => {
-            list.innerHTML = "";
-            CreateList(sortedByName);
-        }, false);
+        let byName = document.createElement('button');
+        byName.appendChild(document.createTextNode("by Name"));
+        byName.onclick = () => {
+            Wrapper(CreateList, sortedByName);
+        };
 
-        let bySchool = Button("by School", tabs);
-        bySchool.addEventListener('click', () => {
-            list.innerHTML = "";
-            CreateList(sortedBySchool);
-        }, false);
+        tabs.appendChild(byName);
 
-        let byClass = Button("by Class", tabs);
-        byClass.addEventListener('click', () => {
-            list.innerHTML = "";
-            CreateClassList(sortedByClass);
-        }, false);
+        let bySchool = document.createElement('button');
+        bySchool.appendChild(document.createTextNode("by School"));
+        bySchool.onclick = () => {
+            Wrapper(CreateList, sortedBySchool);
+        };
+
+        tabs.appendChild(bySchool);
+
+        let byClass = document.createElement('button');
+        byClass.appendChild(document.createTextNode("by Class"));
+        byClass.onclick = () => {
+            Wrapper(CreateClassList, sortedByClass);
+        };
+
+        tabs.appendChild(byClass);
 
         CreateList(sortedByName);
 
+        function Wrapper(callback, obj) {
+            let list = shadow.querySelector("#list");
+
+            if (list.childElementCount > 0) {
+                while (list.firstChild) {
+                    list.firstChild.remove();
+                }
+            }
+
+            callback(obj);
+        }
+
         function CreateList(obj) {
             for (let array in obj) {
-                let div = Element('div', list);
-        
+                let div = document.createElement('div');
+
                 if (obj[array].length > 0) {
-                    let span = Element('span', div);
+                    let span = document.createElement('span');
                     span.appendChild(document.createTextNode(array));
                     span.className = "header";
+
+                    div.appendChild(span);
                 }
                 
                 obj[array].sort().forEach(item => {
-        
-                    let a = Link(item, undefined, div)
-                    a.addEventListener('click', () => {
+                    let a = document.createElement('a');
+                    a.appendChild(document.createTextNode(item));
+                    a.onclick = () => {
                         let target = shadow.querySelector("spell-sheet");
         
                         if (target !== null) {
@@ -910,7 +935,9 @@ export class Spells extends HTMLElement {
                         }
                         
                         subContent.appendChild(new sheet.SpellSheet(item, spells[item]));
-                    });
+                    };
+
+                    div.appendChild(a);
                 });
         
                 list.appendChild(div);
@@ -918,24 +945,27 @@ export class Spells extends HTMLElement {
         }
         
         function CreateClassList(obj) {
-            let host = shadow.getElementById("list");
-
             for (let var1 in obj) {
-                Header('h2', var1, host);
+                let h2 = document.createElement('h2');
+                h2.appendChild(document.createTextNode(var1));
+
+                list.appendChild(h2);
                 
                 for (let var2 in obj[var1]) {
-                    let div = Element('div', host);
+                    let div = document.createElement('div');
 
                     if (obj[var1][var2].length > 0) {
-                        let span = Element('span', div);
+                        let span = document.createElement('span');
                         span.appendChild(document.createTextNode(var2));
                         span.className = "header";
+
+                        div.appendChild(span);
                     }
                     
                     obj[var1][var2].sort().forEach(item => {
-            
-                        let a = Link(item, undefined, div)
-                        a.addEventListener('click', () => {
+                        let a = document.createElement('a');
+                        a.appendChild(document.createTextNode(item));
+                        a.onclick = () => {
                             let target = shadow.querySelector("spell-sheet");
             
                             if (target !== null) {
@@ -943,8 +973,12 @@ export class Spells extends HTMLElement {
                             }
                             
                             subContent.appendChild(new sheet.SpellSheet(item, spells[item]));
-                        });
+                        };
+    
+                        div.appendChild(a);
                     });
+
+                    list.appendChild(div);
                 }
             }
         }
