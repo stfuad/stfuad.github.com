@@ -441,13 +441,13 @@
                     view.type = "button";
                     view.appendChild(document.createTextNode("\uD83D\uDCC4"));
                     view.addEventListener('click', () => {
-                        import("./classes/creatureSheet.class.js")
+                        import("./classes/sheets.classes.js")
                             .then(module => {
                                 let host = document.querySelector("#sheet");
                                 let target = host.querySelector("creature-sheet");
     
                                 if (target !== null) {
-                                    target.remove()
+                                    target.remove();
                                 }
 
                                 host.appendChild(new module.CreatureSheet(name, json));
