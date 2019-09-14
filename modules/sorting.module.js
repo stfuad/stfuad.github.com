@@ -121,6 +121,8 @@ export function ByType(json) {
         "Elemental": [],
         "Fey": [],
         "Fiend": [],
+        "Fiend (Demon)": [],
+        "Fiend Devil (Devil)": [],
         "Giant": [],
         "Humanoid": [],
         "Monstrosity": [],
@@ -145,7 +147,17 @@ export function ByType(json) {
         } else if (json[creature]["Type"] === "fey") {
             obj["Fey"].push(creature);
         } else if (json[creature]["Type"] === "fiend") {
-            obj["Fiend"].push(creature);
+            if (json[creature]["SubType"]) {
+                if (json[creature]["SubType"] === "demon") {
+                    obj["Fiend (Demon)"].push(creature);
+                } else if (json[creature]["SubType"] === "devil") {
+                    obj["Fiend (Devil)"].push(creature);
+                } else {
+                    obj["Fiend"].push(creature);
+                }
+            } else {
+                obj["Fiend"].push(creature);
+            }
         } else if (json[creature]["Type"] === "giant") {
             obj["Giant"].push(creature);
         } else if (json[creature]["Type"] === "humanoid") {
