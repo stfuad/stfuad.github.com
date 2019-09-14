@@ -122,7 +122,7 @@ export function ByType(json) {
         "Fey": [],
         "Fiend": [],
         "Fiend (Demon)": [],
-        "Fiend Devil (Devil)": [],
+        "Fiend (Devil)": [],
         "Giant": [],
         "Humanoid": [],
         "Monstrosity": [],
