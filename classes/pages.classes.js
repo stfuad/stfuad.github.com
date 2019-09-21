@@ -902,7 +902,7 @@ export class Spells extends HTMLElement {
         let byLevel = document.createElement('button');
         byLevel.appendChild(document.createTextNode("by Level"));
         byLevel.onclick = () => {
-            Wrapper(CreateClassList, sortedByLevel);
+            Wrapper(CreateList, sortedByLevel);
         };
 
         tabs.appendChild(byLevel);
