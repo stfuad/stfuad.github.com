@@ -873,6 +873,7 @@ export class Spells extends HTMLElement {
         let sortedByName = sort.ByName(spells);
         let sortedBySchool = sort.BySchool(spells);
         let sortedByClass = sort.ByClass(spells);
+        let sortedByLevel = sort.ByLevel(spells);
 
         let byName = document.createElement('button');
         byName.appendChild(document.createTextNode("by Name"));
