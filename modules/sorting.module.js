@@ -115,6 +115,7 @@ export function ByType(json) {
     let obj = {
         "Aberration": [],
         "Beast": [],
+        "Beast (Dinosaur)": [],
         "Celestial": [],
         "Construct": [],
         "Dragon": [],
@@ -136,7 +137,13 @@ export function ByType(json) {
         if (json[creature]["Type"] === "aberration") {
             obj["Aberration"].push(creature);
         } else if (json[creature]["Type"] === "beast") {
-            obj["Beast"].push(creature);
+            if (json[creature]["SubType"]) {
+                if (json[creature]["SubType"] === "dinosaur") {
+                    obj["Beast (Dinosaur)"].push(creature);
+                }
+            } else {
+                obj["Beast"].push(creature);
+            }
         } else if (json[creature]["Type"] === "celestial") {
             obj["Celestial"].push(creature);            
         } else if (json[creature]["Type"] === "construct") {
@@ -155,8 +162,6 @@ export function ByType(json) {
                     obj["Fiend (Devil)"].push(creature);
                 } else if (json[creature]["SubType"] === "yugoloth") {
                     obj["Fiend (Yugoloth)"].push(creature);
-                } else {
-                    obj["Fiend"].push(creature);
                 }
             } else {
                 obj["Fiend"].push(creature);
