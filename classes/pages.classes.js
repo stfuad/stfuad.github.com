@@ -898,6 +898,14 @@ export class Spells extends HTMLElement {
 
         tabs.appendChild(byClass);
 
+        let byLevel = document.createElement('button');
+        byLevel.appendChild(document.createTextNode("by Level"));
+        byLevel.onclick = () => {
+            Wrapper(CreateClassList, sortedByLevel);
+        };
+
+        tabs.appendChild(byLevel);
+
         CreateList(sortedByName);
 
         function Wrapper(callback, obj) {

@@ -137,13 +137,7 @@ export function ByType(json) {
         if (json[creature]["Type"] === "aberration") {
             obj["Aberration"].push(creature);
         } else if (json[creature]["Type"] === "beast") {
-            if (json[creature]["SubType"]) {
-                if (json[creature]["SubType"] === "dinosaur") {
-                    obj["Beast (Dinosaur)"].push(creature);
-                }
-            } else {
-                obj["Beast"].push(creature);
-            }
+            obj["Beast"].push(creature);
         } else if (json[creature]["Type"] === "celestial") {
             obj["Celestial"].push(creature);            
         } else if (json[creature]["Type"] === "construct") {
@@ -458,6 +452,49 @@ export function ByClass(json) {
                     obj[sClass]["9th Level"].push(spell);
                 }
             }
+        }
+    }
+
+    return obj;
+}
+
+export function ByLevel(jaon) {
+    let obj = {
+        "Cantrips (0 Level)": [],
+        "1st Level": [],
+        "2nd Level": [],
+        "3rd Level": [],
+        "4th Level": [],
+        "5th Level": [],
+        "6th Level": [],
+        "7th Level": [],
+        "8th Level": [],
+        "9th Level": []
+    }
+
+    for (let spell in json) {
+        let level = json[spell]["Level"];
+
+        if (level === 0) {
+            obj["Cantrips (0 Level)"].push(spell);
+        } else if (level === 1) {
+            obj["1st Level"].push(spell);
+        } else if (level === 2) {
+            obj["2nd Level"].push(spell);
+        } else if (level === 3 ) {
+            obj["3rd Level"].push(spell);
+        } else if (level === 4) {
+            obj["4th Level"].push(spell);
+        } else if (level === 5){
+            obj["5th Level"].push(spell);
+        } else if (level === 6) {
+            obj["6th Level"].push(spell);
+        } else if (level === 7) {
+            obj["7th Level"].push(spell);
+        } else if (level === 8) {
+            obj["8th Level"].push(spell);
+        } else if (level === 9) {
+            obj["9th Level"].push(spell);
         }
     }
 
