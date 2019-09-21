@@ -123,6 +123,7 @@ export function ByType(json) {
         "Fiend": [],
         "Fiend (Demon)": [],
         "Fiend (Devil)": [],
+        "Fiend (Yugoloth)": [],
         "Giant": [],
         "Humanoid": [],
         "Monstrosity": [],
@@ -152,6 +153,8 @@ export function ByType(json) {
                     obj["Fiend (Demon)"].push(creature);
                 } else if (json[creature]["SubType"] === "devil") {
                     obj["Fiend (Devil)"].push(creature);
+                } else if (json[creature]["SubType"] === "yugoloth") {
+                    obj["Fiend (Yugoloth)"].push(creature);
                 } else {
                     obj["Fiend"].push(creature);
                 }
