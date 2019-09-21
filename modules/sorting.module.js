@@ -458,7 +458,7 @@ export function ByClass(json) {
     return obj;
 }
 
-export function ByLevel(jaon) {
+export function ByLevel(json) {
     let obj = {
         "Cantrips (0 Level)": [],
         "1st Level": [],
