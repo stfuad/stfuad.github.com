@@ -31,9 +31,14 @@
                 text-decoration: none;
             }
 
-            #navigation div {
+            #navigation span {
                 margin-top: 10px;
                 margin-bottom: 10px;
+            }
+
+            #navigation span:nth-child(2) {
+                border-left: 2px solid black;
+                padding-left: 10px;
             }
 
             #content {
@@ -62,12 +67,14 @@
                 <a id="classes">Classes</a>
                 <a id="feats">Feats</a>
             </div> -->
-            <div>
+            <span>
                 <a id="bestiary">Bestiary</a>
                 <a id="spells">Spells</a>
                 <a id="magicItems">Magic Items</a>
+            </span>
+            <span>
                 <a href='./initiative.html' target='_blank'>Initiative Tracker</a>
-            </div>
+            </span>
         </div>
 
         <div id='content'></div>
