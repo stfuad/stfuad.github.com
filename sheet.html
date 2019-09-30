@@ -1,9 +1,251 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title></title>
+        <style>
+            body {
+                display: grid;
+                height: 100vh;
+                width: 100vw;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 1em;
+                margin: 0px;
+            }
+
+            #menu {
+                grid-column: 1;
+                grid-row: 1;
+                height: 100%;
+                width: 100%;
+                margin: 0px;
+                padding: 5px;
+                list-style: none;
+                font-size: 1.5em;
+            }
+
+            #menu li {
+                display: inline-block;
+            }
+
+            #content {
+                grid-column: 1;
+                grid-row: 2;
+            }
+        </style>
     </head>
     <body>
-        
+        <ul id="menu">
+            <li id="new" title="New Character">&#128462;</li>
+            <li id="open" title="Load Character">&#128449;</li>
+            <li id="save" title="Save Character">&#128427;</li>
+        </ul>
+        <div id="content"></div>
     </body>
+
+    <script>
+        class Character {
+            _name;
+            _race;
+            _classes;
+            _characterLevel = 0;
+            _abilityScores;
+
+            get Name() { return this._name; }
+            set Name(name) { this._name = name; }
+
+            get Race() { return this._race; }
+            set Race(race) { this._race = race };
+
+            get Classes() { return this._classes; }
+            set Classes(obj) { this._classes = obj; }
+
+            get CharacterLevel() { return this._characterLevel; }
+            set CharacterLevel(level) { this._characterLevel = level; }
+
+            get AbilityScores() { return this._abilityScores; }
+            set AbilityScores(obj) { this._abilityScores = obj };
+
+            // Methods
+
+            TotalLevels() {
+                let total = 0;
+
+                for (let key in this._classes) {
+                    total = total + this._classes[key];
+                }
+
+                return total;
+            }
+
+            Modifer(stat) {
+                let modifier = Math.floor((stat - 10) / 2);
+
+                if (modifier > 0) {
+                    return `+${modifier}`;
+                } else {
+                    return modfier;
+                }
+            }
+
+            constructor(json) {
+                if(json) {
+                    this.Name = json["Name"];
+                    this.Race = json["Race"];
+                    this.Classes = new ClassLevels(json["Classes"]);
+                    this.CharacterLevel = this.TotalLevels();
+                    this.AbilityScores = new AbilityScores(json["Ability Scores"]);
+                }
+            }
+        }
+
+        class ClassLevels {
+            // Fields
+
+            _artificer = 0;
+            _barbarian = 0;
+            _bard = 0;
+            _cleric = 0;
+            _fighter = 0;
+            _monk = 0;
+            _paladin = 0;
+            _ranger = 0;
+            _rouge = 0;
+            _sorcerer = 0;
+            _warlock = 0;
+            _wizard = 0;
+
+            // Properties
+
+            get Artificer() { return this._artificer; }
+            set Artificer(level) { this._artificer = level; }
+
+            get Barbarian() { return this._barbarian; }
+            set Barbarian(level) { this._barbarian = level; } 
+
+            get Bard() { return this._bard; }
+            set Bard(level) { this._bard = level; } 
+
+            get Cleric() { return this._cleric; }
+            set Cleric(level) { this._cleric = level; } 
+
+            get Fighter() { return this._fighter; }
+            set Fighter(level) { this._fighter = level; } 
+
+            get Monk() { return this._monk; }
+            set Monk(level) { this._monk = level; } 
+
+            get Paladin() { return this._paladin; }
+            set Paladin(level) { this._paladin = level; } 
+
+            get Ranger() { return this._ranger; }
+            set Ranger(level) { this._ranger = level; } 
+
+            get Rouge() { return this._rouge; }
+            set Rouge(level) { this._rouge = level; } 
+
+            get Sorcerer() { return this._sorcerer; }
+            set Sorcerer(level) { this._sorcerer = level; } 
+
+            get Warlock() { return this._warlock; }
+            set Warlock(level) { this._warlock = level; } 
+
+            get Wizard() { return this._wizard; }
+            set Wizard(level) { this._wizard = level; } 
+
+            constructor(json) {
+                this.Artificer = json["Artificer"];
+                this.Barbarian = json["Barbarian"];
+                this.Bard = json["Bard"];
+                this.Cleric = json["Cleric"];
+                this.Fighter = json["Fighter"];
+                this.Monk = json["Monk"];
+                this.Paladin = json["Paladin"];
+                this.Ranger = json["Ranger"];
+                this.Rouge = json["Rouge"];
+                this.Sorcerer = json["Sorcerer"];
+                this.Warlock = json["Warlock"];
+                this.Wizard = json["Wizard"];
+            }
+        }
+
+        class AbilityScores {
+            // Fields
+
+            _strength = 0;
+            _dexterity = 0;
+            _constituion = 0;
+            _wisdom = 0;
+            _intelligence = 0;
+            _charisma = 0;
+
+            // Properties
+
+            get Strength() { return this._strength; }
+            set Strength(int) { this._strength = int; }
+
+            get Dexterity() { return this._dexterity; }
+            set Dexterity(int) { this._dexterity = int; }
+
+            get Constituion() { return _constituion; }
+            set Constituion(int) { this._constituion = int; }
+
+            get Wisdom() { return this._wisdom; }
+            set Wisdom(int) { this._wisdom = int; }
+
+            get Intelligence() { return this._intelligence; }
+            set Intelligence(int) { this._intelligence = int; }
+
+            get Charisma() { return this._charisma; }
+            set Charisma(int) { this._charisma = int; }
+
+            // Methods
+
+            constructor(json) {
+                this.Strength = json["Strength"];
+                this.Dexterity = json["Dexterity"];
+                this.Constituion = json["Constitution"];
+                this.Wisdom = json["Wisdom"];
+                this.Intelligence = json["Intelligence"];
+                this.Charisma = json["Charisma"];
+            }
+            
+        }
+    </script>
+
+    <script>
+        let test = JSON.parse(`{
+            "Name": "Test Character",
+            "Race": "Test Race",
+            "Classes": {
+                "Artificer": 1,
+                "Barbarian": 0,
+                "Bard": 0,
+                "Cleric": 1,
+                "Fighter": 0,
+                "Monk": 0,
+                "Paladin": 0,
+                "Ranger": 1,
+                "Rouge": 0,
+                "Sorcerer": 0,
+                "Warlock": 0,
+                "Wizard": 0
+            },
+            "Ability Scores": {
+                "Strength": 0,
+                "Dexterity": 0,
+                "Constitution": 0,
+                "Wisdom": 0,
+                "Intelligence": 0,
+                "Charisma": 0
+            }
+        }`)
+
+        let newCharacter = new Character(test);
+
+        console.log(newCharacter);
+    </script>
 </html>
