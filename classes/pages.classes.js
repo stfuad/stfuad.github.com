@@ -276,13 +276,13 @@ export class Classes extends HTMLElement {
             }
 
             #subNav a {
-                display: inline-block;
+                display: block;
                 padding: 10px;
             }
 
             #subList {
-                grid-column: 1;
-                grid-row: 2;
+                grid-column: 2;
+                grid-row: 1;
             }
 
             #subList a {
@@ -294,8 +294,8 @@ export class Classes extends HTMLElement {
             }
 
             #subContent {
-                grid-column: 1;
-                grid-row: 3;
+                grid-column: 3;
+                grid-row: 1;
                 overflow: auto;
             }
 
