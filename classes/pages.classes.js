@@ -283,6 +283,7 @@ export class Classes extends HTMLElement {
             #subList {
                 grid-column: 1;
                 grid-row: 2;
+                overflow: auto;
             }
 
             #subList a {
