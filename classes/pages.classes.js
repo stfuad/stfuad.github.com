@@ -264,7 +264,7 @@ export class Classes extends HTMLElement {
             :host {
                 display: grid;
                 grid-template-columns: 300px 1fr;
-                grid-template-rows: auto 1fr;
+                grid-template-rows: 40px calc(100vh - 40px);
             }
 
             #tabs {
@@ -283,7 +283,6 @@ export class Classes extends HTMLElement {
             #subList {
                 grid-column: 1;
                 grid-row: 2;
-                overflow: auto;
             }
 
             #subList a {
