@@ -264,7 +264,7 @@ export class Classes extends HTMLElement {
             :host {
                 display: grid;
                 grid-template-columns: 300px 300px 1fr;
-                grid-template-rows: 1fr;
+                grid-template-rows: 100%;
             }
 
             #subNav {
