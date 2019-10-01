@@ -263,19 +263,19 @@ export class Classes extends HTMLElement {
         style.textContent = `
             :host {
                 display: grid;
-                grid-template-columns: 300px 1fr;
-                grid-template-rows: 40px calc(100vh - 40px);
+                grid-template-columns: 300px 300px 1fr;
+                grid-template-rows: 1fr;
             }
 
-            #tabs {
-                grid-column: 1/3;
+            #subNav {
+                grid-column: 1;
                 grid-row: 1;
                 background: white;
                 border-bottom: 1px solid black;
                 text-align: center;
             }
 
-            #tabs a {
+            #subNav a {
                 display: inline-block;
                 padding: 10px;
             }
@@ -294,8 +294,8 @@ export class Classes extends HTMLElement {
             }
 
             #subContent {
-                grid-column: 2;
-                grid-row: 2;
+                grid-column: 1;
+                grid-row: 3;
                 overflow: auto;
             }
 
@@ -321,8 +321,8 @@ export class Classes extends HTMLElement {
 
         let json = JSON.parse(localStorage.getItem("Classes"));
 
-        let tabs = document.createElement('div');
-        tabs.id = "tabs";
+        let subNav = document.createElement('div');
+        subNav.id = "subNav";
     
         for (let className in json) {
             let link = document.createElement('a');
@@ -343,10 +343,10 @@ export class Classes extends HTMLElement {
                 LoadData(className, json[className]);
             };
 
-            tabs.appendChild(link);
+            subNav.appendChild(link);
         }
 
-        shadow.appendChild(tabs);
+        shadow.appendChild(subNav);
 
         let subList = document.createElement('div');
         subList.id = "subList";
