@@ -1,0 +1,19 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-gap: 10px;
+    height: calc(100vh - 16px);
+    width: calc(100vw - 16px);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#topNav {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#content {
+    grid-column: 1;
+    grid-row: 2;
+}
