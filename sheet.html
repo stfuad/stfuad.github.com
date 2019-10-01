@@ -31,6 +31,10 @@
                 display: inline-block;
             }
 
+            #menu li #file-input {
+                display: none;
+            }
+
             #content {
                 grid-column: 1;
                 grid-row: 2;
@@ -39,9 +43,9 @@
     </head>
     <body>
         <ul id="menu">
-            <li id="new" title="New Character">&#128462;</li>
-            <li id="open" title="Load Character">&#128449;</li>
-            <li id="save" title="Save Character">&#128427;</li>
+            <li id="new" title="New Character">&#x1F4C4;</li>
+            <li id="open" title="Load Character">&#x1F4C2;</li>
+            <li id="save" title="Save Character">&#x1F4BE;</li>
         </ul>
         <div id="content"></div>
     </body>
@@ -217,35 +221,89 @@
     </script>
 
     <script>
-        let test = JSON.parse(`{
-            "Name": "Test Character",
-            "Race": "Test Race",
-            "Classes": {
-                "Artificer": 1,
-                "Barbarian": 0,
-                "Bard": 0,
-                "Cleric": 1,
-                "Fighter": 0,
-                "Monk": 0,
-                "Paladin": 0,
-                "Ranger": 1,
-                "Rouge": 0,
-                "Sorcerer": 0,
-                "Warlock": 0,
-                "Wizard": 0
-            },
-            "Ability Scores": {
-                "Strength": 0,
-                "Dexterity": 0,
-                "Constitution": 0,
-                "Wisdom": 0,
-                "Intelligence": 0,
-                "Charisma": 0
+        let content = document.getElementById("content");
+
+        let open = document.getElementById("open");
+        open.addEventListener("click", () => {
+            document.body.appendChild(new OpenModal());
+        }, false);
+    </script>
+
+    <script>
+        class OpenModal extends HTMLElement {
+            constructor() {
+                super();
+
+                let shadow = this.attachShadow({mode: 'open'});
+
+                let style = document.createElement('style');
+                style.textContent = `
+                    :host {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        height: auto;
+                        width: auto;
+                        transform: translate(-50%, -50%);
+                        border: 1px solid black;
+                        padding: 10px;
+                    }
+                `;
+
+                shadow.appendChild(style);
+
+                let localText = document.createElement('h3');
+                localText.appendChild(document.createTextNode("Load a saved character from localStorage..."));
+
+                shadow.appendChild(localText);
+
+                let importText = document.createElement('h3');
+                importText.appendChild(document.createTextNode("...or import a JSON file..."));
+
+                shadow.appendChild(importText);
+
+                let importFile = document.createElement('input');
+                importFile.type = "file";
+                importFile.id = "file-input"
+                importFile.onchange = e => {
+                    let file = e.target.files[0];
+
+                    if (!file) { return; }
+
+                    let reader = new FileReader();
+                    reader.readAsText(file,'UTF-8');
+
+                    reader.onload = readerEvent => {
+                        let text = readerEvent.target.result;
+
+                        let newCharacter = new Character(JSON.parse(text));
+
+                        let target = document.getElementById("content");
+                        
+                        console.log(newCharacter);
+
+                        this.remove();
+                    }
+                }
+
+                shadow.appendChild(importFile);
+
+                let cancelText = document.createElement('h3');
+                cancelText.appendChild(document.createTextNode("...or close this window."));
+
+                shadow.appendChild(cancelText);
+
+                let closeButton = document.createElement('button');
+                closeButton.type = "button";
+                closeButton.appendChild(document.createTextNode("Close"));
+                closeButton.onclick = () => {
+                    this.remove();
+                };
+
+                shadow.appendChild(closeButton);
             }
-        }`)
+        }
 
-        let newCharacter = new Character(test);
-
-        console.log(newCharacter);
+        customElements.define("open-modal", OpenModal);
     </script>
 </html>
