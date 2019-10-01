@@ -264,7 +264,7 @@ export class Classes extends HTMLElement {
             :host {
                 display: grid;
                 grid-template-columns: 300px 1fr;
-                grid-template-rows: 40px calc(100vh - 40px);
+                grid-template-rows: auto 1fr;
             }
 
             #tabs {
