@@ -31653,7 +31653,7 @@
 			"Page": 181
 		}
 	},
-    "Bestiary": {
+    "Bestiary 1": {
 		"Aarakocra": {
 			"Size": "Medium",
 			"Type": "humanoid",
@@ -79862,7 +79862,9 @@
 			},
 			"Book": "Monster Manual",
 			"Page": 350
-		},
+		}
+	},
+	"Bestiary 2": {
 		"Giant Fly": {
 			"Size": "Large",
 			"Type": "beast",
@@ -79937,7 +79939,9 @@
 			],
 			"Book": "Dungeon Master's Guide",
 			"Page": 169
-		},
+		}
+	},
+	"Bestiary 3": {
 		"Banderhobb": {
 			"Size": "Large",
 			"Type": "monstrosity",
@@ -94564,7 +94568,9 @@
 			},
 			"Book": "Volo's Guide to Monsters",
 			"Page": 220
-		},
+		}
+	},
+	"Bestiary 4": {
 		"Allip": {
 			"Size": "Medium",
 			"Type": "undead",
@@ -112540,7 +112546,9 @@
 			},
 			"Book": "Mordenkainen's Tome of Foes",
 			"Page": 252
-		},
+		}
+	},
+	"Bestiary 5": {
 		"Ambush Drake": {
 			"Size": "Medium",
 			"Type": "dragon",
@@ -114195,7 +114203,9 @@
 			},
 			"Book": "Hoard of the Dragon Queen",
 			"Page": 93
-		},
+		}
+	},
+	"Bestiary 6": {
 		"Dragonfang": {
 			"Size": "Medium",
 			"Type": "humanoid",
@@ -115212,7 +115222,9 @@
 			},
 			"Book": "The Rise of Tiamat",
 			"Page": 92
-		},
+		}
+	},
+	"Bestiary 7": {
 		"Battleforce Angel": {
 			"Size": "Medium",
 			"Type": "celestial",
@@ -124848,7 +124860,9 @@
 			},
 			"Book": "Guildmaster's Guide to Ravnica",
 			"Page": 256
-		},
+		}
+	},
+	"Bestiary 8": {
 		"Homarid": {
 			"Size": "Medium",
 			"Type": "monstrosity",
@@ -125464,7 +125478,9 @@
 			},
 			"Book": "Plane Shift Dominaria",
 			"Page": 37
-		},
+		}
+	},
+	"Bestiary 9": {
 		"Frilled Death Spitter": {
 			"Size": "Small",
 			"Type": "beast",

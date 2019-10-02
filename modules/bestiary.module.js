@@ -1,7 +1,22 @@
 import * as sort from "./sorting.module.js";
 import * as sheet from "../classes/sheets.classes.js";
 
-let bestiary = JSON.parse(localStorage.getItem("Bestiary"));
+let one = JSON.parse(localStorage.getItem("Bestiary 1"));
+let two = JSON.parse(localStorage.getItem("Bestiary 2"));
+let three = JSON.parse(localStorage.getItem("Bestiary 3"));
+let four = JSON.parse(localStorage.getItem("Bestiary 4"));
+let five = JSON.parse(localStorage.getItem("Bestiary 5"));
+let six = JSON.parse(localStorage.getItem("Bestiary 6"));
+let seven = JSON.parse(localStorage.getItem("Bestiary 7"));
+let eight = JSON.parse(localStorage.getItem("Bestiary 8"));
+let nine = JSON.parse(localStorage.getItem("Bestiary 9"));
+
+const bestiary = {...one, ...two, ...three, ...four, ...five, ...six, ...seven, ...eight, ...nine};
+
+const buttons = document.getElementById("sortButtons");
+const list = document.getElementById("list");
+const content = document.getElementById("sheet");
+
 
 export function Bestiary() {
 
@@ -11,8 +26,6 @@ export function Bestiary() {
     let sortedByBook = sort.ByBook(bestiary);
 
     // buttons
-
-    let buttons = document.getElementById("sortButtons");
 
     let byName = document.createElement('button');
     byName.appendChild(document.createTextNode("by Name"));
@@ -42,8 +55,6 @@ export function Bestiary() {
 }
 
 function Wrapper(obj) {
-    let list = document.getElementById("list");
-
     if (list.childElementCount > 0) {
         while (list.firstChild) {
             list.firstChild.remove();
@@ -54,9 +65,6 @@ function Wrapper(obj) {
 }
 
 function CreateList(obj) {
-    let list = document.getElementById("list");
-    let content = document.getElementById("sheet");
-
     for (let array in obj) {
         let div = document.createElement('div');
 
