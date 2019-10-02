@@ -3,13 +3,12 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>stfuad.cc - Spells</title>
+        <title>stfuad.cc - Feats</title>
         <link rel="stylesheet" href="./styles/navigation.css">
-        <link rel="stylesheet" href="./styles/type1.css">
+        <link rel="stylesheet" href="./styles/type2.css">
     </head>
     <body>
         <div id="topNav"></div>
-        <div id="sortButtons"></div>
         <div id="list"></div>
         <div id="sheet"></div>
 
@@ -22,10 +21,10 @@
         </script>
     
         <script>
-        if(localStorage.getItem("Spells")) {
-            import("./modules/spells.module.js")
+        if(localStorage.getItem("Feats")) {
+            import("./modules/feats.module.js")
                 .then((module) => {
-                    module.Spells();
+                    module.Feats();
                 });
         } else {
             fetch('./json/5e Data.json')
