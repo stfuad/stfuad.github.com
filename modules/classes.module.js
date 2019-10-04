@@ -1,4 +1,4 @@
-import { Paragraphs, Table, List } from "../modules/htmlElements.module.js";
+import { Paragraphs, ParagraphsPrependBold, Table, List } from "../modules/htmlElements.module.js";
 
 const json = JSON.parse(localStorage.getItem("Classes"));
 
@@ -123,22 +123,30 @@ function Content(name, json) {
         Paragraphs(json, content);
     } else {
         for (let key in json) {
+            let h3 = document.createElement('h3');
+            h3.appendChild(document.createTextNode(key));
+        
+            content.appendChild(h3);
+
             if (Array.isArray(json[key])) {
                 Paragraphs(json[key], content);
             } else {
-                if (key === "Description") {
+                if (key.includes("Description")) {
                     Paragraphs(json[key], content);
                 } else if (key.includes("List")) {
                     List(json[key], content);
                 } else if (key.includes("Table")) {
                     Table(json[key], content);
                 } else {
-                    let h3 = document.createElement('h3');
-                    h3.appendChild(document.createTextNode(key));
-
-                    content.appendChild(h3);
-
-                    Paragraphs(json[key], content);
+                    for (let subKey in json[key]) {
+                        if (Array.isArray(json[key][subKey])) {
+                            if (!subKey.includes("Description")) {
+                                ParagraphsPrependBold(subKey, json[key][subKey], content);
+                            } else {
+                                Paragraphs(json[key][subKey], content);
+                            }
+                        }
+                    }
                 }
             }
             
