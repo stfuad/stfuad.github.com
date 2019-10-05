@@ -8,6 +8,17 @@
         <link rel="stylesheet" href="./styles/index.css">
         <link rel="stylesheet" href="./styles/navigation.css">
         <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./worker.js', { scope: './worker.js' })
+                    .then((reg) => {
+                        console.log(reg.scope);
+                    }).catch((e) => {
+                        console.log(e);
+                    })
+            }
+        </script>
+        
+        <script>
             fetch('./json/5e Data.json')
                 .then(response => response.json())
                 .then(json => {

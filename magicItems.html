@@ -34,6 +34,11 @@
                     for(let key in json) {
                         localStorage.setItem(key, JSON.stringify(json[key]));
                     }
+
+                    import("./modules/magicItems.module.js")
+                        .then((module) => {
+                            module.MagicItems();
+                        });
                 });
         }
         </script>

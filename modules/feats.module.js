@@ -1,5 +1,3 @@
-import * as sort from "./sorting.module.js";
-import * as sheet from "../classes/sheets.classes.js";
 import { Paragraphs, List } from "./htmlElements.module.js";
 
 const feats = JSON.parse(localStorage.getItem("Feats"));
