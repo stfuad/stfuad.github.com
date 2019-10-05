@@ -5,6 +5,8 @@ self.addEventListener('install', (e) => {
                 "./json/5e Data.json"
             ]);
     }));
+
+    console.log("install success")
 });
 
 self.addEventListener('fetch', (e) => {
@@ -13,4 +15,6 @@ self.addEventListener('fetch', (e) => {
             return response || fetch(e.request);
         })
     );
+
+    console.log("Waiting for requests");
 });
