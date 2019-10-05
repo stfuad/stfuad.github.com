@@ -44,15 +44,35 @@ function Load(name, race) {
             content.appendChild(h3);
 
             for (let subKey in race[key]) {
-                if (subKey.includes("Description")) {
-                    Paragraphs(race[key][subKey], content);
-                } else if (subKey.includes("List")) {
-                    List(race[key][subKey], "ul", content);
-                } else if (subKey.includes("Table")) {
-                    Table(race[key][subKey], content);
+                if (Array.isArray(race[key][subKey])) {
+                    if (subKey.includes("Description")) {
+                        Paragraphs(race[key][subKey], content);
+                    } else if (subKey.includes("List")) {
+                        List(race[key][subKey], "ul", content);
+                    } else if (subKey.includes("Table")) {
+                        Table(race[key][subKey], content);
+                    } else {
+                        ParagraphsPrependBold(subKey, race[key][subKey], content);
+                    }
                 } else {
-                    ParagraphsPrependBold(subKey, race[key][subKey], content);
+                    let h4 = document.createElement('h4');
+                    h4.appendChild(document.createTextNode(subKey));
+
+                    content.appendChild(h4);
+
+                    for (let keys in race[key][subKey]) {
+                        if (subKey.includes("Description")) {
+                            Paragraphs(race[key][subKey][keys], content);
+                        } else if (subKey.includes("List")) {
+                            List(race[key][subKey][keys], "ul", content);
+                        } else if (subKey.includes("Table")) {
+                            Table(race[key][subKey][keys], content);
+                        } else {
+                            ParagraphsPrependBold(subKey, race[key][subKey][keys], content);
+                        }
+                    }
                 }
+                
             }
         }
     }
