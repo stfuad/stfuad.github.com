@@ -27,11 +27,13 @@ self.addEventListener('install', (e) => {
                     "./modules/sorting.module.js",
                     "./modules/spell.module.js",
                     "./modules/spells.module.js"
-                ]
+                ];
 
                 console.log("Clearing cache");
 
                 toCache.forEach(element => {
+                    console.log(element);
+
                     cache.delete(element);
                 });
 

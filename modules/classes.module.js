@@ -123,7 +123,7 @@ function Content(name, json) {
         Paragraphs(json, content);
     } else {
         for (let key in json) {
-            if (key !== "Description") {
+            if (!key.includes("Description")) {
                 let h3 = document.createElement('h3');
                 h3.appendChild(document.createTextNode(key));
             
