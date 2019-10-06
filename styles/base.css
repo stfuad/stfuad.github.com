@@ -2,10 +2,19 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
+a {
+    color: blue;
+    cursor: pointer;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         color: white;
-        background-color: black;
+        background-color: rgb(32, 32, 32);
+    }
+
+    a {
+        color: rgb(78, 78, 216);
     }
 }
 
