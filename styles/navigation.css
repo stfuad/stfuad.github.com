@@ -9,11 +9,6 @@
     padding-right: 10px;
 }
 
-#topNav div a {
-    color: blue;
-    text-decoration: none;
-}
-
 #topNav div:nth-child(2) {
     border-left: 2px solid black;
     border-right: 2px solid black;

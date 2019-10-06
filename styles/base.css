@@ -5,6 +5,7 @@ body {
 a {
     color: blue;
     cursor: pointer;
+    text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {

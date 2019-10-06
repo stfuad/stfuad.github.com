@@ -36,8 +36,3 @@ body {
 #content table {
     width: 100%;
 }
-
-#content table a {
-    color: blue;
-    cursor: pointer;
-}
