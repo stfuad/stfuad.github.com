@@ -3,7 +3,20 @@ self.addEventListener('install', (e) => {
         .then((cache) => {
             return cache.addAll([
                 "./navigation.html",
-                "./json/5e Data.json"
+                "./classes/sheets.module.js",
+                "./classes/spellModal.module.js",
+                "./json/5e Data.json",
+                "./modules/bestiary.module.js",
+                "./modules/classes.module.js",
+                "./modules/creature.module.js",
+                "./modules/feats.module.js",
+                "./modules/htmlElements.module.js",
+                "./modules/item.module.js",
+                "./modules/magicItems.module.js",
+                "./modules/races.module.js",
+                "./modules/sorting.module.js",
+                "./modules/spell.module.js",
+                "./modules/spells.module.js"
             ]);
     }));
 
