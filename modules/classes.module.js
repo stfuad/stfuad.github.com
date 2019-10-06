@@ -132,7 +132,11 @@ function Content(name, json) {
             
             if (Array.isArray(json[key])) {
                 if ((key === "Unordered List") || (key === "Ordered List")) {
-                    List(json[key], content);
+                    if (key === "Unordered List") {
+                        List(json[key], "ul", content);
+                    } else {
+                        List(json[key], "ol", content);
+                    }
                 } else {
                     Paragraphs(json[key], content);
                 }
