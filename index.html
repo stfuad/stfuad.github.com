@@ -9,12 +9,16 @@
         <link rel="stylesheet" href="./styles/navigation.css">
         <script>
             if ('serviceWorker' in navigator) {
+                console.log("Registering service worker.");
+
                 navigator.serviceWorker.register('./worker.js', { scope: './worker.js' })
                     .then((reg) => {
                         console.log(`Registered: ${reg.scope}`);
                     }).catch((e) => {
                         console.log(e);
                     })
+            } else {
+                console.log(error);
             }
         </script>
         
