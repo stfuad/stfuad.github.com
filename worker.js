@@ -37,6 +37,8 @@ self.addEventListener('install', (e) => {
                     cache.delete(element);
                 });
 
+                console.log(cache);
+
                 return cache.addAll(toCache);
             })
     );
