@@ -23,7 +23,6 @@ export class SpellModal extends HTMLElement {
                 border-radius: 5px;
                 padding: 10px;
                 overflow: auto; 
-                background-color: inherit;
             }
 
             #spellSheetHeader > h3 {
@@ -40,6 +39,20 @@ export class SpellModal extends HTMLElement {
                 position: absolute;
                 top: 0px;
                 right: 0px;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                #spellModal {
+                    color: white;
+                    background-color: rgb(32, 32, 32);
+                }
+            }
+            
+            @media (prefers-color-scheme: light) {
+                #spellModal {
+                    color: black;
+                    background-color: white;
+                }
             }
         `;
 
