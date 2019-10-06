@@ -2,7 +2,7 @@ self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open("stfuad.cc")
             .then((cache) => {
-                return cache.addAll([
+                const toCache = [
                     "./",
                     "./bestiary.html",
                     "./classes.html",
@@ -27,7 +27,13 @@ self.addEventListener('install', (e) => {
                     "./modules/sorting.module.js",
                     "./modules/spell.module.js",
                     "./modules/spells.module.js"
-                ]);
+                ]
+
+                toCache.forEach(element => {
+                    cache.delete(element);
+                });
+
+                return cache.addAll(toCache);
             })
     );
 
