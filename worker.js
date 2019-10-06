@@ -2,6 +2,7 @@ self.addEventListener('install', (e) => {
     e.waitUntil(caches.open("stfuad.cc")
         .then((cache) => {
             return cache.addAll([
+                "./navigation.html",
                 "./classes/sheets.module.js",
                 "./classes/spellModal.module.js",
                 "./json/5e Data.json",
@@ -28,6 +29,8 @@ self.addEventListener('fetch', (e) => {
             return response || fetch(e.request);
         })
     );
+
+    console.log("Waiting for fetch requests");
 });
 
 self.addEventListener('import', (e) => {
@@ -36,4 +39,6 @@ self.addEventListener('import', (e) => {
             return response || import(e.request);
         })
     );
+
+    console.log("Waiting for import requests");
 })
