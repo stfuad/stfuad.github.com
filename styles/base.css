@@ -1,0 +1,17 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: white;
+        background-color: black;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        color: black;
+        background-color: white;
+    }
+}

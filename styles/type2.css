@@ -5,7 +5,6 @@ body {
     grid-gap: 10px;
     height: calc(100vh - 16px);
     width: calc(100vw - 16px);
-    font-family: 'Courier New', Courier, monospace;
 }
 
 #list {

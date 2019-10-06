@@ -29,16 +29,4 @@ self.addEventListener('fetch', (e) => {
             return response || fetch(e.request);
         })
     );
-
-    console.log("Waiting for fetch requests");
 });
-
-/* self.addEventListener('import', (e) => {
-    e.respondWith(
-        caches.match(e.request).then((response) => {
-            return response || import(e.request);
-        })
-    );
-
-    console.log("Waiting for import requests");
-}); */
