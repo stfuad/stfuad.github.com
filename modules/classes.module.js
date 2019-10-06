@@ -123,11 +123,14 @@ function Content(name, json) {
         Paragraphs(json, content);
     } else {
         for (let key in json) {
-            let h3 = document.createElement('h3');
-            h3.appendChild(document.createTextNode(key));
-        
-            content.appendChild(h3);
-
+            
+            if (key !== "Description") {
+                let h3 = document.createElement('h3');
+                h3.appendChild(document.createTextNode(key));
+            
+                content.appendChild(h3);
+            }
+            
             if (Array.isArray(json[key])) {
                 Paragraphs(json[key], content);
             } else {
