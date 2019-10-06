@@ -12,7 +12,7 @@ body {
     grid-row: 2;
     overflow: auto;
     z-index: 1;
-    background-color: white;
+    background-color: inherit;
 }
 
 #classList {
@@ -20,7 +20,7 @@ body {
     grid-row: 2;
     overflow: auto;
     z-index: 10;
-    background-color: white;
+    background-color: inherit;
 }
 
 #classList a, #subList a {
