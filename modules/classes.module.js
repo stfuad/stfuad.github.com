@@ -123,7 +123,6 @@ function Content(name, json) {
         Paragraphs(json, content);
     } else {
         for (let key in json) {
-            
             if (key !== "Description") {
                 let h3 = document.createElement('h3');
                 h3.appendChild(document.createTextNode(key));
@@ -132,7 +131,7 @@ function Content(name, json) {
             }
             
             if (Array.isArray(json[key])) {
-                if (key.includes("List")) {
+                if ((key === "Unordered List") || (key === "Ordered List")) {
                     List(json[key], content);
                 } else {
                     Paragraphs(json[key], content);
