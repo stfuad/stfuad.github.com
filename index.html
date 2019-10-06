@@ -11,7 +11,7 @@
             if ('serviceWorker' in navigator) {
                 console.log("Registering service worker.");
 
-                navigator.serviceWorker.register('./worker.js', { scope: './' })
+                navigator.serviceWorker.register('./worker.js')
                     .then((reg) => {
                         console.log(`Registered: ${reg.scope}`);
                     }).catch((e) => {
