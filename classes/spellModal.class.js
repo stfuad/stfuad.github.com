@@ -19,7 +19,6 @@ export class SpellModal extends HTMLElement {
                 height: auto;
                 max-height: 700px;
                 width: 400px;
-                background-color: white;
                 border: 1px solid black;
                 border-radius: 5px;
                 padding: 10px;
