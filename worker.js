@@ -33,12 +33,12 @@ self.addEventListener('fetch', (e) => {
     console.log("Waiting for fetch requests");
 });
 
-self.addEventListener('fetch', (e) => {
+self.addEventListener('import', (e) => {
     e.respondWith(
         caches.match(e.request).then((response) => {
-            return response || fetch(e.request);
+            return response || import(e.request);
         })
     );
 
-    console.log("Waiting for fetch requests");
+    console.log("Waiting for import requests");
 });
