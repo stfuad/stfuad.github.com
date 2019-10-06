@@ -29,8 +29,6 @@ self.addEventListener('fetch', (e) => {
             return response || fetch(e.request);
         })
     );
-
-    console.log("Waiting for fetch requests");
 });
 
 self.addEventListener('import', (e) => {
@@ -39,6 +37,4 @@ self.addEventListener('import', (e) => {
             return response || import(e.request);
         })
     );
-
-    console.log("Waiting for import requests");
 })
