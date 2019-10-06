@@ -2,7 +2,16 @@ self.addEventListener('install', (e) => {
     e.waitUntil(caches.open("stfuad.cc")
         .then((cache) => {
             return cache.addAll([
+                "./",
+                "./bestiary.html",
+                "./classes.html",
+                "./feats.html",
+                "./index.html",
+                "./initiative.html",
+                "./magicItems.html",
                 "./navigation.html",
+                "./races.html",
+                "./spells.html",
                 "./classes/sheets.classes.js",
                 "./classes/spellModal.class.js",
                 "./json/5e Data.json",
