@@ -38,10 +38,12 @@ function Load(name, race) {
                 Paragraphs(race[key], content);
             }
         } else {
-            let h3 = document.createElement('h3');
-            h3.appendChild(document.createTextNode(key));
+            if (key !== "Sub Races") {
+                let h3 = document.createElement('h3');
+                h3.appendChild(document.createTextNode(key));
 
-            content.appendChild(h3);
+                content.appendChild(h3);                
+            }
 
             for (let subKey in race[key]) {
                 if (Array.isArray(race[key][subKey])) {
@@ -49,30 +51,37 @@ function Load(name, race) {
                         Paragraphs(race[key][subKey], content);
                     } else if (subKey.includes("List")) {
                         List(race[key][subKey], "ul", content);
-                    } else if (subKey.includes("Table")) {
-                        Table(race[key][subKey], content);
                     } else {
                         ParagraphsPrependBold(subKey, race[key][subKey], content);
                     }
                 } else {
-                    let h4 = document.createElement('h4');
-                    h4.appendChild(document.createTextNode(subKey));
+                    if (subKey.includes("Table")) {
+                        Table(race[key][subKey], content);
+                    } else {
+                        let h4 = document.createElement('h4');
+                        h4.appendChild(document.createTextNode(subKey));
 
-                    content.appendChild(h4);
+                        content.appendChild(h4);
 
-                    for (let keys in race[key][subKey]) {
-                        if (subKey.includes("Description")) {
-                            Paragraphs(race[key][subKey][keys], content);
-                        } else if (subKey.includes("List")) {
-                            List(race[key][subKey][keys], "ul", content);
-                        } else if (subKey.includes("Table")) {
-                            Table(race[key][subKey][keys], content);
-                        } else {
-                            ParagraphsPrependBold(subKey, race[key][subKey][keys], content);
+                        for (let keys in race[key][subKey]) {
+                            if (Array.isArray(race[key][subKey][keys])) {
+                                if (keys.includes("Description")) {
+                                    Paragraphs(race[key][subKey][keys], content);
+                                } else if (keys.includes("List")) {
+                                    List(race[key][subKey][keys], "ul", content);
+                                } else {
+                                    ParagraphsPrependBold(keys, race[key][subKey][keys], content);
+                                }
+                            } else {
+                                if (keys.includes("Table")) {
+                                    Table(race[key][subKey][keys], content);
+                                }
+                            }
+                        
                         }
                     }
+                    
                 }
-                
             }
         }
     }
