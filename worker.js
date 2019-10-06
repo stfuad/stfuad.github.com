@@ -29,6 +29,8 @@ self.addEventListener('install', (e) => {
                     "./modules/spells.module.js"
                 ]
 
+                console.log("Clearing cache");
+
                 toCache.forEach(element => {
                     cache.delete(element);
                 });
