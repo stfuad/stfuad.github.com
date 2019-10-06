@@ -3,8 +3,8 @@ self.addEventListener('install', (e) => {
         .then((cache) => {
             return cache.addAll([
                 "./navigation.html",
-                "./classes/sheets.module.js",
-                "./classes/spellModal.module.js",
+                "./classes/sheets.classes.js",
+                "./classes/spellModal.classes.js",
                 "./json/5e Data.json",
                 "./modules/bestiary.module.js",
                 "./modules/classes.module.js",
@@ -33,12 +33,12 @@ self.addEventListener('fetch', (e) => {
     console.log("Waiting for fetch requests");
 });
 
-/* self.addEventListener('import', (e) => {
+self.addEventListener('fetch', (e) => {
     e.respondWith(
         caches.match(e.request).then((response) => {
-            return response || import(e.request);
+            return response || fetch(e.request);
         })
     );
 
-    console.log("Waiting for import requests");
-}) */
+    console.log("Waiting for fetch requests");
+});
