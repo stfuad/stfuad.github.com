@@ -2,7 +2,6 @@ self.addEventListener('install', (e) => {
     e.waitUntil(caches.open("stfuad.cc")
         .then((cache) => {
             return cache.addAll([
-                "./navigation.html",
                 "./classes/sheets.module.js",
                 "./classes/spellModal.module.js",
                 "./json/5e Data.json",
