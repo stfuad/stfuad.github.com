@@ -23,6 +23,7 @@ export class SpellModal extends HTMLElement {
                 border-radius: 5px;
                 padding: 10px;
                 overflow: auto; 
+                background-color: inherit;
             }
 
             #spellSheetHeader > h3 {
