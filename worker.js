@@ -4,7 +4,7 @@ self.addEventListener('install', (e) => {
             return cache.addAll([
                 "./navigation.html",
                 "./classes/sheets.classes.js",
-                "./classes/spellModal.classes.js",
+                "./classes/spellModal.class.js",
                 "./json/5e Data.json",
                 "./modules/bestiary.module.js",
                 "./modules/classes.module.js",
