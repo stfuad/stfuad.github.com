@@ -7,13 +7,12 @@
         <style>
             body {
                 display: grid;
-                height: 100vh;
-                width: 100vw;
+                height: calc(100vh - 16px);
+                width: calc(100vw - 16px);
                 grid-template-columns: 1fr;
                 grid-template-rows: auto 1fr;
                 font-family: 'Courier New', Courier, monospace;
                 font-size: 1em;
-                margin: 0px;
             }
 
             #menu {
@@ -127,54 +126,56 @@
             // Properties
 
             get Artificer() { return this._artificer; }
-            set Artificer(level) { this._artificer = level; }
+            set Artificer(int) { this._artificer = int; }
 
             get Barbarian() { return this._barbarian; }
-            set Barbarian(level) { this._barbarian = level; } 
+            set Barbarian(int) { this._barbarian = int; } 
 
             get Bard() { return this._bard; }
-            set Bard(level) { this._bard = level; } 
+            set Bard(int) { this._bard = int; } 
 
             get Cleric() { return this._cleric; }
-            set Cleric(level) { this._cleric = level; } 
+            set Cleric(int) { this._cleric = int; } 
 
             get Fighter() { return this._fighter; }
-            set Fighter(level) { this._fighter = level; } 
+            set Fighter(int) { this._fighter = int; } 
 
             get Monk() { return this._monk; }
-            set Monk(level) { this._monk = level; } 
+            set Monk(int) { this._monk = int; } 
 
             get Paladin() { return this._paladin; }
-            set Paladin(level) { this._paladin = level; } 
+            set Paladin(int) { this._paladin = int; } 
 
             get Ranger() { return this._ranger; }
-            set Ranger(level) { this._ranger = level; } 
+            set Ranger(int) { this._ranger = int; } 
 
             get Rouge() { return this._rouge; }
-            set Rouge(level) { this._rouge = level; } 
+            set Rouge(int) { this._rouge = int; } 
 
             get Sorcerer() { return this._sorcerer; }
-            set Sorcerer(level) { this._sorcerer = level; } 
+            set Sorcerer(int) { this._sorcerer = int; } 
 
             get Warlock() { return this._warlock; }
-            set Warlock(level) { this._warlock = level; } 
+            set Warlock(int) { this._warlock = int; } 
 
             get Wizard() { return this._wizard; }
-            set Wizard(level) { this._wizard = level; } 
+            set Wizard(int) { this._wizard = int; } 
 
             constructor(json) {
-                this.Artificer = json["Artificer"];
-                this.Barbarian = json["Barbarian"];
-                this.Bard = json["Bard"];
-                this.Cleric = json["Cleric"];
-                this.Fighter = json["Fighter"];
-                this.Monk = json["Monk"];
-                this.Paladin = json["Paladin"];
-                this.Ranger = json["Ranger"];
-                this.Rouge = json["Rouge"];
-                this.Sorcerer = json["Sorcerer"];
-                this.Warlock = json["Warlock"];
-                this.Wizard = json["Wizard"];
+                if (json) {
+                    this.Artificer = json["Artificer"];
+                    this.Barbarian = json["Barbarian"];
+                    this.Bard = json["Bard"];
+                    this.Cleric = json["Cleric"];
+                    this.Fighter = json["Fighter"];
+                    this.Monk = json["Monk"];
+                    this.Paladin = json["Paladin"];
+                    this.Ranger = json["Ranger"];
+                    this.Rouge = json["Rouge"];
+                    this.Sorcerer = json["Sorcerer"];
+                    this.Warlock = json["Warlock"];
+                    this.Wizard = json["Wizard"];                    
+                }
             }
         }
 
@@ -196,7 +197,7 @@
             get Dexterity() { return this._dexterity; }
             set Dexterity(int) { this._dexterity = int; }
 
-            get Constituion() { return _constituion; }
+            get Constituion() { return this._constituion; }
             set Constituion(int) { this._constituion = int; }
 
             get Wisdom() { return this._wisdom; }
@@ -211,14 +212,226 @@
             // Methods
 
             constructor(json) {
-                this.Strength = json["Strength"];
-                this.Dexterity = json["Dexterity"];
-                this.Constituion = json["Constitution"];
-                this.Wisdom = json["Wisdom"];
-                this.Intelligence = json["Intelligence"];
-                this.Charisma = json["Charisma"];
+                if (json) {
+                    this.Strength = json["Strength"];
+                    this.Dexterity = json["Dexterity"];
+                    this.Constituion = json["Constitution"];
+                    this.Wisdom = json["Wisdom"];
+                    this.Intelligence = json["Intelligence"];
+                    this.Charisma = json["Charisma"];                    
+                }
             }
+        }
+
+        class Skills {
+            // Fields
+
+            _acrobatics;
+            _animalHandling;
+            _arcana;
+            _athletics;
+            _deception;
+            _history;
+            _insight;
+            _intimidation;
+            _investigation;
+            _medicine;
+            _nature;
+            _perception;
+            _performance;
+            _persuasion;
+            _religon;
+            _sleightofHand;
+            _stealth;
+            _survival;
+
+            get Acrobatics() { return this._acrobatics };
+            set Acrobatics(bool) { this._acrobatics = bool };
+
+            get AnimalHandling() { return this._animalHandling };
+            set AnimalHandling(bool) { this._animalHandling = bool };
             
+            get Arcana() { return this._arcana };
+            set Arcana(bool) { this._arcana = bool };
+            
+            get Athletics() { return this._athletics };
+            set Athletics(bool) { this._athletics = bool };
+            
+            get Deception() { return this._deception };
+            set Deception(bool) { this._deception = bool };
+            
+            get History() { return this._history };
+            set History(bool) { this._history = bool };
+            
+            get Insight() { return this._insight };
+            set Insight(bool) { this._insight = bool };
+            
+            get Intimidation() { return this._intimidation };
+            set Intimidation(bool) { this._intimidation = bool };
+            
+            get Investigation() { return this._investigation };
+            set Investigation(bool) { this._investigation = bool };
+            
+            get Medicine() { return this._medicine };
+            set Medicine(bool) { this._medicine = bool };
+            
+            get Nature() { return this._nature };
+            set Nature(bool) { this._nature = bool };
+            
+            get Perception() { return this._perception };
+            set Perception(bool) { this._perception = bool };
+            
+            get Performance() { return this._performance };
+            set Performance(bool) { this._performance = bool };
+            
+            get Persuasion() { return this._persuasion };
+            set Persuasion(bool) { this._persuasion = bool };
+            
+            get Religon() { return this._religon };
+            set Religon(bool) { this._religon = bool };
+            
+            get SleightofHand() { return this._sleightofHand };
+            set SleightofHand(bool) { this._sleightofHand = bool };
+            
+            get Stealth() { return this._stealth };
+            set Stealth(bool) { this._survival = bool };
+            
+            get Survival() { return this._survival };
+            set Survival(bool) { this._survival = bool };
+
+            constructor(json) {
+                if (json) {
+                    this.Acrobatics = json["Acrobatics"];
+                    this.AnimalHandling = json["Animal Handling"];
+                    this.Arcana = json["Arcana"];
+                    this.Athletics = json["Athletics"];
+                    this.Deception = json["Deception"];
+                    this.History = json["History"];
+                    this.Insight = json["Insight"];
+                    this.Intimidation = json["Intimidation"];
+                    this.Investigation = json["Investigation"];
+                    this.Medicine = json["Medicine"];
+                    this.Nature = json["Nature"];
+                    this.Perception = json["Perception"];
+                    this.Performance = json["Performance"];
+                    this.Persuasion = json["Persuasion"];
+                    this.Religon = json["Religon"];
+                    this.SleightofHand = json["Sleight of Hand"];
+                    this.Stealth = json["Stealth"];
+                    this.Survival = json["Survival"];                    
+                }
+            }
+        }
+
+        class SavingThrows {
+            // Fields
+
+            _strength = 0;
+            _dexterity = 0;
+            _constituion = 0;
+            _wisdom = 0;
+            _intelligence = 0;
+            _charisma = 0;
+
+            // Properties
+
+            get Strength() { return this._strength; }
+            set Strength(bool) { this._strength = bool; }
+
+            get Dexterity() { return this._dexterity; }
+            set Dexterity(bool) { this._dexterity = bool; }
+
+            get Constituion() { return this._constituion; }
+            set Constituion(bool) { this._constituion = bool; }
+
+            get Wisdom() { return this._wisdom; }
+            set Wisdom(bool) { this._wisdom = bool; }
+
+            get boolelligence() { return this._boolelligence; }
+            set boolelligence(bool) { this._boolelligence = bool; }
+
+            get Charisma() { return this._charisma; }
+            set Charisma(bool) { this._charisma = bool; }
+
+            // Methods
+
+            constructor(json) {
+                if (json) {
+                    this.Strength = json["Strength"];
+                    this.Dexterity = json["Dexterity"];
+                    this.Constituion = json["Constitution"];
+                    this.Wisdom = json["Wisdom"];
+                    this.Intelligence = json["Intelligence"];
+                    this.Charisma = json["Charisma"];                    
+                }
+            }
+        }
+
+        class WeaponProficiencies {
+            // Fields
+            
+            _club;
+            _dagger;
+            _greatclub;
+            _handaxe;
+            _javelin;
+            _lightHammer;
+            _mace;
+            _quarterstaff;
+            _sickle;
+            _spear;
+            _unarmedStrike;
+            
+            _crossbowLight;
+            _dart;
+            _shortbow;
+            _sling;
+
+            _battleaxe;
+            _flail;
+            _glaive;
+            _greataxe;
+            _greatsword;
+            _halberd;
+            _lance;
+            _longsword;
+            _maul;
+            _morningstar;
+            _pike;
+            _rapier;
+            _scimitar;
+            _shortsword;
+            _trident;
+            _warPick;
+            _warhammer;
+            _whip;
+
+            _blowgun;
+            _crossbowHand;
+            _crossbowHeavy;
+            _longbow;
+            _net;
+
+            _simple;
+            _martial;
+
+            // Properties
+
+            get () { return this. };
+            set (bool) {this. = bool};
+        }
+
+        class ArmorProficiencies {
+            // Fields
+
+            _light;
+            _medium;
+            _heavy;
+            _shields;
+        }
+
+        class ToolProficiencies {
+
         }
     </script>
 

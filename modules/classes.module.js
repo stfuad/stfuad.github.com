@@ -132,13 +132,13 @@ function Content(name, json) {
             }
             
             if (Array.isArray(json[key])) {
-                Paragraphs(json[key], content);
-            } else {
                 if (key.includes("Description")) {
                     Paragraphs(json[key], content);
                 } else if (key.includes("List")) {
                     List(json[key], content);
-                } else if (key.includes("Table")) {
+                }
+            } else {
+                if (key.includes("Table")) {
                     Table(json[key], content);
                 } else {
                     for (let subKey in json[key]) {
