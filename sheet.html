@@ -108,8 +108,6 @@
         }
 
         class ClassLevels {
-            // Fields
-
             _artificer = 0;
             _barbarian = 0;
             _bard = 0;
@@ -122,8 +120,6 @@
             _sorcerer = 0;
             _warlock = 0;
             _wizard = 0;
-
-            // Properties
 
             get Artificer() { return this._artificer; }
             set Artificer(int) { this._artificer = int; }
@@ -180,16 +176,12 @@
         }
 
         class AbilityScores {
-            // Fields
-
             _strength = 0;
             _dexterity = 0;
             _constituion = 0;
             _wisdom = 0;
             _intelligence = 0;
             _charisma = 0;
-
-            // Properties
 
             get Strength() { return this._strength; }
             set Strength(int) { this._strength = int; }
@@ -209,8 +201,6 @@
             get Charisma() { return this._charisma; }
             set Charisma(int) { this._charisma = int; }
 
-            // Methods
-
             constructor(json) {
                 if (json) {
                     this.Strength = json["Strength"];
@@ -224,26 +214,24 @@
         }
 
         class Skills {
-            // Fields
-
-            _acrobatics;
-            _animalHandling;
-            _arcana;
-            _athletics;
-            _deception;
-            _history;
-            _insight;
-            _intimidation;
-            _investigation;
-            _medicine;
-            _nature;
-            _perception;
-            _performance;
-            _persuasion;
-            _religon;
-            _sleightofHand;
-            _stealth;
-            _survival;
+            _acrobatics = false;
+            _animalHandling = false;
+            _arcana = false;
+            _athletics = false;
+            _deception = false;
+            _history = false;
+            _insight = false;
+            _intimidation = false;
+            _investigation = false;
+            _medicine = false;
+            _nature = false;
+            _perception = false;
+            _performance = false;
+            _persuasion = false;
+            _religon = false;
+            _sleightofHand = false;
+            _stealth = false;
+            _survival = false;
 
             get Acrobatics() { return this._acrobatics };
             set Acrobatics(bool) { this._acrobatics = bool };
@@ -324,16 +312,12 @@
         }
 
         class SavingThrows {
-            // Fields
-
-            _strength = 0;
-            _dexterity = 0;
-            _constituion = 0;
-            _wisdom = 0;
-            _intelligence = 0;
-            _charisma = 0;
-
-            // Properties
+            _strength = false;
+            _dexterity = false;
+            _constituion = false;
+            _wisdom = false;
+            _intelligence = false;
+            _charisma = false;
 
             get Strength() { return this._strength; }
             set Strength(bool) { this._strength = bool; }
@@ -353,8 +337,6 @@
             get Charisma() { return this._charisma; }
             set Charisma(bool) { this._charisma = bool; }
 
-            // Methods
-
             constructor(json) {
                 if (json) {
                     this.Strength = json["Strength"];
@@ -368,71 +350,258 @@
         }
 
         class WeaponProficiencies {
-            // Fields
+            _club = false;
+            _dagger = false;
+            _greatclub = false;
+            _handaxe = false;
+            _javelin = false;
+            _lightHammer = false;
+            _mace = false;
+            _quarterstaff = false;
+            _sickle = false;
+            _spear = false;
+            _unarmedStrike = false;
+            _crossbowLight = false;
+            _dart = false;
+            _shortbow = false;
+            _sling = false;
+            _battleaxe = false;
+            _flail = false;
+            _glaive = false;
+            _greataxe = false;
+            _greatsword = false;
+            _halberd = false;
+            _lance = false;
+            _longsword = false;
+            _maul = false;
+            _morningstar = false;
+            _pike = false;
+            _rapier = false;
+            _scimitar = false;
+            _shortsword = false;
+            _trident = false;
+            _warPick = false;
+            _warhammer = false;
+            _whip = false;
+            _blowgun = false;
+            _crossbowHand = false;
+            _crossbowHeavy = false;
+            _longbow = false;
+            _net = false;
+            _improvised = false;
+            _simple = false;
+            _martial = false;
+            _all = false;
+
+            get Club() { return this._club };
+            set Club(bool) { this._club = bool };
+
+            get Dagger() { return this._dagger };
+            set Dagger(bool) { this._dagger = bool };
+
+            get Greatclub() { return this._greatclub };
+            set Greatclub(bool) { this._greatclub = bool };
             
-            _club;
-            _dagger;
-            _greatclub;
-            _handaxe;
-            _javelin;
-            _lightHammer;
-            _mace;
-            _quarterstaff;
-            _sickle;
-            _spear;
-            _unarmedStrike;
+            get Handaxe() { return this._handaxe };
+            set Handaxe(bool) { this._handaxe = bool };
+
+            get Javelin() { return this._javelin };
+            set Javelin(bool) { this._javelin = bool };
             
-            _crossbowLight;
-            _dart;
-            _shortbow;
-            _sling;
+            get LightHammer() { return this._lightHammer };
+            set LightHammer(bool) { this._lightHammer = bool };
+            
+            get Mace() { return this._mace };
+            set Mace(bool) { this._mace = bool };
+            
+            get Quarterstaff() { return this._quarterstaff };
+            set Quarterstaff(bool) { this._quarterstaff = bool };
+            
+            get Javelin() { return this._javelin };
+            set Javelin(bool) { this._javelin = bool };
+            
+            get Sickle() { return this._sickle };
+            set Sickle(bool) { this._sickle = bool };
+            
+            get Spear() { return this._spear };
+            set Spear(bool) { this._spear = bool };
+            
+            get UnarmedStrike() { return this._unarmedStrike };
+            set UnarmedStrike(bool) { this._unarmedStrike = bool };
+            
+            get CrossbowLight() { return this._crossbowLight };
+            set CrossbowLight(bool) { this._crossbowLight = bool };
+            
+            get Dart() { return this._dart };
+            set Dart(bool) { this._dart = bool };
+            
+            get Shortbow() { return this._shortbow };
+            set Shortbow(bool) { this._shortbow = bool };
+            
+            get Sling() { return this._sling };
+            set Sling(bool) { this._sling = bool };
+            
+            get Battleaxe() { return this._battleaxe };
+            set Battleaxe(bool) { this._battleaxe = bool };
+            
+            get Flail() { return this._flail };
+            set Flail(bool) { this._flail = bool };
+            
+            get Glaive() { return this._glaive };
+            set Glaive(bool) { this._glaive = bool };
+            
+            get Greataxe() { return this._greataxe };
+            set Greataxe(bool) { this._greataxe = bool };
+            
+            get Greatsword() { return this._greatsword };
+            set Greatsword(bool) { this._greatsword = bool };
+            
+            get Halberd() { return this._halberd };
+            set Halberd(bool) { this._halberd = bool };
+            
+            get Lance() { return this._lance };
+            set Lance(bool) { this._lance = bool };
+            
+            get Longsword() { return this._longsword };
+            set Longsword(bool) { this._longsword = bool };
+            
+            get Maul() { return this._maul };
+            set Maul(bool) { this._maul = bool };
+            
+            get Morningstar() { return this._morningstar };
+            set Morningstar(bool) { this._morningstar = bool };
+            
+            get Pike() { return this._pike };
+            set Pike(bool) { this._pike = bool };
+            
+            get Rapier() { return this._rapier };
+            set Rapier(bool) { this._rapier = bool };
+            
+            get Scimitar() { return this._scimitar };
+            set Scimitar(bool) { this._scimitar = bool };
+            
+            get Shortsword() { return this._shortsword };
+            set Shortsword(bool) { this._shortsword = bool };
+            
+            get Trident() { return this._trident };
+            set Trident(bool) { this._trident = bool };
+            
+            get WarPick() { return this._warPick };
+            set WarPick(bool) { this._warPick = bool };
+            
+            get Warhammer() { return this._warhammer };
+            set Warhammer(bool) { this._warhammer = bool };
+            
+            get Whip() { return this._whip };
+            set Whip(bool) { this._whip = bool };
+            
+            get Blowgun() { return this._blowgun };
+            set Blowgun(bool) { this._blowgun = bool };
+            
+            get CrossbowHand() { return this._crossbowHand };
+            set CrossbowHand(bool) { this._crossbowHand = bool };
+            
+            get CrossbowHeavy() { return this._crossbowHeavy };
+            set CrossbowHeavy(bool) { this._crossbowHeavy = bool };
+            
+            get Longbow() { return this._longbow };
+            set Longbow(bool) { this._longbow = bool };
+            
+            get Net() { return this._net };
+            set Net(bool) { this._net = bool };
+            
+            get Improvised() { return this._improvised };
+            set Improvised(bool) { this._improvised = bool };
+            
+            get Simple() { return this._simple };
+            set Simple(bool) { this._simple = bool };
+            
+            get Martial() { return this._martial };
+            set Martial(bool) { this._martial = bool };
+            
+            get All() { return this._all };
+            set All(bool) { this._all = bool };
 
-            _battleaxe;
-            _flail;
-            _glaive;
-            _greataxe;
-            _greatsword;
-            _halberd;
-            _lance;
-            _longsword;
-            _maul;
-            _morningstar;
-            _pike;
-            _rapier;
-            _scimitar;
-            _shortsword;
-            _trident;
-            _warPick;
-            _warhammer;
-            _whip;
-
-            _blowgun;
-            _crossbowHand;
-            _crossbowHeavy;
-            _longbow;
-            _net;
-
-            _simple;
-            _martial;
-
-            // Properties
-
-            get () { return this. };
-            set (bool) {this. = bool};
+            constructor(json) {
+                if (json) {
+                    this.Club = json["Club"];
+                    this.Dagger = json["Dagger"];
+                    this.Greatclub = json["Greatclub"];
+                    this.Handaxe = json["Handaxe"];
+                    this.Javelin = json["Javelin"];
+                    this.LightHammer = json["Light Hammer"];
+                    this.Mace = json["Mace"];
+                    this.Quarterstaff = json["Quarterstaff"];
+                    this.Sickle = json["Sickle"];
+                    this.Spear = json["Spear"];
+                    this.UnarmedStrike = json["Unarmed Strike"];
+                    this.CrossbowLight = json["Crossbow Light"];
+                    this.Dart = json["Dart"];
+                    this.Shortbow = json["Shortbow"];
+                    this.Sling = json["Sling"];
+                    this.Battleaxe = json["Battleaxe"];
+                    this.Flail = json["Flail"];
+                    this.Glaive = json["Glaive"];
+                    this.Greataxe = json["Greataxe"];
+                    this.Greatsword = json["Greatsword"];
+                    this.Halberd = json["Halberd"];
+                    this.Lance = json["Lance"];
+                    this.Longsword = json["Longsword"];
+                    this.Maul = json["Maul"];
+                    this.Morningstar = json["Morningstar"];
+                    this.Pike = json["Pike"];
+                    this.Rapier = json["Rapier"];
+                    this.Scimitar = json["Scimitar"];
+                    this.Shortsword = json["Shortsword"];
+                    this.Trident = json["Trident"];
+                    this.WarPick = json["War Pick"];
+                    this.Warhammer = json["Warhammer"];
+                    this.Whip = json["Whip"];
+                    this.Blowgun = json["Blowgun"];
+                    this.CrossbowHand = json["Crossbow Hand"];
+                    this.CrossbowHeavy = json["Crossbow Heavy"];
+                    this.Longbow = json["Longbow"];
+                    this.Net = json["Net"];
+                    this.Improvised = json["Improvised"];
+                    this.Simple = json["Simple"];
+                    this.Martial = json["Martial"];
+                    this.All = json["All"];
+                }
+            }
         }
 
         class ArmorProficiencies {
-            // Fields
+            _light = false;
+            _medium = false;
+            _heavy = false;
+            _shields = false;
+            _all = false;
 
-            _light;
-            _medium;
-            _heavy;
-            _shields;
+            get Light() { return this._light; }
+            set Light(bool) { this._light = bool; }
+
+            get Medium() { return this._medium; }
+            set Medium(bool) { this._medium = bool; }
+
+            get Heavy() { return this._heavy; }
+            set Heavy(bool) { this._heavy = bool; }
+
+            get Shields() { return this._shields; }
+            set Shields(bool) { this._shields = bool; }
+
+            get All() { return this._all; }
+            set All(bool) { this._all = bool; }
+
+            constructor(json) {
+                if (json) {
+                    this.Light = json["Light"];
+                    this.Medium = json["Medium"];
+                    this.Heavy = json["Heavy"];
+                    this.All = json["All"]
+                }
+            }
         }
 
-        class ToolProficiencies {
-
-        }
     </script>
 
     <!-- Handle opening a file and loading into localstorage -->

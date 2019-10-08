@@ -51,9 +51,23 @@ export class CreatureSheet extends HTMLElement {
                 margin-left: 22px;
             }
 
-            .spellsBlock div > a {
-                color: blue;
-                cursor: pointer;
+            @media (prefers-color-scheme: dark) {
+                body {
+                    color: white;
+                    background-color: rgb(32, 32, 32);
+                }
+
+                .spellsBlock div > a {
+                    color: rgb(255, 153, 0);
+                    cursor: pointer;
+                }
+            }
+
+            @media (prefers-color-scheme: light) {
+                body {
+                    color: blue;
+                    background-color: white;
+                }
             }
         `;
 
