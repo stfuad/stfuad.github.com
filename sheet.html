@@ -47,15 +47,36 @@
             <li id="save" title="Save Character">&#x1F4BE;</li>
         </ul>
         <div id="content"></div>
+
+        <template id="newCharacterModal">
+            <form>
+                <fieldset>
+                    <legend>Character Name</legend>
+                    <input type="text" id="characterNameInput">
+                </fieldset>
+                
+                <fieldset>
+                    <legend>Race</legend>
+                    <select id="characterRaceSelection"></select>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Classes</legend>
+                    
+                </fieldset>
+            </form>
+        </template>
+
+
     </body>
 
     <!-- Build a Character Object -->
 
     <script>
         class Character {
-            _name;
-            _race;
-            _classes;
+            _name = "New Character";
+            _race = "Human";
+            _classLevels;
             _characterLevel = 0;
             _abilityScores;
 
@@ -65,8 +86,8 @@
             get Race() { return this._race; }
             set Race(race) { this._race = race };
 
-            get Classes() { return this._classes; }
-            set Classes(obj) { this._classes = obj; }
+            get ClassLevels() { return this._classLevels; }
+            set ClassLevels(obj) { this._classLevels = obj; }
 
             get CharacterLevel() { return this._characterLevel; }
             set CharacterLevel(level) { this._characterLevel = level; }
@@ -100,7 +121,7 @@
                 if(json) {
                     this.Name = json["Name"];
                     this.Race = json["Race"];
-                    this.Classes = new ClassLevels(json["Classes"]);
+                    this.ClassLevels = new ClassLevels(json["Classes"]);
                     this.CharacterLevel = this.TotalLevels();
                     this.AbilityScores = new AbilityScores(json["Ability Scores"]);
                 }
@@ -616,6 +637,28 @@
     </script>
 
     <script>
+        class NewCharacterModal extends HTMLElement {
+            constructor() {
+                super();
+
+                let shadow = this.attachShadow({mode: 'open'});
+
+                let style = document.createElement('style');
+                style.textContent = `
+                `;
+
+                shadow.appendChild(style);
+
+                let form = document.createElement('form');
+
+                let fieldset1 = document.createElement('fieldset');
+
+                let label = document.createElement
+
+                shadow.appendChild(form);
+            }
+        }
+
         class OpenModal extends HTMLElement {
             constructor() {
                 super();

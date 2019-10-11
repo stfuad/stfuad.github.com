@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Simple Character Sheet</title>
+        <style>
+            body {
+                display: grid;
+                height: calc(100vh - 20px);
+                width: calc(100vw - 20px);
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 1em;
+            }
+
+            #menu {
+                grid-column: 1;
+                grid-row: 1;
+                height: 100%;
+                width: 100%;
+                margin: 0px;
+                padding: 5px;
+                list-style: none;
+                font-size: 1.5em;
+            }
+
+            #menu li {
+                display: inline-block;
+            }
+
+            #menu li #file-input {
+                display: none;
+            }
+
+            #content {
+                grid-column: 1;
+                grid-row: 2;
+            }
+        </style>
+    </head>
+    <body>
+        <ul id="menu">
+            <li id="new" title="New Character">&#x1F4C4;</li>
+            <li id="open" title="Load Character">&#x1F4C2;</li>
+            <li id="save" title="Save Character">&#x1F4BE;</li>
+        </ul>
+        <div id="content"></div>
+    </body>
+
+    <!-- Templates -->
+
+    <template id="characterTemplate">
+        <style>
+            #savingThrowsFieldset label, #skillsFieldset label, #weaponProficienciesFieldset label, #armorProficienciesFieldset label {
+                display: block;
+            }
+
+            a {
+                color: blue;
+                cursor: pointer;
+            }
+        </style>
+
+        <fieldset id="nameFieldset">
+            <legend>Name</legend>
+            <input type="text" id="name">
+        </fieldset>
+
+        <fieldset id="raceFieldset">
+            <legend>Race</legend>
+            <input type="text" id="race">
+        </fieldset>
+
+        <fieldset id="classesFieldset">
+            <legend>Classes</legend>
+        </fieldset>
+
+        <div>
+            <a id="addClassLink">+ Add a Class</a>
+        </div>
+
+        <fieldset id="proficiencyBonusFieldset">
+            <legend>Proficiency Bonus</legend>
+        </fieldset>
+
+        <fieldset id="abilityScoresFieldset">
+            <legend>Ability Scores</legend>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Strength</th>
+                        <th>Dexterity</th>
+                        <th>Constitution</th>
+                        <th>Intelligence</th>
+                        <th>Wisdom</th>
+                        <th>Charisma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" id="strength">
+                        </td>
+                        <td>
+                            <input type="text" id="dexterity">
+                        </td>
+                        <td>
+                            <input type="text" id="consitution">
+                        </td>
+                        <td>
+                            <input type="text" id="intelligence">
+                        </td>
+                        <td>
+                            <input type="text" id="wisdom">
+                        </td>
+                        <td>
+                            <input type="text" id="charisma">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
+        <fieldset id="savingThrowsFieldset">
+            <legend>Saving Throws</legend>
+            <label><input type="checkbox" id="strength">Strength</label>
+            <label><input type="checkbox" id="dexterity">Dexterity</label>
+            <label><input type="checkbox" id="consitution">Constitution</label>
+            <label><input type="checkbox" id="intelligence">Intelligence</label>
+            <label><input type="checkbox" id="wisdom">Wisdom</label>
+            <label><input type="checkbox" id="charisma">Charisma</label>
+        </fieldset>
+
+        <!-- Proficiencies -->
+
+        <details open>
+            <summary>Proficiencies</summary>
+
+            <fieldset id="skillsFieldset">
+                <legend>Skills</legend>
+                <label><input type="checkbox" id="acrobatics">Acrobatics</label>
+                <label><input type="checkbox" id="animalHandling">Animal Handling</label>
+                <label><input type="checkbox" id="arcana">Arcana</label>
+                <label><input type="checkbox" id="athletics">Athletics</label>
+                <label><input type="checkbox" id="deception">Deception</label>
+                <label><input type="checkbox" id="history">History</label>
+                <label><input type="checkbox" id="insight">Insight</label>
+                <label><input type="checkbox" id="intimidation">Intimidation</label>
+                <label><input type="checkbox" id="investigation">Investigation</label>
+                <label><input type="checkbox" id="medicine">Medicine</label>
+                <label><input type="checkbox" id="nature">Nature</label>
+                <label><input type="checkbox" id="perception">Perception</label>
+                <label><input type="checkbox" id="performance">Performance</label>
+                <label><input type="checkbox" id="persuasion">Persuasion</label>
+                <label><input type="checkbox" id="religon">Religon</label>
+                <label><input type="checkbox" id="sleightofHand">Sleight of Hand</label>
+                <label><input type="checkbox" id="stealth">Stealth</label>
+                <label><input type="checkbox" id="survival">Survival</label>
+            </fieldset>
+
+            <fieldset id="weaponProficienciesFieldset">
+                <legend>Weapon Proficiencies</legend>
+                <div>
+                    <h4>Simple Melee Weapons</h4>
+                    <label><input type="checkbox" id="club">Club</label>
+                    <label><input type="checkbox" id="dagger">Dagger</label>
+                    <label><input type="checkbox" id="greatclub">Greatclub</label>
+                    <label><input type="checkbox" id="handaxe">Handaxe</label>
+                    <label><input type="checkbox" id="javelin">Javelin</label>
+                    <label><input type="checkbox" id="lightHammer">Light Hammer</label>
+                    <label><input type="checkbox" id="mace">Mace</label>
+                    <label><input type="checkbox" id="quarterstaff">Quarterstaff</label>
+                    <label><input type="checkbox" id="sickle">Sickle</label>
+                    <label><input type="checkbox" id="spear">Spear</label>
+                    <label><input type="checkbox" id="unarmedStrike">Unarmed Strike</label>
+                </div>
+
+                <div>
+                    <h4>Simple Ranged Weapons</h4>
+                    <label><input type="checkbox" id="crossbowLight">Crossbow, Light</label>
+                    <label><input type="checkbox" id="dart">Dart</label>
+                    <label><input type="checkbox" id="shortbow">Shortbow</label>
+                    <label><input type="checkbox" id="sling">Sling</label>
+                </div>
+
+                <div>
+                    <h4>Martial Melee Weapons</h4>
+                    <label><input type="checkbox" id="battleaxe">Battleaxe</label>
+                    <label><input type="checkbox" id="flail">Flail</label>
+                    <label><input type="checkbox" id="glaive">Glaive</label>
+                    <label><input type="checkbox" id="greataxe">Greataxe</label>
+                    <label><input type="checkbox" id="greatsword">Greatsword</label>
+                    <label><input type="checkbox" id="halberd">Halberd</label>
+                    <label><input type="checkbox" id="lance">Lance</label>
+                    <label><input type="checkbox" id="longsword">Longsword</label>
+                    <label><input type="checkbox" id="maul">Maul</label>
+                    <label><input type="checkbox" id="morningstar">Morningstar</label>
+                    <label><input type="checkbox" id="pike">Pike</label>
+                    <label><input type="checkbox" id="rapier">Rapier</label>
+                    <label><input type="checkbox" id="scimitar">Scimitar</label>
+                    <label><input type="checkbox" id="shortsword">Shortsword</label>
+                    <label><input type="checkbox" id="trident">Trident</label>
+                    <label><input type="checkbox" id="warPick">War Pick</label>
+                    <label><input type="checkbox" id="warhammer">Warhammer</label>
+                    <label><input type="checkbox" id="whip">Whip</label>
+                </div>
+                
+                <div>
+                    <h4>Martial Ranged Weapons</h4>
+                    <label><input type="checkbox" id="blowgun">Blowgun</label>
+                    <label><input type="checkbox" id="crossbowHand">Crossbow, Hand</label>
+                    <label><input type="checkbox" id="crossbowHeavy">Crossbow, Heavy</label>
+                    <label><input type="checkbox" id="longbow">Longbow</label>
+                    <label><input type="checkbox" id="net">Net</label>
+                </div>
+
+                <div>
+                    <h4>Groups</h4>
+                    <label><input type="checkbox" id="simple">Simple</label>
+                    <label><input type="checkbox" id="martial">Martial</label>
+                    <label><input type="checkbox" id="all">All</label>
+                </div>
+
+            </fieldset>
+
+            <fieldset id="armorProficienciesFieldset">
+                <legend>Armor Proficiencies</legend>
+                <label><input type="checkbox" id="light">Light</label>
+                <label><input type="checkbox" id="medium">Medium</label>
+                <label><input type="checkbox" id="heavy">Heavy</label>
+                <label><input type="checkbox" id="shields">Shields</label>
+                <label><input type="checkbox" id="all">All</label>
+            </fieldset>
+        </details>
+        
+        <!-- Equipment -->
+
+        <details open>
+            <summary>Equipment</summary>
+
+            <fieldset id="equipmentFieldset"></fieldset>
+
+            <div>
+                <a id="addEquipmentLink">+ Add Equipment Item</a>
+            </div>
+
+            <fieldset id="lootFieldset">
+
+            </fieldset>
+            
+            <div>
+                <a id="addLootLink">+ Add Loot Item</a>
+            </div>
+        </details>
+
+        <script>
+            let addClass = document.getElementById("addClassLink");
+            addClass.onclick = () => {
+                document.body.appendChild(new AddClassModal());
+            };
+
+            let addEquipment = document.getElementById("addEquipmentLink");
+            addEquipment.onclick = () => {
+                document.body.appendChild(new AddItemModal("equipmentFieldset"));
+            }
+
+            let addLoot = document.getElementById("addLootLink");
+            addLoot.onclick = () => {
+                document.body.appendChild(new AddItemModal("lootFieldset"));
+            }
+        </script>
+    </template>
+
+    <!-- Buttons -->
+
+    <script>
+        let content = document.getElementById("content");
+
+        let newCharacter = document.getElementById("new");
+        newCharacter.addEventListener("click", () => {
+            /* Do something if the content div has children */
+
+            if (content.childElementCount > 0) {
+                content.innerHTML = "";
+            }
+
+            /* Check for template support and clone the template to the content div. */
+
+            if ('content' in document.createElement('template')) {
+                let template = document.getElementById("characterTemplate");
+                let content = document.getElementById("content");
+
+                let clone = document.importNode(template.content, true);
+                content.appendChild(clone);
+            } else {
+                console.log("<template> not supported.")
+            }
+        }, false);
+
+        let openCharacter = document.getElementById("open");
+        openCharacter.addEventListener("click", () => {
+            document.body.appendChild(new OpenModal());
+        }, false);
+    </script>
+
+    <!-- Modals -->
+
+    <script>
+        class AddItemModal extends HTMLElement {
+            constructor(id) {
+                super();
+
+                let shadow = this.attachShadow({mode: 'open'});
+
+                let style = document.createElement('style');
+                style.textContent = `
+                    :host {
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        height: auto;
+                        width: auto;
+                        transform: translate(-50%, -50%);
+                        border: 1px solid black;
+                        padding: 10px;
+                    }
+
+                    input {
+                        display: block;
+                    }
+                `;
+
+                shadow.appendChild(style);
+
+                shadow.appendChild(HTMLHeader("h3", "Add an Item."))
+
+                let input = HTMLInput("text", undefined);
+
+                shadow.appendChild(input);
+
+                let addButton = HTMLButton("Add Item");
+                addButton.onclick = () => {
+                    let target = document.getElementById(id);
+
+                    target.appendChild(new CustomItem(input.value));
+
+                    this.remove();
+                }
+
+                let cancelButton = HTMLButton("Cancel");
+                cancelButton.onclick = () => {
+                    this.remove();
+                }
+
+                shadow.appendChild(addButton);
+                shadow.appendChild(cancelButton);
+            }
+        }
+
+        customElements.define("additem-modal", AddItemModal);
+
+        class CustomItem extends HTMLElement {
+            constructor(name) {
+                super();
+
+                let shadow = this.attachShadow({mode: 'open'});
+
+                let style = document.createElement('style');
+                style.textContent = `
+                    :host {
+                        display: block;
+                        height: 24px;
+                    }
+
+                    button {
+                        float: right;
+                    }
+                `;
+
+                shadow.appendChild(style);
+
+                shadow.appendChild(document.createTextNode(name));
+
+                let closeButton = HTMLButton("\u2716");
+                closeButton.onclick = () => {
+                    this.remove();
+                }
+
+                shadow.appendChild(closeButton);
+            }
+        }
+
+        customElements.define("custom-item", CustomItem);
+
+        class AddClassModal extends HTMLElement {
+            constructor() {
+                super();
+
+                let shadow = this.attachShadow({mode: 'open'});
+
+                let style = document.createElement('style');
+                style.textContent = `
+                    :host {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        height: auto;
+                        width: auto;
+                        transform: translate(-50%, -50%);
+                        border: 1px solid black;
+                        padding: 10px;
+                    }
+
+                    select {
+                        display: block;
+                    }
+                `;
+
+                shadow.appendChild(style);
+
+                shadow.appendChild(HTMLHeader("h3", "Select a class."))
+
+                let select = HTMLSelect("classes");
+                select.appendChild(HTMLOption("Artificer", "Artificer"));
+                select.appendChild(HTMLOption("Barbarian", "Barbarian"));
+                select.appendChild(HTMLOption("Bard", "Bard"));
+                select.appendChild(HTMLOption("Cleric", "Cleric"));
+                select.appendChild(HTMLOption("Fighter", "Fighter"));
+                select.appendChild(HTMLOption("Monk", "Monk"));
+                select.appendChild(HTMLOption("Paladin", "Paladin"));
+                select.appendChild(HTMLOption("Ranger", "Ranger"));
+                select.appendChild(HTMLOption("Rouge", "Rouge"));
+                select.appendChild(HTMLOption("Sorcerer", "Sorcerer"));
+                select.appendChild(HTMLOption("Warlock", "Warlock"));
+                select.appendChild(HTMLOption("Wizard", "Wizard"));
+
+                shadow.appendChild(select);
+
+                let addButton = HTMLButton("Add Class");
+                addButton.onclick = () => {
+                    let toAdd = shadow.getElementById("classes");
+                    let target = document.getElementById("classesFieldset");
+                    
+                    target.appendChild(HTMLLabel("classLevelInput", `${toAdd.value}: `));
+                    target.appendChild(HTMLInput("text", "classLevelInput"));
+
+                    this.remove();
+                }
+
+                let cancelButton = HTMLButton("Cancel");
+                cancelButton.onclick = () => {
+                    this.remove();
+                }
+
+                shadow.appendChild(addButton);
+                shadow.appendChild(cancelButton);
+            }
+        }
+
+        customElements.define("addclass-modal", AddClassModal);
+
+        class OpenModal extends HTMLElement {
+            constructor() {
+                super();
+
+                let shadow = this.attachShadow({mode: 'open'});
+
+                let style = document.createElement('style');
+                style.textContent = `
+                    :host {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        height: auto;
+                        width: auto;
+                        transform: translate(-50%, -50%);
+                        border: 1px solid black;
+                        padding: 10px;
+                    }
+                `;
+
+                shadow.appendChild(style);
+
+                let localText = document.createElement('h3');
+                localText.appendChild(document.createTextNode("Load a saved character from localStorage..."));
+
+                shadow.appendChild(localText);
+
+                let importText = document.createElement('h3');
+                importText.appendChild(document.createTextNode("...or import a JSON file..."));
+
+                shadow.appendChild(importText);
+
+                let importFile = document.createElement('input');
+                importFile.type = "file";
+                importFile.id = "file-input"
+                importFile.onchange = e => {
+                    let file = e.target.files[0];
+
+                    if (!file) { return; }
+
+                    let reader = new FileReader();
+                    reader.readAsText(file,'UTF-8');
+
+                    reader.onload = readerEvent => {
+                        let text = readerEvent.target.result;
+
+                        let newCharacter = new Character(JSON.parse(text));
+
+                        let target = document.getElementById("content");
+                        
+                        console.log(newCharacter);
+
+                        this.remove();
+                    }
+                }
+
+                shadow.appendChild(importFile);
+
+                let cancelText = document.createElement('h3');
+                cancelText.appendChild(document.createTextNode("...or close this window."));
+
+                shadow.appendChild(cancelText);
+
+                let closeButton = document.createElement('button');
+                closeButton.type = "button";
+                closeButton.appendChild(document.createTextNode("Close"));
+                closeButton.onclick = () => {
+                    this.remove();
+                };
+
+                shadow.appendChild(closeButton);
+            }
+        }
+
+        customElements.define("open-modal", OpenModal);
+    </script>
+
+    <!-- Helper functions -->
+
+    <script>
+    
+        function HTMLButton(text) {
+            let button = document.createElement('button');
+            button.appendChild(document.createTextNode(text));
+
+            return button;
+        }
+
+        function HTMLDiv(id) {
+            let div = document.createElement('div');
+
+            if (id) {
+                div.id = id;
+            }
+            
+            return div;
+        }
+
+        function HTMLForm(parent) {
+            let form = document.createElement('form');
+
+            parent.appendChild(form);
+
+            return form;
+        }
+
+        function HTMLFieldset(id, parent) {
+            let fieldset = document.createElement('fieldset')
+            fieldset.id = id;
+
+            parent.appendChild(fieldset);
+
+            return fieldset;
+        }
+
+        function HTMLHeader(type, text) {
+            let header = document.createElement(type);
+            header.appendChild(document.createTextNode(text));
+
+            return header;
+        }
+
+        function HTMLInput(type, id) {
+            let input = document.createElement('input');
+            input.type = type;
+
+            if (id) {
+                input.id = id;                
+            }
+
+            return input;
+        }
+
+        function HTMLLabel(target, text) {
+            let label = document.createElement('label');
+            label.htmlFor = target;
+            label.appendChild(document.createTextNode(text));
+
+            return label;
+        }
+        
+        function HTMLLegend(text) {
+            let legend = document.createElement('legend');
+            legend.appendChild(document.createTextNode(text));
+
+            return legend;
+        }
+
+        function HTMLOption(value, text) {
+            let option = document.createElement('option');
+            option.value = value;
+            option.text = text;
+
+            return option;
+        }
+
+        function HTMLSelect(id) {
+            let select = document.createElement('select');
+            select.id = id;
+
+            return select;
+        }
+
+        function HTMLSpan(id) {
+            let span = document.createElement('span');
+
+            if (id) {
+                span.id = id;
+            }
+            
+            return span;
+        }
+
+    </script>
+</html>
