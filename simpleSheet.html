@@ -40,6 +40,7 @@
             }
         </style>
     </head>
+    
     <body>
         <ul id="menu">
             <li id="new" title="New Character">&#x1F4C4;</li>
@@ -53,7 +54,7 @@
 
     <template id="characterTemplate">
         <style>
-            #savingThrowsFieldset label, #skillsFieldset label, #weaponProficienciesFieldset label, #armorProficienciesFieldset label {
+            label {
                 display: block;
             }
 
@@ -72,567 +73,409 @@
             <legend>Race</legend>
             <input type="text" id="race">
         </fieldset>
-
-        <fieldset id="classesFieldset">
-            <legend>Classes</legend>
-        </fieldset>
-
-        <div>
-            <a id="addClassLink">+ Add a Class</a>
-        </div>
-
-        <fieldset id="proficiencyBonusFieldset">
+        
+        <!-- <fieldset id="proficiencyBonusFieldset">
             <legend>Proficiency Bonus</legend>
         </fieldset>
 
-        <fieldset id="abilityScoresFieldset">
-            <legend>Ability Scores</legend>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Strength</th>
-                        <th>Dexterity</th>
-                        <th>Constitution</th>
-                        <th>Intelligence</th>
-                        <th>Wisdom</th>
-                        <th>Charisma</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <input type="text" id="strength">
-                        </td>
-                        <td>
-                            <input type="text" id="dexterity">
-                        </td>
-                        <td>
-                            <input type="text" id="consitution">
-                        </td>
-                        <td>
-                            <input type="text" id="intelligence">
-                        </td>
-                        <td>
-                            <input type="text" id="wisdom">
-                        </td>
-                        <td>
-                            <input type="text" id="charisma">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </fieldset>
+        <fieldset id="initiativeFieldset">
+            <legend>Initiative</legend>
+        </fieldset> -->
+    
+        <details id="abilityScoresDetails">
+            <summary>Ability Scores</summary>
+            <fieldset id="abilityScoresFieldset">
+                <legend>Ability Scores</legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Strength</th>
+                            <th>Dexterity</th>
+                            <th>Constitution</th>
+                            <th>Intelligence</th>
+                            <th>Wisdom</th>
+                            <th>Charisma</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="number" id="strength" name="abilityScores">
+                            </td>
+                            <td>
+                                <input type="number" id="dexterity" name="abilityScores">
+                            </td>
+                            <td>
+                                <input type="number" id="consitution" name="abilityScores">
+                            </td>
+                            <td>
+                                <input type="number" id="intelligence" name="abilityScores">
+                            </td>
+                            <td>
+                                <input type="number" id="wisdom" name="abilityScores">
+                            </td>
+                            <td>
+                                <input type="number" id="charisma" name="abilityScores">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>            
+        </details>
 
-        <fieldset id="savingThrowsFieldset">
-            <legend>Saving Throws</legend>
-            <label><input type="checkbox" id="strength">Strength</label>
-            <label><input type="checkbox" id="dexterity">Dexterity</label>
-            <label><input type="checkbox" id="consitution">Constitution</label>
-            <label><input type="checkbox" id="intelligence">Intelligence</label>
-            <label><input type="checkbox" id="wisdom">Wisdom</label>
-            <label><input type="checkbox" id="charisma">Charisma</label>
-        </fieldset>
+        <details id="classesDetails">
+            <summary>Classes</summary>
+            <fieldset id="classesFieldset">
+                <legend>Classes</legend>
+                <label>Artificer <input type="number" id="artificer" name="classes"></label>
+                <label>Barbarian <input type="number" id="barbarian" name="classes"></label>
+                <label>Bard <input type="number" id="bard" name="classes"></label>
+                <label>Cleric <input type="number" id="cleric" name="classes"></label>
+                <label>Fighter <input type="number" id="fighter" name="classes"></label>
+                <label>Monk <input type="number" id="monk" name="classes"></label>
+                <label>Paladin <input type="number" id="paladin" name="classes"></label>
+                <label>Ranger <input type="number" id="ranger" name="classes"></label>
+                <label>Rouge <input type="number" id="rouge" name="classes"></label>
+                <label>Sorcerer <input type="number" id="sorcerer" name="classes"></label>
+                <label>Warlock <input type="number" id="warlock" name="classes"></label>
+                <label>Wizard <input type="number" id="wizard" name="classes"></label>
+            </fieldset>            
+        </details>
+
+        <details id="savingThrowsDetails">
+            <summary>Saving Throws</summary>
+            <fieldset id="savingThrowsFieldset">
+                <legend>Saving Throws</legend>
+                <label><input type="checkbox" id="strength" name="savingThrows">Strength</label>
+                <label><input type="checkbox" id="dexterity" name="savingThrows">Dexterity</label>
+                <label><input type="checkbox" id="consitution" name="savingThrows">Constitution</label>
+                <label><input type="checkbox" id="intelligence" name="savingThrows">Intelligence</label>
+                <label><input type="checkbox" id="wisdom" name="savingThrows">Wisdom</label>
+                <label><input type="checkbox" id="charisma" name="savingThrows">Charisma</label>
+            </fieldset>
+        </details>
+
 
         <!-- Proficiencies -->
 
-        <details open>
+        <details id="proficiencyDeatils">
             <summary>Proficiencies</summary>
 
-            <fieldset id="skillsFieldset">
+            <fieldset id="skillProficienciesFieldset">
                 <legend>Skills</legend>
-                <label><input type="checkbox" id="acrobatics">Acrobatics</label>
-                <label><input type="checkbox" id="animalHandling">Animal Handling</label>
-                <label><input type="checkbox" id="arcana">Arcana</label>
-                <label><input type="checkbox" id="athletics">Athletics</label>
-                <label><input type="checkbox" id="deception">Deception</label>
-                <label><input type="checkbox" id="history">History</label>
-                <label><input type="checkbox" id="insight">Insight</label>
-                <label><input type="checkbox" id="intimidation">Intimidation</label>
-                <label><input type="checkbox" id="investigation">Investigation</label>
-                <label><input type="checkbox" id="medicine">Medicine</label>
-                <label><input type="checkbox" id="nature">Nature</label>
-                <label><input type="checkbox" id="perception">Perception</label>
-                <label><input type="checkbox" id="performance">Performance</label>
-                <label><input type="checkbox" id="persuasion">Persuasion</label>
-                <label><input type="checkbox" id="religon">Religon</label>
-                <label><input type="checkbox" id="sleightofHand">Sleight of Hand</label>
-                <label><input type="checkbox" id="stealth">Stealth</label>
-                <label><input type="checkbox" id="survival">Survival</label>
+                <label><input type="checkbox" id="acrobatics" name="skillProficiencies">Acrobatics</label>
+                <label><input type="checkbox" id="animalHandling" name="skillProficiencies">Animal Handling</label>
+                <label><input type="checkbox" id="arcana" name="skillProficiencies">Arcana</label>
+                <label><input type="checkbox" id="athletics" name="skillProficiencies">Athletics</label>
+                <label><input type="checkbox" id="deception" name="skillProficiencies">Deception</label>
+                <label><input type="checkbox" id="history" name="skillProficiencies">History</label>
+                <label><input type="checkbox" id="insight" name="skillProficiencies">Insight</label>
+                <label><input type="checkbox" id="intimidation" name="skillProficiencies">Intimidation</label>
+                <label><input type="checkbox" id="investigation" name="skillProficiencies">Investigation</label>
+                <label><input type="checkbox" id="medicine" name="skillProficiencies">Medicine</label>
+                <label><input type="checkbox" id="nature" name="skillProficiencies">Nature</label>
+                <label><input type="checkbox" id="perception" name="skillProficiencies">Perception</label>
+                <label><input type="checkbox" id="performance" name="skillProficiencies">Performance</label>
+                <label><input type="checkbox" id="persuasion" name="skillProficiencies">Persuasion</label>
+                <label><input type="checkbox" id="religon" name="skillProficiencies">Religon</label>
+                <label><input type="checkbox" id="sleightofHand" name="skillProficiencies">Sleight of Hand</label>
+                <label><input type="checkbox" id="stealth" name="skillProficiencies">Stealth</label>
+                <label><input type="checkbox" id="survival" name="skillProficiencies">Survival</label>
             </fieldset>
 
             <fieldset id="weaponProficienciesFieldset">
                 <legend>Weapon Proficiencies</legend>
                 <div>
                     <h4>Simple Melee Weapons</h4>
-                    <label><input type="checkbox" id="club">Club</label>
-                    <label><input type="checkbox" id="dagger">Dagger</label>
-                    <label><input type="checkbox" id="greatclub">Greatclub</label>
-                    <label><input type="checkbox" id="handaxe">Handaxe</label>
-                    <label><input type="checkbox" id="javelin">Javelin</label>
-                    <label><input type="checkbox" id="lightHammer">Light Hammer</label>
-                    <label><input type="checkbox" id="mace">Mace</label>
-                    <label><input type="checkbox" id="quarterstaff">Quarterstaff</label>
-                    <label><input type="checkbox" id="sickle">Sickle</label>
-                    <label><input type="checkbox" id="spear">Spear</label>
-                    <label><input type="checkbox" id="unarmedStrike">Unarmed Strike</label>
+                    <label><input type="checkbox" id="club" name="weaponProficiencies">Club</label>
+                    <label><input type="checkbox" id="dagger" name="weaponProficiencies">Dagger</label>
+                    <label><input type="checkbox" id="greatclub" name="weaponProficiencies">Greatclub</label>
+                    <label><input type="checkbox" id="handaxe" name="weaponProficiencies">Handaxe</label>
+                    <label><input type="checkbox" id="javelin" name="weaponProficiencies">Javelin</label>
+                    <label><input type="checkbox" id="lightHammer" name="weaponProficiencies">Light Hammer</label>
+                    <label><input type="checkbox" id="mace" name="weaponProficiencies">Mace</label>
+                    <label><input type="checkbox" id="quarterstaff" name="weaponProficiencies">Quarterstaff</label>
+                    <label><input type="checkbox" id="sickle" name="weaponProficiencies">Sickle</label>
+                    <label><input type="checkbox" id="spear" name="weaponProficiencies">Spear</label>
+                    <label><input type="checkbox" id="unarmedStrike" name="weaponProficiencies">Unarmed Strike</label>
                 </div>
 
                 <div>
                     <h4>Simple Ranged Weapons</h4>
-                    <label><input type="checkbox" id="crossbowLight">Crossbow, Light</label>
-                    <label><input type="checkbox" id="dart">Dart</label>
-                    <label><input type="checkbox" id="shortbow">Shortbow</label>
-                    <label><input type="checkbox" id="sling">Sling</label>
+                    <label><input type="checkbox" id="crossbowLight" name="weaponProficiencies">Crossbow, Light</label>
+                    <label><input type="checkbox" id="dart" name="weaponProficiencies">Dart</label>
+                    <label><input type="checkbox" id="shortbow" name="weaponProficiencies">Shortbow</label>
+                    <label><input type="checkbox" id="sling" name="weaponProficiencies">Sling</label>
                 </div>
 
                 <div>
                     <h4>Martial Melee Weapons</h4>
-                    <label><input type="checkbox" id="battleaxe">Battleaxe</label>
-                    <label><input type="checkbox" id="flail">Flail</label>
-                    <label><input type="checkbox" id="glaive">Glaive</label>
-                    <label><input type="checkbox" id="greataxe">Greataxe</label>
-                    <label><input type="checkbox" id="greatsword">Greatsword</label>
-                    <label><input type="checkbox" id="halberd">Halberd</label>
-                    <label><input type="checkbox" id="lance">Lance</label>
-                    <label><input type="checkbox" id="longsword">Longsword</label>
-                    <label><input type="checkbox" id="maul">Maul</label>
-                    <label><input type="checkbox" id="morningstar">Morningstar</label>
-                    <label><input type="checkbox" id="pike">Pike</label>
-                    <label><input type="checkbox" id="rapier">Rapier</label>
-                    <label><input type="checkbox" id="scimitar">Scimitar</label>
-                    <label><input type="checkbox" id="shortsword">Shortsword</label>
-                    <label><input type="checkbox" id="trident">Trident</label>
-                    <label><input type="checkbox" id="warPick">War Pick</label>
-                    <label><input type="checkbox" id="warhammer">Warhammer</label>
-                    <label><input type="checkbox" id="whip">Whip</label>
+                    <label><input type="checkbox" id="battleaxe" name="weaponProficiencies">Battleaxe</label>
+                    <label><input type="checkbox" id="flail" name="weaponProficiencies">Flail</label>
+                    <label><input type="checkbox" id="glaive" name="weaponProficiencies">Glaive</label>
+                    <label><input type="checkbox" id="greataxe" name="weaponProficiencies">Greataxe</label>
+                    <label><input type="checkbox" id="greatsword" name="weaponProficiencies">Greatsword</label>
+                    <label><input type="checkbox" id="halberd" name="weaponProficiencies">Halberd</label>
+                    <label><input type="checkbox" id="lance" name="weaponProficiencies">Lance</label>
+                    <label><input type="checkbox" id="longsword" name="weaponProficiencies">Longsword</label>
+                    <label><input type="checkbox" id="maul" name="weaponProficiencies">Maul</label>
+                    <label><input type="checkbox" id="morningstar" name="weaponProficiencies">Morningstar</label>
+                    <label><input type="checkbox" id="pike" name="weaponProficiencies">Pike</label>
+                    <label><input type="checkbox" id="rapier" name="weaponProficiencies">Rapier</label>
+                    <label><input type="checkbox" id="scimitar" name="weaponProficiencies">Scimitar</label>
+                    <label><input type="checkbox" id="shortsword" name="weaponProficiencies">Shortsword</label>
+                    <label><input type="checkbox" id="trident" name="weaponProficiencies">Trident</label>
+                    <label><input type="checkbox" id="warPick" name="weaponProficiencies">War Pick</label>
+                    <label><input type="checkbox" id="warhammer" name="weaponProficiencies">Warhammer</label>
+                    <label><input type="checkbox" id="whip" name="weaponProficiencies">Whip</label>
                 </div>
                 
                 <div>
                     <h4>Martial Ranged Weapons</h4>
-                    <label><input type="checkbox" id="blowgun">Blowgun</label>
-                    <label><input type="checkbox" id="crossbowHand">Crossbow, Hand</label>
-                    <label><input type="checkbox" id="crossbowHeavy">Crossbow, Heavy</label>
-                    <label><input type="checkbox" id="longbow">Longbow</label>
-                    <label><input type="checkbox" id="net">Net</label>
+                    <label><input type="checkbox" id="blowgun" name="weaponProficiencies">Blowgun</label>
+                    <label><input type="checkbox" id="crossbowHand" name="weaponProficiencies">Crossbow, Hand</label>
+                    <label><input type="checkbox" id="crossbowHeavy" name="weaponProficiencies">Crossbow, Heavy</label>
+                    <label><input type="checkbox" id="longbow" name="weaponProficiencies">Longbow</label>
+                    <label><input type="checkbox" id="net" name="weaponProficiencies">Net</label>
                 </div>
 
                 <div>
                     <h4>Groups</h4>
-                    <label><input type="checkbox" id="simple">Simple</label>
-                    <label><input type="checkbox" id="martial">Martial</label>
-                    <label><input type="checkbox" id="all">All</label>
+                    <label><input type="checkbox" id="simple" name="weaponProficiencies">Simple</label>
+                    <label><input type="checkbox" id="martial" name="weaponProficiencies">Martial</label>
+                    <label><input type="checkbox" id="all" name="weaponProficiencies">All</label>
                 </div>
 
             </fieldset>
 
             <fieldset id="armorProficienciesFieldset">
                 <legend>Armor Proficiencies</legend>
-                <label><input type="checkbox" id="light">Light</label>
-                <label><input type="checkbox" id="medium">Medium</label>
-                <label><input type="checkbox" id="heavy">Heavy</label>
-                <label><input type="checkbox" id="shields">Shields</label>
-                <label><input type="checkbox" id="all">All</label>
+                <label><input type="checkbox" id="light" name="armorProficiencies">Light</label>
+                <label><input type="checkbox" id="medium" name="armorProficiencies">Medium</label>
+                <label><input type="checkbox" id="heavy" name="armorProficiencies">Heavy</label>
+                <label><input type="checkbox" id="shields" name="armorProficiencies">Shields</label>
+                <label><input type="checkbox" id="all" name="armorProficiencies">All</label>
             </fieldset>
         </details>
         
+        <!-- Expertise -->
+
+        <details id="expertiseDtails"> 
+            <summary>Expertise</summary>
+            <fieldset id="skillExpertiseFieldset">
+                <legend>Skills</legend>
+                <label><input type="checkbox" id="acrobatics" name="skillExpertise">Acrobatics</label>
+                <label><input type="checkbox" id="animalHandling" name="skillExpertise">Animal Handling</label>
+                <label><input type="checkbox" id="arcana" name="skillExpertise">Arcana</label>
+                <label><input type="checkbox" id="athletics" name="skillExpertise">Athletics</label>
+                <label><input type="checkbox" id="deception" name="skillExpertise">Deception</label>
+                <label><input type="checkbox" id="history" name="skillExpertise">History</label>
+                <label><input type="checkbox" id="insight" name="skillExpertise">Insight</label>
+                <label><input type="checkbox" id="intimidation" name="skillExpertise">Intimidation</label>
+                <label><input type="checkbox" id="investigation" name="skillExpertise">Investigation</label>
+                <label><input type="checkbox" id="medicine" name="skillExpertise">Medicine</label>
+                <label><input type="checkbox" id="nature" name="skillExpertise">Nature</label>
+                <label><input type="checkbox" id="perception" name="skillExpertise">Perception</label>
+                <label><input type="checkbox" id="performance" name="skillExpertise">Performance</label>
+                <label><input type="checkbox" id="persuasion" name="skillExpertise">Persuasion</label>
+                <label><input type="checkbox" id="religon" name="skillExpertise">Religon</label>
+                <label><input type="checkbox" id="sleightofHand" name="skillExpertise">Sleight of Hand</label>
+                <label><input type="checkbox" id="stealth" name="skillExpertise">Stealth</label>
+                <label><input type="checkbox" id="survival" name="skillExpertise">Survival</label>
+            </fieldset>
+        </details>
+
+        <!-- Feats -->
+
+        <details id="featsDetails">
+            <summary>Feats</summary>
+            <fieldset id="featsFieldset">
+                <legend>Feats</legend>
+            </fieldset>
+
+            <a id="addFeatLink">+ Add Feat</a>
+        </details>
+
+        <!-- Class Features -->
+
+        <details id="classFeaturesDetails">
+            <summary>Class Features</summary>
+            <fieldset id="classFeaturesFieldset">
+                    <legend>Class Features</legend>
+            </fieldset>
+
+            <a id="addFeatureLink">+ Add Feature</a>
+        </details>
+    
+        <!-- Racial Traits -->
+
+        <details id="racialTraitsDetails">
+            <summary>Racial Traits</summary>
+            <fieldset id="racialTraitsFieldset">
+                <legend>Racial Traits</legend>
+            </fieldset>
+
+            <a id="addTraitLink">+ Add Trait</a>
+        </details>
+
         <!-- Equipment -->
 
-        <details open>
-            <summary>Equipment</summary>
+        <details>
+            <summary>Items</summary>
 
-            <fieldset id="equipmentFieldset"></fieldset>
-
-            <div>
-                <a id="addEquipmentLink">+ Add Equipment Item</a>
-            </div>
+            <fieldset id="equipmentFieldset">
+                <legend>Equipment</legend>
+            </fieldset>
 
             <fieldset id="lootFieldset">
+            <legend>Loot</legend>
 
             </fieldset>
             
-            <div>
-                <a id="addLootLink">+ Add Loot Item</a>
-            </div>
+            <a id="addItemLink">+ Add Item</a>         
         </details>
 
-        <script>
-            let addClass = document.getElementById("addClassLink");
-            addClass.onclick = () => {
-                document.body.appendChild(new AddClassModal());
-            };
+        <!-- Spells -->
 
-            let addEquipment = document.getElementById("addEquipmentLink");
-            addEquipment.onclick = () => {
-                document.body.appendChild(new AddItemModal("equipmentFieldset"));
-            }
+        <details>
+            <summary>Spells</summary>
+            <fieldset id="spells1stLevelFieldset">
+                <legend>1st Level</legend>
+            </fieldset>
 
-            let addLoot = document.getElementById("addLootLink");
-            addLoot.onclick = () => {
-                document.body.appendChild(new AddItemModal("lootFieldset"));
-            }
-        </script>
+            <fieldset id="spells2ndLevelFieldset">
+                <legend>2nd Level</legend>
+            </fieldset>
+
+            <fieldset id="spells3rdLevelFieldset">
+                <legend>3rd Level</legend>
+            </fieldset>
+
+            <fieldset id="spells4thLevelFieldset">
+                <legend>4th Level</legend>
+            </fieldset>
+
+            <fieldset id="spells5thLevelFieldset">
+                <legend>5th Level</legend>
+            </fieldset>
+
+            <fieldset id="spells6thLevelFieldset">
+                <legend>6th Level</legend>
+            </fieldset>
+
+            <fieldset id="spells7thLevelFieldset">
+                <legend>7th Level</legend>
+            </fieldset>
+
+            <fieldset id="spells8thLevelFieldset">
+                <legend>8th Level</legend>
+            </fieldset>
+
+            <fieldset id="spells9thLevelFieldset">
+                <legend>9th Level</legend>
+            </fieldset>
+            
+            <a id="addSpellLink">+ Add a Spell</a>
+        </details>
+
+        
     </template>
 
     <!-- Buttons -->
 
     <script>
-        let content = document.getElementById("content");
-
-        let newCharacter = document.getElementById("new");
-        newCharacter.addEventListener("click", () => {
-            /* Do something if the content div has children */
-
-            if (content.childElementCount > 0) {
-                content.innerHTML = "";
-            }
-
-            /* Check for template support and clone the template to the content div. */
-
-            if ('content' in document.createElement('template')) {
-                let template = document.getElementById("characterTemplate");
+        import("./classes/simpleSheets.classes.js")
+            .then((module) => {
                 let content = document.getElementById("content");
+                let newCharacter = document.getElementById("new");
+                newCharacter.addEventListener("click", () => {
+                    /* Do something if the content div has children */
 
-                let clone = document.importNode(template.content, true);
-                content.appendChild(clone);
-            } else {
-                console.log("<template> not supported.")
-            }
-        }, false);
-
-        let openCharacter = document.getElementById("open");
-        openCharacter.addEventListener("click", () => {
-            document.body.appendChild(new OpenModal());
-        }, false);
-    </script>
-
-    <!-- Modals -->
-
-    <script>
-        class AddItemModal extends HTMLElement {
-            constructor(id) {
-                super();
-
-                let shadow = this.attachShadow({mode: 'open'});
-
-                let style = document.createElement('style');
-                style.textContent = `
-                    :host {
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        height: auto;
-                        width: auto;
-                        transform: translate(-50%, -50%);
-                        border: 1px solid black;
-                        padding: 10px;
+                    if (content.childElementCount > 0) {
+                        content.innerHTML = "";
                     }
 
-                    input {
-                        display: block;
+                    /* Check for template support and clone the template to the content div. */
+
+                    content.appendChild(new module.CharacterTemplate(undefined));
+                }, false);
+
+                let openCharacter = document.getElementById("open");
+                openCharacter.addEventListener("click", () => {
+                    document.body.appendChild(new module.OpenModal());
+                }, false);
+
+                let saveCharacter = document.getElementById("save");
+                saveCharacter.onclick = () => {
+                    if (content.innerHTML) {
+                        let char = {
+                            "name": "",
+                            "race": "",
+                            "classes": {},
+                            "abilityScores": {},
+                            "savingThrows": {},
+                            "skillProficiencies": {},
+                            "weaponProficiencies": {},
+                            "armorProficiencies": {},
+                            "skillExpertise": {},
+                            "feats": [],
+                            "classFeatures": [],
+                            "racialTraits": [],
+                            "equipment": [],
+                            "loot": [],
+                            "spells1stLevel": [],
+                            "spells2ndLevel": [],
+                            "spells3rdLevel": [],
+                            "spells4thLevel": [],
+                            "spells5thLevel": [],
+                            "spells6thLevel": [],
+                            "spells7thLevel": [],
+                            "spells8thLevel": [],
+                            "spells9thLevel": []
+                        };
+
+                        let sheet = document.querySelector("character-template");
+                        let shadow = sheet.shadowRoot;
+
+                        char["name"] = shadow.getElementById("name").value;
+                        char["race"] = shadow.getElementById("race").value;
+
+                        misc.ToObject(char, 
+                        shadow.querySelectorAll("[name=\"classes\"]"),
+                        shadow.querySelectorAll("[name=\"classes\"]"),
+                        shadow.querySelectorAll("[name=\"abilityScores\"]"),
+                        shadow.querySelectorAll("[name=\"savingThrows\""),
+                        shadow.querySelectorAll("[name=\"skillProficiencies\""),
+                        shadow.querySelectorAll("[name=\"weaponProficiencies\""),
+                        shadow.querySelectorAll("[name=\"armorProficiencies\""),
+                        shadow.querySelectorAll("[name=\"skillExpertise\"")
+                        )
+
+                        misc.ToArray(char,
+                        shadow.getElementById("featsFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("classFeaturesFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("racialTraitsFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("equipmentFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("lootFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("spells1stLevelFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("spells2ndLevelFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("spells3rdLevelFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("spells4thLevelFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("spells5thLevelFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("spells6thLevelFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("spells7thLevelFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("spells8thLevelFieldset").querySelectorAll("link-element"),
+                        shadow.getElementById("spells9thLevelFieldset").querySelectorAll("link-element")
+                        )
+
+
+                        if (char["name"]) {
+                            localStorage.setItem(`character-${char["name"]}`, JSON.stringify(char));
+                        } else {
+                            console.log("Enter a character name.");
+                        }
                     }
-                `;
-
-                shadow.appendChild(style);
-
-                shadow.appendChild(HTMLHeader("h3", "Add an Item."))
-
-                let input = HTMLInput("text", undefined);
-
-                shadow.appendChild(input);
-
-                let addButton = HTMLButton("Add Item");
-                addButton.onclick = () => {
-                    let target = document.getElementById(id);
-
-                    target.appendChild(new CustomItem(input.value));
-
-                    this.remove();
-                }
-
-                let cancelButton = HTMLButton("Cancel");
-                cancelButton.onclick = () => {
-                    this.remove();
-                }
-
-                shadow.appendChild(addButton);
-                shadow.appendChild(cancelButton);
-            }
-        }
-
-        customElements.define("additem-modal", AddItemModal);
-
-        class CustomItem extends HTMLElement {
-            constructor(name) {
-                super();
-
-                let shadow = this.attachShadow({mode: 'open'});
-
-                let style = document.createElement('style');
-                style.textContent = `
-                    :host {
-                        display: block;
-                        height: 24px;
-                    }
-
-                    button {
-                        float: right;
-                    }
-                `;
-
-                shadow.appendChild(style);
-
-                shadow.appendChild(document.createTextNode(name));
-
-                let closeButton = HTMLButton("\u2716");
-                closeButton.onclick = () => {
-                    this.remove();
-                }
-
-                shadow.appendChild(closeButton);
-            }
-        }
-
-        customElements.define("custom-item", CustomItem);
-
-        class AddClassModal extends HTMLElement {
-            constructor() {
-                super();
-
-                let shadow = this.attachShadow({mode: 'open'});
-
-                let style = document.createElement('style');
-                style.textContent = `
-                    :host {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        height: auto;
-                        width: auto;
-                        transform: translate(-50%, -50%);
-                        border: 1px solid black;
-                        padding: 10px;
-                    }
-
-                    select {
-                        display: block;
-                    }
-                `;
-
-                shadow.appendChild(style);
-
-                shadow.appendChild(HTMLHeader("h3", "Select a class."))
-
-                let select = HTMLSelect("classes");
-                select.appendChild(HTMLOption("Artificer", "Artificer"));
-                select.appendChild(HTMLOption("Barbarian", "Barbarian"));
-                select.appendChild(HTMLOption("Bard", "Bard"));
-                select.appendChild(HTMLOption("Cleric", "Cleric"));
-                select.appendChild(HTMLOption("Fighter", "Fighter"));
-                select.appendChild(HTMLOption("Monk", "Monk"));
-                select.appendChild(HTMLOption("Paladin", "Paladin"));
-                select.appendChild(HTMLOption("Ranger", "Ranger"));
-                select.appendChild(HTMLOption("Rouge", "Rouge"));
-                select.appendChild(HTMLOption("Sorcerer", "Sorcerer"));
-                select.appendChild(HTMLOption("Warlock", "Warlock"));
-                select.appendChild(HTMLOption("Wizard", "Wizard"));
-
-                shadow.appendChild(select);
-
-                let addButton = HTMLButton("Add Class");
-                addButton.onclick = () => {
-                    let toAdd = shadow.getElementById("classes");
-                    let target = document.getElementById("classesFieldset");
-                    
-                    target.appendChild(HTMLLabel("classLevelInput", `${toAdd.value}: `));
-                    target.appendChild(HTMLInput("text", "classLevelInput"));
-
-                    this.remove();
-                }
-
-                let cancelButton = HTMLButton("Cancel");
-                cancelButton.onclick = () => {
-                    this.remove();
-                }
-
-                shadow.appendChild(addButton);
-                shadow.appendChild(cancelButton);
-            }
-        }
-
-        customElements.define("addclass-modal", AddClassModal);
-
-        class OpenModal extends HTMLElement {
-            constructor() {
-                super();
-
-                let shadow = this.attachShadow({mode: 'open'});
-
-                let style = document.createElement('style');
-                style.textContent = `
-                    :host {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        height: auto;
-                        width: auto;
-                        transform: translate(-50%, -50%);
-                        border: 1px solid black;
-                        padding: 10px;
-                    }
-                `;
-
-                shadow.appendChild(style);
-
-                let localText = document.createElement('h3');
-                localText.appendChild(document.createTextNode("Load a saved character from localStorage..."));
-
-                shadow.appendChild(localText);
-
-                let importText = document.createElement('h3');
-                importText.appendChild(document.createTextNode("...or import a JSON file..."));
-
-                shadow.appendChild(importText);
-
-                let importFile = document.createElement('input');
-                importFile.type = "file";
-                importFile.id = "file-input"
-                importFile.onchange = e => {
-                    let file = e.target.files[0];
-
-                    if (!file) { return; }
-
-                    let reader = new FileReader();
-                    reader.readAsText(file,'UTF-8');
-
-                    reader.onload = readerEvent => {
-                        let text = readerEvent.target.result;
-
-                        let newCharacter = new Character(JSON.parse(text));
-
-                        let target = document.getElementById("content");
-                        
-                        console.log(newCharacter);
-
-                        this.remove();
-                    }
-                }
-
-                shadow.appendChild(importFile);
-
-                let cancelText = document.createElement('h3');
-                cancelText.appendChild(document.createTextNode("...or close this window."));
-
-                shadow.appendChild(cancelText);
-
-                let closeButton = document.createElement('button');
-                closeButton.type = "button";
-                closeButton.appendChild(document.createTextNode("Close"));
-                closeButton.onclick = () => {
-                    this.remove();
                 };
-
-                shadow.appendChild(closeButton);
-            }
-        }
-
-        customElements.define("open-modal", OpenModal);
-    </script>
-
-    <!-- Helper functions -->
-
-    <script>
-    
-        function HTMLButton(text) {
-            let button = document.createElement('button');
-            button.appendChild(document.createTextNode(text));
-
-            return button;
-        }
-
-        function HTMLDiv(id) {
-            let div = document.createElement('div');
-
-            if (id) {
-                div.id = id;
-            }
-            
-            return div;
-        }
-
-        function HTMLForm(parent) {
-            let form = document.createElement('form');
-
-            parent.appendChild(form);
-
-            return form;
-        }
-
-        function HTMLFieldset(id, parent) {
-            let fieldset = document.createElement('fieldset')
-            fieldset.id = id;
-
-            parent.appendChild(fieldset);
-
-            return fieldset;
-        }
-
-        function HTMLHeader(type, text) {
-            let header = document.createElement(type);
-            header.appendChild(document.createTextNode(text));
-
-            return header;
-        }
-
-        function HTMLInput(type, id) {
-            let input = document.createElement('input');
-            input.type = type;
-
-            if (id) {
-                input.id = id;                
-            }
-
-            return input;
-        }
-
-        function HTMLLabel(target, text) {
-            let label = document.createElement('label');
-            label.htmlFor = target;
-            label.appendChild(document.createTextNode(text));
-
-            return label;
-        }
-        
-        function HTMLLegend(text) {
-            let legend = document.createElement('legend');
-            legend.appendChild(document.createTextNode(text));
-
-            return legend;
-        }
-
-        function HTMLOption(value, text) {
-            let option = document.createElement('option');
-            option.value = value;
-            option.text = text;
-
-            return option;
-        }
-
-        function HTMLSelect(id) {
-            let select = document.createElement('select');
-            select.id = id;
-
-            return select;
-        }
-
-        function HTMLSpan(id) {
-            let span = document.createElement('span');
-
-            if (id) {
-                span.id = id;
-            }
-            
-            return span;
-        }
-
+            });
     </script>
 </html>
