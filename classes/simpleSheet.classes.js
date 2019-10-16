@@ -1,4 +1,4 @@
-import * as misc from "../modules/misc.module.js/index.js";
+import * as misc from "../modules/misc.module.js";
 import * as HTML from "../modules/html.module.js";
 import * as Modal from "./spellModal.class.js"; 
 
