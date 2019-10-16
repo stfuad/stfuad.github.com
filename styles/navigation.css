@@ -1,6 +1,8 @@
 #topNav {
     grid-column: 1/3;
     grid-row: 1;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #topNav div {

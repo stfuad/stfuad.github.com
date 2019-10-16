@@ -1,16 +1,40 @@
-export function GatherInputValues(fieldset) {
-    let target = document.getElementById(fieldset);
+import * as dnd from "./dnd.module.js";
+
+export function AppendToSummary(fieldset) {
+    let sheet = document.querySelector("creature-template");
+    let target = sheet.getElementById(fieldset);
     let inputs = target.querySelectorAll("input");
 
     let array = [];
 
     for (let input of inputs) {
-        if (input.value === "checked") {
-            array.push(input.id);
+        if (input.type === "checkbox") {
+            if (input.name === "savingThrows") {
+
+            } else if (input.name === "skillProficiencies") {
+
+            } else if (input.name === "skillExpertise") {
+                
+            }
+        } else if (input === "number") {
+            if (input.name === "abilityScores") {
+                
+            }
         }
     }
 
     return array;
+}
+
+function GetScore(type) {
+    let sheet = document.querySelector("creature-template");
+    let target = sheet.getElementById("abilityScoresFieldset");
+
+    if (type === "")
+
+    let input = target.querySelector(`#${type}`);
+
+    return input.value;
 }
 
 export function ChangeSummary(details, array) {
