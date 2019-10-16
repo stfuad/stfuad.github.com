@@ -370,7 +370,7 @@ export class LinkElement extends HTMLElement {
 
         if (fieldset.includes("spells")) {
             a.onclick = () => {
-                document.body.appendChild(new Modal.SpellModal())
+                document.body.appendChild(new Modal.SpellModal(text));
             }
         }
 
