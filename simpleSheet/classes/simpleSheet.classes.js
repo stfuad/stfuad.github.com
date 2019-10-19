@@ -496,10 +496,8 @@ export class LinkElement extends HTMLElement {
         }
 
         this.setAttribute("id", text);
-
-        let split = fieldset.split("Field");
-
-        this.setAttribute("title", split[0]);
+        this.setAttribute("title", fieldset.split("Field")[0]);
+        this.setAttribute("draggable", true);
 
         shadow.appendChild(closeButton);
     }
@@ -532,7 +530,13 @@ export class CharacterTemplate extends HTMLElement {
                 shadow.querySelectorAll("[name=\"skillExpertise\"")
             )
 
-            ChangeSummaries("abilityScores","savingThrows");
+            shadow.getElementById("proficiencyBonusFieldset")
+                .appendChild(document.createTextNode(`+${ProficiencyBonus(AddCharacterLevels(json["classes"]))}`));
+
+            shadow.getElementById("initiativeFieldset")
+                .appendChild(document.createTextNode(`+${Modifier(parseInt(json["abilityScores"]["dexterity"]))}`));
+            
+            ChangeSummaries("abilityScores", "savingThrows", "skillProficiencies", "weaponProficiencies", "armorProficiencies", "skillExpertise");
 
             ArrayToSheet(shadow, json, 
                 "feats", 
@@ -596,9 +600,17 @@ export class CharacterTemplate extends HTMLElement {
                             array.push(`${input.id} +${proficiencyBonus + Modifier(parseInt(json["abilityScores"][input.id]))}`);
                         }
                     } else if (input.name === "skillProficiencies") {
-        
+                        if (input.checked) {
+                            let ability = SkillToAbilityScore(input.id);
+
+                            array.push(`${input.id} +${proficiencyBonus + Modifier(parseInt(json["abilityScores"][ability]))}`);
+                        }
                     } else if (input.name === "skillExpertise") {
-                        
+                        if (input.checked) {
+                            let ability = SkillToAbilityScore(input.id);
+
+                            array.push(`${input.id} +${(proficiencyBonus * 2) + Modifier(parseInt(json["abilityScores"][ability]))}`);
+                        }
                     }
                 } else if (input.type === "number") {
                     let value = parseInt(input.value);
@@ -665,6 +677,7 @@ export class CharacterTemplate extends HTMLElement {
 
         function ChangeSummary(key) {
             let target = shadow.getElementById(`${key}Details`);
+            
             let summary = target.querySelector("summary");
 
             let newArray = BuildArray(`${key}Fieldset`);

@@ -71,16 +71,25 @@
 
         <fieldset id="raceFieldset">
             <legend>Race</legend>
-            <input type="text" id="race">
+            <table>
+                <tr>
+                    <td>Race</td>
+                    <td><input type="text" id="race"></td>
+                </tr>
+                <tr>
+                    <td>Subrace</td>
+                    <td><input type="text" id="subrace"></td>
+                </tr>
+            </table>
         </fieldset>
         
-        <!-- <fieldset id="proficiencyBonusFieldset">
+        <fieldset id="proficiencyBonusFieldset">
             <legend>Proficiency Bonus</legend>
         </fieldset>
 
         <fieldset id="initiativeFieldset">
             <legend>Initiative</legend>
-        </fieldset> -->
+        </fieldset>
     
         <details id="classesDetails">
             <summary>Classes</summary>
@@ -200,9 +209,8 @@
 
         <!-- Proficiencies -->
 
-        <details id="proficiencyDeatils">
+        <details id="skillProficienciesDetails">
             <summary>Proficiencies</summary>
-
             <fieldset id="skillProficienciesFieldset">
                 <legend>Skills</legend>
                 <label><input type="checkbox" id="acrobatics" name="skillProficiencies">Acrobatics</label>
@@ -224,7 +232,10 @@
                 <label><input type="checkbox" id="stealth" name="skillProficiencies">Stealth</label>
                 <label><input type="checkbox" id="survival" name="skillProficiencies">Survival</label>
             </fieldset>
-
+        </details>
+        
+        <details id="weaponProficienciesDetails">
+            <summary>Weapon Proficiencies</summary>
             <fieldset id="weaponProficienciesFieldset">
                 <legend>Weapon Proficiencies</legend>
                 <div>
@@ -287,9 +298,11 @@
                     <label><input type="checkbox" id="martial" name="weaponProficiencies">Martial</label>
                     <label><input type="checkbox" id="all" name="weaponProficiencies">All</label>
                 </div>
-
             </fieldset>
+        </details>
 
+        <details id="armorProficienciesDetails">
+            <summary>Armor Proficiencies</summary>
             <fieldset id="armorProficienciesFieldset">
                 <legend>Armor Proficiencies</legend>
                 <label><input type="checkbox" id="light" name="armorProficiencies">Light</label>
@@ -299,10 +312,10 @@
                 <label><input type="checkbox" id="all" name="armorProficiencies">All</label>
             </fieldset>
         </details>
-        
+
         <!-- Expertise -->
 
-        <details id="expertiseDtails"> 
+        <details id="skillExpertiseDetails"> 
             <summary>Expertise</summary>
             <fieldset id="skillExpertiseFieldset">
                 <legend>Skills</legend>
