@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>stfuad.cc - Grid</title>
+        <style>
+            body {
+                height: calc(100vh - 16px);
+                width: calc(100vw - 16px);
+            }
+
+            #controls {
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                background-color: white;
+                border: 1px solid black;
+                z-index: 100;
+            }
+
+            #content {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                height: calc(100vh - 16px);
+                width: calc(100vw - 16px);
+                z-index: 1;
+            }
+
+            svg {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                height: calc(100vh - 16px);
+                width: calc(100vw - 16px);
+                z-index: 10;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="controls">
+            <fieldset>
+                <legend>Load Image</legend>
+                <input type="file" id="file-input">
+            </fieldset>
+            
+            <fieldset>
+                <legend>Image Controls</legend>
+
+                <table>
+                    <tr>
+                        <td>Image Size</td>
+                        <td><input type="range" min="1" max="100" value="100" id="imageSize"></td>
+                    </tr>
+                </table>
+                
+                <!-- <button type="button" id="imageRotateClockwiseButton">Rotate Clockwise</button> -->
+            </fieldset>
+            
+            <fieldset>
+                <legend>Grid Controls</legend>
+
+                <table>
+                    <tr>
+                        <td>Height:</td>
+                        <td><input type="number" id="gridHeightInput" value="40"></td>
+                    </tr>
+                    <tr>
+                        <td>Width:</td>
+                        <td><input type="number" id="gridWidthInput" value="40"></td>
+                    </tr>
+                </table>
+
+                <button type="button" id="reloadGridButton">Reload Grid</button>
+                <button type="button" id="clearGridButton">Clear Grid</button>
+            </fieldset>
+        </div>
+
+        <div id="content"></div>
+
+        <template id="gridTemplate">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <rect width="40" height="40" fill="none"/>
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="gray" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+        </template>
+        
+        <script>
+            let template = document.getElementById("gridTemplate");
+            let clone = document.importNode(template.content, true);
+
+            document.getElementById("content").appendChild(clone);
+
+            let importFile = document.getElementById("file-input");
+            importFile.onchange = e => {
+                let file = e.target.files[0];
+
+                if (/\.(jpe?g|png|gif)$/i.test(file.name)) { 
+                    let reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        let image = document.createElement('img');
+                        image.src = reader.result;
+                        
+                        let content = document.getElementById("content");
+
+                        if (content) {
+                            content.innerHTML = "";
+                        }
+
+                        content.appendChild(image);
+
+                        let width = image.width;
+                        let height = image.height;
+
+                        console.log(width);
+                        console.log(height);
+
+                        let imageRange = document.getElementById("imageSize");
+                        imageRange.onchange = () => {
+                            if (image) {
+                                image.width = width * (imageRange.value / 100);
+                                image.height = height * (imageRange.value / 100);
+                            }
+                        };
+                    }
+                }
+            }
+
+            let reloadButton = document.getElementById("reloadGridButton");
+            reloadButton.onclick = () => {
+                let height = document.getElementById("gridHeightInput");
+                let width = document.getElementById("gridWidthInput");
+
+                if (document.querySelector("svg")) {
+                    document.querySelector("svg").remove();
+                }
+
+                let template = document.getElementById("gridTemplate");
+                let clone = document.importNode(template.content, true);
+                
+                let pattern = clone.querySelector("pattern");
+                pattern.setAttribute("width", width.value);
+                pattern.setAttribute("height", height.value);
+
+                let rect = clone.querySelector("rect");
+                rect.setAttribute("width", width.value);
+                rect.setAttribute("height", height.value);
+
+                clone.querySelector("path").setAttribute("d", `M ${width.value} 0 L 0 0 0 ${height.value}`);
+
+                document.getElementById("content").appendChild(clone);
+            };
+            
+            let clearButton = document.getElementById("clearGridButton");
+            clearButton.onclick = () => {
+                if (document.querySelector("svg")) {
+                    document.querySelector("svg").remove();
+                }
+            };
+        
+            /* let rotateCW = document.getElementById("imageRotateClockwiseButton");
+            rotateCW.onclick = () => {
+                let image = document.querySelector("img");
+
+                if (image) {
+                    image.style.transform = "rotate(30deg)"
+                }
+            } */
+        </script>
+    </body>
+</html>

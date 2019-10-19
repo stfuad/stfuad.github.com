@@ -1,6 +1,6 @@
 // classes
 
-import {SpellModal} from "../classes/spellModal.class.js"
+import {SpellModal} from "../classes/modals.classes.js"
 
 // modules
 

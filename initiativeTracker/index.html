@@ -217,7 +217,7 @@
 
             const bestiary = {...one, ...two, ...three, ...four, ...five, ...six, ...seven, ...eight, ...nine};
 
-            import("./modules/sorting.module.js")
+            import("../modules/sorting.module.js")
                 .then(module => {
                     let tabs = document.getElementById("tabs");
                     let list = document.getElementById("list");
@@ -451,7 +451,7 @@
                     view.type = "button";
                     view.appendChild(document.createTextNode("\uD83D\uDCC4"));
                     view.addEventListener('click', () => {
-                        import("./classes/sheets.classes.js")
+                        import("../classes/sheets.classes.js")
                             .then(module => {
                                 let host = document.querySelector("#sheet");
                                 let target = host.querySelector("creature-sheet");

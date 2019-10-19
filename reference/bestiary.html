@@ -3,45 +3,46 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>stfuad.cc - Spells</title>
+        <title>stfuad.cc - Bestiary</title>
         <link rel="stylesheet" href="./styles/base.css">
         <link rel="stylesheet" href="./styles/navigation.css">
         <link rel="stylesheet" href="./styles/type1.css">
     </head>
+
     <body>
         <div id="topNav"></div>
         <div id="sortButtons"></div>
         <div id="list"></div>
         <div id="sheet"></div>
+    </body>
 
-        <script>
-            fetch("./navigation.html")
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById("topNav").innerHTML = html;
-                });
-        </script>
-    
-        <script>
-        if(localStorage.getItem("Spells")) {
-            import("./modules/spells.module.js")
+    <script>
+        fetch("./navigation.html")
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("topNav").innerHTML = html;
+            });
+    </script>
+
+    <script>
+        if(localStorage.getItem("Bestiary 1")) {
+            import("./modules/bestiary.module.js")
                 .then((module) => {
-                    module.Spells();
+                    module.Bestiary();
                 });
         } else {
-            fetch('./json/5e Data.json')
+            fetch('../json/5e Data.json')
                 .then(response => response.json())
                 .then(json => {
                     for(let key in json) {
                         localStorage.setItem(key, JSON.stringify(json[key]));
                     }
 
-                    import("./modules/spells.module.js")
+                    import("./modules/bestiary.module.js")
                         .then((module) => {
-                            module.Spells();
+                            module.Bestiary();
                         });
                 });
         }
-        </script>
-    </body>
+    </script>
 </html>

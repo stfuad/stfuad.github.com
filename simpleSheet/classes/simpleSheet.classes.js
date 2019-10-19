@@ -1,8 +1,9 @@
-import * as misc from "../modules/misc.module.js";
 import * as HTML from "../modules/html.module.js";
-import * as Modal from "./spellModal.class.js"; 
+
+import {Spell} from "../modules/spell.module.js";
 
 /* Modals */
+
 export class AddItemModal extends HTMLElement {
     constructor() {
         super();
@@ -255,6 +256,8 @@ export class OpenModal extends HTMLElement {
         
         let keys = Object.keys(localStorage);
 
+        let content = document.getElementById("content");
+
         if (keys.length > 0) {
             keys.forEach(key => {
                 if (key.includes("character")) {
@@ -267,16 +270,9 @@ export class OpenModal extends HTMLElement {
             let loadButton = HTML.Button("Load");
             loadButton.type = "button";
             loadButton.onclick = () => {
-                
                 let json = JSON.parse(localStorage.getItem(select.value));
 
-                /* Do something if the content div has children */
-
-                if (content.childElementCount > 0) {
-                    content.innerHTML = "";
-                }
-
-                /* Check for template support and clone the template to the content div. */
+                content.innerHTML = "";
 
                 content.appendChild(new CharacterTemplate(json));
 
@@ -343,6 +339,124 @@ export class OpenModal extends HTMLElement {
 
 customElements.define("open-modal", OpenModal);
 
+export class InfoModal extends HTMLElement {
+
+    /* Used for Feat, Feature, Trait display */
+
+    constructor(title, json) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let style = document.createElement('style');
+        style.textContent = `
+            :host {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                height: auto;
+                width: auto;
+                transform: translate(-50%, -50%);
+                border: 1px solid black;
+                padding: 10px;
+                background-color: white;
+            }
+
+            h3 {
+                margin: 0px;
+            }
+
+        `;
+
+        shadow.appendChild(style);
+        
+        shadow.appendChild(HTML.Header("h3", title));
+
+        if (json) {
+            if (Array.isArray(json)) {
+
+            }
+        }
+    }
+}
+
+customElements.define("info-modal", InfoModal);
+
+export class SpellModal extends HTMLElement {
+    constructor(name) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let div = document.createElement('div');
+        div.id = "spellModal";
+
+        let style = document.createElement('style');
+        style.textContent = `
+            #spellModal {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height: auto;
+                max-height: 700px;
+                width: 400px;
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 10px;
+                overflow: auto;
+                background-color: white;
+            }
+
+            #spellSheetHeader > h3 {
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+
+            #spellSheetStats {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            #spellSheetClose {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                #spellModal {
+                    color: white;
+                    background-color: rgb(32, 32, 32);
+                }
+            }
+            
+            @media (prefers-color-scheme: light) {
+                #spellModal {
+                    color: black;
+                    background-color: white;
+                }
+            }
+        `;
+
+        Spell(name, JSON.parse(localStorage.getItem("Spells"))[name], div);
+
+        let button = document.createElement('button');
+        button.id = "spellSheetClose";
+        button.textContent = "\u2716";
+        button.onclick = () => {
+            this.remove();
+        };
+
+        div.appendChild(button);
+
+        shadow.appendChild(style);
+        shadow.appendChild(div);
+    }
+}
+
+customElements.define('spell-modal', SpellModal);
+
 /* Elements */
 
 export class LinkElement extends HTMLElement {
@@ -370,7 +484,7 @@ export class LinkElement extends HTMLElement {
 
         if (fieldset.includes("spells")) {
             a.onclick = () => {
-                document.body.appendChild(new Modal.SpellModal(text));
+                document.body.appendChild(new SpellModal(text));
             }
         }
 
@@ -407,7 +521,7 @@ export class CharacterTemplate extends HTMLElement {
             shadow.getElementById("name").value = json["name"];
             shadow.getElementById("race").value = json["race"];
 
-            misc.ObjectToSheet(json,
+            ObjectToSheet(json,
                 shadow.querySelectorAll("[name=\"classes\"]"),
                 shadow.querySelectorAll("[name=\"classes\"]"),
                 shadow.querySelectorAll("[name=\"abilityScores\"]"),
@@ -418,7 +532,9 @@ export class CharacterTemplate extends HTMLElement {
                 shadow.querySelectorAll("[name=\"skillExpertise\"")
             )
 
-            misc.ArrayToSheet(shadow, json, 
+            ChangeSummaries("abilityScores","savingThrows");
+
+            ArrayToSheet(shadow, json, 
                 "feats", 
                 "classFeatures", 
                 "racialTraits", 
@@ -435,30 +551,193 @@ export class CharacterTemplate extends HTMLElement {
                 "spells9thLevel")
         }
 
-        let addItem = shadow.getElementById("addItemLink");
-        addItem.onclick = () => {
+        shadow.getElementById("addItemLink").onclick = () => {
             document.body.appendChild(new AddItemModal());
         };
 
-        let addSpell = shadow.getElementById("addSpellLink");
-        addSpell.onclick = () => {
+        shadow.getElementById("addSpellLink").onclick = () => {
             document.body.appendChild(new AddSpellModal());
         };
 
-        let addFeat = shadow.getElementById("addFeatLink");
-        addFeat.onclick = () => {
+        shadow.getElementById("addFeatLink").onclick = () => {
             document.body.appendChild(new AddLinkModal("featsFieldset"));
         };
 
-        let addFeature = shadow.getElementById("addFeatureLink");
-        addFeature.onclick = () => {
+        shadow.getElementById("addFeatureLink").onclick = () => {
             document.body.appendChild(new AddLinkModal("classFeaturesFieldset"));
         };
 
-        let addTrait = shadow.getElementById("addTraitLink");
-        addTrait.onclick = () => {
+        shadow.getElementById("addTraitLink").onclick = () => {
             document.body.appendChild(new AddLinkModal("racialTraitsFieldset"));
         };
+
+        function AddCharacterLevels(json) {
+            let total = 0;
+
+            for (let key in json["classes"]) {
+                total += parseInt(key);
+            }
+            
+            return total;
+        }
+
+        function BuildArray(fieldset) {
+            let target = shadow.getElementById(fieldset);
+            let inputs = target.querySelectorAll("input");
+        
+            let array = [];
+        
+            for (let input of inputs) {
+                if (input.type === "checkbox") {
+                    let proficiencyBonus = ProficiencyBonus(AddCharacterLevels(json["classes"]));
+
+                    if (input.name === "savingThrows") {
+                        if (input.checked) {
+                            array.push(`${input.id} +${proficiencyBonus + Modifier(parseInt(json["abilityScores"][input.id]))}`);
+                        }
+                    } else if (input.name === "skillProficiencies") {
+        
+                    } else if (input.name === "skillExpertise") {
+                        
+                    }
+                } else if (input.type === "number") {
+                    let value = parseInt(input.value);
+
+                    if (input.name === "abilityScores" && value) {
+                        if (value > 0) {
+                            array.push(`${input.id} +${Modifier(value)}`)
+                        } else {
+                            array.push(`${input.id} ${Modifier(value)}`)
+                        }
+                        
+                    }
+                }
+            }
+        
+            return array;
+        }
+        
+        function SkillToAbilityScore(skill) {
+            if (skill === "acrobatics") {
+                return "dexterity";
+            } else if (skill === "animalHandling") {
+                return "wisdom";
+            } else if (skill === "arcana") {
+                return "intelligence";
+            } else if (skill === "athletics") {
+                return "strength";
+            } else if (skill === "deception") {
+                return "charisma";
+            } else if (skill === "history") {
+                return "intelligence";
+            } else if (skill === "insight") {
+                return "wisdom";
+            } else if (skill === "intimidation") {
+                return "charisma";
+            } else if (skill === "investigation") {
+                return "intelligence";
+            } else if (skill === "medicine") {
+                return "wisdom";
+            } else if (skill === "nature") {
+                return "intelligence";
+            } else if (skill === "perception") {
+                return "wisdom";
+            } else if (skill === "performance") {
+                return "charisma";
+            } else if (skill === "persuasion") {
+                return "charisma";
+            } else if (skill === "religon") {
+                return "intelligence";
+            } else if (skill === "sleightofHand") {
+                return "dexterity";
+            } else if (skill === "stealth") {
+                return "dexterity";
+            } else if (skill === "survival") {
+                return "wisdom";
+            }
+        }
+
+        function ChangeSummaries(...keys) {
+            keys.forEach(key => {
+                ChangeSummary(key);
+            });
+        }
+
+        function ChangeSummary(key) {
+            let target = shadow.getElementById(`${key}Details`);
+            let summary = target.querySelector("summary");
+
+            let newArray = BuildArray(`${key}Fieldset`);
+
+            summary.textContent = `${summary.textContent} - ${newArray.join(", ")}`;
+        }
+        
+        function ObjectToSheet(json, ...nodeLists) {
+            console.log(json);
+
+            nodeLists.forEach(nodeList => {
+                for (let node of nodeList) {
+                    console.log(node);
+
+                    if (node.type === "checkbox") {
+                        node.checked = json[node.name][node.id];
+                    } else {
+                        node.value = json[node.name][node.id];
+                    }
+                }
+            });
+        }
+    
+        function ArrayToSheet(shadowRoot, json, ...arrays) {
+            arrays.forEach(array => {
+                json[array].forEach(item => {
+                    let target = shadowRoot.querySelector(`#${array}Fieldset`);
+    
+                    target.appendChild(new LinkElement(`${array}Fieldset`, item));
+                });
+            });
+        }
+    
+        function ProficiencyBonus(cr) {
+            let bonus = 0;
+        
+            if(cr == 0) {
+                bonus = 2;
+            } else if(cr == "1/8") {
+                bonus = 2;
+            } else if(cr == "1/4") {
+                bonus = 2;
+            } else if(cr == "1/2") {
+                bonus = 2;
+            } else if(cr < 4) {
+                bonus = 2;
+            } else if(cr < 9) {
+                bonus = 3;
+            } else if(cr < 13) {
+                bonus = 4;
+            } else if(cr < 17) {
+                bonus = 5;
+            } else if(cr < 21) {
+                bonus = 6;
+            } else if(cr < 25) {
+                bonus = 7;
+            } else if(cr < 29) {
+                bonus = 8;
+            } else if(cr < 31) {
+                bonus = 9;
+            }
+        
+            return bonus;
+        }
+        
+        function Modifier(int) {
+            if (int < 0) {
+                return `+${Math.floor((int - 10) / 2)}`;
+            } else {
+                return Math.floor((int - 10) / 2);
+            }
+            
+        }
     }
 }
 

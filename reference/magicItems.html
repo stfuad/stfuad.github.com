@@ -3,7 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>stfuad.cc - </title>
+        <title>stfuad.cc - Magic Items</title>
+        <link rel="stylesheet" href="./styles/base.css">
+        <link rel="stylesheet" href="./styles/navigation.css">
         <link rel="stylesheet" href="./styles/type1.css">
     </head>
     <body>
@@ -21,18 +23,23 @@
         </script>
     
         <script>
-        if(localStorage.getItem("Bestiary")) {
-            import("./modules/")
+        if(localStorage.getItem("Magic Items")) {
+            import("./modules/magicItems.module.js")
                 .then((module) => {
-                    module.
+                    module.MagicItems();
                 });
         } else {
-            fetch('./json/5e Data.json')
+            fetch('../json/5e Data.json')
                 .then(response => response.json())
                 .then(json => {
                     for(let key in json) {
                         localStorage.setItem(key, JSON.stringify(json[key]));
                     }
+
+                    import("./modules/magicItems.module.js")
+                        .then((module) => {
+                            module.MagicItems();
+                        });
                 });
         }
         </script>

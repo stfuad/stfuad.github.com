@@ -3,16 +3,16 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>stfuad.cc - Classes</title>
+        <title>stfuad.cc - Spells</title>
         <link rel="stylesheet" href="./styles/base.css">
         <link rel="stylesheet" href="./styles/navigation.css">
-        <link rel="stylesheet" href="./styles/classes.css">
+        <link rel="stylesheet" href="./styles/type1.css">
     </head>
     <body>
         <div id="topNav"></div>
-        <div id="classList"></div>
-        <div id="subList"></div>
-        <div id="content"></div>
+        <div id="sortButtons"></div>
+        <div id="list"></div>
+        <div id="sheet"></div>
 
         <script>
             fetch("./navigation.html")
@@ -23,22 +23,22 @@
         </script>
     
         <script>
-        if(localStorage.getItem("Classes")) {
-            import("./modules/classes.module.js")
+        if(localStorage.getItem("Spells")) {
+            import("./modules/spells.module.js")
                 .then((module) => {
-                    module.Classes();
+                    module.Spells();
                 });
         } else {
-            fetch('./json/5e Data.json')
+            fetch('../json/5e Data.json')
                 .then(response => response.json())
                 .then(json => {
                     for(let key in json) {
                         localStorage.setItem(key, JSON.stringify(json[key]));
                     }
 
-                    import("./modules/classes.module.js")
+                    import("./modules/spells.module.js")
                         .then((module) => {
-                            module.Classes();
+                            module.Spells();
                         });
                 });
         }

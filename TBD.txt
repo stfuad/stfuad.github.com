@@ -1,1 +1,0 @@
-Need to add Hit Points, Proficiencies, and Starting Equipment to all classes.

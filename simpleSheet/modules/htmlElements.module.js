@@ -1,4 +1,4 @@
-import {SpellModal} from "../classes/spellModal.class.js";
+import {SpellModal} from "../classes/simpleSheet.classes.js";
 
 export function List(array, listType, parent) {
     let list = document.createElement(listType);

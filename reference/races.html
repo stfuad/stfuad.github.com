@@ -3,46 +3,44 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>stfuad.cc - Bestiary</title>
+        <title>stfuad.cc - Races</title>
         <link rel="stylesheet" href="./styles/base.css">
         <link rel="stylesheet" href="./styles/navigation.css">
-        <link rel="stylesheet" href="./styles/type1.css">
+        <link rel="stylesheet" href="./styles/type2.css">
     </head>
-
     <body>
         <div id="topNav"></div>
-        <div id="sortButtons"></div>
         <div id="list"></div>
         <div id="sheet"></div>
-    </body>
 
-    <script>
-        fetch("./navigation.html")
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById("topNav").innerHTML = html;
-            });
-    </script>
-
-    <script>
-        if(localStorage.getItem("Bestiary 1")) {
-            import("./modules/bestiary.module.js")
+        <script>
+            fetch("./navigation.html")
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById("topNav").innerHTML = html;
+                });
+        </script>
+    
+        <script>
+        if(localStorage.getItem("Races")) {
+            import("./modules/races.module.js")
                 .then((module) => {
-                    module.Bestiary();
+                    module.Races();
                 });
         } else {
-            fetch('./json/5e Data.json')
+            fetch('../json/5e Data.json')
                 .then(response => response.json())
                 .then(json => {
                     for(let key in json) {
                         localStorage.setItem(key, JSON.stringify(json[key]));
                     }
 
-                    import("./modules/bestiary.module.js")
+                    import("./modules/races.module.js")
                         .then((module) => {
-                            module.Bestiary();
+                            module.Races();
                         });
                 });
         }
-    </script>
+        </script>
+    </body>
 </html>

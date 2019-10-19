@@ -146,7 +146,9 @@ function Content(name, json) {
                 } else {
                     for (let subKey in json[key]) {
                         if (Array.isArray(json[key][subKey])) {
-                            if (!subKey.includes("Description")) {
+                            if (subKey === "Unordered List") {
+                                List(json[key][subKey], "ul", content);
+                            } else if (!subKey.includes("Description")) {
                                 ParagraphsPrependBold(subKey, json[key][subKey], content);
                             } else {
                                 Paragraphs(json[key][subKey], content);

@@ -1,17 +1,12 @@
 import * as module from "../classes/simpleSheet.classes.js";
-import * as misc from "./misc.module.js";
+
+const content = document.getElementById("content");
 
 export function DoWork() {
-        let content = document.getElementById("content");
+    
     let newCharacter = document.getElementById("new");
     newCharacter.addEventListener("click", () => {
-        /* Do something if the content div has children */
-
-        if (content.childElementCount > 0) {
-            content.innerHTML = "";
-        }
-
-        /* Check for template support and clone the template to the content div. */
+        content.innerHTML = "";
 
         content.appendChild(new module.CharacterTemplate(undefined));
     }, false);
@@ -56,8 +51,7 @@ export function DoWork() {
             char["name"] = shadow.getElementById("name").value;
             char["race"] = shadow.getElementById("race").value;
 
-            misc.ToObject(char, 
-            shadow.querySelectorAll("[name=\"classes\"]"),
+            ToObject(char, 
             shadow.querySelectorAll("[name=\"classes\"]"),
             shadow.querySelectorAll("[name=\"abilityScores\"]"),
             shadow.querySelectorAll("[name=\"savingThrows\""),
@@ -67,7 +61,7 @@ export function DoWork() {
             shadow.querySelectorAll("[name=\"skillExpertise\"")
             )
 
-            misc.ToArray(char,
+            ToArray(char,
             shadow.getElementById("featsFieldset").querySelectorAll("link-element"),
             shadow.getElementById("classFeaturesFieldset").querySelectorAll("link-element"),
             shadow.getElementById("racialTraitsFieldset").querySelectorAll("link-element"),
@@ -87,9 +81,35 @@ export function DoWork() {
 
             if (char["name"]) {
                 localStorage.setItem(`character-${char["name"]}`, JSON.stringify(char));
+                console.log(`Saved to character-${char["name"]} in localStorage`)
             } else {
                 console.log("Enter a character name.");
             }
         }
     };
+}
+
+function ToObject(json, ...nodeList) {
+    nodeList.forEach(nodes => {
+        for (let node of nodes) {
+            if (node.type === "checkbox") {
+                json[node.name][node.id] = node.checked;
+            } else if (node.type === "number") {
+                if (node.value) {
+                    json[node.name][node.id] = node.value;
+                } else {
+                    json[node.name][node.id] = 0;
+                }
+                
+            }
+        }
+    });
+}
+
+function ToArray(json, ...nodeList) {
+    nodeList.forEach(nodes => {
+        for (let node of nodes) {
+            json[node.title].push(node.id);
+        }
+    });
 }

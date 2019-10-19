@@ -1,17 +1,14 @@
-import {Table, List, Paragraphs, Text, Element, TextElement, Header, BoldKeyValue} from "./htmlElements.module.js";
+import {Table, List, Paragraphs, BoldKeyValue} from "./htmlElements.module.js";
 
 export function Spell(name, json, parent) {
-    let header = Element('div', parent);
-    header.id = "spellSheetHeader";
+    /* Header */
+    
+    let title = document.createElement('h3');
+    title.appendChild(document.createTextNode(name));
 
-    let content = Element('div', parent);
-    content.id = "spellSheetContent";
+    parent.appendChild(title);
 
-    let footer = Element('div', parent);
-    footer.id = "spellSheetFooter";
-
-    // Header
-    Header('h3', name, header);
+    /* Sub-Header */
 
     let scrl = "";
 
@@ -42,31 +39,43 @@ export function Spell(name, json, parent) {
         scrl += " (ritual)";
     }
 
-    TextElement('i', scrl, header);
+    let subHeader = document.createElement('i');
+    subHeader.appendChild(document.createTextNode(scrl));
 
-    KeyValue(json, content, "Casting Time", "Range", "Components", "Duration");
+    parent.appendChild(subHeader);
+    
+    /* Properties */
+
+    KeyValue(json, parent, "Casting Time", "Range", "Components", "Duration");
 
     for(let key in json) {
         if(key.includes("Description")) {
-            Paragraphs(json[key], content);
+            Paragraphs(json[key], parent);
         } else if(key == "Higher Levels") {
-            Paragraphs(json[key], content);
+            Paragraphs(json[key], parent);
         } else if(key.includes("Unordered List")) {
-            List(json[key], "ul", content);
+            List(json[key], "ul", parent);
         } else if(key.includes("Ordered List")) {
-            List(json[key], "ol", content);
+            List(json[key], "ol", parent);
         } else if(key.includes("Table")) {
-            Table(json[key], content)
+            Table(json[key], parent)
         }
     }
 
-    TextElement('i', `${json["Book"]}, Pg. ${json["Page"]}`, footer);
+    /* Footer */
+
+    let footer = document.createElement('i');
+    footer.appendChild(document.createTextNode(`${json["Book"]}, Pg. ${json["Page"]}`));
+    
+    parent.appendChild(footer);
 }
 
 function KeyValue(json, parent, ...keys) {
     keys.forEach(key => {
-        let div = Element('div', parent);
+        let div = document.createElement('div')
 
         BoldKeyValue(key, json[key], div);
+
+        parent.appendChild(div);
     });
 }
