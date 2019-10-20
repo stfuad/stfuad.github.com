@@ -566,8 +566,8 @@ export class CharacterTemplate extends HTMLElement {
                 shadow.querySelectorAll("[name=\"abilityScores\"]"),
                 shadow.querySelectorAll("[name=\"savingThrows\""),
                 shadow.querySelectorAll("[name=\"skillProficiencies\""),
-                /* shadow.querySelectorAll("[name=\"weaponProficiencies\""),
-                shadow.querySelectorAll("[name=\"armorProficiencies\""), */
+                shadow.querySelectorAll("[name=\"weaponProficiencies\""),
+                shadow.querySelectorAll("[name=\"armorProficiencies\""),
                 shadow.querySelectorAll("[name=\"skillExpertise\"")
             )
 
@@ -577,7 +577,7 @@ export class CharacterTemplate extends HTMLElement {
             shadow.getElementById("initiativeFieldset")
                 .appendChild(document.createTextNode(`+${Modifier(parseInt(json["abilityScores"]["dexterity"]))}`));
             
-            ChangeSummaries("abilityScores", "savingThrows", "skillProficiencies", "weaponProficiencies", "armorProficiencies", "skillExpertise");
+            ChangeSummaries("abilityScores", "savingThrows", "skillProficiencies", "skillExpertise");
 
             fetch("./json/5e Data.json")
                 .then(response => response.json())
@@ -707,19 +707,36 @@ export class CharacterTemplate extends HTMLElement {
 
                     if (input.name === "savingThrows") {
                         if (input.checked) {
-                            array.push(`${input.id} +${proficiencyBonus + Modifier(parseInt(json["abilityScores"][input.id]))}`);
+                            let value = parseInt(json["abilityScores"][input.id])
+
+                            if (value > 0) {
+                                array.push(`${input.id} +${proficiencyBonus + Modifier(value)}`);
+                            } else {
+                                array.push(`${input.id} ${proficiencyBonus + Modifier(value)}`);
+                            }
+                            
                         }
                     } else if (input.name === "skillProficiencies") {
                         if (input.checked) {
                             let ability = SkillToAbilityScore(input.id);
+                            let value = parseInt(json["abilityScores"][ability])
 
-                            array.push(`${input.id} +${proficiencyBonus + Modifier(parseInt(json["abilityScores"][ability]))}`);
+                            if (value > 0) {
+                                array.push(`${input.id} +${proficiencyBonus + Modifier(value)}`);
+                            } else {
+                                array.push(`${input.id} ${proficiencyBonus + Modifier(value)}`);
+                            }
                         }
                     } else if (input.name === "skillExpertise") {
                         if (input.checked) {
                             let ability = SkillToAbilityScore(input.id);
+                            let value = parseInt(json["abilityScores"][ability])
 
-                            array.push(`${input.id} +${(proficiencyBonus * 2) + Modifier(parseInt(json["abilityScores"][ability]))}`);
+                            if (value > 0) {
+                                array.push(`${input.id} +${(proficiencyBonus * 2) + Modifier(value)}`);
+                            } else {
+                                array.push(`${input.id} ${(proficiencyBonus * 2) + Modifier(value)}`);
+                            }
                         }
                     }
                 } else if (input.type === "number") {
