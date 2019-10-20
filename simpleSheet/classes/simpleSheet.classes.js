@@ -566,8 +566,8 @@ export class CharacterTemplate extends HTMLElement {
                 shadow.querySelectorAll("[name=\"abilityScores\"]"),
                 shadow.querySelectorAll("[name=\"savingThrows\""),
                 shadow.querySelectorAll("[name=\"skillProficiencies\""),
-                shadow.querySelectorAll("[name=\"weaponProficiencies\""),
-                shadow.querySelectorAll("[name=\"armorProficiencies\""),
+                /* shadow.querySelectorAll("[name=\"weaponProficiencies\""),
+                shadow.querySelectorAll("[name=\"armorProficiencies\""), */
                 shadow.querySelectorAll("[name=\"skillExpertise\"")
             )
 
