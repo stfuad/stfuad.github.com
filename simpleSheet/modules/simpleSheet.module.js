@@ -22,7 +22,9 @@ export function DoWork() {
             let char = {
                 "name": "",
                 "race": "",
+                "subrace": "",
                 "classes": {},
+                "subclasses": {},
                 "abilityScores": {},
                 "savingThrows": {},
                 "skillProficiencies": {},
@@ -50,9 +52,11 @@ export function DoWork() {
 
             char["name"] = shadow.getElementById("name").value;
             char["race"] = shadow.getElementById("race").value;
+            char["subrace"] = shadow.getElementById("subrace").value;
 
             ToObject(char, 
             shadow.querySelectorAll("[name=\"classes\"]"),
+            shadow.querySelectorAll("[name=\"subclasses\"]"),
             shadow.querySelectorAll("[name=\"abilityScores\"]"),
             shadow.querySelectorAll("[name=\"savingThrows\""),
             shadow.querySelectorAll("[name=\"skillProficiencies\""),
@@ -63,7 +67,7 @@ export function DoWork() {
 
             ToArray(char,
             shadow.getElementById("featsFieldset").querySelectorAll("link-element"),
-            shadow.getElementById("classFeaturesFieldset").querySelectorAll("link-element"),
+            /* shadow.getElementById("classFeaturesFieldset").querySelectorAll("link-element"), */
             shadow.getElementById("racialTraitsFieldset").querySelectorAll("link-element"),
             shadow.getElementById("equipmentFieldset").querySelectorAll("link-element"),
             shadow.getElementById("lootFieldset").querySelectorAll("link-element"),
@@ -100,7 +104,8 @@ function ToObject(json, ...nodeList) {
                 } else {
                     json[node.name][node.id] = 0;
                 }
-                
+            } else {
+                json[node.name][node.id] = node.value;
             }
         }
     });

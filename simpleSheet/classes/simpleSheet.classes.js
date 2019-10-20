@@ -2,6 +2,8 @@ import * as HTML from "../modules/html.module.js";
 
 import {Spell} from "../modules/spell.module.js";
 
+const classes = localStorage.getItem("Classes");
+
 /* Modals */
 
 export class AddItemModal extends HTMLElement {
@@ -457,6 +459,38 @@ export class SpellModal extends HTMLElement {
 
 customElements.define('spell-modal', SpellModal);
 
+export class SubclassModal extends HTMLElement {
+    constructor(json) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let style = document.createElement('style');
+        style.textContent = `
+            :host {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                height: auto;
+                width: auto;
+                transform: translate(-50%, -50%);
+                border: 1px solid black;
+                padding: 10px;
+                background-color: white;
+            }
+
+            h3 {
+                margin: 0px;
+            }
+
+        `;
+
+        shadow.appendChild(style);
+    }
+}
+
+customElements.define('subclass-modal', SubclassModal);
+
 /* Elements */
 
 export class LinkElement extends HTMLElement {
@@ -482,10 +516,12 @@ export class LinkElement extends HTMLElement {
         let a = document.createElement('a');
         a.appendChild(document.createTextNode(text));
 
-        if (fieldset.includes("spells")) {
-            a.onclick = () => {
-                document.body.appendChild(new SpellModal(text));
-            }
+        if (fieldset) {
+            if (fieldset.includes("spells")) {
+                a.onclick = () => {
+                    document.body.appendChild(new SpellModal(text));
+                }
+            }            
         }
 
         shadow.appendChild(a);
@@ -496,7 +532,11 @@ export class LinkElement extends HTMLElement {
         }
 
         this.setAttribute("id", text);
-        this.setAttribute("title", fieldset.split("Field")[0]);
+
+        if (fieldset) {
+            this.setAttribute("title", fieldset.split("Field")[0]);
+        }
+        
         this.setAttribute("draggable", true);
 
         shadow.appendChild(closeButton);
@@ -518,10 +558,11 @@ export class CharacterTemplate extends HTMLElement {
         if (json) {
             shadow.getElementById("name").value = json["name"];
             shadow.getElementById("race").value = json["race"];
+            shadow.getElementById("subrace").value = json["subrace"];
 
             ObjectToSheet(json,
                 shadow.querySelectorAll("[name=\"classes\"]"),
-                shadow.querySelectorAll("[name=\"classes\"]"),
+                shadow.querySelectorAll("[name=\"subclasses\"]"),
                 shadow.querySelectorAll("[name=\"abilityScores\"]"),
                 shadow.querySelectorAll("[name=\"savingThrows\""),
                 shadow.querySelectorAll("[name=\"skillProficiencies\""),
@@ -538,9 +579,66 @@ export class CharacterTemplate extends HTMLElement {
             
             ChangeSummaries("abilityScores", "savingThrows", "skillProficiencies", "weaponProficiencies", "armorProficiencies", "skillExpertise");
 
+            fetch("./json/5e Data.json")
+                .then(response => response.json())
+                .then(data => {
+                    let classData = data["Classes"]
+                    let classFeaturesFieldset = shadow.getElementById("classFeaturesFieldset");
+
+                    for (let key in json["classes"]) {
+                        let level = json["classes"][key];
+
+                        if (level) {
+                            if (level > 0) {
+                                let subclass = json["subclasses"][`${key}Subclass`];
+
+                                if (subclass) {
+                                    let fieldset = HTML.Fieldset(undefined, shadow);
+                                    fieldset.appendChild(HTML.Legend(key));
+
+                                    for (let name in classData) {
+                                        let nameToLower = name.toLowerCase();
+
+                                        if (nameToLower === key) {
+                                            let base = classData[name]["Base"];
+                                            let placeholder = ClassToSubclass(nameToLower);
+                                            let subclassJSON = classData[name][placeholder][subclass];
+
+                                            let clvl = json["classes"][nameToLower];
+
+                                            if (base) {
+                                                base.forEach(element => {
+                                                    if (element["Level"] <= clvl) {
+                                                        element["Features"].forEach(feature => {
+                                                            fieldset.appendChild(new LinkElement("classFeatures", feature));
+                                                        });
+                                                    }
+                                                });
+                                            }
+
+                                            subclassJSON.forEach(element => {
+                                                if (element["Level"] <= clvl) {
+                                                    element["Features"].forEach(feature => {
+                                                        fieldset.appendChild(new LinkElement("classFeatures", feature));
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    classFeaturesFieldset.appendChild(fieldset);
+                                } else {
+                                    /* open a modal, select a subclass */
+                                }
+                            }
+                        }
+                    }
+                })
+            
+
             ArrayToSheet(shadow, json, 
                 "feats", 
-                "classFeatures", 
+                /* "classFeatures", */ 
                 "racialTraits", 
                 "equipment",
                 "loot", 
@@ -554,6 +652,8 @@ export class CharacterTemplate extends HTMLElement {
                 "spells8thLevel", 
                 "spells9thLevel")
         }
+
+        /* Events */
 
         shadow.getElementById("addItemLink").onclick = () => {
             document.body.appendChild(new AddItemModal());
@@ -574,6 +674,16 @@ export class CharacterTemplate extends HTMLElement {
         shadow.getElementById("addTraitLink").onclick = () => {
             document.body.appendChild(new AddLinkModal("racialTraitsFieldset"));
         };
+
+        /* Local Functions */
+
+        function FetchWrapper(url) {
+            fetch(url)
+                .then(response => response.json())
+                .then(json => {
+                    return json;
+                })
+        }
 
         function AddCharacterLevels(json) {
             let total = 0;
@@ -629,6 +739,36 @@ export class CharacterTemplate extends HTMLElement {
             return array;
         }
         
+        function ClassToSubclass(string) {
+            if (string === "artificer") {
+                
+            } else if (string === "barbarian") {
+                return "Primal Paths"
+            } else if (string === "bard") {
+                return "Bard Colleges"
+            } else if (string === "cleric") {
+                return "Divine Domains"
+            } else if (string === "druid") {
+                return "Druid Circles"
+            } else if (string === "fighter") {
+                return "Martial Archetypes"
+            } else if (string === "monk") {
+                return "Monastic Traditions"
+            } else if (string === "paladin") {
+                return "Sacred Oaths"
+            } else if (string === "ranger") {
+                return "Ranger Archetypes"
+            } else if (string === "rogue") {
+                return "Roguish Archetypes"
+            } else if (string === "sorcerer") {
+                return "Sorcerous Origins"
+            } else if (string === "warlock") {
+                return "Otherworldly Patrons"
+            } else if (string === "wizard") {
+                return "Arcane Traditions"
+            }
+        }
+
         function SkillToAbilityScore(skill) {
             if (skill === "acrobatics") {
                 return "dexterity";
@@ -686,11 +826,11 @@ export class CharacterTemplate extends HTMLElement {
         }
         
         function ObjectToSheet(json, ...nodeLists) {
-            console.log(json);
+            /* console.log(json); */
 
             nodeLists.forEach(nodeList => {
                 for (let node of nodeList) {
-                    console.log(node);
+                    /* console.log(node); */
 
                     if (node.type === "checkbox") {
                         node.checked = json[node.name][node.id];
