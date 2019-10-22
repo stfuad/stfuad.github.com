@@ -23,6 +23,9 @@ export function DoWork() {
                 "name": "",
                 "race": "",
                 "subrace": "",
+                "hitPointsMax": "",
+                "hitPoints": "",
+                "tempHitPoints": "",
                 "classes": {},
                 "subclasses": {},
                 "abilityScores": {},
@@ -53,6 +56,9 @@ export function DoWork() {
             char["name"] = shadow.getElementById("name").value;
             char["race"] = shadow.getElementById("race").value;
             char["subrace"] = shadow.getElementById("subrace").value;
+            char["hitPointsMax"] = shadow.getElementById("hitPointsMax").value;
+            char["hitPoints"] = shadow.getElementById("hitPoints").value;
+            char["tempHitPoints"] = shadow.getElementById("tempHitPoints").value;
 
             ToObject(char, 
             shadow.querySelectorAll("[name=\"classes\"]"),

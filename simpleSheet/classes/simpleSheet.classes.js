@@ -2,7 +2,7 @@ import * as HTML from "../modules/html.module.js";
 
 import {Spell} from "../modules/spell.module.js";
 
-const classes = localStorage.getItem("Classes");
+const classes = JSON.parse(localStorage.getItem("Classes"));
 
 /* Modals */
 
@@ -140,7 +140,12 @@ export class AddSpellModal extends HTMLElement {
             let target = shadow.querySelector(`#${select.value}`);
             
             if (input.value) {
-                target.appendChild(new LinkElement(select.value, input.value));
+                let link = new LinkElement(select.value, input.value);
+                link.onclick = () => {
+                    document.body.appendChild(new SpellModal(input.value));
+                }
+
+                target.appendChild(link);
 
                 this.remove();
             }
@@ -374,10 +379,165 @@ export class InfoModal extends HTMLElement {
         
         shadow.appendChild(HTML.Header("h3", title));
 
-        if (json) {
-            if (Array.isArray(json)) {
+        /* console.log(json); */
 
+        if (json[title]) {
+            if (Array.isArray(json[title])) {
+                Paragraphs(json[title]).forEach(element => {
+                    shadow.appendChild(element)
+                });
+            } else {
+                for (let key in json[title]) {
+                    if (key.includes("Description")) {
+                        Paragraphs(json[title][key]).forEach(element => {
+                            shadow.appendChild(element)
+                        });
+                    } else if (key === "Unordered List") {
+                        shadow.appendChild(List(json[title][key], "ul"));
+                    } else if (key.includes("Table")) {
+
+                    }
+                }
             }
+        }
+
+        let button = document.createElement('button');
+        button.appendChild(document.createTextNode("\u2716"));
+        button.onclick = () => {
+            this.remove();
+        };
+
+        shadow.appendChild(button);
+
+        function Paragraphs(array) {
+            let temp = [];
+    
+            array.forEach(line => {
+                let p = document.createElement('p');
+    
+                if(line.includes('#')) {
+                    let split = line.split('#');
+    
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]}. `));
+                    p.appendChild(b);
+    
+                    p.appendChild(document.createTextNode(split[1]));
+                } else if (line.includes('=')) {
+                    let split = line.split('=');
+    
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]} `));
+                    p.appendChild(b);
+    
+                    p.appendChild(document.createTextNode(`= ${split[1]} `));
+                } else {
+                    p.appendChild(document.createTextNode(line));
+                }
+    
+                temp.push(p);
+            });
+    
+            return temp;
+        }
+
+        function List(array, listType) {
+            let list = document.createElement(listType);
+        
+            array.forEach(item => {
+                let li = document.createElement('li');
+        
+                if(item.includes("#")) {
+                    let split = item.split("#");
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]}. `));
+                    li.appendChild(b);
+        
+                    li.appendChild(document.createTextNode(split[1]));
+                } else {
+                    li.appendChild(document.createTextNode(item));
+                }
+        
+                list.appendChild(li);
+            });
+        
+            return list;
+        }
+        
+        function Table(json, parent) {
+            let table = Element('table', parent);
+
+            // Caption
+
+            if(json["Title"] != undefined) {
+                let caption = Element('caption', table);
+
+                Text(json["Title"], caption);
+            }
+
+            // Headers
+
+            let row0 = Element('tr', table);
+
+            if(json["Headers"] !== undefined) {
+                json["Headers"].forEach(header => {
+                    let th = Element('th', row0);
+
+                    Text(header, th);
+                });
+            }
+            
+            // Rows
+
+            if(json["Rows"] !== undefined) {
+                json["Rows"].forEach(row => {
+                    let tr = Element('tr', table);
+
+                    for(let key in row) {
+                        let td = Element('td', tr);
+
+                        if(key === "Spell" || key === "Spells" || key === "Circle Spells") {
+                            let spells = JSON.parse(localStorage.getItem("Spells"));
+
+                            let length = row[key].length
+
+                            for(var i = 0; i < length; i++) {
+                                let spell = row[key][i];
+
+                                if(i > 0) {
+                                    let a = Link(`, ${spell}`, undefined, td);
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell, spells[spell]));
+                                    }, false);
+                                } else {
+                                    let a = Link(spell, undefined, td);
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell, spells[spell]));
+                                    }, false);
+                                }
+                            }
+                        } else {
+                            if (typeof(row[key]) === "string" && row[key].includes("#")) {
+                                let split = row[key].split("#");
+
+                                let b = document.createElement('b');
+                                b.appendChild(document.createTextNode(`${split[0]}. `));
+                                
+                                td.appendChild(b);
+
+                                td.appendChild(document.createTextNode(split[1]));
+
+                            } else {
+                                td.appendChild(document.createTextNode(row[key]));
+                                Text(row[key], td);
+                            }
+                        }
+                    }
+                });
+            }
+
+            return table;
         }
     }
 }
@@ -516,14 +676,6 @@ export class LinkElement extends HTMLElement {
         let a = document.createElement('a');
         a.appendChild(document.createTextNode(text));
 
-        if (fieldset) {
-            if (fieldset.includes("spells")) {
-                a.onclick = () => {
-                    document.body.appendChild(new SpellModal(text));
-                }
-            }            
-        }
-
         shadow.appendChild(a);
 
         let closeButton = HTML.Button("\u2716");
@@ -559,6 +711,9 @@ export class CharacterTemplate extends HTMLElement {
             shadow.getElementById("name").value = json["name"];
             shadow.getElementById("race").value = json["race"];
             shadow.getElementById("subrace").value = json["subrace"];
+            shadow.getElementById("hitPointsMax").value = json["hitPointsMax"];
+            shadow.getElementById("hitPoints").value = json["hitPoints"];
+            shadow.getElementById("tempHitPoints").value = json["tempHitPoints"];
 
             ObjectToSheet(json,
                 shadow.querySelectorAll("[name=\"classes\"]"),
@@ -610,7 +765,12 @@ export class CharacterTemplate extends HTMLElement {
                                                 base.forEach(element => {
                                                     if (element["Level"] <= clvl) {
                                                         element["Features"].forEach(feature => {
-                                                            fieldset.appendChild(new LinkElement("classFeatures", feature));
+                                                            let link = new LinkElement("classFeatures", feature);
+                                                            link.onclick = () => {
+                                                                document.body.appendChild(new InfoModal(feature, classes[name]["Class Features"]));
+                                                            }
+
+                                                            fieldset.appendChild(link);
                                                         });
                                                     }
                                                 });
@@ -619,7 +779,12 @@ export class CharacterTemplate extends HTMLElement {
                                             subclassJSON.forEach(element => {
                                                 if (element["Level"] <= clvl) {
                                                     element["Features"].forEach(feature => {
-                                                        fieldset.appendChild(new LinkElement("classFeatures", feature));
+                                                        let link = new LinkElement("classFeatures", feature);
+                                                        link.onclick = () => {
+                                                            document.body.appendChild(new InfoModal(feature, classes[name]["Class Features"]));
+                                                        }
+
+                                                        fieldset.appendChild(link);
                                                     });
                                                 }
                                             });
@@ -707,35 +872,32 @@ export class CharacterTemplate extends HTMLElement {
 
                     if (input.name === "savingThrows") {
                         if (input.checked) {
-                            let value = parseInt(json["abilityScores"][input.id])
+                            let modifier = Modifier(json["abilityScores"][input.id])
 
-                            if (value > 0) {
-                                array.push(`${input.id} +${proficiencyBonus + Modifier(value)}`);
+                            if (modifier > 0) {
+                                array.push(`${input.id} +${proficiencyBonus + modifier}`);
                             } else {
-                                array.push(`${input.id} ${proficiencyBonus + Modifier(value)}`);
+                                array.push(`${input.id} ${proficiencyBonus + modifier}`);
                             }
-                            
                         }
                     } else if (input.name === "skillProficiencies") {
                         if (input.checked) {
-                            let ability = SkillToAbilityScore(input.id);
-                            let value = parseInt(json["abilityScores"][ability])
-
-                            if (value > 0) {
-                                array.push(`${input.id} +${proficiencyBonus + Modifier(value)}`);
+                            let modifier = Modifier(json["abilityScores"][SkillToAbility(input.id)]);
+                            
+                            if (modifier > 0) {
+                                array.push(`${input.id} +${proficiencyBonus + modifier}`);
                             } else {
-                                array.push(`${input.id} ${proficiencyBonus + Modifier(value)}`);
+                                array.push(`${input.id} ${proficiencyBonus + modifier}`);
                             }
                         }
                     } else if (input.name === "skillExpertise") {
                         if (input.checked) {
-                            let ability = SkillToAbilityScore(input.id);
-                            let value = parseInt(json["abilityScores"][ability])
-
-                            if (value > 0) {
-                                array.push(`${input.id} +${(proficiencyBonus * 2) + Modifier(value)}`);
+                            let modifier = Modifier(json["abilityScores"][SkillToAbility(input.id)]);
+                            
+                            if (modifier > 0) {
+                                array.push(`${input.id} +${(proficiencyBonus * 2) + modifier}`);
                             } else {
-                                array.push(`${input.id} ${(proficiencyBonus * 2) + Modifier(value)}`);
+                                array.push(`${input.id} ${(proficiencyBonus * 2) + modifier}`);
                             }
                         }
                     }
@@ -743,12 +905,13 @@ export class CharacterTemplate extends HTMLElement {
                     let value = parseInt(input.value);
 
                     if (input.name === "abilityScores" && value) {
-                        if (value > 0) {
-                            array.push(`${input.id} +${Modifier(value)}`)
-                        } else {
-                            array.push(`${input.id} ${Modifier(value)}`)
-                        }
-                        
+                            let modifier = Modifier(json["abilityScores"][input.id]);
+                            
+                            if (modifier > 0) {
+                                array.push(`${input.id} +${modifier}`);
+                            } else {
+                                array.push(`${input.id} ${modifier}`);
+                            }
                     }
                 }
             }
@@ -786,7 +949,7 @@ export class CharacterTemplate extends HTMLElement {
             }
         }
 
-        function SkillToAbilityScore(skill) {
+        function SkillToAbility(skill) {
             if (skill === "acrobatics") {
                 return "dexterity";
             } else if (skill === "animalHandling") {
@@ -863,7 +1026,15 @@ export class CharacterTemplate extends HTMLElement {
                 json[array].forEach(item => {
                     let target = shadowRoot.querySelector(`#${array}Fieldset`);
     
-                    target.appendChild(new LinkElement(`${array}Fieldset`, item));
+                    let link = new LinkElement(`${array}Fieldset`, item);
+
+                    if (array.includes("spells")) {
+                        link.onclick = () => {
+                            document.body.appendChild(new SpellModal(item));
+                        }
+                    }
+
+                    target.appendChild(link);
                 });
             });
         }
@@ -897,16 +1068,11 @@ export class CharacterTemplate extends HTMLElement {
                 bonus = 9;
             }
         
-            return bonus;
+            return parseInt(bonus);
         }
         
         function Modifier(int) {
-            if (int < 0) {
-                return `+${Math.floor((int - 10) / 2)}`;
-            } else {
-                return Math.floor((int - 10) / 2);
-            }
-            
+                return Math.floor((parseInt(int) - 10) / 2);
         }
     }
 }
