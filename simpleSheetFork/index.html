@@ -13,6 +13,7 @@
                 grid-template-rows: auto 1fr;
                 font-family: 'Courier New', Courier, monospace;
                 font-size: 1em;
+                overflow: hidden;
             }
 
             #menu {
@@ -37,6 +38,7 @@
             #content {
                 grid-column: 1;
                 grid-row: 2;
+                overflow: auto;
             }
         </style>
     </head>
@@ -68,24 +70,8 @@
             }
         </style>
 
-        <fieldset id="nameFieldset">
-            <legend>Name</legend>
-            <input type="text" id="name">
-        </fieldset>
-
-        <fieldset id="raceFieldset">
-            <legend>Race</legend>
-            <table>
-                <tr>
-                    <td>Race</td>
-                    <td><input type="text" id="race"></td>
-                </tr>
-                <tr>
-                    <td>Subrace</td>
-                    <td><input type="text" id="subrace"></td>
-                </tr>
-            </table>
-        </fieldset>
+        <h2></h2>
+        <i></i>
         
         <fieldset id="proficiencyBonusFieldset">
             <legend>Proficiency Bonus</legend>
@@ -422,7 +408,7 @@
             <summary>Class Features</summary>
             <fieldset id="classFeaturesFieldset"></fieldset>
 
-            <a id="addFeatureLink">+ Add Feature</a>
+            <!-- <a id="addFeatureLink">+ Add Feature</a> -->
         </details>
     
         <!-- Racial Traits -->
@@ -431,7 +417,7 @@
             <summary>Racial Traits</summary>
             <fieldset id="racialTraitsFieldset"></fieldset>
 
-            <a id="addTraitLink">+ Add Trait</a>
+            <!-- <a id="addTraitLink">+ Add Trait</a> -->
         </details>
 
         <!-- Equipment -->
@@ -455,43 +441,43 @@
 
         <details>
             <summary>Spells</summary>
-            <fieldset id="spellsCantripsFieldset">
+            <fieldset id="level0Fieldset">
                 <legend>Cantrip (0 Level)</legend>
             </fieldset>
 
-            <fieldset id="spells1stLevelFieldset">
+            <fieldset id="level1Fieldset">
                 <legend>1st Level</legend>
             </fieldset>
 
-            <fieldset id="spells2ndLevelFieldset">
+            <fieldset id="level2Fieldset">
                 <legend>2nd Level</legend>
             </fieldset>
 
-            <fieldset id="spells3rdLevelFieldset">
+            <fieldset id="level3Fieldset">
                 <legend>3rd Level</legend>
             </fieldset>
 
-            <fieldset id="spells4thLevelFieldset">
+            <fieldset id="level4Fieldset">
                 <legend>4th Level</legend>
             </fieldset>
 
-            <fieldset id="spells5thLevelFieldset">
+            <fieldset id="level5Fieldset">
                 <legend>5th Level</legend>
             </fieldset>
 
-            <fieldset id="spells6thLevelFieldset">
+            <fieldset id="level6Fieldset">
                 <legend>6th Level</legend>
             </fieldset>
 
-            <fieldset id="spells7thLevelFieldset">
+            <fieldset id="level7Fieldset">
                 <legend>7th Level</legend>
             </fieldset>
 
-            <fieldset id="spells8thLevelFieldset">
+            <fieldset id="level8Fieldset">
                 <legend>8th Level</legend>
             </fieldset>
 
-            <fieldset id="spells9thLevelFieldset">
+            <fieldset id="level9Fieldset">
                 <legend>9th Level</legend>
             </fieldset>
             

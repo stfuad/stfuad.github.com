@@ -1,12 +1,143 @@
-import * as HTML from "../modules/html.module.js";
-
-import {Spell} from "../modules/spell.module.js";
+import * as HTML from "./modules/html.module.js";
 
 const classes = JSON.parse(localStorage.getItem("Classes"));
+const feats = JSON.parse(localStorage.getItem("Feats"));
+const spells = JSON.parse(localStorage.getItem("Spells"));
+
+const content = document.getElementById("content");
+
+const char = {
+    "name": "",
+    "race": "",
+    "subrace": "",
+    "hitPointsMax": "",
+    "hitPoints": "",
+    "tempHitPoints": "",
+    "classes": {},
+    "subclasses": {},
+    "abilityScores": {},
+    "savingThrows": {},
+    "skillProficiencies": {},
+    "weaponProficiencies": {},
+    "armorProficiencies": {},
+    "skillExpertise": {},
+    "feats": [],
+    "classFeatures": [],
+    "racialTraits": [],
+    "equipment": [],
+    "loot": [],
+    "spellsCantripsLevel": [],
+    "spells1stLevel": [],
+    "spells2ndLevel": [],
+    "spells3rdLevel": [],
+    "spells4thLevel": [],
+    "spells5thLevel": [],
+    "spells6thLevel": [],
+    "spells7thLevel": [],
+    "spells8thLevel": [],
+    "spells9thLevel": []
+};
+
+export function MenuEventListeners() {
+    
+    let newCharacter = document.getElementById("new");
+    newCharacter.addEventListener("click", () => {
+        content.innerHTML = "";
+
+        content.appendChild(new CharacterTemplate(undefined));
+    }, false);
+
+    let openCharacter = document.getElementById("open");
+    openCharacter.addEventListener("click", () => {
+        document.body.appendChild(new OpenModal());
+    }, false);
+
+    let saveCharacter = document.getElementById("save");
+    saveCharacter.onclick = () => {
+        if (content.innerHTML) {
+            SavetoLocalStorage();
+        }
+    };
+}
+
+function SavetoLocalStorage() {
+    let sheet = document.querySelector("character-template");
+    let shadow = sheet.shadowRoot;
+
+    char["name"] = shadow.getElementById("name").value;
+    char["race"] = shadow.getElementById("race").value;
+    char["subrace"] = shadow.getElementById("subrace").value;
+    char["hitPointsMax"] = shadow.getElementById("hitPointsMax").value;
+    char["hitPoints"] = shadow.getElementById("hitPoints").value;
+    char["tempHitPoints"] = shadow.getElementById("tempHitPoints").value;
+
+    ToObject(char, 
+    shadow.querySelectorAll("[name=\"classes\"]"),
+    shadow.querySelectorAll("[name=\"subclasses\"]"),
+    shadow.querySelectorAll("[name=\"abilityScores\"]"),
+    shadow.querySelectorAll("[name=\"savingThrows\""),
+    shadow.querySelectorAll("[name=\"skillProficiencies\""),
+    shadow.querySelectorAll("[name=\"weaponProficiencies\""),
+    shadow.querySelectorAll("[name=\"armorProficiencies\""),
+    shadow.querySelectorAll("[name=\"skillExpertise\"")
+    )
+
+    ToArray(char,
+    shadow.getElementById("featsFieldset").querySelectorAll("link-element"),
+    /* shadow.getElementById("classFeaturesFieldset").querySelectorAll("link-element"), */
+    shadow.getElementById("racialTraitsFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("equipmentFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("lootFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spellsCantripsFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spells1stLevelFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spells2ndLevelFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spells3rdLevelFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spells4thLevelFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spells5thLevelFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spells6thLevelFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spells7thLevelFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spells8thLevelFieldset").querySelectorAll("link-element"),
+    shadow.getElementById("spells9thLevelFieldset").querySelectorAll("link-element")
+    )
+
+
+    if (char["name"]) {
+        localStorage.setItem(`character-${char["name"]}`, JSON.stringify(char));
+        console.log(`Saved to character-${char["name"]} in localStorage`)
+    } else {
+        console.log("Enter a character name.");
+    }
+}
+
+function ToObject(json, ...nodeList) {
+    nodeList.forEach(nodes => {
+        for (let node of nodes) {
+            if (node.type === "checkbox") {
+                json[node.name][node.id] = node.checked;
+            } else if (node.type === "number") {
+                if (node.value) {
+                    json[node.name][node.id] = node.value;
+                } else {
+                    json[node.name][node.id] = 0;
+                }
+            } else {
+                json[node.name][node.id] = node.value;
+            }
+        }
+    });
+}
+
+function ToArray(json, ...nodeList) {
+    nodeList.forEach(nodes => {
+        for (let node of nodes) {
+            json[node.getAttribute("fieldset")].push(node.id);
+        }
+    });
+}
 
 /* Modals */
 
-export class AddItemModal extends HTMLElement {
+class AddItemModal extends HTMLElement {
     constructor() {
         super();
 
@@ -80,7 +211,7 @@ export class AddItemModal extends HTMLElement {
 
 customElements.define("additem-modal", AddItemModal);
 
-export class AddSpellModal extends HTMLElement {
+class AddSpellModal extends HTMLElement {
     constructor() {
         super();
 
@@ -100,10 +231,6 @@ export class AddSpellModal extends HTMLElement {
                 background-color: white;
             }
 
-            select {
-                display: block;
-            }
-
             h3 {
                 margin: 0px;
             }
@@ -113,23 +240,18 @@ export class AddSpellModal extends HTMLElement {
         shadow.appendChild(style);
 
         shadow.appendChild(HTML.Header("h3", "Add a spell..."));
-
-        let input = HTML.Input("text", undefined);
-
-        shadow.appendChild(input);
-
-        shadow.appendChild(HTML.Header("h3", "...to..."));
         
-        let select = HTML.Select("spells");
-        select.appendChild(HTML.Option("spells1stLevelFieldset", "1st Level"))
-        select.appendChild(HTML.Option("spells2ndLevelFieldset", "2nd Level"))
-        select.appendChild(HTML.Option("spells3rdLevelFieldset", "3rd Level"))
-        select.appendChild(HTML.Option("spells4thLevelFieldset", "4th Level"))
-        select.appendChild(HTML.Option("spells5thLevelFieldset", "5th Level"))
-        select.appendChild(HTML.Option("spells6thLevelFieldset", "6th Level"))
-        select.appendChild(HTML.Option("spells7thLevelFieldset", "7th Level"))
-        select.appendChild(HTML.Option("spells8thLevelFieldset", "8th Level"))
-        select.appendChild(HTML.Option("spells9thLevelFieldset", "9th Level"))
+        let sorted = Object.keys(spells).sort();
+
+        let select = HTML.Select(undefined);
+
+        sorted.forEach(key => {
+            let option = document.createElement('option');
+            option.value = key;
+            option.text = key;
+
+            select.appendChild(option);
+        });
 
         shadow.appendChild(select);
 
@@ -137,18 +259,43 @@ export class AddSpellModal extends HTMLElement {
         addButton.onclick = () => {
             let sheet = document.querySelector("character-template");
             let shadow = sheet.shadowRoot;
-            let target = shadow.querySelector(`#${select.value}`);
-            
-            if (input.value) {
-                let link = new LinkElement(select.value, input.value);
-                link.onclick = () => {
-                    document.body.appendChild(new SpellModal(input.value));
-                }
+            let fieldset;
 
-                target.appendChild(link);
-
-                this.remove();
+            if (spells[select.value]["Level"] === 0) {
+                fieldset = "spellsCantripsFieldset";
+            } else if (spells[select.value]["Level"] === 1) {
+                fieldset = "spells1stLevelFieldset";
+            } else if (spells[select.value]["Level"] === 2) {
+                fieldset = "spells2ndLevelFieldset";
+            } else if (spells[select.value]["Level"] === 3) {
+                fieldset = "spells3rdLevelFieldset";
+            } else if (spells[select.value]["Level"] === 4) {
+                fieldset = "spells4thLevelFieldset";
+            } else if (spells[select.value]["Level"] === 5) {
+                fieldset = "spells5thLevelFieldset";
+            } else if (spells[select.value]["Level"] === 6) {
+                fieldset = "spells6thLevelFieldset";
+            } else if (spells[select.value]["Level"] === 7) {
+                fieldset = "spells7thLevelFieldset";
+            } else if (spells[select.value]["Level"] === 8) {
+                fieldset = "spells8thLevelFieldset";
+            } else if (spells[select.value]["Level"] === 9) {
+                fieldset = "spells9thLevelFieldset";
             }
+
+            let target = shadow.querySelector(`#${fieldset}`);
+            
+            let link = new LinkElement(fieldset, select.value);
+            let linkShadow = link.shadowRoot;
+            let a = linkShadow.querySelector('a');
+
+            a.onclick = () => {
+                document.body.appendChild(new SpellModal(select.value));
+            }
+
+            target.appendChild(link);
+
+            this.remove();
         }
 
         let cancelButton = HTML.Button("Cancel");
@@ -163,7 +310,7 @@ export class AddSpellModal extends HTMLElement {
 
 customElements.define("addspell-modal", AddSpellModal);
 
-export class AddLinkModal extends HTMLElement {
+class AddLinkModal extends HTMLElement {
     constructor(fieldset) {
         super();
 
@@ -226,7 +373,106 @@ export class AddLinkModal extends HTMLElement {
 
 customElements.define("addlink-modal", AddLinkModal);
 
-export class OpenModal extends HTMLElement {
+class AddFeatModal extends HTMLElement {
+    constructor(fieldset) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let style = document.createElement('style');
+        style.textContent = `
+            :host {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                height: auto;
+                width: auto;
+                transform: translate(-50%, -50%);
+                border: 1px solid black;
+                padding: 10px;
+                background-color: white;
+            }
+
+            input {
+                display: block;
+            }
+
+            h3 {
+                margin: 0px;
+            }
+
+        `;
+
+        shadow.appendChild(style);
+
+        shadow.appendChild(HTML.Header("h3", "Add..."));
+
+        let select = HTML.Select(undefined);
+
+        for (let key in feats) {
+            select.appendChild(HTML.Option(key, key));
+        }
+
+        shadow.appendChild(select);
+
+        let addButton = HTML.Button("Add");
+        addButton.onclick = () => {
+            let sheet = document.querySelector("character-template");
+            let shadow = sheet.shadowRoot;
+            let target = shadow.querySelector(`#${fieldset}`);
+            
+            if (select.value) {
+                target.appendChild(new LinkElement(fieldset, select.value));
+
+                this.remove();
+            }
+        }
+
+        let cancelButton = HTML.Button("Cancel");
+        cancelButton.onclick = () => {
+            this.remove();
+        }
+
+        shadow.appendChild(addButton);
+        shadow.appendChild(cancelButton);
+    }
+}
+
+customElements.define("addfeat-modal", AddFeatModal);
+
+class AddSubclassModal extends HTMLElement {
+    constructor(className) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let style = document.createElement('style');
+        style.textContent = `
+            :host {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                height: auto;
+                width: auto;
+                transform: translate(-50%, -50%);
+                border: 1px solid black;
+                padding: 10px;
+                background-color: white;
+            }
+
+            h3 {
+                margin: 0px;
+            }
+
+        `;
+
+        shadow.appendChild(style);
+    }
+}
+
+customElements.define('addsubclass-modal', AddSubclassModal);
+
+class OpenModal extends HTMLElement {
     constructor() {
         super();
 
@@ -346,7 +592,7 @@ export class OpenModal extends HTMLElement {
 
 customElements.define("open-modal", OpenModal);
 
-export class InfoModal extends HTMLElement {
+class InfoModal extends HTMLElement {
 
     /* Used for Feat, Feature, Trait display */
 
@@ -371,6 +617,12 @@ export class InfoModal extends HTMLElement {
 
             h3 {
                 margin: 0px;
+            }
+
+            button {
+                position: absolute;
+                top: 0px;
+                right: 0px;
             }
 
         `;
@@ -544,7 +796,7 @@ export class InfoModal extends HTMLElement {
 
 customElements.define("info-modal", InfoModal);
 
-export class SpellModal extends HTMLElement {
+class SpellModal extends HTMLElement {
     constructor(name) {
         super();
 
@@ -614,46 +866,94 @@ export class SpellModal extends HTMLElement {
 
         shadow.appendChild(style);
         shadow.appendChild(div);
+
+        function Spell(name, json, parent) {
+            /* Header */
+            
+            let title = document.createElement('h3');
+            title.appendChild(document.createTextNode(name));
+        
+            parent.appendChild(title);
+        
+            /* Sub-Header */
+        
+            let scrl = "";
+        
+            let school = json["School"];
+            let cantrip = json["Cantrip"];
+            let ritual = json["Ritual"];
+            let level = json["Level"];
+        
+            if(level === 0) {
+                scrl = "";
+            } else if(level === 1) {
+                scrl = "1st-level";
+            } else if(level === 2) {
+                scrl = "2nd-level";
+            } else if(level === 3) {
+                scrl = "3rd-level";
+            } else if(level >= 4) {
+                scrl = `${level}th-level`;
+            }
+        
+            scrl += ` ${school}`;
+        
+            if(cantrip == true) {
+                scrl += " cantrip";
+            }
+        
+            if(ritual == true) {
+                scrl += " (ritual)";
+            }
+        
+            let subHeader = document.createElement('i');
+            subHeader.appendChild(document.createTextNode(scrl));
+        
+            parent.appendChild(subHeader);
+            
+            /* Properties */
+        
+            KeyValue(json, parent, "Casting Time", "Range", "Components", "Duration");
+        
+            for(let key in json) {
+                if(key.includes("Description")) {
+                    Paragraphs(json[key], parent);
+                } else if(key == "Higher Levels") {
+                    Paragraphs(json[key], parent);
+                } else if(key.includes("Unordered List")) {
+                    List(json[key], "ul", parent);
+                } else if(key.includes("Ordered List")) {
+                    List(json[key], "ol", parent);
+                } else if(key.includes("Table")) {
+                    Table(json[key], parent)
+                }
+            }
+        
+            /* Footer */
+        
+            let footer = document.createElement('i');
+            footer.appendChild(document.createTextNode(`${json["Book"]}, Pg. ${json["Page"]}`));
+            
+            parent.appendChild(footer);
+        }
+        
+        function KeyValue(json, parent, ...keys) {
+            keys.forEach(key => {
+                let div = document.createElement('div')
+        
+                BoldKeyValue(key, json[key], div);
+        
+                parent.appendChild(div);
+            });
+        }
     }
 }
 
 customElements.define('spell-modal', SpellModal);
 
-export class SubclassModal extends HTMLElement {
-    constructor(json) {
-        super();
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let style = document.createElement('style');
-        style.textContent = `
-            :host {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                height: auto;
-                width: auto;
-                transform: translate(-50%, -50%);
-                border: 1px solid black;
-                padding: 10px;
-                background-color: white;
-            }
-
-            h3 {
-                margin: 0px;
-            }
-
-        `;
-
-        shadow.appendChild(style);
-    }
-}
-
-customElements.define('subclass-modal', SubclassModal);
-
 /* Elements */
 
-export class LinkElement extends HTMLElement {
+class LinkElement extends HTMLElement {
     constructor(fieldset, text) {
         super();
 
@@ -662,12 +962,22 @@ export class LinkElement extends HTMLElement {
         let style = document.createElement('style');
         style.textContent = `
             :host {
-                display: block;
-                height: 24px;
+                display: grid;
+                grid-template-rows: 24px;
+                grid-template-columns: 1fr auto;
+                border: 1px solid black;
+                margin: 3px;
+                padding: 3px;
+            }
+
+            a {
+                grid-row: 1;
+                grid-column: 1;
             }
 
             button {
-                float: right;
+                grid-row: 1;
+                grid-column: 2;
             }
         `;
 
@@ -678,26 +988,31 @@ export class LinkElement extends HTMLElement {
 
         shadow.appendChild(a);
 
-        let closeButton = HTML.Button("\u2716");
-        closeButton.onclick = () => {
-            this.remove();
-        }
-
+        
         this.setAttribute("id", text);
 
         if (fieldset) {
-            this.setAttribute("title", fieldset.split("Field")[0]);
+            this.setAttribute("fieldset", fieldset.split("Field")[0]);
+            
+            if (fieldset.includes("classFeatures")) {
+                
+            } else {
+                let closeButton = HTML.Button("\u2716");
+                closeButton.onclick = () => {
+                    this.remove();
+                }
+
+                shadow.appendChild(closeButton);
+            }
         }
         
         this.setAttribute("draggable", true);
-
-        shadow.appendChild(closeButton);
     }
 }
 
 customElements.define("link-element", LinkElement);
 
-export class CharacterTemplate extends HTMLElement {
+class CharacterTemplate extends HTMLElement {
     constructor(json) {
         super();
 
@@ -733,6 +1048,8 @@ export class CharacterTemplate extends HTMLElement {
                 .appendChild(document.createTextNode(`+${Modifier(parseInt(json["abilityScores"]["dexterity"]))}`));
             
             ChangeSummaries("abilityScores", "savingThrows", "skillProficiencies", "skillExpertise");
+
+            /* Class Features */
 
             fetch("./json/5e Data.json")
                 .then(response => response.json())
@@ -829,7 +1146,7 @@ export class CharacterTemplate extends HTMLElement {
         };
 
         shadow.getElementById("addFeatLink").onclick = () => {
-            document.body.appendChild(new AddLinkModal("featsFieldset"));
+            document.body.appendChild(new AddFeatModal("featsFieldset"));
         };
 
         shadow.getElementById("addFeatureLink").onclick = () => {
@@ -1027,10 +1344,16 @@ export class CharacterTemplate extends HTMLElement {
                     let target = shadowRoot.querySelector(`#${array}Fieldset`);
     
                     let link = new LinkElement(`${array}Fieldset`, item);
+                    let linkShadow = link.shadowRoot;
+                    let a = linkShadow.querySelector('a');
 
                     if (array.includes("spells")) {
-                        link.onclick = () => {
+                        a.onclick = () => {
                             document.body.appendChild(new SpellModal(item));
+                        }
+                    } else if (array.includes("feats")) {
+                        a.onclick = () => {
+                            document.body.appendChild(new InfoModal(item, feats));
                         }
                     }
 
