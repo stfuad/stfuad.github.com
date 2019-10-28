@@ -4,8 +4,6 @@ const classes = JSON.parse(localStorage.getItem("Classes"));
 const feats = JSON.parse(localStorage.getItem("Feats"));
 const spells = JSON.parse(localStorage.getItem("Spells"));
 
-const content = document.getElementById("content");
-
 const char = {
     "name": "",
     "race": "",
@@ -43,9 +41,9 @@ const char = {
 
 export function MenuEventListeners() {
     document.getElementById("new").addEventListener("click", () => {
-        content.innerHTML = "";
+        document.getElementById("content").innerHTML = "";
 
-        content.appendChild(new CharacterTemplate(undefined));
+        document.body.appendChild(new SetupModal());
     }, false);
 
     document.getElementById("open").addEventListener("click", () => {
@@ -53,7 +51,7 @@ export function MenuEventListeners() {
     }, false);
 
     document.getElementById("save").onclick = () => {
-        if (content.innerHTML) {
+        if (document.querySelector("#content").innerHTML) {
             SavetoLocalStorage();
         }
     };
@@ -531,9 +529,9 @@ class InfoModal extends HTMLElement {
                     position: fixed;
                     top: 50%;
                     left: 50%;
-                    height: auto;
-                    width: auto;
                     transform: translate(-50%, -50%);
+                    height: calc(100vh - 20px);
+                    width: calc(100vw - 20px);
                     border: 1px solid black;
                     padding: 10px;
                     background-color: white;
@@ -608,9 +606,8 @@ class SpellModal extends HTMLElement {
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    height: auto;
-                    max-height: 700px;
-                    width: 400px;
+                    height: calc(100vh - 20px);
+                    width: calc(100vw - 20px);
                     border: 1px solid black;
                     border-radius: 5px;
                     padding: 10px;
@@ -627,13 +624,6 @@ class SpellModal extends HTMLElement {
                     position: absolute;
                     top: 0px;
                     right: 0px;
-                }
-
-                @media (width <= 500px) {
-                    #modal {
-                        height: 100vh;
-                        width: calc(100vw - 20px);
-                    }
                 }
             </style>
 
@@ -718,7 +708,7 @@ class SpellModal extends HTMLElement {
 
 customElements.define('spell-modal', SpellModal);
 
-class SelectNameModal extends HTMLElement {
+class SetupModal extends HTMLElement {
     constructor() {
         super();
 
@@ -740,6 +730,7 @@ class SelectNameModal extends HTMLElement {
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
+                    display: grid;
                     height: auto;
                     max-height: 700px;
                     width: 400px;
@@ -754,43 +745,55 @@ class SelectNameModal extends HTMLElement {
             <div id="modal">
                 <h3>Select a character name...</h3>
                 <input type="text">
-                <button type="button">Select</button>
+                <h3>...select a race...</h3>
+                <select id="race"></select>
+                <h3>...select an alignment...</h3>
+                <select id="alignment">
+                    <option value="Lawful Good">Lawful Good</option>
+                    <option value="Neutral Good">Neutral Good</option>
+                    <option value="Chaotic Good">Chaotic Good</option>
+                    <option value="Lawful Neutral">Lawful Neutral</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Chaotic Neutral">Chaotic Neutral</option>
+                    <option value="Lawful Evil">Lawful Evil</option>
+                    <option value="Neutral Evil">Neutral Evil</option>
+                    <option value="Chaotic Evil">Chaotic Evil</option>
+                </select>
+                <h3>...select a class.</h3>
+                <select id="class">
+                    <option value="Artificer">Artificer</option>
+                    <option value="Barbarian">Barbarian</option>
+                    <option value="Bard">Bard</option>
+                    <option value="Cleric">Cleric</option>
+                    <option value="Fighter">Fighter</option>
+                    <option value="Monk">Monk</option>
+                    <option value="Paladin">Paladin</option>
+                    <option value="Ranger">Ranger</option>
+                    <option value="Rouge">Rouge</option>
+                    <option value="Sorcerer">Sorcerer</option>
+                    <option value="Warlock">Warlock</option>
+                    <option value="Wizard">Wizard</option>
+                </select>
+                <button type="button">Continue</button>
             </div>
         `;
 
         shadow.innerHTML = template;
 
-        let input = shadow.querySelector('input');
-
         shadow.querySelector('button').onclick = () => {
-            char["name"] = input.value;
+            char["name"] = shadow.querySelector('input').value;
+            char["race"] = shadow.querySelector('#race').value;
+            char["alignment"] = shadow.querySelector('#alignment').value;
+            char["classes"][shadow.querySelector('#class').value] = 1;
 
-            SetCharacterName(input.value);
+            document.querySelector('#content').appendChild(new CharacterTemplate(char));
 
             this.remove();
         };
-
-        input.focus();
     }
 }
 
-customElements.define('selectname-modal', SelectNameModal);
-
-class SelectRaceModal extends HTMLElement {
-    constructor() {
-        super();
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let template = `
-            
-        `;
-
-        shadow.innerHTML = template;
-    }
-}
-
-customElements.define('selectrace-modal', SelectRaceModal);
+customElements.define('setup-modal', SetupModal);
 
 /* Elements */
 
@@ -833,11 +836,15 @@ class LinkElement extends HTMLElement {
         if (fieldset) {
             this.setAttribute("fieldset", fieldset.split("Field")[0]);
             
-            /* if (fieldset.includes("level")) {
-                a.onclick = () => {
+            if (fieldset.includes("level")) {
+                shadow.querySelector('a').onclick = () => {
                     document.body.appendChild(new SpellModal(text));
                 };
-            } */
+            } else if (fieldset.includes("feat")) {
+                shadow.querySelector('a').onclick = () => {
+                    document.body.appendChild(new InfoModal(text, feats));
+                };
+            }
 
             if (!fieldset.includes("classFeatures")) {
                 shadow.querySelector('button').onclick = () => {
@@ -860,122 +867,147 @@ class CharacterTemplate extends HTMLElement {
         let content = template.content;
 
         let shadow = this.attachShadow({mode: "open"});
+
+        let style = document.createElement('style');
+        style.innerHTML = `
+            <style>
+                label {
+                    display: block;
+                }
+
+                a {
+                    color: blue;
+                    cursor: pointer;
+                }
+
+                #abilityScoresFieldset {
+                    display: grid;
+                    grid-template-columns: repeat(6, minmax(auto, 50px));
+                }
+
+                #abilityScoresFieldset input {
+                    width: 35px;
+                }
+
+                .grid {
+                    display: grid;
+                    grid-auto-rows: auto;
+                }
+            </style>
+        `;
+
+        shadow.appendChild(style);
         shadow.appendChild(content.cloneNode(true));
 
-        if (json) {
-            shadow.querySelector(`h2`).appendChild(document.createTextNode(json["name"]));
-            shadow.querySelector('i').appendChild(document.createTextNode(`${json["size"]} ${json["race"]} ${json["alignment"]}`));
-            shadow.getElementById("hitPointsMax").value = json["hitPointsMax"];
-            shadow.getElementById("hitPoints").value = json["hitPoints"];
-            shadow.getElementById("tempHitPoints").value = json["tempHitPoints"];
+        shadow.querySelector(`h2`).appendChild(document.createTextNode(json["name"]));
+        shadow.querySelector('i').appendChild(document.createTextNode(`${json["size"]} ${json["race"]} ${json["alignment"]}`));
+        shadow.getElementById("hitPointsMax").value = json["hitPointsMax"];
+        shadow.getElementById("hitPoints").value = json["hitPoints"];
+        shadow.getElementById("tempHitPoints").value = json["tempHitPoints"];
 
-            ObjectToSheet(json,
-                shadow.querySelectorAll("[name=\"classes\"]"),
-                shadow.querySelectorAll("[name=\"subclasses\"]"),
-                shadow.querySelectorAll("[name=\"abilityScores\"]"),
-                shadow.querySelectorAll("[name=\"savingThrows\""),
-                shadow.querySelectorAll("[name=\"skillProficiencies\""),
-                shadow.querySelectorAll("[name=\"weaponProficiencies\""),
-                shadow.querySelectorAll("[name=\"armorProficiencies\""),
-                shadow.querySelectorAll("[name=\"skillExpertise\"")
-            )
+        let scores = shadow.querySelectorAll(["[name=\"abilityScores\"]"]);
 
-            shadow.getElementById("proficiencyBonusFieldset")
-                .appendChild(document.createTextNode(`+${ProficiencyBonus(AddCharacterLevels(json["classes"]))}`));
+        for (let score of scores) {
+            score.value = char["abilityScores"][score.id];
+        }
 
-            shadow.getElementById("initiativeFieldset")
-                .appendChild(document.createTextNode(`+${Modifier(parseInt(json["abilityScores"]["dexterity"]))}`));
-            
-            ChangeSummaries("abilityScores", "savingThrows", "skillProficiencies", "skillExpertise");
+        ObjectToSheet(json,
+            /* shadow.querySelectorAll("[name=\"classes\"]"), */
+            shadow.querySelectorAll("[name=\"subclasses\"]"),
+            shadow.querySelectorAll("[name=\"savingThrows\""),
+            shadow.querySelectorAll("[name=\"skillProficiencies\""),
+            shadow.querySelectorAll("[name=\"weaponProficiencies\""),
+            shadow.querySelectorAll("[name=\"armorProficiencies\""),
+            shadow.querySelectorAll("[name=\"skillExpertise\"")
+        );
 
-            /* Class Features */
+        shadow.getElementById("proficiencyBonusFieldset")
+            .appendChild(document.createTextNode(`+${ProficiencyBonus(AddCharacterLevels(json["classes"]))}`));
 
-            fetch("./json/5e Data.json")
-                .then(response => response.json())
-                .then(data => {
-                    let classData = data["Classes"]
-                    let classFeaturesFieldset = shadow.getElementById("classFeaturesFieldset");
+        shadow.getElementById("initiativeFieldset")
+            .appendChild(document.createTextNode(`+${Modifier(parseInt(json["abilityScores"]["dexterity"]))}`));
+        
+        ChangeSummaries(
+            "savingThrows",
+            "skillProficiencies",
+            "skillExpertise");
 
-                    for (let key in json["classes"]) {
-                        let level = json["classes"][key];
+        /* Class Features */
 
-                        if (level) {
-                            if (level > 0) {
-                                let subclass = json["subclasses"][`${key}Subclass`];
+        fetch("./json/5e Data.json")
+            .then(response => response.json())
+            .then(data => {
+                let classData = data["Classes"]
+                let classFeaturesFieldset = shadow.getElementById("classFeaturesFieldset");
 
-                                if (subclass) {
-                                    let fieldset = HTML.Fieldset(undefined, shadow);
-                                    fieldset.appendChild(HTML.Legend(key));
+                for (let key in json["classes"]) {
+                    let level = json["classes"][key];
 
-                                    for (let name in classData) {
-                                        let nameToLower = name.toLowerCase();
+                    if (level) {
+                        if (level > 0) {
+                            let fieldset = HTML.Fieldset(undefined, shadow);
+                            fieldset.appendChild(HTML.Legend(key));
 
-                                        if (nameToLower === key) {
-                                            let base = classData[name]["Base"];
-                                            let placeholder = ClassToSubclass(nameToLower);
-                                            let subclassJSON = classData[name][placeholder][subclass];
+                            for (let name in classData) {
+                                if (name === key) {
+                                    let base = classData[name]["Base"];
 
-                                            let clvl = json["classes"][nameToLower];
-
-                                            if (base) {
-                                                base.forEach(element => {
-                                                    if (element["Level"] <= clvl) {
-                                                        element["Features"].forEach(feature => {
-                                                            let link = new LinkElement("classFeatures", feature);
-                                                            link.onclick = () => {
-                                                                document.body.appendChild(new InfoModal(feature, classes[name]["Class Features"]));
-                                                            }
-
-                                                            fieldset.appendChild(link);
-                                                        });
-                                                    }
-                                                });
-                                            }
-
-                                            subclassJSON.forEach(element => {
-                                                if (element["Level"] <= clvl) {
-                                                    element["Features"].forEach(feature => {
-                                                        let link = new LinkElement("classFeatures", feature);
-                                                        link.onclick = () => {
-                                                            document.body.appendChild(new InfoModal(feature, classes[name]["Class Features"]));
-                                                        }
-
-                                                        fieldset.appendChild(link);
-                                                    });
+                                    base.forEach(element => {
+                                        if (element["Level"] <= json["classes"][name]) {
+                                            element["Features"].forEach(feature => {
+                                                let link = new LinkElement("classFeatures", feature);
+                                                link.onclick = () => {
+                                                    document.body.appendChild(new InfoModal(feature, classes[name]["Class Features"]));
                                                 }
+
+                                                fieldset.appendChild(link);
                                             });
                                         }
-                                    }
-
-                                    classFeaturesFieldset.appendChild(fieldset);
-                                } else {
-                                    /* open a modal, select a subclass */
+                                    });
                                 }
                             }
+
+                            /* let subclass = json["subclasses"][`${key}Subclass`];
+
+                            let subclassJSON = classData[name][ClassToSubclass(name)][subclass];
+
+                            if (subclass) {
+                                subclassJSON.forEach(element => {
+                                        if (element["Level"] <= clvl) {
+                                            element["Features"].forEach(feature => {
+                                                let link = new LinkElement("classFeatures", feature);
+                                                link.onclick = () => {
+                                                    document.body.appendChild(new InfoModal(feature, classes[name]["Class Features"]));
+                                                }
+
+                                                fieldset.appendChild(link);
+                                            });
+                                        }
+                                    });
+                            } */
+
+                            classFeaturesFieldset.appendChild(fieldset);
                         }
                     }
-                })
-            
-
-            ArrayToSheet(shadow, json, 
-                "feats", 
-                /* "classFeatures", */ 
-                /* "racialTraits",  */
-                "equipment",
-                "loot", 
-                "level0", 
-                "level1", 
-                "level2", 
-                "level3", 
-                "level4", 
-                "level5", 
-                "level6", 
-                "level7", 
-                "level8", 
-                "level9")
-        } else {
-            document.body.appendChild(new SelectNameModal());
-        }
+                }
+            });
+        
+        ArrayToSheet(shadow, json, 
+            "feats", 
+            /* "classFeatures", */ 
+            /* "racialTraits",  */
+            "equipment",
+            "loot", 
+            "level0", 
+            "level1", 
+            "level2", 
+            "level3", 
+            "level4", 
+            "level5", 
+            "level6", 
+            "level7", 
+            "level8", 
+            "level9");
 
         /* Events */
 
@@ -999,17 +1031,25 @@ class CharacterTemplate extends HTMLElement {
             document.body.appendChild(new AddLinkModal("racialTraitsFieldset"));
         }; */
 
-        /* let inputs = shadow.querySelectorAll('input');
+        let inputs = shadow.querySelectorAll('input');
 
         for (let node of inputs) {
             node.onchange = () => {
-                char[node.id] = node.id;
-
-                
+                if (node.name) {
+                    if ((node.type === "checkbox") || (node.type === "number")) {
+                        char[node.name][node.id] = node.value;
+                    }
+                } else {
+                    char[node.id] = node.value;
+                }
             }
-        } */
+        }
 
         /* Local Functions */
+
+        function FillSheet(json) {
+            
+        }
 
         function ObjectToSheet(json, ...nodeLists) {
             /* console.log(json); */
@@ -1057,56 +1097,46 @@ class CharacterTemplate extends HTMLElement {
 
             let array = [];
 
-            for (let input of inputs) {
-                if (input.type === "checkbox") {
-                    let proficiencyBonus = ProficiencyBonus(AddCharacterLevels(json["classes"]));
+            if (json) {
+                for (let input of inputs) {
+                    if (input.type === "checkbox") {
+                        let proficiencyBonus = ProficiencyBonus(AddCharacterLevels(json["classes"]));
 
-                    if (input.name === "savingThrows") {
-                        if (input.checked) {
-                            let modifier = Modifier(json["abilityScores"][input.id])
+                        if (input.name === "savingThrows") {
+                            if (input.checked) {
+                                let modifier = Modifier(json["abilityScores"][input.id])
 
-                            if (modifier > 0) {
-                                array.push(`${input.id} +${proficiencyBonus + modifier}`);
-                            } else {
-                                array.push(`${input.id} ${proficiencyBonus + modifier}`);
+                                if (modifier > 0) {
+                                    array.push(`${input.id} +${proficiencyBonus + modifier}`);
+                                } else {
+                                    array.push(`${input.id} ${proficiencyBonus + modifier}`);
+                                }
+                            }
+                        } else if (input.name === "skillProficiencies") {
+                            if (input.checked) {
+                                let modifier = Modifier(json["abilityScores"][SkillToAbility(input.id)]);
+                                
+                                if (modifier > 0) {
+                                    array.push(`${input.id} +${proficiencyBonus + modifier}`);
+                                } else {
+                                    array.push(`${input.id} ${proficiencyBonus + modifier}`);
+                                }
+                            }
+                        } else if (input.name === "skillExpertise") {
+                            if (input.checked) {
+                                let modifier = Modifier(json["abilityScores"][SkillToAbility(input.id)]);
+                                
+                                if (modifier > 0) {
+                                    array.push(`${input.id} +${(proficiencyBonus * 2) + modifier}`);
+                                } else {
+                                    array.push(`${input.id} ${(proficiencyBonus * 2) + modifier}`);
+                                }
                             }
                         }
-                    } else if (input.name === "skillProficiencies") {
-                        if (input.checked) {
-                            let modifier = Modifier(json["abilityScores"][SkillToAbility(input.id)]);
-                            
-                            if (modifier > 0) {
-                                array.push(`${input.id} +${proficiencyBonus + modifier}`);
-                            } else {
-                                array.push(`${input.id} ${proficiencyBonus + modifier}`);
-                            }
-                        }
-                    } else if (input.name === "skillExpertise") {
-                        if (input.checked) {
-                            let modifier = Modifier(json["abilityScores"][SkillToAbility(input.id)]);
-                            
-                            if (modifier > 0) {
-                                array.push(`${input.id} +${(proficiencyBonus * 2) + modifier}`);
-                            } else {
-                                array.push(`${input.id} ${(proficiencyBonus * 2) + modifier}`);
-                            }
-                        }
-                    }
-                } else if (input.type === "number") {
-                    let value = parseInt(input.value);
-
-                    if (input.name === "abilityScores" && value) {
-                            let modifier = Modifier(json["abilityScores"][input.id]);
-                            
-                            if (modifier > 0) {
-                                array.push(`${input.id} +${modifier}`);
-                            } else {
-                                array.push(`${input.id} ${modifier}`);
-                            }
                     }
                 }
             }
-
+            
             return array;
         }
 
@@ -1321,10 +1351,6 @@ function Table(json, parent) {
     parent.appendChild(table);
 }
 
-function SetCharacterName(name) {
-    document.querySelector('character-template').shadowRoot.querySelector(`h2`).appendChild(document.createTextNode(name));
-}
-
 /* DnD Functions */
 
 function AddCharacterLevels(json) {
@@ -1374,71 +1400,71 @@ function Modifier(int) {
 }
 
 function ClassToSubclass(string) {
-    if (string === "artificer") {
+    if (string === "Artificer") {
         
-    } else if (string === "barbarian") {
+    } else if (string === "Barbarian") {
         return "Primal Paths"
-    } else if (string === "bard") {
+    } else if (string === "Bard") {
         return "Bard Colleges"
-    } else if (string === "cleric") {
+    } else if (string === "Cleric") {
         return "Divine Domains"
-    } else if (string === "druid") {
+    } else if (string === "Druid") {
         return "Druid Circles"
-    } else if (string === "fighter") {
+    } else if (string === "Fighter") {
         return "Martial Archetypes"
-    } else if (string === "monk") {
+    } else if (string === "Monk") {
         return "Monastic Traditions"
-    } else if (string === "paladin") {
+    } else if (string === "Paladin") {
         return "Sacred Oaths"
-    } else if (string === "ranger") {
+    } else if (string === "Ranger") {
         return "Ranger Archetypes"
-    } else if (string === "rogue") {
+    } else if (string === "Rogue") {
         return "Roguish Archetypes"
-    } else if (string === "sorcerer") {
+    } else if (string === "Sorcerer") {
         return "Sorcerous Origins"
-    } else if (string === "warlock") {
+    } else if (string === "Warlock") {
         return "Otherworldly Patrons"
-    } else if (string === "wizard") {
+    } else if (string === "Wizard") {
         return "Arcane Traditions"
     }
 }
 
 function SkillToAbility(skill) {
     if (skill === "acrobatics") {
-        return "dexterity";
+        return "Dexterity";
     } else if (skill === "animalHandling") {
-        return "wisdom";
+        return "Wisdom";
     } else if (skill === "arcana") {
-        return "intelligence";
+        return "Intelligence";
     } else if (skill === "athletics") {
-        return "strength";
+        return "Strength";
     } else if (skill === "deception") {
-        return "charisma";
+        return "Charisma";
     } else if (skill === "history") {
-        return "intelligence";
+        return "Intelligence";
     } else if (skill === "insight") {
-        return "wisdom";
+        return "Wisdom";
     } else if (skill === "intimidation") {
-        return "charisma";
+        return "Charisma";
     } else if (skill === "investigation") {
-        return "intelligence";
+        return "Intelligence";
     } else if (skill === "medicine") {
-        return "wisdom";
+        return "Wisdom";
     } else if (skill === "nature") {
-        return "intelligence";
+        return "Intelligence";
     } else if (skill === "perception") {
-        return "wisdom";
+        return "Wisdom";
     } else if (skill === "performance") {
-        return "charisma";
+        return "Charisma";
     } else if (skill === "persuasion") {
-        return "charisma";
+        return "Charisma";
     } else if (skill === "religon") {
-        return "intelligence";
+        return "Intelligence";
     } else if (skill === "sleightofHand") {
-        return "dexterity";
+        return "Dexterity";
     } else if (skill === "stealth") {
-        return "dexterity";
+        return "Dexterity";
     } else if (skill === "survival") {
-        return "wisdom";
+        return "Wisdom";
     }
 }

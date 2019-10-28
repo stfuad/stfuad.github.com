@@ -55,21 +55,6 @@
     <!-- Templates -->
 
     <template id="characterTemplate">
-        <style>
-            label {
-                display: block;
-            }
-
-            a {
-                color: blue;
-                cursor: pointer;
-            }
-
-            th {
-                text-align: left;
-            }
-        </style>
-
         <h2></h2>
         <i></i>
         
@@ -103,7 +88,23 @@
             </table>
         </fieldset>
 
-        <details id="classesDetails">
+        <fieldset id="abilityScoresFieldset">
+            <legend>Ability Scores</legend>
+                <label for="Strength">Str</label>
+                <label for="Dexterity">Dex</label>
+                <label for="Consitution">Con</label>
+                <label for="Intelligence">Int</label>
+                <label for="Wisdom">Wis</label>
+                <label for="Charisma">Cha</label>
+                <input type="number" id="Strength" name="abilityScores">
+                <input type="number" id="Dexterity" name="abilityScores">
+                <input type="number" id="Consitution" name="abilityScores">
+                <input type="number" id="Intelligence" name="abilityScores">
+                <input type="number" id="Wisdom" name="abilityScores">
+                <input type="number" id="Charisma" name="abilityScores">
+        </fieldset>
+
+        <!-- <details id="classesDetails">
             <summary>Classes</summary>
             <fieldset id="classesFieldset">
                 <table>
@@ -205,61 +206,17 @@
                         </tr>
                 </table>
             </fieldset>            
-        </details>
-
-        <details id="abilityScoresDetails">
-            <summary>Ability Scores</summary>
-            <fieldset id="abilityScoresFieldset">
-                <table>
-                        <tr>
-                            <th>Strength</th>
-                            <td>
-                                <input type="number" id="strength" name="abilityScores">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Dexterity</th>
-                            <td>
-                                <input type="number" id="dexterity" name="abilityScores">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Constitution</th>
-                            <td>
-                                <input type="number" id="consitution" name="abilityScores">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Intelligence</th>
-                            <td>
-                                <input type="number" id="intelligence" name="abilityScores">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Wisdom</th>
-                            <td>
-                                <input type="number" id="wisdom" name="abilityScores">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Charisma</th>
-                            <td>
-                                <input type="number" id="charisma" name="abilityScores">
-                            </td>
-                        </tr>
-                </table>
-            </fieldset>            
-        </details>
+        </details> -->
 
         <details id="savingThrowsDetails">
             <summary>Saving Throws</summary>
-            <fieldset id="savingThrowsFieldset">
-                <label><input type="checkbox" id="strength" name="savingThrows">Strength</label>
-                <label><input type="checkbox" id="dexterity" name="savingThrows">Dexterity</label>
-                <label><input type="checkbox" id="consitution" name="savingThrows">Constitution</label>
-                <label><input type="checkbox" id="intelligence" name="savingThrows">Intelligence</label>
-                <label><input type="checkbox" id="wisdom" name="savingThrows">Wisdom</label>
-                <label><input type="checkbox" id="charisma" name="savingThrows">Charisma</label>
+            <fieldset id="savingThrowsFieldset" class="grid">
+                <label><input type="checkbox" id="Strength" name="savingThrows">Strength</label>
+                <label><input type="checkbox" id="Dexterity" name="savingThrows">Dexterity</label>
+                <label><input type="checkbox" id="Consitution" name="savingThrows">Constitution</label>
+                <label><input type="checkbox" id="Intelligence" name="savingThrows">Intelligence</label>
+                <label><input type="checkbox" id="Wisdom" name="savingThrows">Wisdom</label>
+                <label><input type="checkbox" id="Charisma" name="savingThrows">Charisma</label>
             </fieldset>
         </details>
 
@@ -268,7 +225,7 @@
 
         <details id="skillProficienciesDetails">
             <summary>Skills</summary>
-            <fieldset id="skillProficienciesFieldset">
+            <fieldset id="skillProficienciesFieldset" class="grid">
                 <label><input type="checkbox" id="acrobatics" name="skillProficiencies">Acrobatics</label>
                 <label><input type="checkbox" id="animalHandling" name="skillProficiencies">Animal Handling</label>
                 <label><input type="checkbox" id="arcana" name="skillProficiencies">Arcana</label>
@@ -293,7 +250,7 @@
         <details id="weaponProficienciesDetails">
             <summary>Weapon Proficiencies</summary>
             <fieldset id="weaponProficienciesFieldset">
-                <div>
+                <div class="grid">
                     <h4>Simple Melee Weapons</h4>
                     <label><input type="checkbox" id="club" name="weaponProficiencies">Club</label>
                     <label><input type="checkbox" id="dagger" name="weaponProficiencies">Dagger</label>
@@ -308,7 +265,7 @@
                     <label><input type="checkbox" id="unarmedStrike" name="weaponProficiencies">Unarmed Strike</label>
                 </div>
 
-                <div>
+                <div class="grid">
                     <h4>Simple Ranged Weapons</h4>
                     <label><input type="checkbox" id="crossbowLight" name="weaponProficiencies">Crossbow, Light</label>
                     <label><input type="checkbox" id="dart" name="weaponProficiencies">Dart</label>
@@ -316,7 +273,7 @@
                     <label><input type="checkbox" id="sling" name="weaponProficiencies">Sling</label>
                 </div>
 
-                <div>
+                <div class="grid">
                     <h4>Martial Melee Weapons</h4>
                     <label><input type="checkbox" id="battleaxe" name="weaponProficiencies">Battleaxe</label>
                     <label><input type="checkbox" id="flail" name="weaponProficiencies">Flail</label>
@@ -338,7 +295,7 @@
                     <label><input type="checkbox" id="whip" name="weaponProficiencies">Whip</label>
                 </div>
                 
-                <div>
+                <div class="grid">
                     <h4>Martial Ranged Weapons</h4>
                     <label><input type="checkbox" id="blowgun" name="weaponProficiencies">Blowgun</label>
                     <label><input type="checkbox" id="crossbowHand" name="weaponProficiencies">Crossbow, Hand</label>
@@ -347,7 +304,7 @@
                     <label><input type="checkbox" id="net" name="weaponProficiencies">Net</label>
                 </div>
 
-                <div>
+                <div class="grid">
                     <h4>Groups</h4>
                     <label><input type="checkbox" id="simple" name="weaponProficiencies">Simple</label>
                     <label><input type="checkbox" id="martial" name="weaponProficiencies">Martial</label>
@@ -358,7 +315,7 @@
 
         <details id="armorProficienciesDetails">
             <summary>Armor Proficiencies</summary>
-            <fieldset id="armorProficienciesFieldset">
+            <fieldset id="armorProficienciesFieldset" class="grid">
                 <label><input type="checkbox" id="light" name="armorProficiencies">Light</label>
                 <label><input type="checkbox" id="medium" name="armorProficiencies">Medium</label>
                 <label><input type="checkbox" id="heavy" name="armorProficiencies">Heavy</label>
@@ -371,7 +328,7 @@
 
         <details id="skillExpertiseDetails"> 
             <summary>Expertise</summary>
-            <fieldset id="skillExpertiseFieldset">
+            <fieldset id="skillExpertiseFieldset" class="grid">
                 <label><input type="checkbox" id="acrobatics" name="skillExpertise">Acrobatics</label>
                 <label><input type="checkbox" id="animalHandling" name="skillExpertise">Animal Handling</label>
                 <label><input type="checkbox" id="arcana" name="skillExpertise">Arcana</label>
