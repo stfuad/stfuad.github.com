@@ -4,7 +4,7 @@ const classes = JSON.parse(localStorage.getItem("Classes"));
 const feats = JSON.parse(localStorage.getItem("Feats"));
 const spells = JSON.parse(localStorage.getItem("Spells"));
 
-const char = {
+/* const char = {
     "name": "",
     "race": "",
     "size": "",
@@ -35,11 +35,337 @@ const char = {
     "level7": [],
     "level8": [],
     "level9": []
+}; */
+
+const char = {
+    "Name": "",
+    "Race": "",
+    "Size": "",
+    "Alignment": "",
+    "Hit Points Max": "",
+    "Hit Points": "",
+    "Classes": {
+        "Artificer": 0,
+        "Barbarian": 0,
+        "Bard": 0,
+        "Cleric": 0,
+        "Fighter": 0,
+        "Monk": 0,
+        "Paladin": 0,
+        "Ranger": 0,
+        "Rogue": 0,
+        "Sorcerer": 0,
+        "Warlock": 0,
+        "Wizard": 0
+    },
+    "Subclasses": {
+        "Path of the Ancestral Guardian": false,
+        "Path of the Battlerager": false,
+        "Path of the Berserker": false,
+        "Path of the Storm Herald": false,
+        "Path of the Totem Warrior": false,
+        "Path of the Zealot": false,
+        "College of Glamour": false,
+        "College of Lore": false,
+        "College of Swords": false,
+        "College of Valor": false,
+        "College of Whispers": false,
+        "Ambition Domain": false,
+        "Arcana Domain": false,
+        "Forge Domain": false,
+        "Grave Domain": false,
+        "Knowledge Domain": false,
+        "Life Domain": false,
+        "Light Domain": false,
+        "Nature Domain": false,
+        "Order Domain": false,
+        "Solidarity Domain": false,
+        "Strength Domain": false,
+        "Tempest Domain": false,
+        "Trickery Domain": false,
+        "War Domain": false,
+        "Zeal Domain": false,
+        "Circle of Dreams": false,
+        "Circle of Spores": false,
+        "Circle of the Land": false,
+        "Circle of the Moon": false,
+        "Circle of the Sheperd": false,
+        "Arcane Archer": false,
+        "Cavalier": false,
+        "Champion": false,
+        "Battle Master": false,
+        "Eldritch Night": false,
+        "Samurai": false,
+        "Way of Shadow": false,
+        "Way of the Drunken Master": false,
+        "Way of the Four Elements": false,
+        "Way of the Kensei": false,
+        "Way of the Long Death": false,
+        "Way of the Open Hand": false,
+        "Way of the Sun Soul": false,
+        "Oath of Conquest": false,
+        "Oath of Devotion": false,
+        "Oath of Redemption": false,
+        "Oath of Vengeance": false,
+        "Oath of the Ancients": false,
+        "Oath of the Crown": false,
+        "Beast Master": false,
+        "Gloom Stalker": false,
+        "Horizon Walker": false,
+        "Hunter": false,
+        "Monster Slayer": false,
+        "Arcane Trickster": false,
+        "Assassin": false,
+        "Inquisitive": false,
+        "Mastermind": false,
+        "Scout": false,
+        "Swashbuckler": false,
+        "Thief": false,
+        "Draconic Bloodline": false,
+        "Divine Soul": false,
+        "Shadow Magic": false,
+        "Storm Sorcery": false,
+        "Wild Magic": false,
+        "The Archfey": false,
+        "The Celestial": false,
+        "The Fiend": false,
+        "The Great Old One": false,
+        "The Hexblade": false,
+        "The Undying": false,
+        "Bladesinging": false,
+        "School of Abjuration": false,
+        "School of Conjuration": false,
+        "School of Divination": false,
+        "School of Enchantment": false,
+        "School of Evocation": false,
+        "School of Illusion": false,
+        "School of Necromancy": false,
+        "School of Transmutation": false,
+        "Warmagic": false
+    },
+    "Ability Scores": {
+        "Strength": 0,
+        "Dexterity": 0,
+        "Constitution": 0,
+        "Intelligence": 0,
+        "Wisdom": 0,
+        "Charisma": 0
+    },
+    "Saving Throws": {
+        "Strength": false,
+        "Dexterity": false,
+        "Constitution": false,
+        "Intelligence": false,
+        "Wisdom": false,
+        "Charisma": false
+    },
+    "Skills": {
+        "Acrobatics": false,
+        "Animal Handling": false,
+        "Arcana": false,
+        "Athletics": false,
+        "Deception": false,
+        "History": false,
+        "Insight": false,
+        "Intimidation": false,
+        "Investigation": false,
+        "Medicine": false,
+        "Nature": false,
+        "Perception": false,
+        "Performance": false,
+        "Persuasion": false,
+        "Religion": false,
+        "Sleight of Hand": false,
+        "Stealth": false,
+        "Survival":  false
+    },
+    "Speeds": {
+        "Walk": 25,
+        "Burrow": 0,
+        "Climb": 0,
+        "Fly": 50,
+        "Swim": 0
+    },
+    "Weapon Proficiencies": {
+        "Club": false,
+        "Dagger": false,
+        "Greatclub": false,
+        "Handaxe": false,
+        "Javelin": false,
+        "Light Hammer": false,
+        "Mace": false,
+        "Quarterstaff": false,
+        "Sickle": false,
+        "Spear": false,
+        "Unarmed Strike": true,
+        "Crossbow Light": false,
+        "Dart": false,
+        "Shortbow": false,
+        "Sling": false,
+        "Battleaxe": false,
+        "Flail": false,
+        "Glaive": false,
+        "Greataxe": false,
+        "Greatsword": false,
+        "Halberd": false,
+        "Kopesh": false,
+        "Lance": false,
+        "Longsword": false,
+        "Maul": false,
+        "Morningstar": false,
+        "Pike": false,
+        "Rapier": false,
+        "Scimitar": false,
+        "Shortsword": false,
+        "Trident": false,
+        "War Pick": false,
+        "Warhammer": false,
+        "Whip": false,
+        "Blowgun": false,
+        "Crossbow Hand": false,
+        "Crossbow Heavy": false,
+        "Longbow": false,
+        "Net": false,
+        "Simple": false,
+        "Martial": false,
+        "All": false
+    },
+    "Armor Proficiencies": {
+        "Light": false,
+        "Medium": false,
+        "Heavy": false,
+        "All": false
+    },
+    "Tool Proficiencies": {
+        "Alchemist's Supplies": false,
+        "Brewer's Supplies": false,
+        "Calligraphers Supplies": false,
+        "Carpenter's Tools": false,
+        "Cartographer's Tools": false,
+        "Cobbler's Tools": false,
+        "Cook's Tools": false,
+        "Glassblower's Tools": false,
+        "Jeweler's Tools": false,
+        "Leatherworker's Tools": false,
+        "Mason's Tools": false,
+        "Painter's Supplies": false,
+        "Potter's Tools": false,
+        "Smith's Tools": false,
+        "Tinker's Tools": false,
+        "Weaver's Tools": false,
+        "Woodcarver's Tools": false,
+        "Disguise Kit": false,
+        "Forgery Kit": false,
+        "Herbalism Kit": false,
+        "Bagpipes": false,
+        "Drum": false,
+        "Dulcimer": false,
+        "Flute": false,
+        "Lute": false,
+        "Lyre": false,
+        "Horn": false,
+        "Pan Flute": false,
+        "Shawm": false,
+        "Viol": false,
+        "Navigator's Tools": false,
+        "Poisoner's Kit": false,
+        "Thieves' Tools": false
+    },
+    "Languages": {
+        "Abyssal": false,
+        "Aquan": false,
+        "Aarakocra": true,
+        "Auran": true,
+        "Aven": false,
+        "Celestial": false,
+        "Common": true,
+        "Deep Speech": false,
+        "Draconic": false,
+        "Druidic": false,
+        "Dwarvish": false,
+        "Elvish": false,
+        "Giant": false,
+        "Gith": false,
+        "Gnomish": false,
+        "Goblin": false,
+        "Gnoll": false,
+        "Grung": false,
+        "Halfling": false,
+        "Ignan": false,
+        "Infernal": false,
+        "Keldon": false,
+        "Loxodon": false,
+        "Merfolk": false,
+        "Minotaur": false,
+        "Orc": false,
+        "Primordial": false,
+        "Siren": false,
+        "Sylvan": false,
+        "Terran": false,
+        "Undercommon": false,
+        "Vampire": false,
+        "Vedalken": false
+    },
+    "Damage Resistances": {
+        "Acid": false,
+        "Bludgeoning": false,
+        "Cold": false,
+        "Fire": false,
+        "Force": false,
+        "Lightning": false,
+        "Necrotic": false,
+        "Piercing": false,
+        "Poison": false,
+        "Psychic": false,
+        "Radiant": false,
+        "Slashing": false,
+        "Thunder": false
+    },
+    "Damage Immunities": {
+        "Acid": false,
+        "Bludgeoning": false,
+        "Cold": false,
+        "Fire": false,
+        "Force": false,
+        "Lightning": false,
+        "Necrotic": false,
+        "Piercing": false,
+        "Poison": false,
+        "Psychic": false,
+        "Radiant": false,
+        "Slashing": false,
+        "Thunder": false
+    },
+    "Condition Immunities": {
+        "Blinded": false,
+        "Charmed": false,
+        "Deafened": false,
+        "Frightened": false,
+        "Grappled": false,
+        "Incapacitated": false,
+        "Invisible": false,
+        "Paralyzed": false,
+        "Petrified": false,
+        "Poisoned": false,
+        "Prone": false,
+        "Restrained": false,
+        "Stunned": false,
+        "Unconcious": false
+    },
+    "Feats": [
+
+    ],
+    "Equipment": [
+
+    ],
+    "Spells": [
+
+    ]
 };
 
 /* Exports */
 
-export function MenuEventListeners() {
+export function Init() {
     document.getElementById("new").addEventListener("click", () => {
         document.getElementById("content").innerHTML = "";
 
@@ -123,7 +449,7 @@ class AddItemModal extends HTMLElement {
                 
                 char[select.value].push(input.value);
 
-                UpdateUIArray(select.value, char[select.value]);
+                /* UpdateUIArray(select.value, char[select.value]); */
 
                 this.remove();
             }
@@ -193,7 +519,7 @@ class AddSpellModal extends HTMLElement {
         });
 
         shadow.getElementById('add').onclick = () => {
-            let spellLevel;
+            /* let spellLevel;
 
             if (spells[select.value]["Level"] === 0) {
                 spellLevel = "level0";
@@ -215,11 +541,11 @@ class AddSpellModal extends HTMLElement {
                 spellLevel = "level8";
             } else if (spells[select.value]["Level"] === 9) {
                 spellLevel = "level9";
-            }
+            } */
 
-            char[spellLevel].push(select.value);
+            char["Spells"].push(select.value);
 
-            UpdateUIArray(spellLevel, char[spellLevel]);
+            /* UpdateUIArray(spellLevel, char[spellLevel]); */
 
             this.remove();
         }
@@ -351,9 +677,9 @@ class AddFeatModal extends HTMLElement {
 
         shadow.getElementById('add').onclick = () => {
             if (select.value) {
-                char["feats"].push(select.value);
+                char["Feats"].push(select.value);
 
-                UpdateUIArray("feats", char["feats"])
+                /* UpdateUIArray("feats", char["feats"]) */
 
                 this.remove();
             }
@@ -781,10 +1107,10 @@ class SetupModal extends HTMLElement {
         shadow.innerHTML = template;
 
         shadow.querySelector('button').onclick = () => {
-            char["name"] = shadow.querySelector('input').value;
+            /* char["name"] = shadow.querySelector('input').value;
             char["race"] = shadow.querySelector('#race').value;
             char["alignment"] = shadow.querySelector('#alignment').value;
-            char["classes"][shadow.querySelector('#class').value] = 1;
+            char["classes"][shadow.querySelector('#class').value] = 1; */
 
             document.querySelector('#content').appendChild(new CharacterTemplate(char));
 
@@ -833,7 +1159,7 @@ class LinkElement extends HTMLElement {
 
         this.setAttribute("id", text);
 
-        if (fieldset) {
+        /* if (fieldset) {
             this.setAttribute("fieldset", fieldset.split("Field")[0]);
             
             if (fieldset.includes("level")) {
@@ -851,7 +1177,7 @@ class LinkElement extends HTMLElement {
                     RemoveLinkElement(this, char);
                 }
             }
-        }
+        } */
         
         this.setAttribute("draggable", true);
     }
@@ -863,13 +1189,9 @@ class CharacterTemplate extends HTMLElement {
     constructor(json) {
         super();
 
-        let template = document.getElementById("characterTemplate");
-        let content = template.content;
-
         let shadow = this.attachShadow({mode: "open"});
 
-        let style = document.createElement('style');
-        style.innerHTML = `
+        let template = `
             <style>
                 label {
                     display: block;
@@ -892,268 +1214,342 @@ class CharacterTemplate extends HTMLElement {
                 .grid {
                     display: grid;
                     grid-auto-rows: auto;
+                    grid-auto-columns: auto;
                 }
             </style>
+
+            <h2></h2>
+            <i></i>
+            
+            <fieldset id="proficiencyBonusFieldset">
+                <legend>Proficiency Bonus</legend>
+            </fieldset>
+
+            <fieldset id="initiativeFieldset">
+                <legend>Initiative</legend>
+            </fieldset>
+        
+            <fieldset id="hitpointsFieldset" class="grid">
+                <legend>Hit Points</legend>
+
+                <label for="hitPointsMax">Hit Points Max</label>
+                <input type="number" id="hitPointsMax">
+
+                <label for="hitPoints">Hit Points</label>
+                <input type="number" id="hitPoints"></td>
+            </fieldset>
+
+            <fieldset id="abilityScoresFieldset">
+                <legend>Ability Scores</legend>
+                <label for="Strength">Str</label>
+                <label for="Dexterity">Dex</label>
+                <label for="Consitution">Con</label>
+                <label for="Intelligence">Int</label>
+                <label for="Wisdom">Wis</label>
+                <label for="Charisma">Cha</label>
+                <input type="number" id="Strength" name="abilityScores">
+                <input type="number" id="Dexterity" name="abilityScores">
+                <input type="number" id="Consitution" name="abilityScores">
+                <input type="number" id="Intelligence" name="abilityScores">
+                <input type="number" id="Wisdom" name="abilityScores">
+                <input type="number" id="Charisma" name="abilityScores">
+            </fieldset>
+
+            <details id="savingThrowsDetails" class="grid">
+                <summary>Saving Throws</summary>
+                <label><input type="checkbox" id="Strength" name="savingThrows">Strength</label>
+                <label><input type="checkbox" id="Dexterity" name="savingThrows">Dexterity</label>
+                <label><input type="checkbox" id="Consitution" name="savingThrows">Constitution</label>
+                <label><input type="checkbox" id="Intelligence" name="savingThrows">Intelligence</label>
+                <label><input type="checkbox" id="Wisdom" name="savingThrows">Wisdom</label>
+                <label><input type="checkbox" id="Charisma" name="savingThrows">Charisma</label>
+            </details>
+
+            <!-- Proficiencies -->
+
+            <details id="skillProficienciesDetails" class="grid">
+                <summary>Skills</summary>
+                <label><input type="checkbox" id="Acrobatics" name="skillProficiencies">Acrobatics</label>
+                <label><input type="checkbox" id="Animal Handling" name="skillProficiencies">Animal Handling</label>
+                <label><input type="checkbox" id="Arcana" name="skillProficiencies">Arcana</label>
+                <label><input type="checkbox" id="Athletics" name="skillProficiencies">Athletics</label>
+                <label><input type="checkbox" id="Deception" name="skillProficiencies">Deception</label>
+                <label><input type="checkbox" id="History" name="skillProficiencies">History</label>
+                <label><input type="checkbox" id="Insight" name="skillProficiencies">Insight</label>
+                <label><input type="checkbox" id="Intimidation" name="skillProficiencies">Intimidation</label>
+                <label><input type="checkbox" id="Investigation" name="skillProficiencies">Investigation</label>
+                <label><input type="checkbox" id="Medicine" name="skillProficiencies">Medicine</label>
+                <label><input type="checkbox" id="Nature" name="skillProficiencies">Nature</label>
+                <label><input type="checkbox" id="Perception" name="skillProficiencies">Perception</label>
+                <label><input type="checkbox" id="Performance" name="skillProficiencies">Performance</label>
+                <label><input type="checkbox" id="Persuasion" name="skillProficiencies">Persuasion</label>
+                <label><input type="checkbox" id="Religon" name="skillProficiencies">Religon</label>
+                <label><input type="checkbox" id="Sleight of Hand" name="skillProficiencies">Sleight of Hand</label>
+                <label><input type="checkbox" id="Stealth" name="skillProficiencies">Stealth</label>
+                <label><input type="checkbox" id="Survival" name="skillProficiencies">Survival</label>
+            </details>
+            
+            <details id="weaponProficienciesDetails" class="grid">
+                <summary>Weapon Proficiencies</summary>
+
+                <h4>Simple Melee Weapons</h4>
+                <label><input type="checkbox" id="Club" name="weaponProficiencies">Club</label>
+                <label><input type="checkbox" id="Dagger" name="weaponProficiencies">Dagger</label>
+                <label><input type="checkbox" id="Greatclub" name="weaponProficiencies">Greatclub</label>
+                <label><input type="checkbox" id="Handaxe" name="weaponProficiencies">Handaxe</label>
+                <label><input type="checkbox" id="Javelin" name="weaponProficiencies">Javelin</label>
+                <label><input type="checkbox" id="Light Hammer" name="weaponProficiencies">Light Hammer</label>
+                <label><input type="checkbox" id="Mace" name="weaponProficiencies">Mace</label>
+                <label><input type="checkbox" id="Quarterstaff" name="weaponProficiencies">Quarterstaff</label>
+                <label><input type="checkbox" id="Sickle" name="weaponProficiencies">Sickle</label>
+                <label><input type="checkbox" id="Spear" name="weaponProficiencies">Spear</label>
+                <label><input type="checkbox" id="Unarmed Strike" name="weaponProficiencies">Unarmed Strike</label>
+                
+                <h4>Simple Ranged Weapons</h4>
+                <label><input type="checkbox" id="Crossbow Light" name="weaponProficiencies">Crossbow, Light</label>
+                <label><input type="checkbox" id="Dart" name="weaponProficiencies">Dart</label>
+                <label><input type="checkbox" id="Shortbow" name="weaponProficiencies">Shortbow</label>
+                <label><input type="checkbox" id="Sling" name="weaponProficiencies">Sling</label>
+                
+                <h4>Martial Melee Weapons</h4>
+                <label><input type="checkbox" id="Battleaxe" name="weaponProficiencies">Battleaxe</label>
+                <label><input type="checkbox" id="Flail" name="weaponProficiencies">Flail</label>
+                <label><input type="checkbox" id="Glaive" name="weaponProficiencies">Glaive</label>
+                <label><input type="checkbox" id="Greataxe" name="weaponProficiencies">Greataxe</label>
+                <label><input type="checkbox" id="Greatsword" name="weaponProficiencies">Greatsword</label>
+                <label><input type="checkbox" id="Halberd" name="weaponProficiencies">Halberd</label>
+                <label><input type="checkbox" id="Lance" name="weaponProficiencies">Lance</label>
+                <label><input type="checkbox" id="Longsword" name="weaponProficiencies">Longsword</label>
+                <label><input type="checkbox" id="Maul" name="weaponProficiencies">Maul</label>
+                <label><input type="checkbox" id="Morningstar" name="weaponProficiencies">Morningstar</label>
+                <label><input type="checkbox" id="Pike" name="weaponProficiencies">Pike</label>
+                <label><input type="checkbox" id="Rapier" name="weaponProficiencies">Rapier</label>
+                <label><input type="checkbox" id="Scimitar" name="weaponProficiencies">Scimitar</label>
+                <label><input type="checkbox" id="Shortsword" name="weaponProficiencies">Shortsword</label>
+                <label><input type="checkbox" id="Trident" name="weaponProficiencies">Trident</label>
+                <label><input type="checkbox" id="War Pick" name="weaponProficiencies">War Pick</label>
+                <label><input type="checkbox" id="Warhammer" name="weaponProficiencies">Warhammer</label>
+                <label><input type="checkbox" id="Whip" name="weaponProficiencies">Whip</label>
+
+                <h4>Martial Ranged Weapons</h4>
+                <label><input type="checkbox" id="Blowgun" name="weaponProficiencies">Blowgun</label>
+                <label><input type="checkbox" id="Crossbow Hand" name="weaponProficiencies">Crossbow, Hand</label>
+                <label><input type="checkbox" id="Crossbow Heavy" name="weaponProficiencies">Crossbow, Heavy</label>
+                <label><input type="checkbox" id="Longbow" name="weaponProficiencies">Longbow</label>
+                <label><input type="checkbox" id="Net" name="weaponProficiencies">Net</label>
+
+                <h4>Groups</h4>
+                <label><input type="checkbox" id="Simple" name="weaponProficiencies">Simple</label>
+                <label><input type="checkbox" id="Martial" name="weaponProficiencies">Martial</label>
+                <label><input type="checkbox" id="All" name="weaponProficiencies">All</label>
+            </details>
+
+            <details id="armorProficienciesDetails" class="grid">
+                <summary>Armor Proficiencies</summary>
+                <fieldset id="armorProficienciesFieldset" class="grid">
+                <label><input type="checkbox" id="Light" name="armorProficiencies">Light</label>
+                <label><input type="checkbox" id="Medium" name="armorProficiencies">Medium</label>
+                <label><input type="checkbox" id="Heavy" name="armorProficiencies">Heavy</label>
+                <label><input type="checkbox" id="Shields" name="armorProficiencies">Shields</label>
+                <label><input type="checkbox" id="All" name="armorProficiencies">All</label>
+                </fieldset>
+            </details>
+
+            <!-- Expertise -->
+
+            <details id="skillExpertiseDetails" class="grid"> 
+                <summary>Expertise</summary>
+                <label><input type="checkbox" id="Acrobatics" name="skillExpertise">Acrobatics</label>
+                <label><input type="checkbox" id="Animal Handling" name="skillExpertise">Animal Handling</label>
+                <label><input type="checkbox" id="Arcana" name="skillExpertise">Arcana</label>
+                <label><input type="checkbox" id="Athletics" name="skillExpertise">Athletics</label>
+                <label><input type="checkbox" id="Deception" name="skillExpertise">Deception</label>
+                <label><input type="checkbox" id="History" name="skillExpertise">History</label>
+                <label><input type="checkbox" id="Insight" name="skillExpertise">Insight</label>
+                <label><input type="checkbox" id="Intimidation" name="skillExpertise">Intimidation</label>
+                <label><input type="checkbox" id="Investigation" name="skillExpertise">Investigation</label>
+                <label><input type="checkbox" id="Medicine" name="skillExpertise">Medicine</label>
+                <label><input type="checkbox" id="Nature" name="skillExpertise">Nature</label>
+                <label><input type="checkbox" id="Perception" name="skillExpertise">Perception</label>
+                <label><input type="checkbox" id="Performance" name="skillExpertise">Performance</label>
+                <label><input type="checkbox" id="Persuasion" name="skillExpertise">Persuasion</label>
+                <label><input type="checkbox" id="Religon" name="skillExpertise">Religon</label>
+                <label><input type="checkbox" id="Sleight of Hand" name="skillExpertise">Sleight of Hand</label>
+                <label><input type="checkbox" id="Stealth" name="skillExpertise">Stealth</label>
+                <label><input type="checkbox" id="Survival" name="skillExpertise">Survival</label>
+            </details>
+
+            
+            <details id="languagesDetails" class="grid">
+                <summary>Languages</summary>
+                <label><input type="checkbox" id="" name="languages"></label>
+            </details>
+
+            <details id="" class="grid">
+                <summary></summary>
+                <label><input type="checkbox" id="" name=""></label>
+            </details>
+
+            <!-- Feats -->
+
+            <details id="featsDetails">
+                <summary>Feats</summary>
+
+                <a id="addFeatLink">+ Add Feat</a>
+            </details>
+
+            <!-- Class Features -->
+
+            <details id="classFeaturesDetails">
+                <summary>Class Features</summary>
+
+                <!-- <a id="addFeatureLink">+ Add Feature</a> -->
+            </details>
+        
+            <!-- Racial Traits -->
+
+            <details id="racialTraitsDetails">
+                <summary>Racial Traits</summary>
+
+                <!-- <a id="addTraitLink">+ Add Trait</a> -->
+            </details>
+
+            <!-- Equipment -->
+
+            <details>
+                <summary>Items</summary>
+
+                <fieldset id="equipmentFieldset">
+                    <legend>Equipment</legend>
+                </fieldset>
+
+                <fieldset id="lootFieldset">
+                    <legend>Loot</legend>
+                </fieldset>
+                
+                <a id="addItemLink">+ Add Item</a>         
+            </details>
+
+            <!-- Spells -->
+
+            <details>
+                <summary>Spells</summary>
+                <fieldset id="level0Fieldset">
+                    <legend>Cantrip (0 Level)</legend>
+                </fieldset>
+
+                <fieldset id="level1Fieldset">
+                    <legend>1st Level</legend>
+                </fieldset>
+
+                <fieldset id="level2Fieldset">
+                    <legend>2nd Level</legend>
+                </fieldset>
+
+                <fieldset id="level3Fieldset">
+                    <legend>3rd Level</legend>
+                </fieldset>
+
+                <fieldset id="level4Fieldset">
+                    <legend>4th Level</legend>
+                </fieldset>
+
+                <fieldset id="level5Fieldset">
+                    <legend>5th Level</legend>
+                </fieldset>
+
+                <fieldset id="level6Fieldset">
+                    <legend>6th Level</legend>
+                </fieldset>
+
+                <fieldset id="level7Fieldset">
+                    <legend>7th Level</legend>
+                </fieldset>
+
+                <fieldset id="level8Fieldset">
+                    <legend>8th Level</legend>
+                </fieldset>
+
+                <fieldset id="level9Fieldset">
+                    <legend>9th Level</legend>
+                </fieldset>
+                
+                <a id="addSpellLink">+ Add a Spell</a>
+            </details>
         `;
 
-        shadow.appendChild(style);
-        shadow.appendChild(content.cloneNode(true));
+        shadow.innerHTML = template;
 
-        shadow.querySelector(`h2`).appendChild(document.createTextNode(json["name"]));
-        shadow.querySelector('i').appendChild(document.createTextNode(`${json["size"]} ${json["race"]} ${json["alignment"]}`));
-        shadow.getElementById("hitPointsMax").value = json["hitPointsMax"];
-        shadow.getElementById("hitPoints").value = json["hitPoints"];
-        shadow.getElementById("tempHitPoints").value = json["tempHitPoints"];
-
-        let scores = shadow.querySelectorAll(["[name=\"abilityScores\"]"]);
-
-        for (let score of scores) {
-            score.value = char["abilityScores"][score.id];
-        }
-
-        ObjectToSheet(json,
-            /* shadow.querySelectorAll("[name=\"classes\"]"), */
-            shadow.querySelectorAll("[name=\"subclasses\"]"),
-            shadow.querySelectorAll("[name=\"savingThrows\""),
-            shadow.querySelectorAll("[name=\"skillProficiencies\""),
-            shadow.querySelectorAll("[name=\"weaponProficiencies\""),
-            shadow.querySelectorAll("[name=\"armorProficiencies\""),
-            shadow.querySelectorAll("[name=\"skillExpertise\"")
-        );
-
-        shadow.getElementById("proficiencyBonusFieldset")
-            .appendChild(document.createTextNode(`+${ProficiencyBonus(AddCharacterLevels(json["classes"]))}`));
-
-        shadow.getElementById("initiativeFieldset")
-            .appendChild(document.createTextNode(`+${Modifier(parseInt(json["abilityScores"]["dexterity"]))}`));
+        shadow.querySelector(`h2`).appendChild(document.createTextNode(json["Name"]));
+        shadow.querySelector('i').appendChild(document.createTextNode(`${json["Size"]} ${json["Race"]} ${json["Alignment"]}`));
+        shadow.getElementById("hitPointsMax").value = json["Hit Points Max"];
+        shadow.getElementById("hitPoints").value = json["Hit Points"];
         
-        ChangeSummaries(
-            "savingThrows",
-            "skillProficiencies",
-            "skillExpertise");
+        /* Ability Scores */
 
-        /* Class Features */
+        let abilityScoreInputs = shadow.querySelectorAll(["[name=\"abilityScores\"]"]);
 
-        fetch("./json/5e Data.json")
-            .then(response => response.json())
-            .then(data => {
-                let classData = data["Classes"]
-                let classFeaturesFieldset = shadow.getElementById("classFeaturesFieldset");
-
-                for (let key in json["classes"]) {
-                    let level = json["classes"][key];
-
-                    if (level) {
-                        if (level > 0) {
-                            let fieldset = HTML.Fieldset(undefined, shadow);
-                            fieldset.appendChild(HTML.Legend(key));
-
-                            for (let name in classData) {
-                                if (name === key) {
-                                    let base = classData[name]["Base"];
-
-                                    base.forEach(element => {
-                                        if (element["Level"] <= json["classes"][name]) {
-                                            element["Features"].forEach(feature => {
-                                                let link = new LinkElement("classFeatures", feature);
-                                                link.onclick = () => {
-                                                    document.body.appendChild(new InfoModal(feature, classes[name]["Class Features"]));
-                                                }
-
-                                                fieldset.appendChild(link);
-                                            });
-                                        }
-                                    });
-                                }
-                            }
-
-                            /* let subclass = json["subclasses"][`${key}Subclass`];
-
-                            let subclassJSON = classData[name][ClassToSubclass(name)][subclass];
-
-                            if (subclass) {
-                                subclassJSON.forEach(element => {
-                                        if (element["Level"] <= clvl) {
-                                            element["Features"].forEach(feature => {
-                                                let link = new LinkElement("classFeatures", feature);
-                                                link.onclick = () => {
-                                                    document.body.appendChild(new InfoModal(feature, classes[name]["Class Features"]));
-                                                }
-
-                                                fieldset.appendChild(link);
-                                            });
-                                        }
-                                    });
-                            } */
-
-                            classFeaturesFieldset.appendChild(fieldset);
-                        }
-                    }
-                }
-            });
-        
-        ArrayToSheet(shadow, json, 
-            "feats", 
-            /* "classFeatures", */ 
-            /* "racialTraits",  */
-            "equipment",
-            "loot", 
-            "level0", 
-            "level1", 
-            "level2", 
-            "level3", 
-            "level4", 
-            "level5", 
-            "level6", 
-            "level7", 
-            "level8", 
-            "level9");
-
-        /* Events */
-
-        shadow.getElementById("addItemLink").onclick = () => {
-            document.body.appendChild(new AddItemModal());
-        };
-
-        shadow.getElementById("addSpellLink").onclick = () => {
-            document.body.appendChild(new AddSpellModal());
-        };
-
-        shadow.getElementById("addFeatLink").onclick = () => {
-            document.body.appendChild(new AddFeatModal());
-        };
-
-        /* shadow.getElementById("addFeatureLink").onclick = () => {
-            document.body.appendChild(new AddLinkModal("classFeaturesFieldset"));
-        }; */
-
-        /* shadow.getElementById("addTraitLink").onclick = () => {
-            document.body.appendChild(new AddLinkModal("racialTraitsFieldset"));
-        }; */
-
-        let inputs = shadow.querySelectorAll('input');
-
-        for (let node of inputs) {
-            node.onchange = () => {
-                if (node.name) {
-                    if ((node.type === "checkbox") || (node.type === "number")) {
-                        char[node.name][node.id] = node.value;
-                    }
-                } else {
-                    char[node.id] = node.value;
-                }
-            }
-        }
-
-        /* Local Functions */
-
-        function FillSheet(json) {
-            
-        }
-
-        function ObjectToSheet(json, ...nodeLists) {
-            /* console.log(json); */
-        
-            nodeLists.forEach(nodeList => {
-                for (let node of nodeList) {
-                    /* console.log(node); */
-        
-                    if (node.type === "checkbox") {
-                        node.checked = json[node.name][node.id];
-                    } else {
-                        node.value = json[node.name][node.id];
-                    }
-                }
-            });
-        }
-        
-        function ArrayToSheet(shadowRoot, json, ...arrays) {
-            arrays.forEach(array => {
-                json[array].forEach(item => {
-                    let target = shadowRoot.querySelector(`#${array}Fieldset`);
-        
-                    let link = new LinkElement(`${array}Fieldset`, item);
-                    let linkShadow = link.shadowRoot;
-                    let a = linkShadow.querySelector('a');
-        
-                    if (array.includes("level")) {
-                        a.onclick = () => {
-                            document.body.appendChild(new SpellModal(item));
-                        }
-                    } else if (array.includes("feats")) {
-                        a.onclick = () => {
-                            document.body.appendChild(new InfoModal(item, feats));
-                        }
-                    }
-        
-                    target.appendChild(link);
-                });
-            });
-        }
-                
-        function BuildArray(fieldset) {
-            let target = shadow.getElementById(fieldset);
-            let inputs = target.querySelectorAll("input");
-
-            let array = [];
-
-            if (json) {
-                for (let input of inputs) {
-                    if (input.type === "checkbox") {
-                        let proficiencyBonus = ProficiencyBonus(AddCharacterLevels(json["classes"]));
-
-                        if (input.name === "savingThrows") {
-                            if (input.checked) {
-                                let modifier = Modifier(json["abilityScores"][input.id])
-
-                                if (modifier > 0) {
-                                    array.push(`${input.id} +${proficiencyBonus + modifier}`);
-                                } else {
-                                    array.push(`${input.id} ${proficiencyBonus + modifier}`);
-                                }
-                            }
-                        } else if (input.name === "skillProficiencies") {
-                            if (input.checked) {
-                                let modifier = Modifier(json["abilityScores"][SkillToAbility(input.id)]);
-                                
-                                if (modifier > 0) {
-                                    array.push(`${input.id} +${proficiencyBonus + modifier}`);
-                                } else {
-                                    array.push(`${input.id} ${proficiencyBonus + modifier}`);
-                                }
-                            }
-                        } else if (input.name === "skillExpertise") {
-                            if (input.checked) {
-                                let modifier = Modifier(json["abilityScores"][SkillToAbility(input.id)]);
-                                
-                                if (modifier > 0) {
-                                    array.push(`${input.id} +${(proficiencyBonus * 2) + modifier}`);
-                                } else {
-                                    array.push(`${input.id} ${(proficiencyBonus * 2) + modifier}`);
-                                }
-                            }
-                        }
-                    }
-                }
+        for (let node of abilityScoreInputs) {
+            if (json["Ability Scores"][node.id]) {
+                node.value = json["Ability Scores"][node.id];
             }
             
-            return array;
         }
 
-        function ChangeSummaries(...keys) {
+        function UpdateSomethings(...keys) {
             keys.forEach(key => {
-                ChangeSummary(key);
+                UpdateSomething(key);
             });
         }
 
-        function ChangeSummary(key) {
-            let target = shadow.getElementById(`${key}Details`);
-            
-            let summary = target.querySelector("summary");
+        function UpdateSomething(name) {
+            let nodeList = shadow.querySelectorAll([`[name=\"${PropToVar(name)}\"]`]);
+            let detailsVisibility = false;
+    
+            for (let node of nodeList) {
+                if (json[name][node.id]) {
+                    detailsVisibility = true;
+                    node.value = json[name][node.id];
+                }
+            }
 
-            let newArray = BuildArray(`${key}Fieldset`);
+            if (!detailsVisibility) {
+                ToggleDetailsVisibility(name);
+            }
+        }
 
-            summary.textContent = `${summary.textContent} - ${newArray.join(", ")}`;
+        function PropToVar(prop) {
+            if (prop === "Saving Throws") {
+                return "savingThrows";
+            } else if (prop === "Skills") {
+                return "skillProficiencies";
+            } else if (prop === "Weapon Proficiencies") {
+                return "weaponProficiencies";
+            } else if (prop === "Armor Proficiencies") {
+                return "armorProficiencies";
+            } else if (prop === "Tool Proficiencies") {
+                return "toolProficiencies";
+            } else if (prop === "Skill Expertise") {
+                return "skillExpertise";
+            } else if (prop === "Languages") {
+                return "languages";
+            } else if (prop === "Damage Resistances") {
+                return "damageResistances";
+            } else if (prop === "Damage Immunities") {
+                return "damageImmunities";
+            } else if (prop === "Condition Immunities") {
+                return "conditionImmunitiess";
+            }
+        }
+
+        function ToggleDetailsVisibility(details) {
+            let element = shadow.querySelector(`#${details}Details`);
+
+            if (element.style.visibility === "visible") {
+                element.style.visibility = "collapse";
+            } else {
+                element.style.visibility = "visible";
+            }
         }
     }
 }
@@ -1193,10 +1589,6 @@ function UpdateUIArray(fieldset, json) {
     json.forEach(element => {
         target.appendChild(new LinkElement(fieldset, element));
     });
-}
-
-function UpdateUIInput(input, json) {
-    document.querySelector('character-template').shadowRoot.querySelector(`#${input}`).setAttribute("value", json);
 }
 
 function RemoveLinkElement(node, char) {
@@ -1366,13 +1758,13 @@ function AddCharacterLevels(json) {
 function ProficiencyBonus(cr) {
     let bonus = 0;
 
-    if(cr == 0) {
+    if(cr === 0) {
         bonus = 2;
-    } else if(cr == "1/8") {
+    } else if(cr === "1/8") {
         bonus = 2;
-    } else if(cr == "1/4") {
+    } else if(cr === "1/4") {
         bonus = 2;
-    } else if(cr == "1/2") {
+    } else if(cr === "1/2") {
         bonus = 2;
     } else if(cr < 4) {
         bonus = 2;
