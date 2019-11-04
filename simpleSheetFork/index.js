@@ -4,39 +4,6 @@ const classes = JSON.parse(localStorage.getItem("Classes"));
 const feats = JSON.parse(localStorage.getItem("Feats"));
 const spells = JSON.parse(localStorage.getItem("Spells"));
 
-/* const char = {
-    "name": "",
-    "race": "",
-    "size": "",
-    "alignment": "",
-    "hitPointsMax": "",
-    "hitPoints": "",
-    "tempHitPoints": "",
-    "classes": {},
-    "subclasses": {},
-    "abilityScores": {},
-    "savingThrows": {},
-    "skillProficiencies": {},
-    "weaponProficiencies": {},
-    "armorProficiencies": {},
-    "skillExpertise": {},
-    "feats": [],
-    "classFeatures": [],
-    "racialTraits": [],
-    "equipment": [],
-    "loot": [],
-    "level0": [],
-    "level1": [],
-    "level2": [],
-    "level3": [],
-    "level4": [],
-    "level5": [],
-    "level6": [],
-    "level7": [],
-    "level8": [],
-    "level9": []
-}; */
-
 const char = {
     "Name": "",
     "Race": "",
@@ -369,7 +336,7 @@ export function Init() {
     document.getElementById("new").addEventListener("click", () => {
         document.getElementById("content").innerHTML = "";
 
-        document.body.appendChild(new SetupModal());
+        document.body.appendChild(new SetupModal(char));
     }, false);
 
     document.getElementById("open").addEventListener("click", () => {
@@ -1035,7 +1002,7 @@ class SpellModal extends HTMLElement {
 customElements.define('spell-modal', SpellModal);
 
 class SetupModal extends HTMLElement {
-    constructor() {
+    constructor(json) {
         super();
 
         let shadow = this.attachShadow({mode: 'open'});
@@ -1107,12 +1074,12 @@ class SetupModal extends HTMLElement {
         shadow.innerHTML = template;
 
         shadow.querySelector('button').onclick = () => {
-            /* char["name"] = shadow.querySelector('input').value;
-            char["race"] = shadow.querySelector('#race').value;
-            char["alignment"] = shadow.querySelector('#alignment').value;
-            char["classes"][shadow.querySelector('#class').value] = 1; */
+            json["Name"] = shadow.querySelector('input').value;
+            json["Race"] = shadow.querySelector('#race').value;
+            json["Alignment"] = shadow.querySelector('#alignment').value;
+            json["Classes"][shadow.querySelector('#class').value] = 1;
 
-            document.querySelector('#content').appendChild(new CharacterTemplate(char));
+            document.querySelector('#content').appendChild(new CharacterTemplate(json));
 
             this.remove();
         };
@@ -1346,13 +1313,11 @@ class CharacterTemplate extends HTMLElement {
 
             <details id="armorProficienciesDetails" class="grid">
                 <summary>Armor Proficiencies</summary>
-                <fieldset id="armorProficienciesFieldset" class="grid">
                 <label><input type="checkbox" id="Light" name="armorProficiencies">Light</label>
                 <label><input type="checkbox" id="Medium" name="armorProficiencies">Medium</label>
                 <label><input type="checkbox" id="Heavy" name="armorProficiencies">Heavy</label>
                 <label><input type="checkbox" id="Shields" name="armorProficiencies">Shields</label>
                 <label><input type="checkbox" id="All" name="armorProficiencies">All</label>
-                </fieldset>
             </details>
 
             <!-- Expertise -->
@@ -1382,12 +1347,91 @@ class CharacterTemplate extends HTMLElement {
             
             <details id="languagesDetails" class="grid">
                 <summary>Languages</summary>
-                <label><input type="checkbox" id="" name="languages"></label>
+                <label><input type="checkbox" id="Abyssal" name="languages">Abyssal</label>
+                <label><input type="checkbox" id="Aquan" name="languages">Aquan</label>
+                <label><input type="checkbox" id="Aarakocra" name="languages">Aarakocra</label>
+                <label><input type="checkbox" id="Auran" name="languages">Auran</label>
+                <label><input type="checkbox" id="Aven" name="languages">Aven</label>
+                <label><input type="checkbox" id="Celestial" name="languages">Celestial</label>
+                <label><input type="checkbox" id="Common" name="languages">Common</label>
+                <label><input type="checkbox" id="Deep Speech" name="languages">Deep Speech</label>
+                <label><input type="checkbox" id="Draconic" name="languages">Draconic</label>
+                <label><input type="checkbox" id="Druidic" name="languages">Druidic</label>
+                <label><input type="checkbox" id="Dwarvish" name="languages">Dwarvish</label>
+                <label><input type="checkbox" id="Elvish" name="languages">Elvish</label>
+                <label><input type="checkbox" id="Giant" name="languages">Giant</label>
+                <label><input type="checkbox" id="Gith" name="languages">Gith</label>
+                <label><input type="checkbox" id="Gnomish" name="languages">Gnomish</label>
+                <label><input type="checkbox" id="Goblin" name="languages">Goblin</label>
+                <label><input type="checkbox" id="Gnoll" name="languages">Gnoll</label>
+                <label><input type="checkbox" id="Grung" name="languages">Grung</label>
+                <label><input type="checkbox" id="Halfling" name="languages">Halfling</label>
+                <label><input type="checkbox" id="Ignan" name="languages">Ignan</label>
+                <label><input type="checkbox" id="Infernal" name="languages">Infernal</label>
+                <label><input type="checkbox" id="Keldon" name="languages">Keldon</label>
+                <label><input type="checkbox" id="Loxodon" name="languages">Loxodon</label>
+                <label><input type="checkbox" id="Merfolk" name="languages">Merfolk</label>
+                <label><input type="checkbox" id="Minotaur" name="languages">Minotaur</label>
+                <label><input type="checkbox" id="Orc" name="languages">Orc</label>
+                <label><input type="checkbox" id="Primordial" name="languages">Primordial</label>
+                <label><input type="checkbox" id="Siren" name="languages">Siren</label>
+                <label><input type="checkbox" id="Sylvan" name="languages">Sylvan</label>
+                <label><input type="checkbox" id="Terran" name="languages">Terran</label>
+                <label><input type="checkbox" id="Undercommon" name="languages">Undercommon</label>
+                <label><input type="checkbox" id="Vampire" name="languages">Vampire</label>
+                <label><input type="checkbox" id="Vedalken" name="languages">Vedalken</label>
             </details>
 
-            <details id="" class="grid">
-                <summary></summary>
-                <label><input type="checkbox" id="" name=""></label>
+            <details id="damageResistancesDetails" class="grid">
+                <summary>Damage Resistances</summary>
+                <label><input type="checkbox" id="Acid" name="damageResistances">Acid</label>
+                <label><input type="checkbox" id="Bludgeoning" name="damageResistances">Bludgeoning</label>
+                <label><input type="checkbox" id="Cold" name="damageResistances">Cold</label>
+                <label><input type="checkbox" id="Fire" name="damageResistances">Fire</label>
+                <label><input type="checkbox" id="Force" name="damageResistances">Force</label>
+                <label><input type="checkbox" id="Lightning" name="damageResistances">Lightning</label>
+                <label><input type="checkbox" id="Necrotic" name="damageResistances">Necrotic</label>
+                <label><input type="checkbox" id="Piercing" name="damageResistances">Piercing</label>
+                <label><input type="checkbox" id="Poison" name="damageResistances">Poison</label>
+                <label><input type="checkbox" id="Psychic" name="damageResistances">Psychic</label>
+                <label><input type="checkbox" id="Radiant" name="damageResistances">Radiant</label>
+                <label><input type="checkbox" id="Slashing" name="damageResistances">Slashing</label>
+                <label><input type="checkbox" id="Thunder" name="damageResistances">Thunder</label>
+            </details>
+
+            <details id="damageImmunitiesDetails" class="grid">
+                <summary>Damage Immunities</summary>
+                <label><input type="checkbox" id="Acid" name="damageImmunities">Acid</label>
+                <label><input type="checkbox" id="Bludgeoning" name="damageImmunities">Bludgeoning</label>
+                <label><input type="checkbox" id="Cold" name="damageImmunities">Cold</label>
+                <label><input type="checkbox" id="Fire" name="damageImmunities">Fire</label>
+                <label><input type="checkbox" id="Force" name="damageImmunities">Force</label>
+                <label><input type="checkbox" id="Lightning" name="damageImmunities">Lightning</label>
+                <label><input type="checkbox" id="Necrotic" name="damageImmunities">Necrotic</label>
+                <label><input type="checkbox" id="Piercing" name="damageImmunities">Piercing</label>
+                <label><input type="checkbox" id="Poison" name="damageImmunities">Poison</label>
+                <label><input type="checkbox" id="Psychic" name="damageImmunities">Psychic</label>
+                <label><input type="checkbox" id="Radiant" name="damageImmunities">Radiant</label>
+                <label><input type="checkbox" id="Slashing" name="damageImmunities">Slashing</label>
+                <label><input type="checkbox" id="Thunder" name="damageImmunities">Thunder</label>
+            </details>
+
+            <details id="conditionImmunitiesDetails" class="grid">
+                <summary>Condition Immunities</summary>
+                <label><input type="checkbox" id="Blinded" name="conditionImmunities">Blinded</label>
+                <label><input type="checkbox" id="Charmed" name="conditionImmunities">Charmed</label>
+                <label><input type="checkbox" id="Deafened" name="conditionImmunities">Deafened</label>
+                <label><input type="checkbox" id="Frightened" name="conditionImmunities">Frightened</label>
+                <label><input type="checkbox" id="Grappled" name="conditionImmunities">Grappled</label>
+                <label><input type="checkbox" id="Incapacitated" name="conditionImmunities">Incapacitated</label>
+                <label><input type="checkbox" id="Invisible" name="conditionImmunities">Invisible</label>
+                <label><input type="checkbox" id="Paralyzed" name="conditionImmunities">Paralyzed</label>
+                <label><input type="checkbox" id="Petrified" name="conditionImmunities">Petrified</label>
+                <label><input type="checkbox" id="Poisoned" name="conditionImmunities">Poisoned</label>
+                <label><input type="checkbox" id="Prone" name="conditionImmunities">Prone</label>
+                <label><input type="checkbox" id="Restrained" name="conditionImmunities">Restrained</label>
+                <label><input type="checkbox" id="Stunned" name="conditionImmunities">Stunned</label>
+                <label><input type="checkbox" id="Unconcious" name="conditionImmunities">Unconcious</label>
             </details>
 
             <!-- Feats -->
@@ -1482,8 +1526,8 @@ class CharacterTemplate extends HTMLElement {
 
         shadow.querySelector(`h2`).appendChild(document.createTextNode(json["Name"]));
         shadow.querySelector('i').appendChild(document.createTextNode(`${json["Size"]} ${json["Race"]} ${json["Alignment"]}`));
-        shadow.getElementById("hitPointsMax").value = json["Hit Points Max"];
-        shadow.getElementById("hitPoints").value = json["Hit Points"];
+        shadow.querySelector("#hitPointsMax").value = json["Hit Points Max"];
+        shadow.querySelector("#hitPoints").value = json["Hit Points"];
         
         /* Ability Scores */
 
@@ -1495,6 +1539,28 @@ class CharacterTemplate extends HTMLElement {
             }
             
         }
+
+
+
+        /* Input Event Listeners */
+
+        let inputs = shadow.querySelectorAll('input');
+
+        for (let node of inputs) {
+            node.onchange = () => {
+                if (node.type === "checkbox") {
+                    json[VarToProp(node.name)][node.id] = node.checked;
+                } else if (node.type === "number") {
+                    if (node.name) {
+                        json["Ability Scores"][node.id] = node.value;
+                    } else {
+                        json[node.id] = node.value;
+                    }
+                }
+            };
+        }
+
+        /* Functions */
 
         function UpdateSomethings(...keys) {
             keys.forEach(key => {
@@ -1514,7 +1580,7 @@ class CharacterTemplate extends HTMLElement {
             }
 
             if (!detailsVisibility) {
-                ToggleDetailsVisibility(name);
+                /* ToggleDetailsVisibility(name); */
             }
         }
 
@@ -1542,6 +1608,30 @@ class CharacterTemplate extends HTMLElement {
             }
         }
 
+        function VarToProp(prop) {
+            if (prop === "savingThrows") {
+                return "Saving Throws";
+            } else if (prop === "skillProficiencies") {
+                return "Skills";
+            } else if (prop === "weaponProficiencies") {
+                return "Weapon Proficiencies";
+            } else if (prop === "armorProficiencies") {
+                return "Armor Proficiencies";
+            } else if (prop === "toolProficiencies") {
+                return "Tool Proficiencies";
+            } else if (prop === "skillExpertise") {
+                return "Skill Expertise";
+            } else if (prop === "languages") {
+                return "Languages";
+            } else if (prop === "damageResistances") {
+                return "Damage Resistances";
+            } else if (prop === "damageImmunities") {
+                return "Damage Immunities";
+            } else if (prop === "conditionImmunitiess") {
+                return "Condition Immunities";
+            }
+        }
+
         function ToggleDetailsVisibility(details) {
             let element = shadow.querySelector(`#${details}Details`);
 
@@ -1565,9 +1655,9 @@ function CopyJSON(json) {
 /* Localstorage */
 
 function SavetoLocalStorage() {
-    if (char["name"]) {
-        localStorage.setItem(`character-${char["name"]}`, JSON.stringify(char));
-        console.log(`Saved to character-${char["name"]} in localStorage`)
+    if (char["Name"]) {
+        localStorage.setItem(`character-${char["Name"]}`, JSON.stringify(char));
+        console.log(`Saved to character-${char["Name"]} in localStorage`)
     } else {
         console.log("Enter a character name.");
     }
