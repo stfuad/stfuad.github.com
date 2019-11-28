@@ -1,10 +1,20 @@
-import * as HTML from "./modules/html.module.js";
+fetch("./json/5e Data.json")
+    .then(response => response.json)
+    .then(json => {
+        for (let key in json) {
+            localStorage.setItem(`${key} Data`, JSON.stringify(json[key]));
+        }
+    })  
 
+const races = JSON.parse(localStorage.getItem("Races"));
 const classes = JSON.parse(localStorage.getItem("Classes"));
 const feats = JSON.parse(localStorage.getItem("Feats"));
 const spells = JSON.parse(localStorage.getItem("Spells"));
 
-const char = {
+const raceData = JSON.parse(localStorage.getItem("Races Data"));
+const classData = JSON.parse(localStorage.getItem("Classes Data"));
+
+const charTemplate = {
     "Name": "",
     "Race": "",
     "Size": "",
@@ -12,7 +22,6 @@ const char = {
     "Hit Points Max": "",
     "Hit Points": "",
     "Classes": {
-        "Artificer": 0,
         "Barbarian": 0,
         "Bard": 0,
         "Cleric": 0,
@@ -26,89 +35,113 @@ const char = {
         "Wizard": 0
     },
     "Subclasses": {
-        "Path of the Ancestral Guardian": false,
-        "Path of the Battlerager": false,
-        "Path of the Berserker": false,
-        "Path of the Storm Herald": false,
-        "Path of the Totem Warrior": false,
-        "Path of the Zealot": false,
-        "College of Glamour": false,
-        "College of Lore": false,
-        "College of Swords": false,
-        "College of Valor": false,
-        "College of Whispers": false,
-        "Ambition Domain": false,
-        "Arcana Domain": false,
-        "Forge Domain": false,
-        "Grave Domain": false,
-        "Knowledge Domain": false,
-        "Life Domain": false,
-        "Light Domain": false,
-        "Nature Domain": false,
-        "Order Domain": false,
-        "Solidarity Domain": false,
-        "Strength Domain": false,
-        "Tempest Domain": false,
-        "Trickery Domain": false,
-        "War Domain": false,
-        "Zeal Domain": false,
-        "Circle of Dreams": false,
-        "Circle of Spores": false,
-        "Circle of the Land": false,
-        "Circle of the Moon": false,
-        "Circle of the Sheperd": false,
-        "Arcane Archer": false,
-        "Cavalier": false,
-        "Champion": false,
-        "Battle Master": false,
-        "Eldritch Night": false,
-        "Samurai": false,
-        "Way of Shadow": false,
-        "Way of the Drunken Master": false,
-        "Way of the Four Elements": false,
-        "Way of the Kensei": false,
-        "Way of the Long Death": false,
-        "Way of the Open Hand": false,
-        "Way of the Sun Soul": false,
-        "Oath of Conquest": false,
-        "Oath of Devotion": false,
-        "Oath of Redemption": false,
-        "Oath of Vengeance": false,
-        "Oath of the Ancients": false,
-        "Oath of the Crown": false,
-        "Beast Master": false,
-        "Gloom Stalker": false,
-        "Horizon Walker": false,
-        "Hunter": false,
-        "Monster Slayer": false,
-        "Arcane Trickster": false,
-        "Assassin": false,
-        "Inquisitive": false,
-        "Mastermind": false,
-        "Scout": false,
-        "Swashbuckler": false,
-        "Thief": false,
-        "Draconic Bloodline": false,
-        "Divine Soul": false,
-        "Shadow Magic": false,
-        "Storm Sorcery": false,
-        "Wild Magic": false,
-        "The Archfey": false,
-        "The Celestial": false,
-        "The Fiend": false,
-        "The Great Old One": false,
-        "The Hexblade": false,
-        "The Undying": false,
-        "Bladesinging": false,
-        "School of Abjuration": false,
-        "School of Conjuration": false,
-        "School of Divination": false,
-        "School of Enchantment": false,
-        "School of Evocation": false,
-        "School of Illusion": false,
-        "School of Necromancy": false,
-        "School of Transmutation": false,
-        "Warmagic": false
+        "Barbarian": {
+            "Path of the Ancestral Guardian": false,
+            "Path of the Battlerager": false,
+            "Path of the Berserker": false,
+            "Path of the Storm Herald": false,
+            "Path of the Totem Warrior": false,
+            "Path of the Zealot": false
+        },
+        "Bard": {
+            "College of Glamour": false,
+            "College of Lore": false,
+            "College of Swords": false,
+            "College of Valor": false,
+            "College of Whispers": false
+        },
+        "Cleric": {
+            "Ambition Domain": false,
+            "Arcana Domain": false,
+            "Forge Domain": false,
+            "Grave Domain": false,
+            "Knowledge Domain": false,
+            "Life Domain": false,
+            "Light Domain": false,
+            "Nature Domain": false,
+            "Order Domain": false,
+            "Solidarity Domain": false,
+            "Strength Domain": false,
+            "Tempest Domain": false,
+            "Trickery Domain": false,
+            "War Domain": false,
+            "Zeal Domain": false
+        },
+        "Druid": {
+            "Circle of Dreams": false,
+            "Circle of Spores": false,
+            "Circle of the Land": false,
+            "Circle of the Moon": false,
+            "Circle of the Sheperd": false
+        },
+        "Fighter": {
+            "Arcane Archer": false,
+            "Cavalier": false,
+            "Champion": false,
+            "Battle Master": false,
+            "Eldritch Night": false,
+            "Samurai": false
+        },
+        "Monk": {
+            "Way of Shadow": false,
+            "Way of the Drunken Master": false,
+            "Way of the Four Elements": false,
+            "Way of the Kensei": false,
+            "Way of the Long Death": false,
+            "Way of the Open Hand": false,
+            "Way of the Sun Soul": false
+        },
+        "Paladin": {
+            "Oath of Conquest": false,
+            "Oath of Devotion": false,
+            "Oath of Redemption": false,
+            "Oath of Vengeance": false,
+            "Oath of the Ancients": false,
+            "Oath of the Crown": false
+        },
+        "Ranger": {
+            "Beast Master": false,
+            "Gloom Stalker": false,
+            "Horizon Walker": false,
+            "Hunter": false,
+            "Monster Slayer": false
+        },
+        "Rogue": {
+            "Arcane Trickster": false,
+            "Assassin": false,
+            "Inquisitive": false,
+            "Mastermind": false,
+            "Scout": false,
+            "Swashbuckler": false,
+            "Thief": false
+        },
+        "Sorcerer": {
+            "Draconic Bloodline": false,
+            "Divine Soul": false,
+            "Shadow Magic": false,
+            "Storm Sorcery": false,
+            "Wild Magic": false
+        },
+        "Warlock": {
+            "The Archfey": false,
+            "The Celestial": false,
+            "The Fiend": false,
+            "The Great Old One": false,
+            "The Hexblade": false,
+            "The Undying": false
+        },
+        "Wizard": {
+            "Bladesinging": false,
+            "School of Abjuration": false,
+            "School of Conjuration": false,
+            "School of Divination": false,
+            "School of Enchantment": false,
+            "School of Evocation": false,
+            "School of Illusion": false,
+            "School of Necromancy": false,
+            "School of Transmutation": false,
+            "Warmagic": false
+        }
     },
     "Ability Scores": {
         "Strength": 0,
@@ -127,30 +160,30 @@ const char = {
         "Charisma": false
     },
     "Skills": {
-        "Acrobatics": false,
-        "Animal Handling": false,
-        "Arcana": false,
-        "Athletics": false,
-        "Deception": false,
-        "History": false,
-        "Insight": false,
-        "Intimidation": false,
-        "Investigation": false,
-        "Medicine": false,
-        "Nature": false,
-        "Perception": false,
-        "Performance": false,
-        "Persuasion": false,
-        "Religion": false,
-        "Sleight of Hand": false,
-        "Stealth": false,
-        "Survival":  false
+        "Acrobatics": "none",
+        "Animal Handling": "none",
+        "Arcana": "none",
+        "Athletics": "none",
+        "Deception": "none",
+        "History": "none",
+        "Insight": "none",
+        "Intimidation": "none",
+        "Investigation": "none",
+        "Medicine": "none",
+        "Nature": "none",
+        "Perception": "none",
+        "Performance": "none",
+        "Persuasion": "none",
+        "Religion": "none",
+        "Sleight of Hand": "none",
+        "Stealth": "none",
+        "Survival":  "none"
     },
     "Speeds": {
-        "Walk": 25,
+        "Walk": 0,
         "Burrow": 0,
         "Climb": 0,
-        "Fly": 50,
+        "Fly": 0,
         "Swim": 0
     },
     "Weapon Proficiencies": {
@@ -241,11 +274,11 @@ const char = {
     "Languages": {
         "Abyssal": false,
         "Aquan": false,
-        "Aarakocra": true,
-        "Auran": true,
+        "Aarakocra": false,
+        "Auran": false,
         "Aven": false,
         "Celestial": false,
-        "Common": true,
+        "Common": false,
         "Deep Speech": false,
         "Draconic": false,
         "Druidic": false,
@@ -336,21 +369,17 @@ export function Init() {
     document.getElementById("new").addEventListener("click", () => {
         document.getElementById("content").innerHTML = "";
 
-        document.body.appendChild(new SetupModal(char));
+        document.body.appendChild(new SetupModal(...charTemplate));
     }, false);
 
     document.getElementById("open").addEventListener("click", () => {
         document.body.appendChild(new OpenModal());
     }, false);
-
-    document.getElementById("save").onclick = () => {
-        if (document.querySelector("#content").innerHTML) {
-            SavetoLocalStorage();
-        }
-    };
 }
 
 /* Modals */
+
+/* Add */
 
 class AddItemModal extends HTMLElement {
     constructor() {
@@ -431,7 +460,7 @@ class AddItemModal extends HTMLElement {
 customElements.define("additem-modal", AddItemModal);
 
 class AddSpellModal extends HTMLElement {
-    constructor() {
+    constructor(character) {
         super();
 
         let shadow = this.attachShadow({mode: 'open'});
@@ -486,33 +515,7 @@ class AddSpellModal extends HTMLElement {
         });
 
         shadow.getElementById('add').onclick = () => {
-            /* let spellLevel;
-
-            if (spells[select.value]["Level"] === 0) {
-                spellLevel = "level0";
-            } else if (spells[select.value]["Level"] === 1) {
-                spellLevel = "level1";
-            } else if (spells[select.value]["Level"] === 2) {
-                spellLevel = "level2";
-            } else if (spells[select.value]["Level"] === 3) {
-                spellLevel = "level3";
-            } else if (spells[select.value]["Level"] === 4) {
-                spellLevel = "level4";
-            } else if (spells[select.value]["Level"] === 5) {
-                spellLevel = "level5";
-            } else if (spells[select.value]["Level"] === 6) {
-                spellLevel = "level6";
-            } else if (spells[select.value]["Level"] === 7) {
-                spellLevel = "level7";
-            } else if (spells[select.value]["Level"] === 8) {
-                spellLevel = "level8";
-            } else if (spells[select.value]["Level"] === 9) {
-                spellLevel = "level9";
-            } */
-
-            char["Spells"].push(select.value);
-
-            /* UpdateUIArray(spellLevel, char[spellLevel]); */
+            character["Spells"].push(select.value);
 
             this.remove();
         }
@@ -524,69 +527,6 @@ class AddSpellModal extends HTMLElement {
 }
 
 customElements.define("addspell-modal", AddSpellModal);
-
-/* class AddLinkModal extends HTMLElement {
-    constructor(fieldset) {
-        super();
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let style = document.createElement('style');
-        style.textContent = `
-            :host {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                height: auto;
-                width: auto;
-                transform: translate(-50%, -50%);
-                border: 1px solid black;
-                padding: 10px;
-                background-color: white;
-            }
-
-            input {
-                display: block;
-            }
-
-            h3 {
-                margin: 0px;
-            }
-
-        `;
-
-        shadow.appendChild(style);
-
-        shadow.appendChild(HTML.Header("h3", "Add..."));
-
-        let input = HTML.Input("text", undefined);
-
-        shadow.appendChild(input);
-
-        let addButton = HTML.Button("Add");
-        addButton.onclick = () => {
-            let sheet = document.querySelector("character-template");
-            let shadow = sheet.shadowRoot;
-            let target = shadow.querySelector(`#${fieldset}`);
-            
-            if (input.value) {
-                target.appendChild(new LinkElement(fieldset, input.value));
-
-                this.remove();
-            }
-        }
-
-        let cancelButton = HTML.Button("Cancel");
-        cancelButton.onclick = () => {
-            this.remove();
-        }
-
-        shadow.appendChild(addButton);
-        shadow.appendChild(cancelButton);
-    }
-}
-
-customElements.define("addlink-modal", AddLinkModal); */
 
 class AddFeatModal extends HTMLElement {
     constructor() {
@@ -691,6 +631,8 @@ customElements.define("addfeat-modal", AddFeatModal);
 }
 
 customElements.define('addsubclass-modal', AddSubclassModal); */
+
+/* Open */
 
 class OpenModal extends HTMLElement {
     constructor() {
@@ -800,6 +742,99 @@ class OpenModal extends HTMLElement {
 }
 
 customElements.define("open-modal", OpenModal);
+
+/* New */
+
+/* class SetupModal extends HTMLElement {
+    constructor(json) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    display: grid;
+                    height: auto;
+                    max-height: 700px;
+                    width: 400px;
+                    border: 1px solid black;
+                    border-radius: 5px;
+                    padding: 10px;
+                    overflow: auto;
+                    background-color: white;
+                }
+            </style>
+
+            <div id="modal">
+                <h3>Select a character name...</h3>
+                <input type="text">
+                <h3>...select a race...</h3>
+                <select id="race"></select>
+                <h3>...select an alignment...</h3>
+                <select id="alignment">
+                    <option value="Lawful Good">Lawful Good</option>
+                    <option value="Neutral Good">Neutral Good</option>
+                    <option value="Chaotic Good">Chaotic Good</option>
+                    <option value="Lawful Neutral">Lawful Neutral</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Chaotic Neutral">Chaotic Neutral</option>
+                    <option value="Lawful Evil">Lawful Evil</option>
+                    <option value="Neutral Evil">Neutral Evil</option>
+                    <option value="Chaotic Evil">Chaotic Evil</option>
+                </select>
+                <h3>...select a class.</h3>
+                <select id="class">
+                    <option value="Artificer">Artificer</option>
+                    <option value="Barbarian">Barbarian</option>
+                    <option value="Bard">Bard</option>
+                    <option value="Cleric">Cleric</option>
+                    <option value="Fighter">Fighter</option>
+                    <option value="Monk">Monk</option>
+                    <option value="Paladin">Paladin</option>
+                    <option value="Ranger">Ranger</option>
+                    <option value="Rouge">Rouge</option>
+                    <option value="Sorcerer">Sorcerer</option>
+                    <option value="Warlock">Warlock</option>
+                    <option value="Wizard">Wizard</option>
+                </select>
+                <button type="button">Continue</button>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        shadow.querySelector('button').onclick = () => {
+            json["Name"] = shadow.querySelector('input').value;
+            json["Race"] = shadow.querySelector('#race').value;
+            json["Alignment"] = shadow.querySelector('#alignment').value;
+            json["Classes"][shadow.querySelector('#class').value] = 1;
+
+            if (json["Name"]) {
+                document.querySelector('#content').appendChild(new CharacterTemplate(json));
+
+                this.remove();
+            }
+        };
+    }
+}
+
+customElements.define('setup-modal', SetupModal); */
+
+/* Info Popups */
 
 class InfoModal extends HTMLElement {
     constructor(title, json) {
@@ -1001,97 +1036,10 @@ class SpellModal extends HTMLElement {
 
 customElements.define('spell-modal', SpellModal);
 
-class SetupModal extends HTMLElement {
-    constructor(json) {
-        super();
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let template = `
-            <style>
-                :host {
-                    position: fixed;
-                    top: 0px;
-                    left: 0px;
-                    height: 100vh;
-                    width: 100vw;
-                    background-color: rgba(128,128,128,0.5);
-                }
-
-                #modal {
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    display: grid;
-                    height: auto;
-                    max-height: 700px;
-                    width: 400px;
-                    border: 1px solid black;
-                    border-radius: 5px;
-                    padding: 10px;
-                    overflow: auto;
-                    background-color: white;
-                }
-            </style>
-
-            <div id="modal">
-                <h3>Select a character name...</h3>
-                <input type="text">
-                <h3>...select a race...</h3>
-                <select id="race"></select>
-                <h3>...select an alignment...</h3>
-                <select id="alignment">
-                    <option value="Lawful Good">Lawful Good</option>
-                    <option value="Neutral Good">Neutral Good</option>
-                    <option value="Chaotic Good">Chaotic Good</option>
-                    <option value="Lawful Neutral">Lawful Neutral</option>
-                    <option value="Neutral">Neutral</option>
-                    <option value="Chaotic Neutral">Chaotic Neutral</option>
-                    <option value="Lawful Evil">Lawful Evil</option>
-                    <option value="Neutral Evil">Neutral Evil</option>
-                    <option value="Chaotic Evil">Chaotic Evil</option>
-                </select>
-                <h3>...select a class.</h3>
-                <select id="class">
-                    <option value="Artificer">Artificer</option>
-                    <option value="Barbarian">Barbarian</option>
-                    <option value="Bard">Bard</option>
-                    <option value="Cleric">Cleric</option>
-                    <option value="Fighter">Fighter</option>
-                    <option value="Monk">Monk</option>
-                    <option value="Paladin">Paladin</option>
-                    <option value="Ranger">Ranger</option>
-                    <option value="Rouge">Rouge</option>
-                    <option value="Sorcerer">Sorcerer</option>
-                    <option value="Warlock">Warlock</option>
-                    <option value="Wizard">Wizard</option>
-                </select>
-                <button type="button">Continue</button>
-            </div>
-        `;
-
-        shadow.innerHTML = template;
-
-        shadow.querySelector('button').onclick = () => {
-            json["Name"] = shadow.querySelector('input').value;
-            json["Race"] = shadow.querySelector('#race').value;
-            json["Alignment"] = shadow.querySelector('#alignment').value;
-            json["Classes"][shadow.querySelector('#class').value] = 1;
-
-            document.querySelector('#content').appendChild(new CharacterTemplate(json));
-
-            this.remove();
-        };
-    }
-}
-
-customElements.define('setup-modal', SetupModal);
-
 /* Elements */
 
 class LinkElement extends HTMLElement {
-    constructor(fieldset, text) {
+    constructor(type, text) {
         super();
 
         let shadow = this.attachShadow({mode: 'open'});
@@ -1124,29 +1072,25 @@ class LinkElement extends HTMLElement {
 
         shadow.innerHTML = template;
 
-        this.setAttribute("id", text);
-
-        /* if (fieldset) {
-            this.setAttribute("fieldset", fieldset.split("Field")[0]);
+        if (type) {
+            this.setAttribute("fieldset", type.split("Field")[0]);
             
-            if (fieldset.includes("level")) {
+            if (type.includes("spell")) {
                 shadow.querySelector('a').onclick = () => {
                     document.body.appendChild(new SpellModal(text));
                 };
-            } else if (fieldset.includes("feat")) {
+            } else if (type.includes("feat")) {
                 shadow.querySelector('a').onclick = () => {
                     document.body.appendChild(new InfoModal(text, feats));
                 };
             }
 
-            if (!fieldset.includes("classFeatures")) {
+            if (!type.includes("classFeature")) {
                 shadow.querySelector('button').onclick = () => {
                     RemoveLinkElement(this, char);
                 }
             }
-        } */
-        
-        this.setAttribute("draggable", true);
+        }
     }
 }
 
@@ -1526,6 +1470,8 @@ class CharacterTemplate extends HTMLElement {
 
         shadow.querySelector(`h2`).appendChild(document.createTextNode(json["Name"]));
         shadow.querySelector('i').appendChild(document.createTextNode(`${json["Size"]} ${json["Race"]} ${json["Alignment"]}`));
+        shadow.querySelector("#proficiencyBonusFieldset").appendChild(document.createTextNode(`${ProficiencyBonus(AddCharacterLevels(json["Classes"]))}`));
+        shadow.querySelector("#initiativeFieldset").appendChild(document.createTextNode(`${Modifier(json["Ability Scores"]["Dexterity"])}`));
         shadow.querySelector("#hitPointsMax").value = json["Hit Points Max"];
         shadow.querySelector("#hitPoints").value = json["Hit Points"];
         
@@ -1540,8 +1486,21 @@ class CharacterTemplate extends HTMLElement {
             
         }
 
+        /* All Those Checkboxes */
 
-
+        UpdateSomethings(
+            "Saving Throws",
+            "Skill Proficiencies",
+            "Skill Expertise",
+            "Weapon Proficiencies",
+            "Armor Proficiencies",
+            "Tool Proficiencies",
+            "Languages",
+            "Damage Resistances",
+            "Damage Immunities",
+            "Condition Immunities"
+            );
+        
         /* Input Event Listeners */
 
         let inputs = shadow.querySelectorAll('input');
@@ -1575,7 +1534,7 @@ class CharacterTemplate extends HTMLElement {
             for (let node of nodeList) {
                 if (json[name][node.id]) {
                     detailsVisibility = true;
-                    node.value = json[name][node.id];
+                    node.checked = json[name][node.id];
                 }
             }
 
@@ -1587,7 +1546,7 @@ class CharacterTemplate extends HTMLElement {
         function PropToVar(prop) {
             if (prop === "Saving Throws") {
                 return "savingThrows";
-            } else if (prop === "Skills") {
+            } else if (prop === "Skill Proficiencies") {
                 return "skillProficiencies";
             } else if (prop === "Weapon Proficiencies") {
                 return "weaponProficiencies";
@@ -1664,22 +1623,6 @@ function SavetoLocalStorage() {
 }
 
 /* HTML Functions */
-
-function UpdateUIArray(fieldset, json) {
-    let template = document.querySelector('character-template')
-    let shadow = template.shadowRoot;
-    let target = shadow.getElementById(`${fieldset}Fieldset`);
-
-    for (let node of target.children) {
-        if (node.localName !== "legend") {
-            node.remove();
-        }
-    }
-
-    json.forEach(element => {
-        target.appendChild(new LinkElement(fieldset, element));
-    });
-}
 
 function RemoveLinkElement(node, char) {
     /* Remove the link-element */
@@ -1838,39 +1781,31 @@ function Table(json, parent) {
 function AddCharacterLevels(json) {
     let total = 0;
 
-    for (let key in json["classes"]) {
-        total += parseInt(key);
+    for (let key in json) {
+        total += json[key];
     }
     
     return total;
 }
 
-function ProficiencyBonus(cr) {
+function ProficiencyBonus(characterLevel) {
     let bonus = 0;
 
-    if(cr === 0) {
+    if (characterLevel < 4) {
         bonus = 2;
-    } else if(cr === "1/8") {
-        bonus = 2;
-    } else if(cr === "1/4") {
-        bonus = 2;
-    } else if(cr === "1/2") {
-        bonus = 2;
-    } else if(cr < 4) {
-        bonus = 2;
-    } else if(cr < 9) {
+    } else if (characterLevel < 9) {
         bonus = 3;
-    } else if(cr < 13) {
+    } else if (characterLevel < 13) {
         bonus = 4;
-    } else if(cr < 17) {
+    } else if (characterLevel < 17) {
         bonus = 5;
-    } else if(cr < 21) {
+    } else if (characterLevel < 21) {
         bonus = 6;
-    } else if(cr < 25) {
+    } else if (characterLevel < 25) {
         bonus = 7;
-    } else if(cr < 29) {
+    } else if (characterLevel < 29) {
         bonus = 8;
-    } else if(cr < 31) {
+    } else if (characterLevel < 31) {
         bonus = 9;
     }
 
