@@ -16,11 +16,16 @@ const classData = JSON.parse(localStorage.getItem("Classes Data"));
 
 const character = {
     "Name": "",
+    "Player Name": "",
+    "Background": "",
     "Race": "",
     "Size": "",
     "Alignment": "",
     "Hit Points Max": "",
     "Hit Points": "",
+    "Experience Points": 0,
+    "Inspiration": 0,
+    "Armor Class": 0,
     "Classes": {
         "Barbarian": 0,
         "Bard": 0,
@@ -179,13 +184,7 @@ const character = {
         "Stealth": "none",
         "Survival":  "none"
     },
-    "Speeds": {
-        "Walk": 0,
-        "Burrow": 0,
-        "Climb": 0,
-        "Fly": 0,
-        "Swim": 0
-    },
+    "Speeds": 0,
     "Weapon Proficiencies": {
         "Club": false,
         "Dagger": false,
@@ -197,7 +196,7 @@ const character = {
         "Quarterstaff": false,
         "Sickle": false,
         "Spear": false,
-        "Unarmed Strike": true,
+        "Unarmed Strike": false,
         "Crossbow Light": false,
         "Dart": false,
         "Shortbow": false,
@@ -228,13 +227,14 @@ const character = {
         "Net": false,
         "Simple": false,
         "Martial": false,
-        "All": false
+        "All Weapons": false
     },
     "Armor Proficiencies": {
         "Light": false,
         "Medium": false,
         "Heavy": false,
-        "All": false
+        "Shields": false,
+        "All Armor": false
     },
     "Tool Proficiencies": {
         "Alchemist's Supplies": false,
@@ -364,27 +364,387 @@ const character = {
 };
 
 export function init() {
-    document.querySelector('#content').appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
+    let content = document.querySelector('#content');
+        content.innerHTML = "";
+
+        content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
+
+    document.querySelector("#new").onclick = () => {
+        let content = document.querySelector('#content');
+        content.innerHTML = "";
+
+        content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
+    };
+    
+    document.querySelector("#open").onclick = () => {
+        document.body.appendChild(new OpenModal());
+    };
+
+    document.querySelector("#save").onclick = () => {
+        let sheet = document.querySelector("character-sheet");
+        
+        if (sheet.Character["Name"]) {
+            localStorage.setItem(`character-${sheet.Character["Name"]}`, JSON.stringify(sheet.Character));
+
+            console.log("Saved");
+        } else {
+            console.log("Sheet undefined");
+        }
+    };
 }
 
 class CharacterSheet extends HTMLElement {
+    Character;
+
+    ProficiencyBonus(characterLevel) {
+        let bonus = 0;
+    
+        if (characterLevel < 4) {
+            bonus = 2;
+        } else if (characterLevel < 9) {
+            bonus = 3;
+        } else if (characterLevel < 13) {
+            bonus = 4;
+        } else if (characterLevel < 17) {
+            bonus = 5;
+        } else if (characterLevel < 21) {
+            bonus = 6;
+        } else if (characterLevel < 25) {
+            bonus = 7;
+        } else if (characterLevel < 29) {
+            bonus = 8;
+        } else if (characterLevel < 31) {
+            bonus = 9;
+        }
+    
+        return parseInt(bonus);
+    }
+
+    CharacterLevels(json) {
+        let total = 0;
+    
+        for (let key in json) {
+            total += json[key];
+        }
+        
+        return total;
+    }
+
+    Expertise(int) {
+        return (parseInt(int) * 2);
+    }
+
+    Modifier(int) {
+        return Math.floor((parseInt(int) - 10) / 2);
+    }
+
+    UpdateClasses() {
+        let array = [];
+
+        for (let key in this.Character["Classes"]) {
+            if (this.Character["Classes"][key] > 0) {
+                array.push(`${key}, ${this.Character["Classes"][key]}`)
+            }
+        }
+
+        this.shadowRoot.querySelector("#class").value = array.join();
+    }
+
+    UpdateProficiencyBonus() {
+        let proficiencyBonus = this.shadowRoot.querySelector("#proficiencyBonus");
+
+        proficiencyBonus.value = this.ProficiencyBonus(this.CharacterLevels(this.Character["Classes"]));
+    }
+
+    UpdatePassivePerception() {
+        let passiveWisdom = this.shadowRoot.querySelector("#passivePerception");
+
+        if (this.Character["Skills"]["Perception"] === "proficient") {
+            passiveWisdom.value = 10 + this.Modifier(this.Character["Ability Scores"]["Wisdom"]) + this.ProficiencyBonus(this.CharacterLevels(this.Character["Classes"]));
+        } else if (this.Character["Skills"]["Perception"] === "expertise") {
+            passiveWisdom.value = 10 + this.Modifier(this.Character["Ability Scores"]["Wisdom"]) + this.Expertise(this.CharacterLevels(this.Character["Classes"]));
+        } else if (this.Character["Skills"]["Perception"] === "none") {
+            passiveWisdom.value = 10 + this.Modifier(this.Character["Ability Scores"]["Wisdom"]);
+        }
+    }
+
+    UpdateOtherProficiencies() {
+        let array = [];
+
+        let op = this.shadowRoot.querySelector("#otherProficiencies");
+
+        op.innerHTML = "";
+
+        for (let key in this.Character["Weapon Proficiencies"]) {
+            if (this.Character["Weapon Proficiencies"][key] === true) {
+                array.push(key);
+            }
+        }
+
+        for (let key in this.Character["Armor Proficiencies"]) {
+            if (this.Character["Armor Proficiencies"][key] === true) {
+                array.push(key);
+            }
+        }
+
+        for (let key in this.Character["Tool Proficiencies"]) {
+            if (this.Character["Tool Proficiencies"][key] === true) {
+                array.push(key);
+            }
+        }
+
+        op.appendChild(document.createTextNode(array.join(", ")));
+    }
+
+    UpdateLanguages() {
+        let array = [];
+
+        let lang = this.shadowRoot.querySelector("#languages");
+
+        lang.innerHTML = "";
+
+        for (let key in this.Character["Weapon Proficiencies"]) {
+            if (this.Character["Languages"][key] === true) {
+                array.push(key);
+            }
+        }
+
+        lang.appendChild(document.createTextNode(array.join(", ")));
+    }
+
+    UpdateAC() {
+        this.shadowRoot.querySelector("#ac").value = this.Character["Armor Class"]
+    }
+
+    UpdateInitiative() {
+        this.shadowRoot.querySelector("#initiative").value = this.Modifier(this.Character["Ability Scores"]["Dexterity"]);
+    }
+
     constructor(json) {
         super();
+
+        this.Character = json;
 
         let shadow = this.attachShadow({mode: 'open'});
 
         let template = `
             <style>
                 :host {
-                    display: flex;
+                    
                 }
+
+                :host > div {
+                    border: 1px solid black;
+                    margin: 10px 0px 10px 0px;
+                }
+
+                /* input {
+                    border: 0px;
+                    text-align: center;
+                }
+
+                input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+                 
+                input[type="number"] {
+                    -moz-appearance: textfield;
+                }
+
+                label {
+                    font-weight: bold;
+                }
+
+                #subheader {
+                    display: grid;
+                    grid-template-rows: 1fr 1fr;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-gap: 1em;
+                } */
             </style>
+
+            <div id="header">
+                <input type="text" id="characterName" value="${this.Character["Name"]}">
+                <label for="characterName">Character Name</label>
+            </div>
+
+            <div id="subheader">
+                    <div>
+                        <input type="text" id="class" readonly>
+                        <label for="class">Classes & Levels</label>
+                    </div>
+                    <div>
+                        <input type="text" id="background" value="${this.Character["Background"]}">
+                        <label for="background">Background</label>
+                    </div>
+                    <div>
+                        <input type="text" id="playerName" value="${this.Character["Player Name"]}">
+                        <label for="playerName">Player Name</label>
+                    </div>
+                    <div>
+                        <input type="text" id="race" value="${this.Character["Race"]}">
+                        <label for="race">Race</label>
+                    </div>
+                    <div>
+                        <input type="text" id="alignment" value="${this.Character["Alignment"]}">
+                        <label for="alignment">Alignment</label>
+                    </div>
+                    <div>
+                        <input type="number" id="exp" value="${this.Character["Experience Points"]}">
+                        <label for="exp">Experience Points</label>
+                    </div>
+            </div>
+
+            <div id="inspirationDiv">
+                <input type="number" id="Inspiration" value="${this.Character["Inspiration"]}">
+                <label for="Inspiration">Inspiration</label>
+            </div>
+
+            <div id="proficiencyBonusDiv">
+                <input type="number" id="proficiencyBonus" readonly>
+                <label for="proficiencyBonus">Proficiency Bonus</label>
+            </div>
+
+            <div id="passivePerceptionDiv">
+                <input type="number" id="passivePerception" readonly>
+                <label for="passivePerception">Passive Wisdom (Perception)</label>
+            </div>
+
+            <div id="acDiv">
+                <input type="number" id="ac" value="${this.Character["Armor Class"]}">
+                <label for="ac">Armor Class</label>
+            </div>
+
+            <div id="initiativeDiv">
+                <input type="number" id="initiative" value="${this.Modifier(this.Character["Ability Scores"]["Dexterity"])}" readonly>
+                <label for="initiative">Initiative</label>
+            </div>
+            
+            <div id="speedDiv">
+                <input type="number" id="Speed" value="">
+                <label for="Speed">Speed</label>
+            </div>
+
+            <div id="hpDiv">
+                <div>
+                    <input id="hpMax" type="number" value="${this.Character["Hit Points Max"]}">
+                    <label for="hpMax">Hit Point Maximum</label>
+                </div>
+                <div>
+                    <input id="hp" type="number" value="${this.Character["Hit Points Max"]}">
+                    <label for="hp">Current Hit Points</label>
+                </div>
+            </div>
+
+            <div id="tempHpDiv">
+                <input id="tempHp" type="number">
+                <label for="tempHp">Temporary Hit Points</label>
+            </div>
+
+            <div id="hitDiceDiv">
+                <div>
+                    <input id="totalHitDice" type="text" readonly>
+                    <label for="totalHitDice">Total</label>
+                </div>
+                <div>
+                    <input id="hitDice" type="text" readonly>
+                    <label for="hitDice">Hit Dice</label>
+                </div>
+            </div>
+            
+            <div id="profLang">
+                <h4>Other Proficiencies</h4>
+                <div id="otherProficiencies"></div>
+                <a id="addProficiency">+ Add Other Proficiency</a>
+                <h4>Languages</h4>
+                <div id="languages"></div>
+                <a>+ Add Language</a>
+            </div>
+
+
         `;
 
         shadow.innerHTML = template;
+        
+        this.UpdateProficiencyBonus();
+        this.UpdatePassivePerception();
+        this.UpdateOtherProficiencies();
+        this.UpdateLanguages();
 
-        shadow.appendChild(new AbilityScores(json));
-        shadow.appendChild(new Skills(json));
+        shadow.appendChild(new AbilityScores(this.Character));
+        shadow.appendChild(new SavingThrows(this.Character));
+        shadow.appendChild(new Skills(this.Character));
+
+        let inputs = shadow.querySelectorAll('input');
+
+        for (let node of inputs) {
+            if (!node.readOnly) {
+                node.onchange = () => {
+                    if (node.id === "ac") {
+                        this.Character["Armor Class"] = node.valueAsNumber;
+                    } else if (node.id === "inspiration") {
+                        this.Character["Inspiration"] = node.valueAsNumber;
+                    } else if (node.id === "characterName") {
+                        this.Character["Name"] = node.value;
+                    } else if (node.id === "background") {
+                        this.Character["Background"] = node.value;
+                    } else if (node.id === "alignment") {
+                        this.Character["Alignment"] = node.value;
+                    } else if (node.id === "playerName") {
+                        this.Character["Player Name"] = node.value;
+                    } else if (node.id === "experience") {
+                        this.Character["Experience Points"] = node.valueAsNumber;
+                    } else if (node.id === "speed") {
+                        this.Character["Speed"] = node.valueAsNumber;
+                    }
+                }
+            } else if (node.id = "class") {
+                node.onclick = () => {
+                    document.body.appendChild(new EditClassesModal(this.Character));
+                }
+            }
+        }
+
+        shadow.querySelector("#addProficiency").onclick = () => {
+            document.body.appendChild(new EditProficienciesModal(this.Character));
+        };
+
+        // Testing MutationObserver
+        let MutationObserver = window.MutationObserver;
+    
+        let skills = shadow.querySelector("skills-element");
+        let throws = shadow.querySelector("saving-throws");
+        let scores = shadow.querySelector("ability-scores");
+    
+        let observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.type === "attributes") {
+                    let skillstoChange = skills.shadowRoot.querySelectorAll(`[attribute=\"${mutation.target.id}\"]`);
+                    let throwstoChange = throws.shadowRoot.querySelectorAll(`[attribute=\"${mutation.target.id}\"]`);
+    
+                    [...skillstoChange, ...throwstoChange].forEach(element => {
+                        element.UpdateElement(element.id);
+                    });
+    
+                    if (mutation.target.id === "Dexterity") {
+                        sheet.UpdateInitiative();
+                    }
+    
+                    if (mutation.target.id === "Wisdom") {
+                        sheet.UpdatePassivePerception();
+                    }
+                }
+            });
+        })
+    
+        for (let node of scores.shadowRoot.children) {
+            observer.observe(node, {
+                attributes: true,
+                childList: true,
+                characterData: true
+            });
+        }
     }
 }
 
@@ -399,9 +759,9 @@ class AbilityScores extends HTMLElement {
         let template = `
             <style>
                 :host {
-                    margin: 10px;
-                    padding: 10px;
-                    border: 1px solid black;
+                    display: block;
+                    /* margin: 10px;
+                    padding: 10px; */
                 }
             </style>
         `;
@@ -426,6 +786,7 @@ class AbilityScores extends HTMLElement {
 customElements.define('ability-scores', AbilityScores);
 
 class AbilityScore extends HTMLElement {
+
     Modifier(int) {
         return Math.floor((parseInt(int) - 10) / 2);
     }
@@ -438,22 +799,41 @@ class AbilityScore extends HTMLElement {
         let template = `
             <style>
                 :host {
-                    display: grid;
-                    font-size: 1em;
+                    display: inline-block;
+                    border: 1px solid black;
+                    padding: 10px;
+                    text-align: center;
                 }
 
                 label {
                     font-weight: bold;
+                    font-size: 1em;
                 }
 
                 input {
-                    width: 3em;
+                    width: 4em;
+                    border: 0px;
+                    font-size: 1.5em;
+                    text-align: center;
+                }
+
+                input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+                 
+                input[type="number"] {
+                    -moz-appearance: textfield;
                 }
             </style>
 
-            <label for="abilityScore"></label>
-            <input type="number" id="abilityScore" value="0">
-            <div id="modifier">0</div>
+            <div>
+                <label for="abilityScore"></label>
+            </div>
+            <div>
+                <input type="number" id="abilityScore">
+            </div>
+            <div id="modifier"></div>
         `;
 
         shadow.innerHTML = template;
@@ -489,6 +869,170 @@ class AbilityScore extends HTMLElement {
 
 customElements.define('ability-score', AbilityScore);
 
+class SavingThrows extends HTMLElement {
+    constructor(json) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    /* margin: 10px; */
+                    padding: 10px;
+                }
+
+                h4 {
+                    text-align: center;
+                    margin-bottom: 0px;
+                }
+            </style>
+
+            <div></div>
+            <h4>Saving Throws</h4>
+        `;
+
+        shadow.innerHTML = template;
+
+        const savingThrows = [
+            "Strength",
+            "Dexterity",
+            "Constitution",
+            "Intelligence",
+            "Wisdom",
+            "Charisma"
+        ];
+
+        savingThrows.forEach(key => {
+            shadow.querySelector('div').appendChild(new SavingThrow(key, json));
+        });
+    }
+}
+
+customElements.define('saving-throws', SavingThrows);
+
+class SavingThrow extends HTMLElement {
+    Character;
+
+    Modifier(int) {
+        return Math.floor((parseInt(int) - 10) / 2);
+    }
+
+    ProficiencyBonus(characterLevel) {
+        let bonus = 0;
+    
+        if (characterLevel < 4) {
+            bonus = 2;
+        } else if (characterLevel < 9) {
+            bonus = 3;
+        } else if (characterLevel < 13) {
+            bonus = 4;
+        } else if (characterLevel < 17) {
+            bonus = 5;
+        } else if (characterLevel < 21) {
+            bonus = 6;
+        } else if (characterLevel < 25) {
+            bonus = 7;
+        } else if (characterLevel < 29) {
+            bonus = 8;
+        } else if (characterLevel < 31) {
+            bonus = 9;
+        }
+    
+        return parseInt(bonus);
+    }
+
+    CharacterLevels(json) {
+        let total = 0;
+    
+        for (let key in json) {
+            total += json[key];
+        }
+        
+        return total;
+    }
+
+    WriteMemory(key) {
+        if (this.Character["Saving Throws"][key] === false) {
+            this.Character["Saving Throws"][key] = true;
+        } else if (this.Character["Saving Throws"][key] === true) {
+            this.Character["Saving Throws"][key] = false;
+        }
+    }
+
+    UpdateElement(key) {
+        if (this.Character["Saving Throws"][key] === false) {
+            this.shadowRoot.querySelector("#proficiency").innerHTML = "\u25cb";
+
+            this.shadowRoot.querySelector("#modifier").innerHTML = this.Modifier(this.Character["Ability Scores"][key]);
+        } else if (this.Character["Saving Throws"][key] === true) {
+            this.shadowRoot.querySelector("#proficiency").innerHTML = "\u25c9";
+
+            this.shadowRoot.querySelector("#modifier").innerHTML = this.Modifier(this.Character["Ability Scores"][key]) + this.ProficiencyBonus(this.CharacterLevels(this.Character["Classes"]));
+        }
+    }
+
+    constructor(key, json) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    display: block;
+                    font-size: 1em;
+                }
+
+                #proficiency {
+                    display: inline-block;
+                    width: 1em;
+                    font-size: 1.5em;
+                    text-align: center;
+                    cursor: pointer;
+                }
+
+                #modifier {
+                    display: inline-block;
+                    width: 2em;
+                    border-bottom: 1px solid black;
+                }
+            </style>
+
+            <span id="proficiency"></span><span id="modifier"></span><span id="savingThrow"></span>
+        `;
+
+        shadow.innerHTML = template;
+
+        this.Character = json;
+
+        this.setAttribute("id", key);
+        this.setAttribute("attribute", key);
+
+        let proficiencySpan = shadow.querySelector("#proficiency")
+        let modifierSpan = shadow.querySelector("#modifier");
+
+        if (this.Character["Saving Throws"][key] === false) {
+            proficiencySpan.appendChild(document.createTextNode("\u25cb"))
+
+            modifierSpan.appendChild(document.createTextNode(this.Modifier(json["Ability Scores"][key])));
+        } else if (this.Character["Saving Throws"][key] === true) {
+            proficiencySpan.appendChild(document.createTextNode("\u25c9"));
+
+            modifierSpan.appendChild(document.createTextNode(this.Modifier(json["Ability Scores"][key]))) + this.ProficiencyBonus(this.CharacterLevels(json["Classes"]));
+        }
+
+        shadow.querySelector("#savingThrow").appendChild(document.createTextNode(key));
+
+        shadow.querySelector("#proficiency").onclick = () => {
+            this.WriteMemory(key);
+            this.UpdateElement(key)
+        }
+    }
+}
+
+customElements.define('saving-throw', SavingThrow);
+
 class Skills extends HTMLElement {
     constructor(json) {
         super();
@@ -498,21 +1042,17 @@ class Skills extends HTMLElement {
         let template = `
             <style>
                 :host {
-                    margin: 10px;
+                    /* margin: 10px; */
                     padding: 10px;
-                    border: 1px solid black;
-                }
-
-                #skills {
-                    display: grid;
                 }
 
                 h4 {
                     text-align: center;
+                    margin-bottom: 0px;
                 }
             </style>
 
-            <div id="skills"></div>
+            <div></div>
             <h4>Skills</h4>
         `;
 
@@ -540,7 +1080,7 @@ class Skills extends HTMLElement {
         ]
 
         skills.forEach(key => {
-            shadow.querySelector("#skills").appendChild(new Skill(key, json));
+            shadow.querySelector('div').appendChild(new Skill(key, json));
         });
     }
 }
@@ -682,6 +1222,7 @@ class Skill extends HTMLElement {
         let template = `
             <style>
                 :host {
+                    display: block;
                     font-size: 1em;
                 }
 
@@ -755,33 +1296,372 @@ class Skill extends HTMLElement {
 
 customElements.define('skill-element', Skill);
 
-window.addEventListener('load', event => {
-    // Testing MutationObserver
-    let MutationObserver = window.MutationObserver;
+class EditClassesModal extends HTMLElement {
+    Character;
+    
+    constructor(json) {
+        super();
 
-    let sheet = document.querySelector("character-sheet");
-    let shadow = sheet.shadowRoot;
-    let skills = shadow.querySelector("skills-element");
-    let scores = shadow.querySelector("ability-scores");
+        this.Character = json;
 
-    let observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-            if (mutation.type === "attributes") {
-                let toChange = skills.shadowRoot.querySelectorAll(`[attribute=\"${mutation.target.id}\"]`);
+        let shadow = this.attachShadow({mode: "open"});
 
-                for (let node of toChange) {
-                    node.UpdateElement(node.id);
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
                 }
-            }
-        });
-    })
 
-    for (let node of scores.shadowRoot.children) {
-        observer.observe(node, {
-            attributes: true,
-            childList: true,
-            characterData: true
-        });
+                #modal {
+                    display: grid;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    width: auto;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                }
+
+                #modal label {
+                    grid-column: 1;
+                }
+
+                #modal input {
+                    grid-column: 2;
+                }
+            </style>
+
+            <div id="modal"></div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let target = shadow.querySelector("#modal");
+
+        for (let key in this.Character["Classes"]) {
+            /* let div = document.createElement('div'); */
+
+            let label = document.createElement('label');
+            label.htmlFor = key;
+            label.appendChild(document.createTextNode(key));
+
+            target.appendChild(label);
+
+            let input = document.createElement('input');
+            input.id = key;
+            input.type = "number";
+            input.onchange = () => {
+                this.Character["Classes"][key] = input.value;
+            };
+
+            target.appendChild(input);
+
+            /* target.appendChild(div); */
+        }
+
+        let close = document.createElement('button');
+        close.appendChild(document.createTextNode("Close"));
+        close.onclick = () => {
+            document.querySelector('character-sheet').UpdateClasses();
+
+            this.remove();
+        }
+
+        target.appendChild(close);
     }
-});
+}
 
+customElements.define("editclasses-modal", EditClassesModal);
+
+class EditProficienciesModal extends HTMLElement {
+    Character;
+
+    constructor(json) {
+        super();
+
+        this.Character = json;
+
+        let shadow = this.attachShadow({mode: "open"});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    grid-template-columns: 2em 1fr;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: 80vh;
+                    width: 80vw;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                    overflow: auto;
+                }
+            </style>
+
+            <div id="modal">
+                <fieldset id="weapon">
+                    <legend>Weapon Proficiencies</legend>
+                </fieldset>
+
+                <fieldset id="armor">
+                    <legend>Armor Proficiencies</legend>
+                </fieldset>
+
+                <fieldset id="tool">
+                    <legend>Tool Proficiencies</legend>   
+                </fieldset>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let weapon = shadow.querySelector("#weapon");
+        let armor = shadow.querySelector("#armor");
+        let tool = shadow.querySelector("#tool");
+
+        for (let key in this.Character["Weapon Proficiencies"]) {
+            let div = document.createElement('div');
+
+            let input = document.createElement('input');
+            input.id = key;
+            input.type = "checkbox";
+            input.onchange = () => {
+                this.Character["Weapon Proficiencies"][key] = input.checked;
+            };
+
+            div.appendChild(input);
+
+            let label = document.createElement('label');
+            label.htmlFor = key;
+            label.appendChild(document.createTextNode(key));
+
+            div.appendChild(label);
+
+            weapon.appendChild(div);
+        }
+        
+        for (let key in this.Character["Armor Proficiencies"]) {
+            let div = document.createElement('div');
+
+            let input = document.createElement('input');
+            input.id = key;
+            input.type = "checkbox";
+            input.onchange = () => {
+                this.Character["Armor Proficiencies"][key] = input.checked;
+            };
+
+            div.appendChild(input);
+
+            let label = document.createElement('label');
+            label.htmlFor = key;
+            label.appendChild(document.createTextNode(key));
+
+            div.appendChild(label);
+
+            armor.appendChild(div);
+        }
+        
+        for (let key in this.Character["Tool Proficiencies"]) {
+            let div = document.createElement('div');
+
+            let input = document.createElement('input');
+            input.id = key;
+            input.type = "checkbox";
+            input.onchange = () => {
+                this.Character["Tool Proficiencies"][key] = input.checked;
+            };
+
+            div.appendChild(input);
+
+            let label = document.createElement('label');
+            label.htmlFor = key;
+            label.appendChild(document.createTextNode(key));
+
+            div.appendChild(label);
+
+            tool.appendChild(div);
+        }
+        
+        let close = document.createElement('button');
+        close.appendChild(document.createTextNode("Close"));
+        close.onclick = () => {
+            document.querySelector('character-sheet').UpdateOtherProficiencies();
+
+            this.remove();
+        }
+
+        shadow.querySelector("#modal").appendChild(close);
+    }
+}
+
+customElements.define("editproficiencies-modal", EditProficienciesModal);
+
+class OpenModal extends HTMLElement {
+    constructor() {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    width: auto;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                }
+
+                h3 {
+                    margin: 0px;
+                }
+            </style>
+
+            <div id="modal">
+                <h3>Load a saved character from localStorage...</h3>
+                <select></select>
+                <button type="button" id="load">Load</button>
+                <h3>...or import a JSON file...</h3>
+                <input type="file" id="file-input">
+                <h3>...or close this window.</h3>
+                <button type="button" id="cancel">Cancel</button>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let keys = Object.keys(localStorage);
+
+        let content = document.getElementById("content");
+        let select = shadow.querySelector('select');
+
+        if (keys.length > 0) {
+            keys.forEach(key => {
+                if (key.includes("character")) {
+                    let split = key.split("-");
+
+                    let option = document.createElement('option');
+                    option.value = key;
+                    option.appendChild(document.createTextNode(split[1]));
+
+                    select.appendChild(option);
+                }
+            });
+
+            shadow.querySelector("#load").onclick = () => {
+                content.innerHTML = "";
+
+                content.appendChild(new CharacterSheet(JSON.parse(localStorage.getItem(select.value))));
+
+                this.remove();
+            };
+        }
+        
+        shadow.querySelector("#file-input").onchange = e => {
+            let file = e.target.files[0];
+
+            if (!file) { return; }
+
+            let reader = new FileReader();
+            reader.readAsText(file,'UTF-8');
+
+            reader.onload = readerEvent => {
+                /* Do something if the content div has children */
+
+                content.innerHTML = "";
+
+                /* Check for template support and clone the template to the content div. */
+
+                content.appendChild(new CharacterSheet(JSON.parse(readerEvent.target.result)));
+
+                this.remove();
+            }
+        }
+
+        shadow.querySelector("#cancel").onclick = () => {
+            this.remove();
+        };
+    }
+}
+
+customElements.define("open-modal", OpenModal);
+
+
+/* 
+    Modal Template
+
+    class  extends HTMLElement {
+        Character;
+
+        constructor(json) {
+            super();
+
+            this.Character = json;
+
+            let shadow = this.attachShadow({mode: "open"});
+
+            let template = `
+                <style>
+                    :host {
+                        position: fixed;
+                        top: 0px;
+                        left: 0px;
+                        height: 100vh;
+                        width: 100vw;
+                        background-color: rgba(128,128,128,0.5);
+                    }
+
+                    #modal {
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        height: auto;
+                        width: auto;
+                        transform: translate(-50%, -50%);
+                        border: 1px solid black;
+                        padding: 10px;
+                        background-color: white;
+                    }
+                </style>
+
+                <div id="modal"></div>
+            `;
+
+            shadow.innerHTML = template;
+        }
+    }
+
+    customElements.define("", );
+*/
