@@ -503,7 +503,7 @@ class CharacterSheet extends HTMLElement {
 
         lang.innerHTML = "";
 
-        for (let key in this.Character["Weapon Proficiencies"]) {
+        for (let key in this.Character["Languages"]) {
             if (this.Character["Languages"][key] === true) {
                 array.push(key);
             }
@@ -654,15 +654,18 @@ class CharacterSheet extends HTMLElement {
             </div>
             
             <div id="profLang">
-                <h4>Other Proficiencies</h4>
                 <div id="otherProficiencies"></div>
                 <a id="addProficiency">+ Add Other Proficiency</a>
-                <h4>Languages</h4>
                 <div id="languages"></div>
-                <a>+ Add Language</a>
+                <a id="addLanguage">+ Add Language</a>
             </div>
 
-
+            <div id="featsTraits">
+                <div id="traits"></div>
+                <div id="feats"></div>
+                <a>+Add Feat</a>
+                <div id="features"></div>
+            </div>
         `;
 
         shadow.innerHTML = template;
@@ -709,6 +712,12 @@ class CharacterSheet extends HTMLElement {
         shadow.querySelector("#addProficiency").onclick = () => {
             document.body.appendChild(new EditProficienciesModal(this.Character));
         };
+
+        shadow.querySelector("#addLanguage").onclick = () => {
+            document.body.appendChild(new EditLanguagesModal(this.Character));
+        };
+
+        shadow
 
         // Testing MutationObserver
         let MutationObserver = window.MutationObserver;
@@ -1514,6 +1523,88 @@ class EditProficienciesModal extends HTMLElement {
 }
 
 customElements.define("editproficiencies-modal", EditProficienciesModal);
+
+class EditLanguagesModal extends HTMLElement {
+    Character;
+
+    constructor(json) {
+        super();
+
+        this.Character = json;
+
+        let shadow = this.attachShadow({mode: "open"});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    grid-template-columns: 2em 1fr;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: 80vh;
+                    width: 80vw;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                    overflow: auto;
+                }
+            </style>
+
+            <div id="modal">
+                <fieldset id="languages">
+                    <legend>Languages</legend>
+                </fieldset>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let lang = shadow.querySelector("#languages");
+
+        for (let key in this.Character["Languages"]) {
+            let div = document.createElement('div');
+
+            let input = document.createElement('input');
+            input.id = key;
+            input.type = "checkbox";
+            input.onchange = () => {
+                this.Character["Languages"][key] = input.checked;
+            };
+
+            div.appendChild(input);
+
+            let label = document.createElement('label');
+            label.htmlFor = key;
+            label.appendChild(document.createTextNode(key));
+
+            div.appendChild(label);
+
+            lang.appendChild(div);
+        }
+        
+        let close = document.createElement('button');
+        close.appendChild(document.createTextNode("Close"));
+        close.onclick = () => {
+            document.querySelector('character-sheet').UpdateLanguages();
+
+            this.remove();
+        }
+
+        shadow.querySelector("#modal").appendChild(close);
+    }
+}
+
+customElements.define("editlanguages-modal", EditLanguagesModal);
 
 class OpenModal extends HTMLElement {
     constructor() {
