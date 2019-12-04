@@ -62,16 +62,6 @@
                 console.log("Service workers not supported");
             }
         </script> -->
-        
-        <script>
-            fetch('./json/5e Reference.json')
-                .then(response => response.json())
-                .then(json => {
-                    for(let key in json) {
-                        localStorage.setItem(key, JSON.stringify(json[key]));
-                    }
-                });
-        </script>
     </head>
 
     <body>
