@@ -1,8 +1,5 @@
 {
     "Classes": {
-        "Artificer": {
-
-        },
         "Barbarian": {
             "Base": [
                 {
@@ -169,7 +166,7 @@
                     "Rage Damage": 4
                 }
             ],
-            "Primal Paths": {
+            "Subclasses": {
                 "Path of the Berserker": [
                     {
                         "Level": 3,
@@ -680,7 +677,7 @@
                     "9th": 1
                 }
             ],
-            "Bard Colleges": {
+            "Subclasses": {
                 "College of Lore": [
                     {
                         "Level": 3,
@@ -1118,7 +1115,7 @@
                     "9th": 1
                 }
             ],
-            "Divine Domains": {
+            "Subclasses": {
                 "Knowledge Domain": [
                     {
                         "Level": 1,
@@ -1940,7 +1937,7 @@
                     "9th": 1
                 }
             ],
-            "Druid Circles": {
+            "Subclasses": {
                 "Circle of the Land": [
                     {
                         "Level": 2,
@@ -2209,7 +2206,7 @@
                     ]
                 }
             ],
-            "Martial Archetypes": {
+            "Subclasses": {
                 "Champion": [
                     {
                         "Level": 3,
@@ -2603,7 +2600,7 @@
                     ]
                 }
             ],
-            "Monastic Traditions": {
+            "Subclasses": {
                 "Way of the Open Hand": [
                     {
                         "Level": 3,
@@ -3012,7 +3009,7 @@
                     "5th": 2
                 }
             ],
-            "Sacred Oaths": {
+            "Subclasses": {
                 "Oath of Devotion": [
                     {
                         "Level": 3,
@@ -3441,7 +3438,7 @@
                     "5th": 2
                 }
             ],
-            "Ranger Archetypes": {
+            "Subclasses": {
                 "Hunter": [
                     {
                         "Level": 3,
@@ -3744,7 +3741,7 @@
                     ]
                 }
             ],
-            "Roguish Archetypes": {
+            "Subclasses": {
                 "Thief": [
                     {
                         "Level": 3,
@@ -4316,7 +4313,7 @@
                     "9th": 1
                 }
             ],
-            "Sorcerous Origins": {
+            "Subclasses": {
                 "Draconic Bloodline": [
                     {
                         "Level": 1,
@@ -4697,7 +4694,7 @@
                     "Invocations Known": 8
                 }
             ],
-            "Otherworldly Patrons": {
+            "Subclasses": {
                 "The Archfey": [
                     {
                         "Level": 1,
@@ -5200,7 +5197,7 @@
                     "9th": 1
                 }
             ],
-            "Arcane Traditions": {
+            "Subclasses": {
                 "School of Abjuration": [
                     {
                         "Level": 2,
