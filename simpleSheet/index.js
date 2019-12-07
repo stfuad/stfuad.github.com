@@ -570,12 +570,19 @@ class CharacterSheet extends HTMLElement {
         for (let key in raceData[this.Character["Race"]]) {
             let obj = raceData[this.Character["Race"]][key];
 
-            if (obj["Level"] === 0) {
+            if (this.CharacterLevels() >= obj["Level"]) {
                 for (let trait in obj["Traits"]) {
                     target.appendChild(new RacialTrait(trait));
                 }
             }
         }
+    }
+
+    UpdateClassFeatures() {
+        let target = this.shadowRoot.querySelector("#features");
+        target.innerHTML = "";
+
+
     }
 
     UpdateFeats() {
@@ -759,8 +766,8 @@ class CharacterSheet extends HTMLElement {
 
             <div id="featsTraits">
                 <div id="traits"></div>
-                <div id="feats"></div>
                 <div id="features"></div>
+                <div id="feats"></div>
             </div>
 
             <a>+ Add Feat</a>
