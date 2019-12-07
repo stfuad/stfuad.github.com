@@ -476,6 +476,9 @@ class CharacterSheet extends HTMLElement {
                 target.appendChild(div);
             }
         }
+
+        this.UpdateRacialTraits();
+        this.UpdateClassFeatures();
     }
 
     UpdateProficiencyBonus() {
@@ -567,14 +570,25 @@ class CharacterSheet extends HTMLElement {
         let target = this.shadowRoot.querySelector("#traits");
         target.innerHTML = "";
 
-        for (let key in raceData[this.Character["Race"]]) {
-            let obj = raceData[this.Character["Race"]][key];
+        if (this.Character["Race"]) {
+            let fieldset = document.createElement('fieldset');
 
-            if (this.CharacterLevels() >= obj["Level"]) {
-                for (let trait in obj["Traits"]) {
-                    target.appendChild(new RacialTrait(trait));
+            let legend = document.createElement('legend');
+            legend.appendChild(document.createTextNode(`${this.Character["Race"]} - Racial Traits`));
+
+            fieldset.appendChild(legend);
+
+            for (let key in raceData[this.Character["Race"]]) {
+                let obj = raceData[this.Character["Race"]][key];
+
+                if (this.CharacterLevels() >= obj["Level"]) {
+                    for (let trait in obj["Traits"]) {
+                        fieldset.appendChild(new RacialTrait(trait));
+                    }
                 }
             }
+
+            target.appendChild(fieldset);
         }
     }
 
@@ -582,7 +596,26 @@ class CharacterSheet extends HTMLElement {
         let target = this.shadowRoot.querySelector("#features");
         target.innerHTML = "";
 
+        for (let key in this.Character["Classes"]) {
+            if (this.Character["Classes"][key] > 0) {
+                let fieldset = document.createElement('fieldset');
 
+                let legend = document.createElement('legend');
+                legend.appendChild(document.createTextNode(`${key} - Class Features`));
+        
+                fieldset.appendChild(legend);
+
+                for (let obj in classData[key]["Base"]) {
+                    if (this.Character["Classes"][key] >= classData[key]["Base"][obj]["Level"]) {
+                        for (let feature of classData[key]["Base"][obj]["Features"]) {
+                            fieldset.appendChild(new ClassFeature(feature));
+                        }
+                    }
+                }
+
+                target.appendChild(fieldset);
+            }
+        }
     }
 
     UpdateFeats() {
@@ -1356,6 +1389,32 @@ class RacialTrait extends HTMLElement {
 }
 
 customElements.define("racial-trait", RacialTrait);
+
+class ClassFeature extends HTMLElement {
+    constructor(feature) {
+        super();
+
+        let shadow = this.attachShadow({mode: "open"});
+
+        let template = `
+            <style>
+                :host {
+                    display: block;
+                }
+            </style>
+
+            <a>${feature}</a>
+        `;
+
+        shadow.innerHTML = template;
+
+        shadow.querySelector('a').onclick = () => {
+
+        }
+    }
+}
+
+customElements.define("class-feature", ClassFeature);
 
 /* Add Modals */
 
