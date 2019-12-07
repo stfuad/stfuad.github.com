@@ -1,17 +1,48 @@
-fetch("../json/5e Data.json")
-    .then(response => response.json())
-    .then(json => {
-        for (let key in json) {
-            localStorage.setItem(`${key} Data`, JSON.stringify(json[key]));
+export function init() {
+
+    fetch("../json/5e Data.json")
+        .then(response => response.json())
+        .then(json => {
+            for (let key in json) {
+                localStorage.setItem(`${key} Data`, JSON.stringify(json[key]));
+            }
+        })
+    fetch('../json/5e Reference.json')
+        .then(response => response.json())
+        .then(json => {
+            for(let key in json) {
+                localStorage.setItem(key, JSON.stringify(json[key]));
+            }
+        });
+
+    let content = document.querySelector('#content');
+        content.innerHTML = "";
+
+        content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
+
+    document.querySelector("#new").onclick = () => {
+        let content = document.querySelector('#content');
+        content.innerHTML = "";
+
+        content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
+    };
+    
+    document.querySelector("#open").onclick = () => {
+        document.body.appendChild(new OpenModal());
+    };
+
+    document.querySelector("#save").onclick = () => {
+        let sheet = document.querySelector("character-sheet");
+        
+        if (sheet.Character["Name"]) {
+            localStorage.setItem(`character-${sheet.Character["Name"]}`, JSON.stringify(sheet.Character));
+
+            console.log("Saved");
+        } else {
+            console.log("Sheet undefined");
         }
-    })
-fetch('../json/5e Reference.json')
-    .then(response => response.json())
-    .then(json => {
-        for(let key in json) {
-            localStorage.setItem(key, JSON.stringify(json[key]));
-        }
-    });
+    };
+}
 
 const races = JSON.parse(localStorage.getItem("Races"));
 const classes = JSON.parse(localStorage.getItem("Classes"));
@@ -369,36 +400,6 @@ const character = {
 
     ]
 };
-
-export function init() {
-    let content = document.querySelector('#content');
-        content.innerHTML = "";
-
-        content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
-
-    document.querySelector("#new").onclick = () => {
-        let content = document.querySelector('#content');
-        content.innerHTML = "";
-
-        content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
-    };
-    
-    document.querySelector("#open").onclick = () => {
-        document.body.appendChild(new OpenModal());
-    };
-
-    document.querySelector("#save").onclick = () => {
-        let sheet = document.querySelector("character-sheet");
-        
-        if (sheet.Character["Name"]) {
-            localStorage.setItem(`character-${sheet.Character["Name"]}`, JSON.stringify(sheet.Character));
-
-            console.log("Saved");
-        } else {
-            console.log("Sheet undefined");
-        }
-    };
-}
 
 class CharacterSheet extends HTMLElement {
     Character;
