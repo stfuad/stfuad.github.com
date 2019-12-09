@@ -1,5 +1,4 @@
 export function init() {
-
     fetch("../json/5e Data.json")
         .then(response => response.json())
         .then(json => {
@@ -17,13 +16,11 @@ export function init() {
 
     let content = document.querySelector('#content');
         content.innerHTML = "";
-
         content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
 
     document.querySelector("#new").onclick = () => {
         let content = document.querySelector('#content');
         content.innerHTML = "";
-
         content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
     };
     
@@ -78,113 +75,18 @@ const character = {
         "Wizard": 0
     },
     "Subclasses": {
-        "Barbarian": {
-            "Path of the Ancestral Guardian": false,
-            "Path of the Battlerager": false,
-            "Path of the Berserker": false,
-            "Path of the Storm Herald": false,
-            "Path of the Totem Warrior": false,
-            "Path of the Zealot": false
-        },
-        "Bard": {
-            "College of Glamour": false,
-            "College of Lore": false,
-            "College of Swords": false,
-            "College of Valor": false,
-            "College of Whispers": false
-        },
-        "Cleric": {
-            "Ambition Domain": false,
-            "Arcana Domain": false,
-            "Forge Domain": false,
-            "Grave Domain": false,
-            "Knowledge Domain": false,
-            "Life Domain": false,
-            "Light Domain": false,
-            "Nature Domain": false,
-            "Order Domain": false,
-            "Solidarity Domain": false,
-            "Strength Domain": false,
-            "Tempest Domain": false,
-            "Trickery Domain": false,
-            "War Domain": false,
-            "Zeal Domain": false
-        },
-        "Druid": {
-            "Circle of Dreams": false,
-            "Circle of Spores": false,
-            "Circle of the Land": false,
-            "Circle of the Moon": false,
-            "Circle of the Sheperd": false
-        },
-        "Fighter": {
-            "Arcane Archer": false,
-            "Cavalier": false,
-            "Champion": false,
-            "Battle Master": false,
-            "Eldritch Night": false,
-            "Samurai": false
-        },
-        "Monk": {
-            "Way of Shadow": false,
-            "Way of the Drunken Master": false,
-            "Way of the Four Elements": false,
-            "Way of the Kensei": false,
-            "Way of the Long Death": false,
-            "Way of the Open Hand": false,
-            "Way of the Sun Soul": false
-        },
-        "Paladin": {
-            "Oath of Conquest": false,
-            "Oath of Devotion": false,
-            "Oath of Redemption": false,
-            "Oath of Vengeance": false,
-            "Oath of the Ancients": false,
-            "Oath of the Crown": false
-        },
-        "Ranger": {
-            "Beast Master": false,
-            "Gloom Stalker": false,
-            "Horizon Walker": false,
-            "Hunter": false,
-            "Monster Slayer": false
-        },
-        "Rogue": {
-            "Arcane Trickster": false,
-            "Assassin": false,
-            "Inquisitive": false,
-            "Mastermind": false,
-            "Scout": false,
-            "Swashbuckler": false,
-            "Thief": false
-        },
-        "Sorcerer": {
-            "Draconic Bloodline": false,
-            "Divine Soul": false,
-            "Shadow Magic": false,
-            "Storm Sorcery": false,
-            "Wild Magic": false
-        },
-        "Warlock": {
-            "The Archfey": false,
-            "The Celestial": false,
-            "The Fiend": false,
-            "The Great Old One": false,
-            "The Hexblade": false,
-            "The Undying": false
-        },
-        "Wizard": {
-            "Bladesinging": false,
-            "School of Abjuration": false,
-            "School of Conjuration": false,
-            "School of Divination": false,
-            "School of Enchantment": false,
-            "School of Evocation": false,
-            "School of Illusion": false,
-            "School of Necromancy": false,
-            "School of Transmutation": false,
-            "Warmagic": false
-        }
+        "Barbarian": "",
+        "Bard": "",
+        "Cleric": "",
+        "Druid": "",
+        "Fighter": "",
+        "Monk": "",
+        "Paladin": "",
+        "Ranger": "",
+        "Rogue": "",
+        "Sorcerer": "",
+        "Warlock": "",
+        "Wizard": ""
     },
     "Ability Scores": {
         "Strength": 0,
@@ -396,13 +298,52 @@ const character = {
     "Equipment": [
 
     ],
-    "Spells": [
-
-    ]
+    "Spells": {
+        "Level 0 (Captrip)": [],
+        "Level 1": [],
+        "Level 2": [],
+        "Level 3": [],
+        "Level 4": [],
+        "Level 5": [],
+        "Level 6": [],
+        "Level 7": [],
+        "Level 8": [],
+        "Level 9": []
+    }
 };
 
 class CharacterSheet extends HTMLElement {
     Character;
+
+    ClassToSubclass(string) {
+        if (string === "Artificer") {
+            
+        } else if (string === "Barbarian") {
+            return "Primal Paths"
+        } else if (string === "Bard") {
+            return "Bard Colleges"
+        } else if (string === "Cleric") {
+            return "Divine Domains"
+        } else if (string === "Druid") {
+            return "Druid Circles"
+        } else if (string === "Fighter") {
+            return "Martial Archetypes"
+        } else if (string === "Monk") {
+            return "Monastic Traditions"
+        } else if (string === "Paladin") {
+            return "Sacred Oaths"
+        } else if (string === "Ranger") {
+            return "Ranger Archetypes"
+        } else if (string === "Rogue") {
+            return "Roguish Archetypes"
+        } else if (string === "Sorcerer") {
+            return "Sorcerous Origins"
+        } else if (string === "Warlock") {
+            return "Otherworldly Patrons"
+        } else if (string === "Wizard") {
+            return "Arcane Traditions"
+        }
+    }
 
     ProficiencyBonus() {
         let bonus = 0;
@@ -453,28 +394,26 @@ class CharacterSheet extends HTMLElement {
 
         for (let key in this.Character["Classes"]) {
             if (this.Character["Classes"][key] > 0) {
-                let div = document.createElement('div');
+                let a = document.createElement('a');
 
-                if (this.Character["Classes"][key] >= 3) {
-                    let subclass;
+                if (this.Character["Subclasses"][key]) {
+                    let subclass = this.Character["Subclasses"][key];
 
-                    for (let subkey in this.Character["Subclasses"][key]) {
-                        if (this.Character["Subclasses"][key][subkey] === true) {
-                            subclass = subkey;
-                        }
-                    }
-                    
                     if (subclass) {
-                        div.appendChild(document.createTextNode(`${key} (${subclass}), ${this.Character["Classes"][key]}`));
+                        a.appendChild(document.createTextNode(`${key} (${subclass}), ${this.Character["Classes"][key]}`));
                     } else {
-                        div.appendChild(document.createTextNode(`${key}, ${this.Character["Classes"][key]}`));
+                        a.appendChild(document.createTextNode(`${key}, ${this.Character["Classes"][key]}`));
                     }
                     
                 } else {
-                    div.appendChild(document.createTextNode(`${key}, ${this.Character["Classes"][key]}`));
+                    a.appendChild(document.createTextNode(`${key}, ${this.Character["Classes"][key]}`));
                 }
                 
-                target.appendChild(div);
+                a.onclick = () => {
+                    document.body.appendChild(new TableModal(classes[key]["Table"]));
+                };
+
+                target.appendChild(a);
             }
         }
 
@@ -584,7 +523,13 @@ class CharacterSheet extends HTMLElement {
 
                 if (this.CharacterLevels() >= obj["Level"]) {
                     for (let trait in obj["Traits"]) {
-                        fieldset.appendChild(new RacialTrait(trait));
+                        let a = document.createElement('a');
+                        a.appendChild(document.createTextNode(trait));
+                        a.onclick = () => {
+                            document.body.appendChild(new TraitModal(trait, obj["Traits"][trait]));
+                        };
+
+                        fieldset.appendChild(a);
                     }
                 }
             }
@@ -609,7 +554,29 @@ class CharacterSheet extends HTMLElement {
                 for (let obj in classData[key]["Base"]) {
                     if (this.Character["Classes"][key] >= classData[key]["Base"][obj]["Level"]) {
                         for (let feature of classData[key]["Base"][obj]["Features"]) {
-                            fieldset.appendChild(new ClassFeature(feature));
+                            let a = document.createElement('a');
+                            a.appendChild(document.createTextNode(feature));
+                            a.onclick = () => {
+                                document.body.appendChild(new FeatureModal(feature, classes[key]["Class Features"]));
+                            };
+
+                            fieldset.appendChild(a);
+                        }
+                    }
+                }
+
+                let subclass = this.Character["Subclasses"][key]
+
+                for (let obj in classData[key]["Subclasses"][subclass]) {
+                    if (this.Character["Classes"][key] >= classData[key]["Subclasses"][subclass][obj]["Level"]) {
+                        for (let feature of classData[key]["Subclasses"][subclass][obj]["Features"]) {
+                            let a = document.createElement('a');
+                            a.appendChild(document.createTextNode(feature));
+                            a.onclick = () => {
+                                document.body.appendChild(new FeatureModal(feature, classes[key][this.ClassToSubclass(key)][subclass]));
+                            };
+
+                            fieldset.appendChild(a);
                         }
                     }
                 }
@@ -620,7 +587,49 @@ class CharacterSheet extends HTMLElement {
     }
 
     UpdateFeats() {
+        let target = this.shadowRoot.querySelector("#feats");
+        target.innerHTML = "";
 
+        let fieldset = document.createElement('fieldset');
+
+        let legend = document.createElement('legend');
+        legend.appendChild(document.createTextNode(`Feats`));
+
+        fieldset.appendChild(legend);
+
+        for (let feat of this.Character["Feats"]) {
+            let a = document.createElement('a');
+                a.appendChild(document.createTextNode(feat));
+                a.onclick = () => {
+                    document.body.appendChild(new FeatModal(feat, feats[feat]));
+                };
+
+            fieldset.appendChild(a);
+        }
+
+        target.appendChild(fieldset);
+    }
+
+    UpdateSpells() {
+        let target = this.shadowRoot.querySelector("#spells");
+        target.innerHTML = "";
+
+        for (let key in this.Character["Spells"]) {
+            if (this.Character["Spells"][key].length > 0) {
+                let fieldset = document.createElement('fieldset');
+
+                let legend = document.createElement('legend');
+                    legend.appendChild(document.createTextNode(key))
+
+                fieldset.appendChild(legend);
+
+                for (let spell of this.Character["Spells"][key]) {
+                    fieldset.appendChild(new Spell(spell, this.Character));
+                }
+
+                target.appendChild(fieldset);
+            }
+        }
     }
 
     constructor(json) {
@@ -641,7 +650,8 @@ class CharacterSheet extends HTMLElement {
                     margin: 10px 0px 10px 0px;
                 }
 
-                :host > a {
+                a {
+                    display: block;
                     color: blue;
                     cursor: pointer;
                 }
@@ -675,6 +685,8 @@ class CharacterSheet extends HTMLElement {
                     grid-gap: 1em;
                 } */
             </style>
+
+            <a id="json">Character JSON</a>
 
             <div>
                 <input type="text" id="characterName" value="${this.Character["Name"]}">
@@ -804,18 +816,35 @@ class CharacterSheet extends HTMLElement {
                 <div id="feats"></div>
             </div>
 
-            <a>+ Add Feat</a>
+            <a id="addFeat">+ Add Feat</a>
+
+            <h4>Spells</h4>
+
+            <div id="spells"></div>
+
+            <a id="addSpell">+ Add Spell</a>
         `;
 
         shadow.innerHTML = template;
         
+        shadow.querySelector("#json").onclick = () => {
+            console.log(this.Character);
+        }
+
         this.UpdateClasses();
         this.UpdateProficiencyBonus();
         this.UpdatePassivePerception();
         this.UpdateOtherProficiencies();
         this.UpdateLanguages();
+        this.UpdateSpells();
 
         let select = shadow.querySelector("#race");
+
+        let option = document.createElement('option');
+        option.value = "";
+        option.appendChild(document.createTextNode("Select a race"));
+
+        select.appendChild(option);
 
         for (let key in raceData) {
             let option = document.createElement('option');
@@ -845,6 +874,14 @@ class CharacterSheet extends HTMLElement {
 
         shadow.querySelector("#addLanguage").onclick = () => {
             document.body.appendChild(new EditLanguagesModal(this.Character));
+        };
+
+        shadow.querySelector("#addFeat").onclick = () => {
+            document.body.appendChild(new AddFeatModal(this.Character));
+        };
+
+        shadow.querySelector("#addSpell").onclick = () => {
+            document.body.appendChild(new AddSpellModal(this.Character));
         };
 
         let inputs = shadow.querySelectorAll('input');
@@ -924,6 +961,8 @@ class CharacterSheet extends HTMLElement {
 }
 
 customElements.define('character-sheet', CharacterSheet);
+
+/* Elements */
 
 class AbilityScore extends HTMLElement {
     Character;
@@ -1365,8 +1404,82 @@ class Skill extends HTMLElement {
 
 customElements.define('skill-element', Skill);
 
-class RacialTrait extends HTMLElement {
-    constructor(trait) {
+class Spell extends HTMLElement {
+    Character;
+
+    constructor(title, json) {
+        super();
+
+        this.Character = json;
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    display: grid;
+                    grid-template-columns: 1fr auto;
+                    font-size: 1em;
+                    justify-content: left;
+                }
+
+                a {
+                    grid-column: 1;
+                    color: blue;
+                    cursor: pointer;
+                }
+
+                button {
+                    grid-column: 2;
+                }
+            </style>
+
+            <a>${title}</a>
+            <button>\u2716</button>
+        `;
+
+        shadow.innerHTML = template;
+
+        shadow.querySelector('a').onclick = () => {
+            document.body.appendChild(new SpellModal(title));
+        };
+
+        let spellLevel = spells[title]["Level"];
+
+        shadow.querySelector('button').onclick = () => {
+            if (spellLevel === 0) {
+                this.Character["Spells"]["Level 0 (Captrip)"].pop(title);
+            } else if (spellLevel === 1) {
+                this.Character["Spells"]["Level 1"].pop(title);
+            } else if (spellLevel === 2) {
+                this.Character["Spells"]["Level 2"].pop(title);
+            } else if (spellLevel === 3) {
+                this.Character["Spells"]["Level 3"].pop(title);
+            } else if (spellLevel === 4) {
+                this.Character["Spells"]["Level 4"].pop(title);
+            } else if (spellLevel === 5) {
+                this.Character["Spells"]["Level 5"].pop(title);
+            } else if (spellLevel === 6) {
+                this.Character["Spells"]["Level 6"].pop(title);
+            } else if (spellLevel === 7) {
+                this.Character["Spells"]["Level 7"].pop(title);
+            } else if (spellLevel === 8) {
+                this.Character["Spells"]["Level 8"].pop(title);
+            } else if (spellLevel === 9) {
+                this.Character["Spells"]["Level 9"].pop(title);
+            }
+
+            this.remove();
+        };
+    }
+}
+
+customElements.define('spell-element', Spell);
+
+/* Info Modals */
+
+class TableModal extends HTMLElement {
+    constructor(json) {
         super();
 
         let shadow = this.attachShadow({mode: "open"});
@@ -1374,25 +1487,141 @@ class RacialTrait extends HTMLElement {
         let template = `
             <style>
                 :host {
-                    display: block;
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    max-height: 80vh;
+                    width: 80vw;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                    overflow: auto;
+                }
+
+                button {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
                 }
             </style>
 
-            <a>${trait}</a>
+            <div id="modal">
+            <button type="button" id="close">\u2716</button>
+            </div>
         `;
 
         shadow.innerHTML = template;
 
-        shadow.querySelector('a').onclick = () => {
+        let modal = shadow.querySelector("#modal");
+        
+        Table(json, modal);
 
+        shadow.querySelector('button').onclick = () => {
+            this.remove();
+        };
+
+        function Table(json, parent) {
+            let table = document.createElement('table');
+
+            // Caption
+
+            if(json["Title"] !== undefined) {
+                let caption = document.createElement('caption');
+                caption.appendChild(document.createTextNode(json["Title"]))
+
+                table.appendChild(caption);
+            }
+
+            // Headers
+
+            if(json["Headers"] !== undefined) {
+                let headers = document.createElement('tr');
+
+                json["Headers"].forEach(header => {
+                    let th = document.createElement('th');
+                    th.appendChild(document.createTextNode(header));
+                    
+                    headers.appendChild(th);
+                });
+
+                table.appendChild(headers);
+            }
+            
+            // Rows
+
+            if(json["Rows"] !== undefined) {
+                json["Rows"].forEach(row => {
+                    let tr = document.createElement('tr');
+
+                    for(let key in row) {
+                        let td = document.createElement('td');
+
+                        if(key === "Spell" || key === "Spells" || key === "Circle Spells") {
+                            let length = row[key].length
+
+                            for(var i = 0; i < length; i++) {
+                                let spell = row[key][i];
+
+                                let a = document.createElement('a');
+
+                                if(i > 0) {
+                                    a.appendChild(document.createTextNode(`, ${spell}`))
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell));
+                                    }, false);
+
+
+                                } else {
+                                    a.appendChild(document.createTextNode(spell))
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell));
+                                    }, false);
+
+                                }
+
+                                td.appendChild(a);
+                            }
+                        } else {
+                            if (typeof(row[key]) === "string" && row[key].includes("#")) {
+                                let split = row[key].split("#");
+
+                                let b = document.createElement('b');
+                                b.appendChild(document.createTextNode(`${split[0]}. `));
+
+                                td.appendChild(b);
+                                td.appendChild(document.createTextNode(split[1]));
+                            } else {
+                                td.appendChild(document.createTextNode(row[key]));
+                            }
+                        }
+
+                        tr.appendChild(td);
+                    }
+
+                    table.appendChild(tr);
+                });
+            }
+
+            parent.appendChild(table);
         }
     }
 }
 
-customElements.define("racial-trait", RacialTrait);
+customElements.define("table-modal", TableModal);
 
-class ClassFeature extends HTMLElement {
-    constructor(feature) {
+class FeatModal extends HTMLElement {
+    constructor(title, json) {
         super();
 
         let shadow = this.attachShadow({mode: "open"});
@@ -1400,22 +1629,776 @@ class ClassFeature extends HTMLElement {
         let template = `
             <style>
                 :host {
-                    display: block;
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    max-height: 80vh;
+                    width: 80vw;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                    overflow: auto;
+                }
+
+                button {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
                 }
             </style>
 
-            <a>${feature}</a>
+            <div id="modal">
+            <h3>${title}</h3>
+            <button type="button" id="close">\u2716</button>
+            </div>
         `;
 
         shadow.innerHTML = template;
 
-        shadow.querySelector('a').onclick = () => {
+        let modal = shadow.querySelector("#modal");
+        
+        for (let key in json) {
+            if (key.includes("Description")) {
+                Paragraphs(json[key], modal);
+            } else if (key.includes("Unordered List")) {
+                List(json[key], "ul", modal);
+            } else if (key.includes("Table")) {
+                Table(json[key], modal);
+            }
+        }
 
+        shadow.querySelector('button').onclick = () => {
+            this.remove();
+        };
+
+        function Paragraphs(array, parent) {
+            array.forEach(line => {
+                let p = document.createElement('p');
+        
+                if(line.includes('#')) {
+                    let split = line.split('#');
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]}. `));
+                    p.appendChild(b);
+        
+                    p.appendChild(document.createTextNode(split[1]));
+                } else if (line.includes('=')) {
+                    let split = line.split('=');
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]} `));
+                    p.appendChild(b);
+        
+                    p.appendChild(document.createTextNode(`= ${split[1]} `));
+                } else {
+                    p.appendChild(document.createTextNode(line));
+                }
+        
+                parent.appendChild(p);
+            });
+        }
+
+        function List(array, listType, parent) {
+            let list = document.createElement(listType);
+
+            array.forEach(item => {
+                let li = document.createElement('li');
+
+                if(item.includes("#")) {
+                    let split = item.split("#");
+
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]}. `));
+                    li.appendChild(b);
+
+                    li.appendChild(document.createTextNode(split[1]));
+                } else {
+                    li.appendChild(document.createTextNode(item));
+                }
+
+                list.appendChild(li);
+            });
+
+            parent.appendChild(list);
+        }
+
+        function Table(json, parent) {
+            let table = document.createElement('table');
+
+            // Caption
+
+            if(json["Title"] !== undefined) {
+                let caption = document.createElement('caption');
+                caption.appendChild(document.createTextNode(json["Title"]))
+
+                table.appendChild(caption);
+            }
+
+            // Headers
+
+            
+
+            if(json["Headers"] !== undefined) {
+                let headers = document.createElement('tr');
+
+                json["Headers"].forEach(header => {
+                    let th = document.createElement('th');
+                    th.appendChild(document.createTextNode(header));
+                    
+                    headers.appendChild(th);
+                });
+
+                table.appendChild(headers);
+            }
+            
+            // Rows
+
+            if(json["Rows"] !== undefined) {
+                json["Rows"].forEach(row => {
+                    let tr = document.createElement('tr');
+
+                    for(let key in row) {
+                        let td = document.createElement('td');
+
+                        if(key === "Spell" || key === "Spells" || key === "Circle Spells") {
+                            let length = row[key].length
+
+                            for(var i = 0; i < length; i++) {
+                                let spell = row[key][i];
+
+                                let a = document.createElement('a');
+
+                                if(i > 0) {
+                                    a.appendChild(document.createTextNode(`, ${spell}`))
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell));
+                                    }, false);
+
+
+                                } else {
+                                    a.appendChild(document.createTextNode(spell))
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell));
+                                    }, false);
+
+                                }
+
+                                td.appendChild(a);
+                            }
+                        } else {
+                            if (typeof(row[key]) === "string" && row[key].includes("#")) {
+                                let split = row[key].split("#");
+
+                                let b = document.createElement('b');
+                                b.appendChild(document.createTextNode(`${split[0]}. `));
+
+                                td.appendChild(b);
+                                td.appendChild(document.createTextNode(split[1]));
+                            } else {
+                                td.appendChild(document.createTextNode(row[key]));
+                            }
+                        }
+
+                        tr.appendChild(td);
+                    }
+
+                    table.appendChild(tr);
+                });
+            }
+
+            parent.appendChild(table);
         }
     }
 }
 
-customElements.define("class-feature", ClassFeature);
+customElements.define("feat-modal", FeatModal);
+
+class TraitModal extends HTMLElement {
+    constructor(title, json) {
+        super();
+
+        let shadow = this.attachShadow({mode: "open"});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    max-height: 80vh;
+                    width: 80vw;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                    overflow: auto;
+                }
+
+                button {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                }
+            </style>
+
+            <div id="modal">
+            <h3>${title}</h3>
+            <button type="button" id="close">\u2716</button>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let modal = shadow.querySelector("#modal");
+        
+        Paragraphs(json, modal);
+
+        shadow.querySelector('button').onclick = () => {
+            this.remove();
+        };
+
+        function Paragraphs(array, parent) {
+            array.forEach(line => {
+                let p = document.createElement('p');
+        
+                if(line.includes('#')) {
+                    let split = line.split('#');
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]}. `));
+                    p.appendChild(b);
+        
+                    p.appendChild(document.createTextNode(split[1]));
+                } else if (line.includes('=')) {
+                    let split = line.split('=');
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]} `));
+                    p.appendChild(b);
+        
+                    p.appendChild(document.createTextNode(`= ${split[1]} `));
+                } else {
+                    p.appendChild(document.createTextNode(line));
+                }
+        
+                parent.appendChild(p);
+            });
+        }
+    }
+}
+
+customElements.define("trait-modal", TraitModal);
+
+class FeatureModal extends HTMLElement {
+    constructor(title, json) {
+        super();
+
+        let shadow = this.attachShadow({mode: "open"});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    max-height: 80vh;
+                    width: 80vw;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                    overflow: auto;
+                }
+
+                button {
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                }
+            </style>
+
+            <div id="modal">
+            <h3>${title}</h3>
+            <button type="button" id="close">\u2716</button>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let modal = shadow.querySelector("#modal");
+        
+        let newTitle = title;
+
+        if (title.includes("(")) {
+            let split = title.split(" (");
+            
+            newTitle = split[0];
+        }
+
+        if (json[newTitle]) {
+            if (Array.isArray(json[newTitle])) {
+                Paragraphs(json[newTitle], modal);
+            } else {
+                for (let key in json[newTitle]) {
+                    if (key.includes("Description")) {
+                        Paragraphs(json[newTitle][key], modal);
+                    } else if (key === "Unordered List") {
+                        List(json[newTitle][key], "ul", modal);
+                    } else if (key.includes("Table")) {
+                        Table(json[newTitle][key], modal);
+                    } else if (Array.isArray(json[newTitle][key])) {
+                        let b = document.createElement('b');
+                        b.appendChild(document.createTextNode(key));
+
+                        modal.appendChild(b);
+
+                        Paragraphs(json[newTitle][key], modal)
+                    }
+                }
+            }
+        }
+
+        shadow.querySelector('button').onclick = () => {
+            this.remove();
+        };
+
+        function Paragraphs(array, parent) {
+            array.forEach(line => {
+                let p = document.createElement('p');
+        
+                if(line.includes('#')) {
+                    let split = line.split('#');
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]}. `));
+                    p.appendChild(b);
+        
+                    p.appendChild(document.createTextNode(split[1]));
+                } else if (line.includes('=')) {
+                    let split = line.split('=');
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]} `));
+                    p.appendChild(b);
+        
+                    p.appendChild(document.createTextNode(`= ${split[1]} `));
+                } else {
+                    p.appendChild(document.createTextNode(line));
+                }
+        
+                parent.appendChild(p);
+            });
+        }
+        
+        function List(array, listType, parent) {
+            let list = document.createElement(listType);
+        
+            array.forEach(item => {
+                let li = document.createElement('li');
+        
+                if(item.includes("#")) {
+                    let split = item.split("#");
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]}. `));
+                    li.appendChild(b);
+        
+                    li.appendChild(document.createTextNode(split[1]));
+                } else {
+                    li.appendChild(document.createTextNode(item));
+                }
+        
+                list.appendChild(li);
+            });
+        
+            parent.appendChild(list);
+        }
+        
+        function Table(json, parent) {
+            let table = document.createElement('table');
+        
+            // Caption
+        
+            if(json["Title"] !== undefined) {
+                let caption = document.createElement('caption');
+                caption.appendChild(document.createTextNode(json["Title"]))
+        
+                table.appendChild(caption);
+            }
+        
+            // Headers
+        
+            
+        
+            if(json["Headers"] !== undefined) {
+                let headers = document.createElement('tr');
+        
+                json["Headers"].forEach(header => {
+                    let th = document.createElement('th');
+                    th.appendChild(document.createTextNode(header));
+                    
+                    headers.appendChild(th);
+                });
+        
+                table.appendChild(headers);
+            }
+            
+            // Rows
+        
+            if(json["Rows"] !== undefined) {
+                json["Rows"].forEach(row => {
+                    let tr = document.createElement('tr');
+        
+                    for(let key in row) {
+                        let td = document.createElement('td');
+        
+                        if(key === "Spell" || key === "Spells" || key === "Circle Spells") {
+                            let length = row[key].length
+        
+                            for(var i = 0; i < length; i++) {
+                                let spell = row[key][i];
+        
+                                let a = document.createElement('a');
+        
+                                if(i > 0) {
+                                    a.appendChild(document.createTextNode(`, ${spell}`))
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell));
+                                    }, false);
+        
+        
+                                } else {
+                                    a.appendChild(document.createTextNode(spell))
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell));
+                                    }, false);
+        
+                                }
+        
+                                td.appendChild(a);
+                            }
+                        } else {
+                            if (typeof(row[key]) === "string" && row[key].includes("#")) {
+                                let split = row[key].split("#");
+        
+                                let b = document.createElement('b');
+                                b.appendChild(document.createTextNode(`${split[0]}. `));
+        
+                                td.appendChild(b);
+                                td.appendChild(document.createTextNode(split[1]));
+                            } else {
+                                td.appendChild(document.createTextNode(row[key]));
+                            }
+                        }
+        
+                        tr.appendChild(td);
+                    }
+        
+                    table.appendChild(tr);
+                });
+            }
+        
+            parent.appendChild(table);
+        }
+    }
+}
+
+customElements.define("feature-modal", FeatureModal);
+
+class SpellModal extends HTMLElement {
+    constructor(name) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    height: auto;
+                    max-height: 80vh;
+                    width: 80vw;
+                    border: 1px solid black;
+                    border-radius: 5px;
+                    padding: 10px;
+                    overflow: auto;
+                    background-color: white;
+                }
+
+                #modal, #content, #description{
+                    display: grid;
+                    grid-auto-rows: auto;
+                }
+
+                button {
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                }
+            </style>
+
+            <div id="modal">
+                <button type="button">\u2716</button>
+
+                <div id="header">
+                    <h3>${name}</h3>
+                    <i></i>
+                </div>
+                <div id="content">
+                    <span><b>Casting Time</b> ${spells[name]["Casting Time"]}</span>
+                    <span><b>Range</b> ${spells[name]["Range"]}</span>
+                    <span><b>Components</b> ${spells[name]["Components"]}</span>
+                    <span><b>Duration</b> ${spells[name]["Duration"]}</span>
+                </div>
+                <div id="description"></div>
+                <div id="footer">
+                    <i></i>
+                </div>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        /* Set subheader */
+
+        let subheader = "";
+        
+        let level = spells[name]["Level"];
+    
+        if (level === 0) {
+            subheader = "";
+        } else if (level === 1) {
+            subheader = "1st-level";
+        } else if (level === 2) {
+            subheader = "2nd-level";
+        } else if (level === 3) {
+            subheader = "3rd-level";
+        } else if (level >= 4) {
+            subheader = `${level}th-level`;
+        }
+    
+        subheader += ` ${spells[name]["School"]}`;
+    
+        if (spells[name]["Cantrip"] === true) {
+            subheader += " cantrip";
+        }
+    
+        if (spells[name]["Ritual"] === true) {
+            subheader += " (ritual)";
+        }
+
+        shadow.querySelector('#header i').appendChild(document.createTextNode(subheader));
+
+        /* Spell(name, JSON.parse(localStorage.getItem("Spells"))[name], div); */
+
+        shadow.querySelector('button').onclick = () => {
+            this.remove();
+        };
+
+        let description = shadow.querySelector('#description');
+
+        for(let key in spells[name]) {
+            if(key.includes("Description")) {
+                Paragraphs(spells[name][key], description);
+            } else if(key == "Higher Levels") {
+                Paragraphs(spells[name][key], description);
+            } else if(key.includes("Unordered List")) {
+                List(spells[name][key], "ul", description);
+            } else if(key.includes("Ordered List")) {
+                List(spells[name][key], "ol", description);
+            } else if(key.includes("Table")) {
+                Table(spells[name][key], description)
+            }
+        }
+
+        shadow.querySelector('#footer i').appendChild(document.createTextNode(`${spells[name]["Book"]}, Pg. ${spells[name]["Page"]}`));
+
+        function Paragraphs(array, parent) {
+            array.forEach(line => {
+                let p = document.createElement('p');
+        
+                if(line.includes('#')) {
+                    let split = line.split('#');
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]}. `));
+                    p.appendChild(b);
+        
+                    p.appendChild(document.createTextNode(split[1]));
+                } else if (line.includes('=')) {
+                    let split = line.split('=');
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]} `));
+                    p.appendChild(b);
+        
+                    p.appendChild(document.createTextNode(`= ${split[1]} `));
+                } else {
+                    p.appendChild(document.createTextNode(line));
+                }
+        
+                parent.appendChild(p);
+            });
+        }
+        
+        function List(array, listType, parent) {
+            let list = document.createElement(listType);
+        
+            array.forEach(item => {
+                let li = document.createElement('li');
+        
+                if(item.includes("#")) {
+                    let split = item.split("#");
+        
+                    let b = document.createElement('b');
+                    b.appendChild(document.createTextNode(`${split[0]}. `));
+                    li.appendChild(b);
+        
+                    li.appendChild(document.createTextNode(split[1]));
+                } else {
+                    li.appendChild(document.createTextNode(item));
+                }
+        
+                list.appendChild(li);
+            });
+        
+            parent.appendChild(list);
+        }
+        
+        function Table(json, parent) {
+            let table = document.createElement('table');
+        
+            // Caption
+        
+            if(json["Title"] !== undefined) {
+                let caption = document.createElement('caption');
+                caption.appendChild(document.createTextNode(json["Title"]))
+        
+                table.appendChild(caption);
+            }
+        
+            // Headers
+        
+            
+        
+            if(json["Headers"] !== undefined) {
+                let headers = document.createElement('tr');
+        
+                json["Headers"].forEach(header => {
+                    let th = document.createElement('th');
+                    th.appendChild(document.createTextNode(header));
+                    
+                    headers.appendChild(th);
+                });
+        
+                table.appendChild(headers);
+            }
+            
+            // Rows
+        
+            if(json["Rows"] !== undefined) {
+                json["Rows"].forEach(row => {
+                    let tr = document.createElement('tr');
+        
+                    for(let key in row) {
+                        let td = document.createElement('td');
+        
+                        if(key === "Spell" || key === "Spells" || key === "Circle Spells") {
+                            let length = row[key].length
+        
+                            for(var i = 0; i < length; i++) {
+                                let spell = row[key][i];
+        
+                                let a = document.createElement('a');
+        
+                                if(i > 0) {
+                                    a.appendChild(document.createTextNode(`, ${spell}`))
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell));
+                                    }, false);
+        
+        
+                                } else {
+                                    a.appendChild(document.createTextNode(spell))
+                                    a.addEventListener('click', () => {
+                                        parent.appendChild(new SpellModal(spell));
+                                    }, false);
+        
+                                }
+        
+                                td.appendChild(a);
+                            }
+                        } else {
+                            if (typeof(row[key]) === "string" && row[key].includes("#")) {
+                                let split = row[key].split("#");
+        
+                                let b = document.createElement('b');
+                                b.appendChild(document.createTextNode(`${split[0]}. `));
+        
+                                td.appendChild(b);
+                                td.appendChild(document.createTextNode(split[1]));
+                            } else {
+                                td.appendChild(document.createTextNode(row[key]));
+                            }
+                        }
+        
+                        tr.appendChild(td);
+                    }
+        
+                    table.appendChild(tr);
+                });
+            }
+        
+            parent.appendChild(table);
+        }
+    }
+}
+
+customElements.define('spell-modal', SpellModal);
 
 /* Add Modals */
 
@@ -1481,6 +2464,8 @@ class AddFeatModal extends HTMLElement {
             if (select.value) {
                 this.Character["Feats"].push(select.value);
 
+                document.querySelector('character-sheet').UpdateFeats();
+
                 this.remove();
             }
         }
@@ -1493,11 +2478,122 @@ class AddFeatModal extends HTMLElement {
 
 customElements.define("addfeat-modal", AddFeatModal);
 
+class AddSpellModal extends HTMLElement {
+    Character;
+
+    constructor(json) {
+        super();
+
+        this.Character = json;
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    width: auto;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                }
+
+                h3 {
+                    margin: 0px;
+                }
+            </style>
+
+            <div id="modal">
+                <h3>Add a spell...</h3>
+                <select></select>
+                <button type="button" id="add">Add Spell</button>
+                <button type="button" id="cancel">Cancel</button>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let select = shadow.querySelector('select');
+        let sorted = Object.keys(spells).sort();
+
+        sorted.forEach(key => {
+            let option = document.createElement('option');
+            option.value = key;
+            option.appendChild(document.createTextNode(key));
+
+            select.appendChild(option);
+        });
+
+        let spellLevel;
+
+        select.onchange = () => {
+            spellLevel = spells[select.value]["Level"];
+        };
+
+        shadow.getElementById('add').onclick = () => {
+            if (spellLevel === 0) {
+                this.Character["Spells"]["Level 0 (Captrip)"].push(select.value);
+            } else if (spellLevel === 1) {
+                this.Character["Spells"]["Level 1"].push(select.value);
+            } else if (spellLevel === 2) {
+                this.Character["Spells"]["Level 2"].push(select.value);
+            } else if (spellLevel === 3) {
+                this.Character["Spells"]["Level 3"].push(select.value);
+            } else if (spellLevel === 4) {
+                this.Character["Spells"]["Level 4"].push(select.value);
+            } else if (spellLevel === 5) {
+                this.Character["Spells"]["Level 5"].push(select.value);
+            } else if (spellLevel === 6) {
+                this.Character["Spells"]["Level 6"].push(select.value);
+            } else if (spellLevel === 7) {
+                this.Character["Spells"]["Level 7"].push(select.value);
+            } else if (spellLevel === 8) {
+                this.Character["Spells"]["Level 8"].push(select.value);
+            } else if (spellLevel === 9) {
+                this.Character["Spells"]["Level 9"].push(select.value);
+            }
+            
+            document.body.querySelector('character-sheet').UpdateSpells();
+
+            this.remove();
+        }
+
+        shadow.getElementById('cancel').onclick = () => {
+            this.remove();
+        }
+    }
+}
+
+customElements.define("addspell-modal", AddSpellModal);
+
 /* Edit Modals */
 
 class EditClassesModal extends HTMLElement {
     Character;
     
+    ToggleSelect() {
+        let select = this.shadowRoot.querySelector('select');
+
+        if (select.disabled === true) {
+            select.disabled = false;
+        } else {
+            select.disabled = true;
+        }
+    }
+
     constructor(json) {
         super();
 
@@ -1563,10 +2659,6 @@ class EditClassesModal extends HTMLElement {
             input.value = this.Character["Classes"][key];
             input.onchange = () => {
                 this.Character["Classes"][key] = input.valueAsNumber;
-
-                if (this.Character["Classes"][key] >= 3) {
-                    shadow.querySelector(`#${key}Subclass`).disabled = false;
-                }
             };
 
             target.appendChild(input);
@@ -1574,24 +2666,22 @@ class EditClassesModal extends HTMLElement {
             let select = document.createElement('select');
             select.id = `${key}Subclass`;
 
-            if (this.Character["Classes"][key] < 3) {
-                select.disabled = true;
-            }
+            let option = document.createElement('option');
+            option.appendChild(document.createTextNode("Select a subclass"));
+            option.value = "";
 
-            for (let subclass in this.Character["Subclasses"][key]) {
+            select.appendChild(option);
+
+            for (let subclass in classData[key]["Subclasses"]) {
                 let option = document.createElement('option');
                 option.appendChild(document.createTextNode(subclass));
                 option.value = subclass;
-
-                if (this.Character["Classes"][key] >= 3) {
-                    option.selected = true;
-                }
 
                 select.appendChild(option);
             }
 
             select.onchange = () => {
-                this.Character["Subclasses"][key][select.value] = true;
+                this.Character["Subclasses"][key] = [select.value];
             }
 
             target.appendChild(select);
