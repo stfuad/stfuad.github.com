@@ -53,14 +53,9 @@
     </body>
 
     <script>
-        try {
-            import("./index.js")
-                .then((module) => {
-                    module.init();
-                })
-        } catch (error) {
-            alert(error)
-        }
-        
+        import("./index.js")
+            .then((module) => {
+                module.init();
+            })
     </script>
 </html>
