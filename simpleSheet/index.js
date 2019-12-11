@@ -1,16 +1,34 @@
+let classes;
+let feats;
+let spells;
+
+let raceData;
+let classData;
+
 export function init() {
     fetch("../json/5e Data.json")
         .then(response => response.json())
         .then(json => {
             for (let key in json) {
-                localStorage.setItem(`${key} Data`, JSON.stringify(json[key]));
+                if (key.includes("Races")) {
+                    raceData = json[key];
+                } else if (key.includes("Classes")) {
+                    classData = json[key];
+                }
             }
         })
+
     fetch('../json/5e Reference.json')
         .then(response => response.json())
         .then(json => {
             for(let key in json) {
-                localStorage.setItem(key, JSON.stringify(json[key]));
+                if (key.includes("Classes")) {
+                    classes = json[key];
+                } else if (key.includes("Feats")) {
+                    feats = json[key];
+                } else if (key.includes("Spells")) {
+                    spells = json[key];
+                }
             }
         });
 
@@ -20,8 +38,8 @@ export function init() {
 
     document.querySelector("#new").onclick = () => {
         let content = document.querySelector('#content');
-        content.innerHTML = "";
-        content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
+            content.innerHTML = "";
+            content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
     };
     
     document.querySelector("#open").onclick = () => {
@@ -40,14 +58,6 @@ export function init() {
         }
     };
 }
-
-const races = JSON.parse(localStorage.getItem("Races"));
-const classes = JSON.parse(localStorage.getItem("Classes"));
-const feats = JSON.parse(localStorage.getItem("Feats"));
-const spells = JSON.parse(localStorage.getItem("Spells"));
-
-const raceData = JSON.parse(localStorage.getItem("Races Data"));
-const classData = JSON.parse(localStorage.getItem("Classes Data"));
 
 const character = {
     "Name": "",
@@ -1548,12 +1558,12 @@ class TableModal extends HTMLElement {
             if(json["Headers"] !== undefined) {
                 let headers = document.createElement('tr');
 
-                json["Headers"].forEach(header => {
+                for (let header of json["Headers"]) {
                     let th = document.createElement('th');
-                    th.appendChild(document.createTextNode(header));
+                        th.appendChild(document.createTextNode(header));
                     
                     headers.appendChild(th);
-                });
+                }
 
                 table.appendChild(headers);
             }
@@ -1561,56 +1571,18 @@ class TableModal extends HTMLElement {
             // Rows
 
             if(json["Rows"] !== undefined) {
-                json["Rows"].forEach(row => {
+                for (let row of json["Rows"]) {
                     let tr = document.createElement('tr');
 
                     for(let key in row) {
                         let td = document.createElement('td');
-
-                        if(key === "Spell" || key === "Spells" || key === "Circle Spells") {
-                            let length = row[key].length
-
-                            for(var i = 0; i < length; i++) {
-                                let spell = row[key][i];
-
-                                let a = document.createElement('a');
-
-                                if(i > 0) {
-                                    a.appendChild(document.createTextNode(`, ${spell}`))
-                                    a.addEventListener('click', () => {
-                                        parent.appendChild(new SpellModal(spell));
-                                    }, false);
-
-
-                                } else {
-                                    a.appendChild(document.createTextNode(spell))
-                                    a.addEventListener('click', () => {
-                                        parent.appendChild(new SpellModal(spell));
-                                    }, false);
-
-                                }
-
-                                td.appendChild(a);
-                            }
-                        } else {
-                            if (typeof(row[key]) === "string" && row[key].includes("#")) {
-                                let split = row[key].split("#");
-
-                                let b = document.createElement('b');
-                                b.appendChild(document.createTextNode(`${split[0]}. `));
-
-                                td.appendChild(b);
-                                td.appendChild(document.createTextNode(split[1]));
-                            } else {
-                                td.appendChild(document.createTextNode(row[key]));
-                            }
-                        }
+                            td.appendChild(document.createTextNode(row[key]));
 
                         tr.appendChild(td);
                     }
 
                     table.appendChild(tr);
-                });
+                }
             }
 
             parent.appendChild(table);
@@ -3023,51 +2995,3 @@ class OpenModal extends HTMLElement {
 }
 
 customElements.define("open-modal", OpenModal);
-
-
-/* 
-    Modal Template
-
-    class  extends HTMLElement {
-        Character;
-
-        constructor(json) {
-            super();
-
-            this.Character = json;
-
-            let shadow = this.attachShadow({mode: "open"});
-
-            let template = `
-                <style>
-                    :host {
-                        position: fixed;
-                        top: 0px;
-                        left: 0px;
-                        height: 100vh;
-                        width: 100vw;
-                        background-color: rgba(128,128,128,0.5);
-                    }
-
-                    #modal {
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        height: auto;
-                        width: auto;
-                        transform: translate(-50%, -50%);
-                        border: 1px solid black;
-                        padding: 10px;
-                        background-color: white;
-                    }
-                </style>
-
-                <div id="modal"></div>
-            `;
-
-            shadow.innerHTML = template;
-        }
-    }
-
-    customElements.define("", );
-*/
