@@ -6,31 +6,36 @@ let raceData;
 let classData;
 
 export function init() {
-    fetch("../json/5e Data.json")
-        .then(response => response.json())
-        .then(json => {
-            for (let key in json) {
-                if (key.includes("Races")) {
-                    raceData = json[key];
-                } else if (key.includes("Classes")) {
-                    classData = json[key];
+    try {
+        fetch("../json/5e Data.json")
+            .then(response => response.json())
+            .then(json => {
+                for (let key in json) {
+                    if (key.includes("Races")) {
+                        raceData = json[key];
+                    } else if (key.includes("Classes")) {
+                        classData = json[key];
+                    }
                 }
-            }
-        })
+            })
 
-    fetch('../json/5e Reference.json')
-        .then(response => response.json())
-        .then(json => {
-            for(let key in json) {
-                if (key.includes("Classes")) {
-                    classes = json[key];
-                } else if (key.includes("Feats")) {
-                    feats = json[key];
-                } else if (key.includes("Spells")) {
-                    spells = json[key];
+        fetch('../json/5e Reference.json')
+            .then(response => response.json())
+            .then(json => {
+                for(let key in json) {
+                    if (key.includes("Classes")) {
+                        classes = json[key];
+                    } else if (key.includes("Feats")) {
+                        feats = json[key];
+                    } else if (key.includes("Spells")) {
+                        spells = json[key];
+                    }
                 }
-            }
-        });
+            });
+    } catch (error) {
+        alert(error);
+    }
+    
 
     let content = document.querySelector('#content');
         content.innerHTML = "";
