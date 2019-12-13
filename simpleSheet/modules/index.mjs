@@ -1,42 +1,14 @@
-let classes;
-let feats;
-let spells;
+import * as reference from "./json/5e Reference.mjs";
+import * as data from "./json/5e Data.mjs";
 
-let raceData;
-let classData;
+let classes = reference.Classes();
+let feats = reference.Feats();
+let spells = reference.Spells();
+
+let raceData = data.RacesData();
+let classData = data.ClassesData();
 
 export function init() {
-    try {
-        fetch("../json/5e Data.json")
-            .then(response => response.json())
-            .then(json => {
-                for (let key in json) {
-                    if (key.includes("Races")) {
-                        raceData = json[key];
-                    } else if (key.includes("Classes")) {
-                        classData = json[key];
-                    }
-                }
-            })
-
-        fetch('../json/5e Reference.json')
-            .then(response => response.json())
-            .then(json => {
-                for(let key in json) {
-                    if (key.includes("Classes")) {
-                        classes = json[key];
-                    } else if (key.includes("Feats")) {
-                        feats = json[key];
-                    } else if (key.includes("Spells")) {
-                        spells = json[key];
-                    }
-                }
-            });
-    } catch (error) {
-        alert(error);
-    }
-    
-
     let content = document.querySelector('#content');
         content.innerHTML = "";
         content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));

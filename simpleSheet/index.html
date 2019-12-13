@@ -53,14 +53,10 @@
     </body>
 
     <script>
-        try {
-        import("./index.js")
+        import("./modules/index.mjs")
             .then((module) => {
                 module.init();
-            })
-        } catch (error) {
-            alert(error);
-        }
+            });
 
     </script>
 </html>
