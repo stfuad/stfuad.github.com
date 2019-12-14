@@ -1,40 +1,12 @@
 import * as reference from "./json/5e Reference.mjs";
 import * as data from "./json/5e Data.mjs";
 
-let classes = reference.Classes();
-let feats = reference.Feats();
-let spells = reference.Spells();
+const classes = reference.classes();
+const feats = reference.feats();
+const spells = reference.spells();
 
-let raceData = data.RacesData();
-let classData = data.ClassesData();
-
-export function init() {
-    let content = document.querySelector('#content');
-        content.innerHTML = "";
-        content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
-
-    document.querySelector("#new").onclick = () => {
-        let content = document.querySelector('#content');
-            content.innerHTML = "";
-            content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
-    };
-    
-    document.querySelector("#open").onclick = () => {
-        document.body.appendChild(new OpenModal());
-    };
-
-    document.querySelector("#save").onclick = () => {
-        let sheet = document.querySelector("character-sheet");
-        
-        if (sheet.Character["Name"]) {
-            localStorage.setItem(`character-${sheet.Character["Name"]}`, JSON.stringify(sheet.Character));
-
-            console.log("Saved");
-        } else {
-            console.log("Sheet undefined");
-        }
-    };
-}
+const raceData = data.racesData();
+const classData = data.classesData();
 
 const character = {
     "Name": "",
@@ -298,6 +270,34 @@ const character = {
         "Level 9": []
     }
 };
+
+export function init() {
+    let content = document.querySelector('#content');
+        content.innerHTML = "";
+        content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
+
+    document.querySelector("#new").onclick = () => {
+        let content = document.querySelector('#content');
+            content.innerHTML = "";
+            content.appendChild(new CharacterSheet(JSON.parse(JSON.stringify(character))));
+    };
+    
+    document.querySelector("#open").onclick = () => {
+        document.body.appendChild(new OpenModal());
+    };
+
+    document.querySelector("#save").onclick = () => {
+        let sheet = document.querySelector("character-sheet");
+        
+        if (sheet.Character["Name"]) {
+            localStorage.setItem(`character-${sheet.Character["Name"]}`, JSON.stringify(sheet.Character));
+
+            console.log("Saved");
+        } else {
+            console.log("Sheet undefined");
+        }
+    };
+}
 
 class CharacterSheet extends HTMLElement {
     Character;
@@ -918,7 +918,7 @@ class CharacterSheet extends HTMLElement {
         let observer = new MutationObserver(mutations => {
             mutations.forEach(mutation => {
                 if (mutation.type === "attributes") {
-                    console.log(mutation.target.id)
+                    /* console.log(mutation.target.id) */
 
                     let toChange = shadow.querySelectorAll(`[attribute=\"${mutation.target.id}\"]`);
     
