@@ -300,8 +300,6 @@ export function init() {
 }
 
 class CharacterSheet extends HTMLElement {
-    Character;
-
     ClassToSubclass(string) {
         if (string === "Artificer") {
             
@@ -952,8 +950,6 @@ customElements.define('character-sheet', CharacterSheet);
 /* Elements */
 
 class AbilityScore extends HTMLElement {
-    Character;
-
     Modifier(int) {
         return Math.floor((parseInt(int) - 10) / 2);
     }
@@ -1055,8 +1051,6 @@ class AbilityScore extends HTMLElement {
 customElements.define('ability-score', AbilityScore);
 
 class SavingThrow extends HTMLElement {
-    Character;
-
     Modifier(int) {
         return Math.floor((parseInt(int) - 10) / 2);
     }
@@ -1180,8 +1174,6 @@ class SavingThrow extends HTMLElement {
 customElements.define('saving-throw', SavingThrow);
 
 class Skill extends HTMLElement {
-    Character;
-
     Modifier(int) {
         return Math.floor((parseInt(int) - 10) / 2);
     }
@@ -1392,8 +1384,6 @@ class Skill extends HTMLElement {
 customElements.define('skill-element', Skill);
 
 class Spell extends HTMLElement {
-    Character;
-
     constructor(title, json) {
         super();
 
@@ -2352,8 +2342,6 @@ customElements.define('spell-modal', SpellModal);
 /* Add Modals */
 
 class AddFeatModal extends HTMLElement {
-    Character;
-
     constructor(json) {
         super();
 
@@ -2428,8 +2416,6 @@ class AddFeatModal extends HTMLElement {
 customElements.define("addfeat-modal", AddFeatModal);
 
 class AddSpellModal extends HTMLElement {
-    Character;
-
     constructor(json) {
         super();
 
@@ -2531,8 +2517,6 @@ customElements.define("addspell-modal", AddSpellModal);
 /* Edit Modals */
 
 class EditClassesModal extends HTMLElement {
-    Character;
-    
     ToggleSelect() {
         let select = this.shadowRoot.querySelector('select');
 
@@ -2653,8 +2637,6 @@ class EditClassesModal extends HTMLElement {
 customElements.define("editclasses-modal", EditClassesModal);
 
 class EditProficienciesModal extends HTMLElement {
-    Character;
-
     constructor(json) {
         super();
 
@@ -2787,8 +2769,6 @@ class EditProficienciesModal extends HTMLElement {
 customElements.define("editproficiencies-modal", EditProficienciesModal);
 
 class EditLanguagesModal extends HTMLElement {
-    Character;
-
     constructor(json) {
         super();
 
