@@ -627,7 +627,8 @@ class CharacterSheet extends HTMLElement {
         let template = `
             <style>
                 :host {
-                    
+                    display: block;
+                    columns: 5 20em;
                 }
 
                 :host > div {
@@ -831,6 +832,8 @@ class CharacterSheet extends HTMLElement {
 
         select.appendChild(option);
 
+        /* Racial Stuff */
+
         for (let key in raceData) {
             let option = document.createElement('option');
             option.value = key;
@@ -843,10 +846,78 @@ class CharacterSheet extends HTMLElement {
             select.appendChild(option);
         }
 
+        const setOtherProficiencies = key => {
+            for (let subkey in raceData[key]) {
+                if (raceData[key][subkey] === false) {
+                    this.Character[key][subkey] = true;
+                }
+            }
+        }
+
         select.onchange = () => {
             this.Character["Race"] = select.value;
 
+            /* Write to memory */
+
+            for (let obj of raceData[this.Character["Race"]]) {
+                for (let key in obj) {
+                    if (key === "Saving Throws") {
+                        for (let savingThrow in obj[key]) {
+                            if (obj[key][savingThrow] === true) {
+                                this.Character["Saving Throws"][savingThrow] = obj[key][savingThrow];
+                            }
+                        }
+                    } else if (key === "Skills") {
+                        for (let skill in obj[key]) {
+                            if (obj[key][skill] !== "none") {
+                                this.Character["Skills"][skill] = obj[key][skill];
+                            }
+                        }
+                    } else if (key === "Weapon Proficiencies") {
+                        for (let weapon in obj[key]) {
+                            if (obj[key][weapon] === true) {
+                                this.Character["Weapon Proficiencies"][weapon] = obj[key][weapon];
+                            }
+                        }
+                    } else if (key === "Armor Proficiencies") {
+                        for (let armor in obj[key]) {
+                            if (obj[key][armor] === true) {
+                                this.Character["Armor Proficiencies"][armor] = obj[key][armor];
+                            }
+                        }
+                    } else if (key === "Tool Proficiencies") {
+                        for (let tool in obj[key]) {
+                            if (obj[key][tool] === true) {
+                                this.Character["Tool Proficiencies"][tool] = obj[key][tool];
+                            }
+                        }
+                    } else if (key === "Languages") {
+                        for (let language in obj[key]) {
+                            if (obj[key][language] === true) {
+                                this.Character["Languages"][language] = obj[key][language];
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* Update the UI */
+
+            let savingThrows = shadow.querySelectorAll('saving-throw');
+
+            for (let node of savingThrows) {
+                node.UpdateElement(node.id);
+            }
+
+            let skills = shadow.querySelectorAll('skill-element');
+
+            for (let node of skills) {
+                node.UpdateElement(node.id);
+            }
+
+            this.UpdateOtherProficiencies();
             this.UpdateRacialTraits();
+            this.UpdateLanguages();
         }
 
         shadow.querySelector("#classEdit").onclick = () => {
