@@ -1559,7 +1559,7 @@ class WeaponAttack extends HTMLElement {
             </style>
 
             <span>
-                <b>${obj["Name"]} ${parseInt(obj["Modifier"]) > 0 ? "+" + parseInt(obj["Modifier"]) : ""}.</b> 
+                <b>${obj["Name"]}${parseInt(obj["Modifier"]) > 0 ? " +" + parseInt(obj["Modifier"]) : ""}.</b> 
             </span>
             
             <button type="button" id="remove">\u2716</button>
