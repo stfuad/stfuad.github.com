@@ -1,13 +1,15 @@
 import * as sort from "./sorting.module.js";
 import * as sheet from "../classes/sheets.classes.js";
 
-const items = JSON.parse(localStorage.getItem("Magic Items"));
-
 const buttons = document.getElementById("sortButtons");
 const list = document.getElementById("list");
 const content = document.getElementById("sheet");
 
-export function MagicItems() {
+let items;
+
+export function MagicItems(json) {
+    items = json;
+
     let sortedByName = sort.ByName(items);
     let sortedByRarity = sort.ByRarity(items);
 

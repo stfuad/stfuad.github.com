@@ -1,9 +1,11 @@
 import * as sort from "./sorting.module.js";
 import * as sheet from "../classes/sheets.classes.js";
 
-let spells = JSON.parse(localStorage.getItem("Spells"));
+let spells;
 
-export function Spells() {
+export function Spells(json) {
+    spells = json;
+    
     let buttons = document.getElementById("sortButtons");
 
     let sortedByName = sort.ByName(spells);

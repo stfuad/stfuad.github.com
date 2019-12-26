@@ -23,25 +23,14 @@
         </script>
     
         <script>
-        if(localStorage.getItem("Classes")) {
-            import("./modules/classes.module.js")
-                .then((module) => {
-                    module.Classes();
-                });
-        } else {
             fetch('../json/5e Reference.json')
                 .then(response => response.json())
                 .then(json => {
-                    for(let key in json) {
-                        localStorage.setItem(key, JSON.stringify(json[key]));
-                    }
-
                     import("./modules/classes.module.js")
                         .then((module) => {
-                            module.Classes();
+                            module.Classes(json["Classes"]);
                         });
                 });
-        }
         </script>
     </body>
 </html>

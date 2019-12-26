@@ -25,24 +25,13 @@
     </script>
 
     <script>
-        if(localStorage.getItem("Bestiary 1")) {
-            import("./modules/bestiary.module.js")
-                .then((module) => {
-                    module.Bestiary();
-                });
-        } else {
-            fetch('../json/5e Reference.json')
-                .then(response => response.json())
-                .then(json => {
-                    for(let key in json) {
-                        localStorage.setItem(key, JSON.stringify(json[key]));
-                    }
-
-                    import("./modules/bestiary.module.js")
-                        .then((module) => {
-                            module.Bestiary();
-                        });
-                });
-        }
+        fetch('../json/5e Reference.json')
+            .then(response => response.json())
+            .then(json => {
+                import("./modules/bestiary.module.js")
+                    .then((module) => {
+                        module.Bestiary(json["Bestiary"]);
+                    });
+            });
     </script>
 </html>

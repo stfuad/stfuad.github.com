@@ -1,11 +1,13 @@
 import { Paragraphs, List } from "./htmlElements.module.js";
 
-const feats = JSON.parse(localStorage.getItem("Feats"));
-
 const list = document.getElementById("list");
 const content = document.getElementById("sheet");
 
-export function Feats() {
+let feats;
+
+export function Feats(json) {
+    feats = json;
+
     let sorted = Object.keys(feats).sort();
 
     sorted.forEach(feat => {

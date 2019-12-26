@@ -1,24 +1,14 @@
 import * as sort from "./sorting.module.js";
 import * as sheet from "../classes/sheets.classes.js";
 
-let one = JSON.parse(localStorage.getItem("Bestiary 1"));
-let two = JSON.parse(localStorage.getItem("Bestiary 2"));
-let three = JSON.parse(localStorage.getItem("Bestiary 3"));
-let four = JSON.parse(localStorage.getItem("Bestiary 4"));
-let five = JSON.parse(localStorage.getItem("Bestiary 5"));
-let six = JSON.parse(localStorage.getItem("Bestiary 6"));
-let seven = JSON.parse(localStorage.getItem("Bestiary 7"));
-let eight = JSON.parse(localStorage.getItem("Bestiary 8"));
-let nine = JSON.parse(localStorage.getItem("Bestiary 9"));
-
-const bestiary = {...one, ...two, ...three, ...four, ...five, ...six, ...seven, ...eight, ...nine};
-
 const buttons = document.getElementById("sortButtons");
 const list = document.getElementById("list");
 const content = document.getElementById("sheet");
 
+let bestiary;
 
-export function Bestiary() {
+export function Bestiary(json) {
+    bestiary = json;
 
     let sortedByName = sort.ByName(bestiary);
     let sortedByType = sort.ByType(bestiary);

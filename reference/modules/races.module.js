@@ -1,11 +1,13 @@
 import { Paragraphs, ParagraphsPrependBold, List, Table } from "./htmlElements.module.js";
 
-const races = JSON.parse(localStorage.getItem("Races"));
-
 const list = document.getElementById("list");
 const content = document.getElementById("sheet");
 
-export function Races() {
+let races;
+
+export function Races(json) {
+    races = json;
+
     for (let race in races) {
         let listLink = document.createElement('a');
         listLink.appendChild(document.createTextNode(race));
