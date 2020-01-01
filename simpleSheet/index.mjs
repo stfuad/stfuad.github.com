@@ -1571,20 +1571,33 @@ class WeaponAttack extends HTMLElement {
 
         let properties = weaponData[obj["Base"]]["Properties"];
 
+        let isProficienct = character["Weapon Proficiencies"][obj["Base"]];
+
         let pBonus = proficiencyBonus(characterLevels());
         let dexMod = modifier(character["Ability Scores"]["Dexterity"]);
         let strMod = modifier(character["Ability Scores"]["Strength"]);
 
-        if (isThrown()) {
-            desc += `Melee or Ranged Weapon Attack: `;
+        let finesse = dexMod > strMod ? dexMod : strMod;
 
-            if (isFinesse()) {
-                desc += dexMod > strMod ? `+${pBonus + dexMod + parseInt(obj["Modifier"])} to hit, ` : `+${pBonus + strMod + parseInt(obj["Modifier"])} to hit, `;
-            }
+        let weaponDamage;
+        let weaponDamageType = weaponData[obj["Base"]]["Damage Type"];
 
-            desc += `reach 5 ft. or range ${getRange()} ft., one target. `;
-            desc += `Hit: ${averageDamage()} (${weaponData[obj["Base"]]["Damage"]} + ${dexMod > strMod ? (dexMod + parseInt(obj["Modifier"])) : (strMod + parseInt(obj["Modifier"]))}) ${weaponData[obj["Base"]]["Damage Type"]} damage.`;
+        let objModifier = parseInt(obj["Modifier"]);
+
+        let attackBonus;
+        let attackDamage;
+
+        if (checkProperty("Finesse")) {
+            attackBonus = isProficienct ? finesse + pBonus + objModifier : finesse + objModifier;
+            attackDamage = finesse + objModifier;
+        } else {
+            attackBonus = isProficienct ? strMod + pBonus + objModifier : strMod + objModifier;
+            attackDamage = strMod + objModifier;
         }
+
+        checkProperty("Versatile") ? weaponDamage = `${weaponData[obj["Base"]]["Damage"]} or ${getVersatile()}` : weaponData[obj["Base"]]["Damage"];
+
+        desc += `+${attackBonus}/+${attackDamage} ${weaponDamage} ${weaponDamageType}`;
 
         shadow.querySelector('span').appendChild(document.createTextNode(desc));
 
@@ -1646,55 +1659,17 @@ class WeaponAttack extends HTMLElement {
             }
         }
 
-        function averageDamage() {
-            let split = weaponData[obj["Base"]]["Damage"].split(/d/);
-
-            return Math.floor((((split[1] + 1) / 2) * split[0]) + (dexMod > strMod ? dexMod : strMod));
-        }
-
-        function isFinesse() {
-            for (let prop of properties) {
-                if (prop.includes("Finesse")) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        function isThrown() {
-            for (let prop of properties) {
-                if (prop.includes("Thrown")) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        function isVersatile() {
+        function getVersatile() {
             for (let prop of properties) {
                 if (prop.includes("Versatile")) {
-                    return true;
+                    return prop.match(/\(([^)]+)\)/)[1];
                 }
             }
-
-            return false;
         }
 
-        function isReach() {
+        function checkProperty(key) {
             for (let prop of properties) {
-                if (prop.includes("Reach")) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        function isAmmunition() {
-            for (let prop of properties) {
-                if (prop.includes("Ammunition")) {
+                if (prop.includes(key)) {
                     return true;
                 }
             }
@@ -1702,7 +1677,6 @@ class WeaponAttack extends HTMLElement {
             return false;
         }
     }
-
 }
 
 customElements.define('weapon-attack', WeaponAttack);
@@ -3180,6 +3154,7 @@ class EditProficienciesModal extends HTMLElement {
         
         shadow.querySelector('button').onclick = () => {
             document.querySelector('character-sheet').UpdateOtherProficiencies();
+            document.querySelector('character-sheet').UpdateWeaponAttacks();
 
             this.remove();
         }
