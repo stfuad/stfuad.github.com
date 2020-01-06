@@ -1,4 +1,4 @@
-export function byName(json) {
+export function ByName(json) {
     // Declare empty arrays
 
     let obj = {
@@ -91,7 +91,7 @@ export function byName(json) {
     return obj;
 }
 
-export function byBook(json) {
+export function ByBook(json) {
     let obj = {}
 
     for (let creature in json) {
@@ -109,7 +109,7 @@ export function byBook(json) {
 
 // creatures
 
-export function byType(json) {
+export function ByType(json) {
     let obj = {
         "Aberration": [],
         "Beast": [],
@@ -176,7 +176,7 @@ export function byType(json) {
     return obj;
 }
 
-export function byCR(json) {
+export function ByCR(json) {
     let obj = {
         "Zero": [],
         "One-Quarter": [],
@@ -288,7 +288,7 @@ export function byCR(json) {
 
 // spells
 
-export function bySchool(json) {
+export function BySchool(json) {
     let obj = {
         "Abjuration": [],
         "Conjuration": [],
@@ -323,7 +323,7 @@ export function bySchool(json) {
     return obj;
 }
 
-export function byClass(json) {
+export function ByClass(json) {
     let obj = {
         "Bard": {
             "Cantrips (0 Level)": [],
@@ -456,7 +456,7 @@ export function byClass(json) {
     return obj;
 }
 
-export function byLevel(json) {
+export function ByLevel(json) {
     let obj = {
         "Cantrips (0 Level)": [],
         "1st Level": [],
@@ -501,7 +501,7 @@ export function byLevel(json) {
 
 // items
 
-export function byRarity(json) {
+export function ByRarity(json) {
     let obj = {
         "Common": [],
         "Uncommon": [],

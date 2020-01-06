@@ -1034,10 +1034,6 @@ customElements.define('character-sheet', CharacterSheet);
 /* Elements */
 
 class AbilityScore extends HTMLElement {
-    Modifier(int) {
-        return Math.floor((parseInt(int) - 10) / 2);
-    }
-
     constructor(key, json) {
         super();
 
@@ -1082,7 +1078,7 @@ class AbilityScore extends HTMLElement {
             <div>
                 <input type="number" id="abilityScore" value="${this.Character["Ability Scores"][key]}">
             </div>
-            <div id="modifier">${this.Modifier(this.Character["Ability Scores"][key])}</div>
+            <div id="modifier">${modifier(this.Character["Ability Scores"][key])}</div>
         `;
 
         let flat = `
@@ -1106,7 +1102,7 @@ class AbilityScore extends HTMLElement {
             </style>
 
             <input type="number" id="abilityScore" value="${this.Character["Ability Scores"][key]}">
-            <span id="modifier">(${this.Modifier(this.Character["Ability Scores"][key])})</span>
+            <span id="modifier">(${modifier(this.Character["Ability Scores"][key])})</span>
             <label for="abilityScore">${key}</label>
         `;
 
@@ -1127,7 +1123,11 @@ class AbilityScore extends HTMLElement {
             this.setAttribute("value", this.Character["Ability Scores"][key]);
 
             // Update the modifier div.
-            shadow.querySelector("#modifier").innerHTML = `(${this.Modifier(this.Character["Ability Scores"][key])})`;
+            shadow.querySelector("#modifier").innerHTML = `(${modifier(this.Character["Ability Scores"][key])})`;
+        }
+        
+        function modifier(int) {
+            return Math.floor((int - 10) / 2);
         }
     }
 }
