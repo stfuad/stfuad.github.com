@@ -18,6 +18,8 @@ const character = {
     "Experience Points": 0,
     "Inspiration": 0,
     "Armor Class": 0,
+    "Character Level": 0,
+    "Proficiency Bonus": 0,
     "Classes": {
         "Barbarian": 0,
         "Bard": 0,
@@ -46,6 +48,14 @@ const character = {
         "Wizard": ""
     },
     "Ability Scores": {
+        "Strength": 0,
+        "Dexterity": 0,
+        "Constitution": 0,
+        "Intelligence": 0,
+        "Wisdom": 0,
+        "Charisma": 0
+    },
+    "Modifiers": {
         "Strength": 0,
         "Dexterity": 0,
         "Constitution": 0,
@@ -272,7 +282,14 @@ const character = {
     ],
     "Spell Attacks": [
 
-    ]
+    ],
+    "Money": {
+        "CP": 0,
+        "SP": 0,
+        "EP": 0,
+        "GP": 0,
+        "PP": 0
+    }
 };
 
 export async function init() {
@@ -342,48 +359,7 @@ class CharacterSheet extends HTMLElement {
         }
     }
 
-    ProficiencyBonus() {
-        let bonus = 0;
-        let characterLevel = this.CharacterLevels();
-    
-        if (characterLevel < 4) {
-            bonus = 2;
-        } else if (characterLevel < 9) {
-            bonus = 3;
-        } else if (characterLevel < 13) {
-            bonus = 4;
-        } else if (characterLevel < 17) {
-            bonus = 5;
-        } else if (characterLevel < 21) {
-            bonus = 6;
-        } else if (characterLevel < 25) {
-            bonus = 7;
-        } else if (characterLevel < 29) {
-            bonus = 8;
-        } else if (characterLevel < 31) {
-            bonus = 9;
-        }
-    
-        return parseInt(bonus);
-    }
-
-    CharacterLevels() {
-        let total = 0;
-    
-        for (let key in this.Character["Classes"]) {
-            total = total + this.Character["Classes"][key];
-        }
-
-        return total;
-    }
-
-    Expertise() {
-        return (this.ProficiencyBonus() * 2);
-    }
-
-    Modifier(ability) {
-        return Math.floor((parseInt(this.Character["Ability Scores"][ability]) - 10) / 2);
-    }
+    /* Update */
 
     UpdateClasses() {
         let target = this.shadowRoot.querySelector("#classesLevels");
@@ -417,29 +393,29 @@ class CharacterSheet extends HTMLElement {
     }
 
     UpdateProficiencyBonus() {
-        let proficiencyBonus = this.shadowRoot.querySelector("#proficiencyBonus");
-
-        proficiencyBonus.value = this.ProficiencyBonus();
+        this.shadowRoot.querySelector("#proficiencyBonus").value = this.Character["Proficiency Bonus"];
     }
 
     UpdatePassivePerception() {
         let passiveWisdom = this.shadowRoot.querySelector("#passivePerception");
 
+        let wisdomModifier = this.Character["Modifiers"]["Wisdom"];
+
         if (this.Character["Skills"]["Perception"] === "proficient") {
-            passiveWisdom.value = 10 + this.Modifier("Wisdom") + this.ProficiencyBonus();
+            passiveWisdom.value = 10 + wisdomModifier + this.Character["Proficiency Bonus"];
         } else if (this.Character["Skills"]["Perception"] === "expertise") {
-            passiveWisdom.value = 10 + this.Modifier("Wisdom") + this.Expertise();
+            passiveWisdom.value = 10 + wisdomModifier + this.Character["Proficiency Bonus"] * 2;
         } else if (this.Character["Skills"]["Perception"] === "none") {
-            passiveWisdom.value = 10 + this.Modifier("Wisdom");
+            passiveWisdom.value = 10 + wisdomModifier;
         }
     }
 
     UpdateProficiencies() {
         let skills = this.shadowRoot.querySelector("#skills");
-        skills.innerHTML = "";
+        skills.innerHTML = "<h4>Skills</h4>";
 
         let savingThrows = this.shadowRoot.querySelector("#savingThrows")
-        savingThrows.innerHTML = "";
+        savingThrows.innerHTML = "<h4>Saving Throws</h4>";
 
 
         /* Saving Throws */
@@ -498,7 +474,7 @@ class CharacterSheet extends HTMLElement {
     }
 
     UpdateInitiative() {
-        this.shadowRoot.querySelector("#initiative").value = this.Modifier("Dexterity");
+        this.shadowRoot.querySelector("#initiative").value = this.Character["Modifiers"]["Dexterity"];
     }
 
     UpdateRacialTraits() {
@@ -516,7 +492,7 @@ class CharacterSheet extends HTMLElement {
             for (let key in raceData[this.Character["Race"]]) {
                 let obj = raceData[this.Character["Race"]][key];
 
-                if (this.CharacterLevels() >= obj["Level"]) {
+                if (this.Character["Character Level"] >= obj["Level"]) {
                     for (let trait in obj["Traits"]) {
                         let a = document.createElement('a');
                         a.appendChild(document.createTextNode(trait));
@@ -751,7 +727,7 @@ class CharacterSheet extends HTMLElement {
             </div>
 
             <div>
-                <input type="number" id="initiative" value="${this.Modifier("Dexterity")}" readonly>
+                <input type="number" id="initiative" value="${this.Character["Modifiers"]["Dexterity"]}" readonly>
                 <label for="initiative">Initiative</label>
             </div>
             
@@ -1034,6 +1010,12 @@ customElements.define('character-sheet', CharacterSheet);
 /* Elements */
 
 class AbilityScore extends HTMLElement {
+    UpdateElement(key) {
+        this.setAttribute("value", this.Character["Ability Scores"][key]);
+
+        this.shadowRoot.querySelector("#modifier").innerHTML = `(${this.Character["Modifiers"][key]})`;
+    }
+
     constructor(key, json) {
         super();
 
@@ -1102,28 +1084,22 @@ class AbilityScore extends HTMLElement {
             </style>
 
             <input type="number" id="abilityScore" value="${this.Character["Ability Scores"][key]}">
-            <span id="modifier">(${modifier(this.Character["Ability Scores"][key])})</span>
+            <span id="modifier">(${this.Character["Modifiers"][key]})</span>
             <label for="abilityScore">${key}</label>
         `;
 
         shadow.innerHTML = flat;
 
-        // Set inital element attributes.
         this.setAttribute("id", key);
         this.setAttribute("value", this.Character["Ability Scores"][key])
 
         let input = shadow.querySelector('input');
 
-        // When the input element value changes.
         input.onchange = () => {
-            // Grab the value from the input and write to memory.
             this.Character["Ability Scores"][key] = input.valueAsNumber;
+            this.Character["Modifiers"][key] = modifier(this.Character["Ability Scores"][key]);
 
-            // Update the elements "value" attribute.
-            this.setAttribute("value", this.Character["Ability Scores"][key]);
-
-            // Update the modifier div.
-            shadow.querySelector("#modifier").innerHTML = `(${modifier(this.Character["Ability Scores"][key])})`;
+            this.UpdateElement(key);
         }
         
         function modifier(int) {
@@ -1135,46 +1111,6 @@ class AbilityScore extends HTMLElement {
 customElements.define('ability-score', AbilityScore);
 
 class SavingThrow extends HTMLElement {
-    Modifier(int) {
-        return Math.floor((parseInt(int) - 10) / 2);
-    }
-
-    ProficiencyBonus(characterLevel) {
-        let bonus = 0;
-    
-        let levelTotal = this.CharacterLevels();
-
-        if (characterLevel < 4) {
-            bonus = 2;
-        } else if (characterLevel < 9) {
-            bonus = 3;
-        } else if (characterLevel < 13) {
-            bonus = 4;
-        } else if (characterLevel < 17) {
-            bonus = 5;
-        } else if (characterLevel < 21) {
-            bonus = 6;
-        } else if (characterLevel < 25) {
-            bonus = 7;
-        } else if (characterLevel < 29) {
-            bonus = 8;
-        } else if (characterLevel < 31) {
-            bonus = 9;
-        }
-    
-        return parseInt(bonus);
-    }
-
-    CharacterLevels() {
-        let total = 0;
-    
-        for (let key in this.Character["Classes"]) {
-            total += this.Character["Classes"][key];
-        }
-        
-        return total;
-    }
-
     WriteMemory(key) {
         if (this.Character["Saving Throws"][key] === false) {
             this.Character["Saving Throws"][key] = true;
@@ -1187,11 +1123,11 @@ class SavingThrow extends HTMLElement {
         if (this.Character["Saving Throws"][key] === false) {
             this.shadowRoot.querySelector("#proficiency").innerHTML = "\u25cb";
 
-            this.shadowRoot.querySelector("#modifier").innerHTML = this.Modifier(this.Character["Ability Scores"][key]);
+            this.shadowRoot.querySelector("#modifier").innerHTML = this.Character["Modifiers"][key];
         } else if (this.Character["Saving Throws"][key] === true) {
             this.shadowRoot.querySelector("#proficiency").innerHTML = "\u25c9";
 
-            this.shadowRoot.querySelector("#modifier").innerHTML = this.Modifier(this.Character["Ability Scores"][key]) + this.ProficiencyBonus(this.CharacterLevels(this.Character["Classes"]));
+            this.shadowRoot.querySelector("#modifier").innerHTML = this.Character["Modifiers"][key] + this.Character["Proficiency Bonus"];
         }
     }
 
@@ -1239,11 +1175,11 @@ class SavingThrow extends HTMLElement {
         if (this.Character["Saving Throws"][key] === false) {
             proficiencySpan.appendChild(document.createTextNode("\u25cb"))
 
-            modifierSpan.appendChild(document.createTextNode(this.Modifier(json["Ability Scores"][key])));
+            modifierSpan.appendChild(document.createTextNode(this.Character["Modifiers"][key]));
         } else if (this.Character["Saving Throws"][key] === true) {
             proficiencySpan.appendChild(document.createTextNode("\u25c9"));
 
-            modifierSpan.appendChild(document.createTextNode(this.Modifier(json["Ability Scores"][key]))) + this.ProficiencyBonus(this.CharacterLevels(json["Classes"]));
+            modifierSpan.appendChild(document.createTextNode(this.Character["Modifiers"][key])) + this.Character["Proficiency Bonus"];
         }
 
         shadow.querySelector("#savingThrow").appendChild(document.createTextNode(key));
@@ -1258,48 +1194,6 @@ class SavingThrow extends HTMLElement {
 customElements.define('saving-throw', SavingThrow);
 
 class Skill extends HTMLElement {
-    Modifier(int) {
-        return Math.floor((parseInt(int) - 10) / 2);
-    }
-
-    Expertise(int) {
-        return (parseInt(int) * 2);
-    }
-
-    ProficiencyBonus(characterLevel) {
-        let bonus = 0;
-    
-        if (characterLevel < 4) {
-            bonus = 2;
-        } else if (characterLevel < 9) {
-            bonus = 3;
-        } else if (characterLevel < 13) {
-            bonus = 4;
-        } else if (characterLevel < 17) {
-            bonus = 5;
-        } else if (characterLevel < 21) {
-            bonus = 6;
-        } else if (characterLevel < 25) {
-            bonus = 7;
-        } else if (characterLevel < 29) {
-            bonus = 8;
-        } else if (characterLevel < 31) {
-            bonus = 9;
-        }
-    
-        return parseInt(bonus);
-    }
-
-    CharacterLevels(json) {
-        let total = 0;
-    
-        for (let key in json) {
-            total += json[key];
-        }
-        
-        return total;
-    }
-
     SkillToAbility(skill) {
         if (skill === "Acrobatics") {
             return "Dexterity";
@@ -1363,8 +1257,8 @@ class Skill extends HTMLElement {
         const proficient = "\u24c5";
         const expertise = "\u24ba";
 
-        let pBonus = this.ProficiencyBonus(this.CharacterLevels(this.Character["Classes"]));
-        let modifier = this.Modifier(this.Character["Ability Scores"][this.SkillToAbility(key)]);
+        let pBonus = this.Character["Proficiency Bonus"];
+        let modifier = this.Character["Modifiers"][this.SkillToAbility(key)];
 
         // Update the proficiency type and bonus span elements.
         if (this.Character["Skills"][key] === "proficient") {
@@ -1374,7 +1268,7 @@ class Skill extends HTMLElement {
         } else if (this.Character["Skills"][key] === "expertise") {
             proficiencySpan.innerHTML = expertise;
 
-            modifierSpan.innerHTML = modifier + this.Expertise(pBonus);
+            modifierSpan.innerHTML = modifier + pBonus * 2;
         } else if (this.Character["Skills"][key] === "none") {
             proficiencySpan.innerHTML = normal;
 
@@ -1435,12 +1329,9 @@ class Skill extends HTMLElement {
         let proficiencySpan = shadow.querySelector("#proficiency");
         let modifierSpan = shadow.querySelector("#modifier");
         
-        let pBonus;
-        let modifier;
+        let pBonus = this.Character["Proficiency Bonus"];
+        let modifier = this.Character["Modifiers"][this.SkillToAbility(key)];
 
-        pBonus = this.ProficiencyBonus(this.CharacterLevels(this.Character["Classes"]));
-        modifier = this.Modifier(this.Character["Ability Scores"][this.SkillToAbility(key)]);
-        
         if (this.Character["Skills"][key] === "proficient") {
             proficiencySpan.appendChild(document.createTextNode(proficient));
 
@@ -1448,7 +1339,7 @@ class Skill extends HTMLElement {
         } else if (this.Character["Skills"][key] === "expertise") {
             proficiencySpan.appendChild(document.createTextNode(expertise));
 
-            modifierSpan.appendChild(document.createTextNode(modifier + this.Expertise(pBonus)));
+            modifierSpan.appendChild(document.createTextNode(modifier + pBonus * 2));
         } else if (this.Character["Skills"][key] === "none") {
             proficiencySpan.appendChild(document.createTextNode(normal));
 
@@ -1459,7 +1350,6 @@ class Skill extends HTMLElement {
 
         proficiencySpan.onclick = () => {
             this.WriteMemory(key);
-
             this.UpdateElement(key);
         }
     }
@@ -2587,6 +2477,7 @@ class AddWeaponAttackModal extends HTMLElement {
                     height: auto;
                     width: max-content;
                     transform: translate(-50%, -50%);
+                    display: grid;
                     border: 1px solid black;
                     padding: 10px;
                     background-color: white;
@@ -2608,6 +2499,9 @@ class AddWeaponAttackModal extends HTMLElement {
                         <option value="2">+2</option>
                         <option value="3">+3</option>
                     </select>
+
+                    <input id="miscAttack" type="number">
+                    <input id="miscDamage" type="number">
                 </div>
                 <div>
                     <button type="button" id="add">Add Weapon Attack</button>
@@ -2845,16 +2739,6 @@ customElements.define("addspell-modal", AddSpellModal);
 /* Edit Modals */
 
 class EditClassesModal extends HTMLElement {
-    ToggleSelect() {
-        let select = this.shadowRoot.querySelector('select');
-
-        if (select.disabled === true) {
-            select.disabled = false;
-        } else {
-            select.disabled = true;
-        }
-    }
-
     constructor(json) {
         super();
 
@@ -2981,6 +2865,41 @@ class EditClassesModal extends HTMLElement {
         }
 
         shadow.querySelector('button').onclick = () => {
+            
+            /* Character Levels */
+
+            let total = 0;
+        
+            for (let key in this.Character["Classes"]) {
+                total = total + this.Character["Classes"][key];
+            }
+
+            this.Character["Character Level"] = total;
+
+            /* Proficiency Bonus */
+
+            let bonus = 0;
+
+            if (total < 4) {
+                bonus = 2;
+            } else if (total < 9) {
+                bonus = 3;
+            } else if (total < 13) {
+                bonus = 4;
+            } else if (total < 17) {
+                bonus = 5;
+            } else if (total < 21) {
+                bonus = 6;
+            } else if (total < 25) {
+                bonus = 7;
+            } else if (total < 29) {
+                bonus = 8;
+            } else if (total < 31) {
+                bonus = 9;
+            }
+        
+            this.Character["Proficiency Bonus"] = parseInt(bonus);
+
             document.querySelector('character-sheet').UpdateClasses();
             document.querySelector('character-sheet').UpdateProficiencies();
             document.querySelector('character-sheet').UpdateProficiencyBonus();
