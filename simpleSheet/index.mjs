@@ -259,6 +259,9 @@ const character = {
         "Stunned": false,
         "Unconcious": false
     },
+    "Class Features": [
+
+    ],
     "Feats": [
 
     ],
@@ -389,7 +392,6 @@ class CharacterSheet extends HTMLElement {
         }
 
         this.UpdateRacialTraits();
-        this.UpdateClassFeatures();
     }
 
     UpdateProficiencyBonus() {
@@ -511,44 +513,18 @@ class CharacterSheet extends HTMLElement {
         let target = this.shadowRoot.querySelector("#features");
         target.innerHTML = "";
 
-        for (let key in this.Character["Classes"]) {
-            if (this.Character["Classes"][key] > 0) {
-                let fieldset = document.createElement('fieldset');
+        let fieldset = document.createElement('fieldset');
 
-                let legend = document.createElement('legend');
-                legend.appendChild(document.createTextNode(`${key} - Class Features`));
-        
-                fieldset.appendChild(legend);
+        let legend = document.createElement('legend');
+        legend.appendChild(document.createTextNode(`Class Features`));
 
-                for (let obj in classData[key]["Base"]) {
-                    if (this.Character["Classes"][key] >= classData[key]["Base"][obj]["Level"]) {
-                        for (let feature of classData[key]["Base"][obj]["Features"]) {
-                            let a = document.createElement('a');
-                            a.appendChild(document.createTextNode(feature));
-                            a.onclick = () => document.body.appendChild(new FeatureModal(feature, classes[key]["Class Features"]));
+        fieldset.appendChild(legend);
 
-                            fieldset.appendChild(a);
-                        }
-                    }
-                }
-
-                let subclass = this.Character["Subclasses"][key]
-
-                for (let obj in classData[key]["Subclasses"][subclass]) {
-                    if (this.Character["Classes"][key] >= classData[key]["Subclasses"][subclass][obj]["Level"]) {
-                        for (let feature of classData[key]["Subclasses"][subclass][obj]["Features"]) {
-                            let a = document.createElement('a');
-                            a.appendChild(document.createTextNode(feature));
-                            a.onclick = () => document.body.appendChild(new FeatureModal(feature, classes[key][this.ClassToSubclass(key)][subclass]));
-
-                            fieldset.appendChild(a);
-                        }
-                    }
-                }
-
-                target.appendChild(fieldset);
-            }
+        for (let obj of this.Character["Class Features"]) {
+            fieldset.appendChild(new ClassFeature(obj, this.Character));
         }
+
+        target.appendChild(fieldset);
     }
 
     UpdateFeats() {
@@ -806,6 +782,7 @@ class CharacterSheet extends HTMLElement {
                 <div id="feats"></div>
             </div>
 
+            <a id="addClassFeature">+ Add Class Feature</a>
             <a id="addFeat">+ Add Feat</a>
 
             <div id="spells">
@@ -918,6 +895,7 @@ class CharacterSheet extends HTMLElement {
         shadow.querySelector("#classEdit").onclick = () => document.body.appendChild(new EditClassesModal(this.Character));
         shadow.querySelector("#addProficiency").onclick = () => document.body.appendChild(new EditProficienciesModal(this.Character));
         shadow.querySelector("#addLanguage").onclick = () => document.body.appendChild(new EditLanguagesModal(this.Character));
+        shadow.querySelector("#addClassFeature").onclick = () => document.body.appendChild(new AddClassFeatureModal(this.Character));
         shadow.querySelector("#addFeat").onclick = () => document.body.appendChild(new AddFeatModal(this.Character));
         shadow.querySelector("#addSpell").onclick = () => document.body.appendChild(new AddSpellModal(this.Character));
         shadow.querySelector("#addWeaponAttack").onclick = () => document.body.appendChild(new AddWeaponAttackModal(this.Character));
@@ -1435,7 +1413,7 @@ class WeaponAttack extends HTMLElement {
             <style>
                 :host {
                     display: grid;
-                    grid-template-rows: 1fr auto;
+                    grid-template-columns: 1fr auto;
                 }
 
                 span {
@@ -1448,48 +1426,12 @@ class WeaponAttack extends HTMLElement {
 
             </style>
 
-            <span>
-                <b>${obj["Name"]}${parseInt(obj["Modifier"]) > 0 ? " +" + parseInt(obj["Modifier"]) : ""}.</b> 
-            </span>
+            <span><b>${obj["Name"]}.</b> ${obj["Description"]}</span>
             
             <button type="button" id="remove">\u2716</button>
         `;
 
         shadow.innerHTML = template;
-
-        let desc = "";
-
-        let properties = weaponData[obj["Base"]]["Properties"];
-
-        let isProficienct = character["Weapon Proficiencies"][obj["Base"]];
-
-        let pBonus = proficiencyBonus(characterLevels());
-        let dexMod = modifier(character["Ability Scores"]["Dexterity"]);
-        let strMod = modifier(character["Ability Scores"]["Strength"]);
-
-        let finesse = dexMod > strMod ? dexMod : strMod;
-
-        let weaponDamage;
-        let weaponDamageType = weaponData[obj["Base"]]["Damage Type"];
-
-        let objModifier = parseInt(obj["Modifier"]);
-
-        let attackBonus;
-        let attackDamage;
-
-        if (checkProperty("Finesse")) {
-            attackBonus = isProficienct ? finesse + pBonus + objModifier : finesse + objModifier;
-            attackDamage = finesse + objModifier;
-        } else {
-            attackBonus = isProficienct ? strMod + pBonus + objModifier : strMod + objModifier;
-            attackDamage = strMod + objModifier;
-        }
-
-        checkProperty("Versatile") ? weaponDamage = `${weaponData[obj["Base"]]["Damage"]} or ${getVersatile()}` : weaponData[obj["Base"]]["Damage"];
-
-        desc += `+${attackBonus}/+${attackDamage} ${weaponDamage} ${weaponDamageType}`;
-
-        shadow.querySelector('span').appendChild(document.createTextNode(desc));
 
         shadow.querySelector('button').onclick = () => {
             for (let obj2 of character["Weapon Attacks"]) {
@@ -1502,74 +1444,61 @@ class WeaponAttack extends HTMLElement {
                 }
             }
         }
-
-        function modifier(int) {
-            return Math.floor((int - 10) / 2);
-        }
-        
-        function proficiencyBonus(characterLevel) {
-            let bonus = 0;
-    
-            if (characterLevel < 4) {
-                bonus = 2;
-            } else if (characterLevel < 9) {
-                bonus = 3;
-            } else if (characterLevel < 13) {
-                bonus = 4;
-            } else if (characterLevel < 17) {
-                bonus = 5;
-            } else if (characterLevel < 21) {
-                bonus = 6;
-            } else if (characterLevel < 25) {
-                bonus = 7;
-            } else if (characterLevel < 29) {
-                bonus = 8;
-            } else if (characterLevel < 31) {
-                bonus = 9;
-            }
-        
-            return parseInt(bonus);
-        }
-
-        function characterLevels() {
-            let total = 0;
-        
-            for (let key in character["Classes"]) {
-                total = total + character["Classes"][key];
-            }
-    
-            return total;
-        }
-
-        function getRange() {
-            for (let prop of properties) {
-                if (prop.includes("range")) {
-                    return prop.match(/\(([^)]+)\)/)[1];
-                }
-            }
-        }
-
-        function getVersatile() {
-            for (let prop of properties) {
-                if (prop.includes("Versatile")) {
-                    return prop.match(/\(([^)]+)\)/)[1];
-                }
-            }
-        }
-
-        function checkProperty(key) {
-            for (let prop of properties) {
-                if (prop.includes(key)) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }
 
 customElements.define('weapon-attack', WeaponAttack);
+
+class ClassFeature extends HTMLElement {
+    constructor(obj, character) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    display: grid;
+                    grid-template-columns: 1fr auto;
+                }
+
+                details {
+                    margin: .25em;
+                }
+
+                button {
+                    grid-column: 2;
+                    grid-row: 1;
+                    display: inline-block;
+                    height: 2em;
+                    width: 2em;
+                    padding: 2px;
+                }
+
+            </style>
+
+            <details><summary><b>${obj["Name"]}</b></summary> ${obj["Description"]}</details>
+            
+            <button type="button" id="remove">\u2716</button>
+        `;
+
+        shadow.innerHTML = template;
+
+        shadow.querySelector('button').onclick = () => {
+            for (let obj2 of character["Class Features"]) {
+                if (obj["Name"] === obj2["Name"]) {
+                    let index = character["Class Features"].indexOf(obj2);
+                    
+                    character["Class Features"].splice(index, 1);
+
+                    this.remove();
+                }
+            }
+        }
+    }
+}
+
+customElements.define('class-feature', ClassFeature);
 
 /* Info Modals */
 
@@ -2510,41 +2439,58 @@ class AddWeaponAttackModal extends HTMLElement {
             </div>
         `;
 
-        shadow.innerHTML = template;
+        let template2 = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
 
-        let input = shadow.querySelector("#name");
-        let select1 = shadow.querySelector("#base");
-        let select2 = shadow.querySelector("#modifier");
-        let button = shadow.querySelector("#add");
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    width: max-content;
+                    transform: translate(-50%, -50%);
+                    display: grid;
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                }
+            </style>
+
+            <div id="modal">
+                <div>
+                    <label for="name">Weapon Name</label>
+                    <input type="text" id="name">
+                </div>
+                <div>
+                    <textarea id="description"></textarea>
+                </div>
+                <div>
+                    <button type="button" id="add">Add Weapon Attack</button>
+                    <button type="button" id="cancel">Cancel</button>
+                </div>
+            </div>
+        `;
+
+        shadow.innerHTML = template2;
 
         let obj = {
             "Name": "",
-            "Base": "",
-            "Modifier": ""
+            "Description": ""
         }
 
-        for (let key in weaponData) {
-            let option = document.createElement('option');
-                option.value = key;
-                option.appendChild(document.createTextNode(key));
+        shadow.querySelector("#add").onclick = () => {
+            if (shadow.querySelector("#name").value) {
+                obj["Name"] = shadow.querySelector("#name").value;
+                obj["Description"] = shadow.querySelector("#description").value;
 
-            select1.appendChild(option);
-        }
-
-        input.onchange = () => {
-            obj["Name"] = input.value;
-        }
-
-        select1.onchange = () => {
-            obj["Base"] = select1.value;
-        }
-
-        select2.onchange = () => {
-            obj["Modifier"] = select2.value;
-        }
-
-        button.onclick = () => {
-            if (input.value && select1.value && select2.value) {
                 this.Character["Weapon Attacks"].push(obj);
 
                 document.querySelector('character-sheet').UpdateWeaponAttacks();
@@ -2560,6 +2506,82 @@ class AddWeaponAttackModal extends HTMLElement {
 }
 
 customElements.define("addweaponattack-modal", AddWeaponAttackModal);
+
+class AddClassFeatureModal extends HTMLElement {
+    constructor(json) {
+        super();
+
+        this.Character = json;
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    width: max-content;
+                    transform: translate(-50%, -50%);
+                    display: grid;
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                }
+            </style>
+
+            <div id="modal">
+                <div>
+                    <label for="name">Feature Name</label>
+                    <input type="text" id="name">
+                </div>
+                <div>
+                    <textarea id="description"></textarea>
+                </div>
+                <div>
+                    <button type="button" id="add">Add Class Feature</button>
+                    <button type="button" id="cancel">Cancel</button>
+                </div>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let obj = {
+            "Name": "",
+            "Description": ""
+        }
+
+        shadow.querySelector("#add").onclick = () => {
+            if (shadow.querySelector("#name").value) {
+                obj["Name"] = shadow.querySelector("#name").value;
+                obj["Description"] = shadow.querySelector("#description").value;
+
+                this.Character["Class Features"].push(obj);
+
+                document.querySelector('character-sheet').UpdateClassFeatures();
+
+                this.remove();
+            }
+        }
+
+        shadow.querySelector("#cancel").onclick = () => {
+            this.remove();
+        }
+    }
+}
+
+customElements.define("addclassfeature-modal", AddClassFeatureModal);
 
 class AddFeatModal extends HTMLElement {
     constructor(json) {
