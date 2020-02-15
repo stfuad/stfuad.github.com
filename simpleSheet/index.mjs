@@ -259,6 +259,9 @@ const character = {
         "Stunned": false,
         "Unconcious": false
     },
+    "Racial Traits": [
+
+    ],
     "Class Features": [
 
     ],
@@ -483,7 +486,7 @@ class CharacterSheet extends HTMLElement {
         let target = this.shadowRoot.querySelector("#traits");
         target.innerHTML = "";
 
-        if (this.Character["Race"]) {
+        /* if (this.Character["Race"]) {
             let fieldset = document.createElement('fieldset');
 
             let legend = document.createElement('legend');
@@ -506,6 +509,21 @@ class CharacterSheet extends HTMLElement {
             }
 
             target.appendChild(fieldset);
+        } */
+
+        if (this.Character["Racial Traits"].length > 0) {
+            let fieldset = document.createElement('fieldset');
+
+            let legend = document.createElement('legend');
+            legend.appendChild(document.createTextNode(`Racial Traits`));
+
+            fieldset.appendChild(legend);
+
+            for (let obj of this.Character["Racial Traits"]) {
+                fieldset.appendChild(new SummaryDetail(obj, "Racial Traits", this.Character));
+            }
+
+            target.appendChild(fieldset);
         }
     }
 
@@ -521,7 +539,7 @@ class CharacterSheet extends HTMLElement {
         fieldset.appendChild(legend);
 
         for (let obj of this.Character["Class Features"]) {
-            fieldset.appendChild(new ClassFeature(obj, this.Character));
+            fieldset.appendChild(new SummaryDetail(obj, "Class Features", this.Character));
         }
 
         target.appendChild(fieldset);
@@ -782,6 +800,7 @@ class CharacterSheet extends HTMLElement {
                 <div id="feats"></div>
             </div>
 
+            <a id="addRacialTrait">+ Add Racial Trait</a>
             <a id="addClassFeature">+ Add Class Feature</a>
             <a id="addFeat">+ Add Feat</a>
 
@@ -895,10 +914,11 @@ class CharacterSheet extends HTMLElement {
         shadow.querySelector("#classEdit").onclick = () => document.body.appendChild(new EditClassesModal(this.Character));
         shadow.querySelector("#addProficiency").onclick = () => document.body.appendChild(new EditProficienciesModal(this.Character));
         shadow.querySelector("#addLanguage").onclick = () => document.body.appendChild(new EditLanguagesModal(this.Character));
-        shadow.querySelector("#addClassFeature").onclick = () => document.body.appendChild(new AddClassFeatureModal(this.Character));
+        shadow.querySelector("#addRacialTrait").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Racial Traits", this.Character));
+        shadow.querySelector("#addClassFeature").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Class Features", this.Character));
         shadow.querySelector("#addFeat").onclick = () => document.body.appendChild(new AddFeatModal(this.Character));
         shadow.querySelector("#addSpell").onclick = () => document.body.appendChild(new AddSpellModal(this.Character));
-        shadow.querySelector("#addWeaponAttack").onclick = () => document.body.appendChild(new AddWeaponAttackModal(this.Character));
+        shadow.querySelector("#addWeaponAttack").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Weapon Attacks", this.Character));
 
         let inputs = shadow.querySelectorAll('input');
 
@@ -1433,7 +1453,7 @@ class WeaponAttack extends HTMLElement {
 
         shadow.innerHTML = template;
 
-        shadow.querySelector('button').onclick = () => {
+        shadow.querySelector("#remove").onclick = () => {
             for (let obj2 of character["Weapon Attacks"]) {
                 if (obj["Name"] === obj2["Name"]) {
                     let index = character["Weapon Attacks"].indexOf(obj2);
@@ -1448,6 +1468,57 @@ class WeaponAttack extends HTMLElement {
 }
 
 customElements.define('weapon-attack', WeaponAttack);
+
+class RacialTrait extends HTMLElement {
+    constructor(obj, character) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    display: grid;
+                    grid-template-columns: 1fr auto;
+                }
+
+                details {
+                    margin: .25em;
+                }
+
+                button {
+                    grid-column: 2;
+                    grid-row: 1;
+                    display: inline-block;
+                    height: 2em;
+                    width: 2em;
+                    padding: 2px;
+                }
+
+            </style>
+
+            <details><summary><b>${obj["Name"]}</b></summary> ${obj["Description"]}</details>
+            
+            <button type="button" id="remove">\u2716</button>
+        `;
+
+        shadow.innerHTML = template;
+
+        shadow.querySelector('button').onclick = () => {
+            for (let obj2 of character["Racial Traits"]) {
+                if (obj["Name"] === obj2["Name"]) {
+                    let index = character["Racial Traits"].indexOf(obj2);
+                    
+                    character["Racial Traits"].splice(index, 1);
+
+                    this.remove();
+                }
+            }
+        }
+    }
+}
+
+customElements.define('racial-trait', RacialTrait);
 
 class ClassFeature extends HTMLElement {
     constructor(obj, character) {
@@ -1499,6 +1570,77 @@ class ClassFeature extends HTMLElement {
 }
 
 customElements.define('class-feature', ClassFeature);
+
+class SummaryDetail extends HTMLElement {
+    constructor(obj, category, character) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    display: grid;
+                    grid-template-columns: 1fr auto auto;
+                }
+
+                details {
+                    margin: .25em;
+                }
+
+                #edit {
+                    grid-column: 2;
+                    grid-row: 1;
+                    display: inline-block;
+                    height: 2em;
+                    width: 2em;
+                    padding: 2px;
+                }
+
+                #remove {
+                    grid-column: 3;
+                    grid-row: 1;
+                    display: inline-block;
+                    height: 2em;
+                    width: 2em;
+                    padding: 2px;
+                }
+
+            </style>
+
+            <details>
+                <summary>
+                    <b>${obj["Name"]}</b>
+                </summary>
+
+                ${obj["Description"]}
+            </details>
+            
+            <button type="button" id="edit">Edit</button>
+            <button type="button" id="remove">\u2716</button>
+        `;
+
+        shadow.innerHTML = template;
+
+        shadow.querySelector('#edit').onclick = () => {
+            document.body.appendChild(new GenericAddEditModal(obj["Name"], category, character));
+        }
+
+        shadow.querySelector('#remove').onclick = () => {
+            for (let obj2 of character[category]) {
+                if (obj["Name"] === obj2["Name"]) {
+                    let index = character[category].indexOf(obj2);
+                    
+                    character[category].splice(index, 1);
+
+                    this.remove();
+                }
+            }
+        }
+    }
+}
+
+customElements.define('summary-detail', SummaryDetail);
 
 /* Info Modals */
 
@@ -2582,6 +2724,114 @@ class AddClassFeatureModal extends HTMLElement {
 }
 
 customElements.define("addclassfeature-modal", AddClassFeatureModal);
+
+class GenericAddEditModal extends HTMLElement {
+    constructor(name, category, character) {
+        super();
+
+        this.Character = character;
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                label {
+                    display: block;
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    width: max-content;
+                    transform: translate(-50%, -50%);
+                    display: grid;
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                }
+            </style>
+
+            <div id="modal">
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" id="name">
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <textarea id="description"></textarea>
+                </div>
+                <div>
+                    <button type="button" id="add">Add</button>
+                    <button type="button" id="cancel">Cancel</button>
+                </div>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let obj = {
+            "Name": "",
+            "Description": ""
+        }
+
+        let input = shadow.querySelector('input');
+        let textarea = shadow.querySelector('textarea');
+
+        let index;
+
+        if (name) {
+            this.Character[category].forEach(element => {
+                if (element["Name"] === name) {
+                    index = this.Character[category].indexOf(element, 0);
+
+                    input.value = element["Name"];
+                    textarea.value = element["Description"];
+                }
+            });
+        }
+
+        shadow.querySelector("#add").onclick = () => {
+            if (input.value) {
+                if (name) {
+                    this.Character[category][index]["Name"] = input.value;
+                    this.Character[category][index]["Description"] = textarea.value;
+                } else {
+                    obj["Name"] = input.value;
+                    obj["Description"] = textarea.value;
+
+                    this.Character[category].push(obj);
+                }
+
+                if (category === "Racial Traits") {
+                    document.querySelector('character-sheet').UpdateRacialTraits();
+                } else if (category === "Class Features") {
+                    document.querySelector('character-sheet').UpdateClassFeatures();
+                } else if (category === "Weapon Attacks") {
+                    document.querySelector('character-sheet').UpdateWeaponAttacks();
+                }
+                
+                this.remove();
+            }
+        }
+
+        shadow.querySelector("#cancel").onclick = () => {
+            this.remove();
+        }
+    }
+}
+
+customElements.define("genericaddedit-modal", GenericAddEditModal);
 
 class AddFeatModal extends HTMLElement {
     constructor(json) {
