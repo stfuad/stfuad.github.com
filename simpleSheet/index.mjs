@@ -283,10 +283,7 @@ const character = {
         "Level 8": [],
         "Level 9": []
     },
-    "Weapon Attacks": [
-
-    ],
-    "Spell Attacks": [
+    "Attacks": [
 
     ],
     "Money": {
@@ -595,12 +592,12 @@ class CharacterSheet extends HTMLElement {
         }
     }
 
-    UpdateWeaponAttacks() {
-        let target = this.shadowRoot.querySelector("#weaponAttacks");
+    UpdateAttacks() {
+        let target = this.shadowRoot.querySelector("#attacks");
             target.innerHTML = "";
 
-        for (let obj of this.Character["Weapon Attacks"]) {
-            target.appendChild(new NameDescription(obj, "Weapon Attacks", this.Character));
+        for (let obj of this.Character["Attacks"]) {
+            target.appendChild(new NameDescription(obj, "Attacks", this.Character));
         }
     }
 
@@ -777,11 +774,10 @@ class CharacterSheet extends HTMLElement {
 
             <div id="attacksSpellcasting">
                 <h4>Attacks & Spellcasting</h4>
-                <div id="weaponAttacks"></div>
+                <div id="attacks"></div>
             </div>
 
-            <a id="addWeaponAttack">+ Add Weapon Attack</a>
-            <a id="addSpellAttack">+ Add Spell Attack</a>
+            <a id="addAttack">+ Add Weapon/Spell Attack</a>
 
             <div id="profLang">
                 <h4>Other Proficiencies & Languages</h4>
@@ -790,7 +786,8 @@ class CharacterSheet extends HTMLElement {
                 <div id="languages"></div>
             </div>
 
-            <a id="addProficiency">+ Add Other Proficiency</a> <a id="addLanguage">+ Add Language</a>
+            <a id="addProficiency">+ Add Other Proficiency</a>
+            <a id="addLanguage">+ Add Language</a>
 
             <div id="featsTraits">
                 <h4>Features & Traits</h4>
@@ -821,7 +818,7 @@ class CharacterSheet extends HTMLElement {
         this.UpdateOtherProficiencies();
         this.UpdateLanguages();
         this.UpdateSpells();
-        this.UpdateWeaponAttacks();
+        this.UpdateAttacks();
 
         let select = shadow.querySelector("#race");
 
@@ -911,6 +908,8 @@ class CharacterSheet extends HTMLElement {
             this.UpdateLanguages();
         }
 
+        /* Binding Links */
+
         shadow.querySelector("#classEdit").onclick = () => document.body.appendChild(new EditClassesModal(this.Character));
         shadow.querySelector("#addProficiency").onclick = () => document.body.appendChild(new EditProficienciesModal(this.Character));
         shadow.querySelector("#addLanguage").onclick = () => document.body.appendChild(new EditLanguagesModal(this.Character));
@@ -918,7 +917,7 @@ class CharacterSheet extends HTMLElement {
         shadow.querySelector("#addClassFeature").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Class Features", this.Character));
         shadow.querySelector("#addFeat").onclick = () => document.body.appendChild(new AddFeatModal(this.Character));
         shadow.querySelector("#addSpell").onclick = () => document.body.appendChild(new AddSpellModal(this.Character));
-        shadow.querySelector("#addWeaponAttack").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Weapon Attacks", this.Character));
+        shadow.querySelector("#addAttack").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Attacks", this.Character));
 
         let inputs = shadow.querySelectorAll('input');
 
@@ -975,13 +974,8 @@ class CharacterSheet extends HTMLElement {
                         element.UpdateElement(element.id);
                     });
     
-                    if (mutation.target.id === "Strength") {
-                        this.UpdateWeaponAttacks();
-                    }
-    
                     if (mutation.target.id === "Dexterity") {
                         this.UpdateInitiative();
-                        this.UpdateWeaponAttacks();
                     }
     
                     if (mutation.target.id === "Wisdom") {
@@ -1422,154 +1416,6 @@ class Spell extends HTMLElement {
 }
 
 customElements.define('spell-element', Spell);
-
-class WeaponAttack extends HTMLElement {
-    constructor(obj, character) {
-        super();
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let template = `
-            <style>
-                :host {
-                    display: grid;
-                    grid-template-columns: 1fr auto;
-                }
-
-                span {
-                    grid-column: 1;
-                }
-
-                button {
-                    grid-column: 2;
-                }
-
-            </style>
-
-            <span><b>${obj["Name"]}.</b> ${obj["Description"]}</span>
-            
-            <button type="button" id="remove">\u2716</button>
-        `;
-
-        shadow.innerHTML = template;
-
-        shadow.querySelector("#remove").onclick = () => {
-            for (let obj2 of character["Weapon Attacks"]) {
-                if (obj["Name"] === obj2["Name"]) {
-                    let index = character["Weapon Attacks"].indexOf(obj2);
-                    
-                    character["Weapon Attacks"].splice(index, 1);
-
-                    this.remove();
-                }
-            }
-        }
-    }
-}
-
-customElements.define('weapon-attack', WeaponAttack);
-
-class RacialTrait extends HTMLElement {
-    constructor(obj, character) {
-        super();
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let template = `
-            <style>
-                :host {
-                    display: grid;
-                    grid-template-columns: 1fr auto;
-                }
-
-                details {
-                    margin: .25em;
-                }
-
-                button {
-                    grid-column: 2;
-                    grid-row: 1;
-                    display: inline-block;
-                    height: 2em;
-                    width: 2em;
-                    padding: 2px;
-                }
-
-            </style>
-
-            <details><summary><b>${obj["Name"]}</b></summary> ${obj["Description"]}</details>
-            
-            <button type="button" id="remove">\u2716</button>
-        `;
-
-        shadow.innerHTML = template;
-
-        shadow.querySelector('button').onclick = () => {
-            for (let obj2 of character["Racial Traits"]) {
-                if (obj["Name"] === obj2["Name"]) {
-                    let index = character["Racial Traits"].indexOf(obj2);
-                    
-                    character["Racial Traits"].splice(index, 1);
-
-                    this.remove();
-                }
-            }
-        }
-    }
-}
-
-customElements.define('racial-trait', RacialTrait);
-
-class ClassFeature extends HTMLElement {
-    constructor(obj, character) {
-        super();
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let template = `
-            <style>
-                :host {
-                    display: grid;
-                    grid-template-columns: 1fr auto;
-                }
-
-                details {
-                    margin: .25em;
-                }
-
-                button {
-                    grid-column: 2;
-                    grid-row: 1;
-                    display: inline-block;
-                    height: 2em;
-                    width: 2em;
-                    padding: 2px;
-                }
-
-            </style>
-
-            <details><summary><b>${obj["Name"]}</b></summary> ${obj["Description"]}</details>
-            
-            <button type="button" id="remove">\u2716</button>
-        `;
-
-        shadow.innerHTML = template;
-
-        shadow.querySelector('button').onclick = () => {
-            for (let obj2 of character["Class Features"]) {
-                if (obj["Name"] === obj2["Name"]) {
-                    let index = character["Class Features"].indexOf(obj2);
-                    
-                    character["Class Features"].splice(index, 1);
-
-                    this.remove();
-                }
-            }
-        }
-    }
-}
-
-customElements.define('class-feature', ClassFeature);
 
 class SummaryDetail extends HTMLElement {
     constructor(obj, category, character) {
@@ -2019,314 +1865,6 @@ class FeatModal extends HTMLElement {
 
 customElements.define("feat-modal", FeatModal);
 
-class TraitModal extends HTMLElement {
-    constructor(title, json) {
-        super();
-
-        let shadow = this.attachShadow({mode: "open"});
-
-        let template = `
-            <style>
-                :host {
-                    position: fixed;
-                    top: 0px;
-                    left: 0px;
-                    height: 100vh;
-                    width: 100vw;
-                    background-color: rgba(128,128,128,0.5);
-                }
-
-                #modal {
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    height: auto;
-                    max-height: 80vh;
-                    width: 80vw;
-                    transform: translate(-50%, -50%);
-                    border: 1px solid black;
-                    padding: 10px;
-                    background-color: white;
-                    overflow: auto;
-                }
-
-                button {
-                    position: absolute;
-                    top: 20px;
-                    right: 20px;
-                }
-            </style>
-
-            <div id="modal">
-            <h3>${title}</h3>
-            <button type="button" id="close">\u2716</button>
-            </div>
-        `;
-
-        shadow.innerHTML = template;
-
-        let modal = shadow.querySelector("#modal");
-        
-        paragraphs(json, modal);
-
-        shadow.querySelector('button').onclick = () => this.remove();
-
-        function paragraphs(array, parent) {
-            array.forEach(line => {
-                let p = document.createElement('p');
-        
-                if(line.includes('#')) {
-                    let split = line.split('#');
-        
-                    let b = document.createElement('b');
-                    b.appendChild(document.createTextNode(`${split[0]}. `));
-                    p.appendChild(b);
-        
-                    p.appendChild(document.createTextNode(split[1]));
-                } else if (line.includes('=')) {
-                    let split = line.split('=');
-        
-                    let b = document.createElement('b');
-                    b.appendChild(document.createTextNode(`${split[0]} `));
-                    p.appendChild(b);
-        
-                    p.appendChild(document.createTextNode(`= ${split[1]} `));
-                } else {
-                    p.appendChild(document.createTextNode(line));
-                }
-        
-                parent.appendChild(p);
-            });
-        }
-    }
-}
-
-customElements.define("trait-modal", TraitModal);
-
-class FeatureModal extends HTMLElement {
-    constructor(title, json) {
-        super();
-
-        let shadow = this.attachShadow({mode: "open"});
-
-        let template = `
-            <style>
-                :host {
-                    position: fixed;
-                    top: 0px;
-                    left: 0px;
-                    height: 100vh;
-                    width: 100vw;
-                    background-color: rgba(128,128,128,0.5);
-                }
-
-                #modal {
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    height: auto;
-                    max-height: 80vh;
-                    width: 80vw;
-                    transform: translate(-50%, -50%);
-                    border: 1px solid black;
-                    padding: 10px;
-                    background-color: white;
-                    overflow: auto;
-                }
-
-                button {
-                    position: absolute;
-                    top: 20px;
-                    right: 20px;
-                }
-            </style>
-
-            <div id="modal">
-            <h3>${title}</h3>
-            <button type="button" id="close">\u2716</button>
-            </div>
-        `;
-
-        shadow.innerHTML = template;
-
-        let modal = shadow.querySelector("#modal");
-        
-        let newTitle = title;
-
-        if (title.includes("(")) {
-            let split = title.split(" (");
-            
-            newTitle = split[0];
-        }
-
-        if (json[newTitle]) {
-            if (Array.isArray(json[newTitle])) {
-                paragraphs(json[newTitle], modal);
-            } else {
-                for (let key in json[newTitle]) {
-                    if (key.includes("Description")) {
-                        paragraphs(json[newTitle][key], modal);
-                    } else if (key === "Unordered List") {
-                        list(json[newTitle][key], "ul", modal);
-                    } else if (key.includes("Table")) {
-                        table(json[newTitle][key], modal);
-                    } else if (Array.isArray(json[newTitle][key])) {
-                        let b = document.createElement('b');
-                        b.appendChild(document.createTextNode(key));
-
-                        modal.appendChild(b);
-
-                        paragraphs(json[newTitle][key], modal)
-                    }
-                }
-            }
-        }
-
-        shadow.querySelector('button').onclick = () => this.remove();
-
-        function paragraphs(array, parent) {
-            array.forEach(line => {
-                let p = document.createElement('p');
-        
-                if(line.includes('#')) {
-                    let split = line.split('#');
-        
-                    let b = document.createElement('b');
-                    b.appendChild(document.createTextNode(`${split[0]}. `));
-                    p.appendChild(b);
-        
-                    p.appendChild(document.createTextNode(split[1]));
-                } else if (line.includes('=')) {
-                    let split = line.split('=');
-        
-                    let b = document.createElement('b');
-                    b.appendChild(document.createTextNode(`${split[0]} `));
-                    p.appendChild(b);
-        
-                    p.appendChild(document.createTextNode(`= ${split[1]} `));
-                } else {
-                    p.appendChild(document.createTextNode(line));
-                }
-        
-                parent.appendChild(p);
-            });
-        }
-        
-        function list(array, listType, parent) {
-            let list = document.createElement(listType);
-        
-            array.forEach(item => {
-                let li = document.createElement('li');
-        
-                if(item.includes("#")) {
-                    let split = item.split("#");
-        
-                    let b = document.createElement('b');
-                    b.appendChild(document.createTextNode(`${split[0]}. `));
-                    li.appendChild(b);
-        
-                    li.appendChild(document.createTextNode(split[1]));
-                } else {
-                    li.appendChild(document.createTextNode(item));
-                }
-        
-                list.appendChild(li);
-            });
-        
-            parent.appendChild(list);
-        }
-        
-        function table(json, parent) {
-            let table = document.createElement('table');
-        
-            // Caption
-        
-            if(json["Title"] !== undefined) {
-                let caption = document.createElement('caption');
-                caption.appendChild(document.createTextNode(json["Title"]))
-        
-                table.appendChild(caption);
-            }
-        
-            // Headers
-        
-            
-        
-            if(json["Headers"] !== undefined) {
-                let headers = document.createElement('tr');
-        
-                json["Headers"].forEach(header => {
-                    let th = document.createElement('th');
-                    th.appendChild(document.createTextNode(header));
-                    
-                    headers.appendChild(th);
-                });
-        
-                table.appendChild(headers);
-            }
-            
-            // Rows
-        
-            if(json["Rows"] !== undefined) {
-                json["Rows"].forEach(row => {
-                    let tr = document.createElement('tr');
-        
-                    for(let key in row) {
-                        let td = document.createElement('td');
-        
-                        if(key === "Spell" || key === "Spells" || key === "Circle Spells") {
-                            let length = row[key].length
-        
-                            for(var i = 0; i < length; i++) {
-                                let spell = row[key][i];
-        
-                                let a = document.createElement('a');
-        
-                                if(i > 0) {
-                                    a.appendChild(document.createTextNode(`, ${spell}`))
-                                    a.addEventListener('click', () => {
-                                        parent.appendChild(new SpellModal(spell));
-                                    }, false);
-        
-        
-                                } else {
-                                    a.appendChild(document.createTextNode(spell))
-                                    a.addEventListener('click', () => {
-                                        parent.appendChild(new SpellModal(spell));
-                                    }, false);
-        
-                                }
-        
-                                td.appendChild(a);
-                            }
-                        } else {
-                            if (typeof(row[key]) === "string" && row[key].includes("#")) {
-                                let split = row[key].split("#");
-        
-                                let b = document.createElement('b');
-                                b.appendChild(document.createTextNode(`${split[0]}. `));
-        
-                                td.appendChild(b);
-                                td.appendChild(document.createTextNode(split[1]));
-                            } else {
-                                td.appendChild(document.createTextNode(row[key]));
-                            }
-                        }
-        
-                        tr.appendChild(td);
-                    }
-        
-                    table.appendChild(tr);
-                });
-            }
-        
-            parent.appendChild(table);
-        }
-    }
-}
-
-customElements.define("feature-modal", FeatureModal);
-
 class SpellModal extends HTMLElement {
     constructor(name) {
         super();
@@ -2588,209 +2126,6 @@ customElements.define('spell-modal', SpellModal);
 
 /* Add Modals */
 
-class AddWeaponAttackModal extends HTMLElement {
-    constructor(json) {
-        super();
-
-        this.Character = json;
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let template = `
-            <style>
-                :host {
-                    position: fixed;
-                    top: 0px;
-                    left: 0px;
-                    height: 100vh;
-                    width: 100vw;
-                    background-color: rgba(128,128,128,0.5);
-                }
-
-                #modal {
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    height: auto;
-                    width: max-content;
-                    transform: translate(-50%, -50%);
-                    display: grid;
-                    border: 1px solid black;
-                    padding: 10px;
-                    background-color: white;
-                }
-            </style>
-
-            <div id="modal">
-                <div>
-                    <input type="text" id="name">
-
-                    <select id="base">
-                        <option value="">Select a Weapon Base</option>
-                    </select>
-
-                    <select id="modifier">
-                        <option value="">Attack/Damage Modifier</option>
-                        <option value="0">0</option>
-                        <option value="1">+1</option>
-                        <option value="2">+2</option>
-                        <option value="3">+3</option>
-                    </select>
-
-                    <input id="miscAttack" type="number">
-                    <input id="miscDamage" type="number">
-                </div>
-                <div>
-                    <button type="button" id="add">Add Weapon Attack</button>
-                    <button type="button" id="cancel">Cancel</button>
-                </div>
-            </div>
-        `;
-
-        let template2 = `
-            <style>
-                :host {
-                    position: fixed;
-                    top: 0px;
-                    left: 0px;
-                    height: 100vh;
-                    width: 100vw;
-                    background-color: rgba(128,128,128,0.5);
-                }
-
-                #modal {
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    height: auto;
-                    width: max-content;
-                    transform: translate(-50%, -50%);
-                    display: grid;
-                    border: 1px solid black;
-                    padding: 10px;
-                    background-color: white;
-                }
-            </style>
-
-            <div id="modal">
-                <div>
-                    <label for="name">Weapon Name</label>
-                    <input type="text" id="name">
-                </div>
-                <div>
-                    <textarea id="description"></textarea>
-                </div>
-                <div>
-                    <button type="button" id="add">Add Weapon Attack</button>
-                    <button type="button" id="cancel">Cancel</button>
-                </div>
-            </div>
-        `;
-
-        shadow.innerHTML = template2;
-
-        let obj = {
-            "Name": "",
-            "Description": ""
-        }
-
-        shadow.querySelector("#add").onclick = () => {
-            if (shadow.querySelector("#name").value) {
-                obj["Name"] = shadow.querySelector("#name").value;
-                obj["Description"] = shadow.querySelector("#description").value;
-
-                this.Character["Weapon Attacks"].push(obj);
-
-                document.querySelector('character-sheet').UpdateWeaponAttacks();
-
-                this.remove();
-            }
-        }
-
-        shadow.querySelector("#cancel").onclick = () => {
-            this.remove();
-        }
-    }
-}
-
-customElements.define("addweaponattack-modal", AddWeaponAttackModal);
-
-class AddClassFeatureModal extends HTMLElement {
-    constructor(json) {
-        super();
-
-        this.Character = json;
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let template = `
-            <style>
-                :host {
-                    position: fixed;
-                    top: 0px;
-                    left: 0px;
-                    height: 100vh;
-                    width: 100vw;
-                    background-color: rgba(128,128,128,0.5);
-                }
-
-                #modal {
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    height: auto;
-                    width: max-content;
-                    transform: translate(-50%, -50%);
-                    display: grid;
-                    border: 1px solid black;
-                    padding: 10px;
-                    background-color: white;
-                }
-            </style>
-
-            <div id="modal">
-                <div>
-                    <label for="name">Feature Name</label>
-                    <input type="text" id="name">
-                </div>
-                <div>
-                    <textarea id="description"></textarea>
-                </div>
-                <div>
-                    <button type="button" id="add">Add Class Feature</button>
-                    <button type="button" id="cancel">Cancel</button>
-                </div>
-            </div>
-        `;
-
-        shadow.innerHTML = template;
-
-        let obj = {
-            "Name": "",
-            "Description": ""
-        }
-
-        shadow.querySelector("#add").onclick = () => {
-            if (shadow.querySelector("#name").value) {
-                obj["Name"] = shadow.querySelector("#name").value;
-                obj["Description"] = shadow.querySelector("#description").value;
-
-                this.Character["Class Features"].push(obj);
-
-                document.querySelector('character-sheet').UpdateClassFeatures();
-
-                this.remove();
-            }
-        }
-
-        shadow.querySelector("#cancel").onclick = () => {
-            this.remove();
-        }
-    }
-}
-
-customElements.define("addclassfeature-modal", AddClassFeatureModal);
-
 class GenericAddEditModal extends HTMLElement {
     constructor(name, category, character) {
         super();
@@ -2883,8 +2218,8 @@ class GenericAddEditModal extends HTMLElement {
                     document.querySelector('character-sheet').UpdateRacialTraits();
                 } else if (category === "Class Features") {
                     document.querySelector('character-sheet').UpdateClassFeatures();
-                } else if (category === "Weapon Attacks") {
-                    document.querySelector('character-sheet').UpdateWeaponAttacks();
+                } else if (category === "Attacks") {
+                    document.querySelector('character-sheet').UpdateAttacks();
                 }
                 
                 this.remove();
