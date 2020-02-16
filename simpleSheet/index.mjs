@@ -600,7 +600,7 @@ class CharacterSheet extends HTMLElement {
             target.innerHTML = "";
 
         for (let obj of this.Character["Weapon Attacks"]) {
-            target.appendChild(new WeaponAttack(obj, this.Character));
+            target.appendChild(new NameDescription(obj, "Weapon Attacks", this.Character));
         }
     }
 
@@ -1641,6 +1641,72 @@ class SummaryDetail extends HTMLElement {
 }
 
 customElements.define('summary-detail', SummaryDetail);
+
+class NameDescription extends HTMLElement {
+    constructor(obj, category, character) {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        let template = `
+            <style>
+                :host {
+                    display: grid;
+                    grid-template-columns: 1fr auto auto;
+                }
+
+                span {
+                    grid-column: 1;
+                    grid-row: 1;
+                }
+
+                #edit {
+                    grid-column: 2;
+                    grid-row: 1;
+                    display: inline-block;
+                    height: 2em;
+                    width: 2em;
+                    padding: 2px;
+                }
+
+                #remove {
+                    grid-column: 3;
+                    grid-row: 1;
+                    display: inline-block;
+                    height: 2em;
+                    width: 2em;
+                    padding: 2px;
+                }
+
+            </style>
+            
+            <span><b>${obj["Name"]}.</b> ${obj["Description"]}</span>
+
+            <button type="button" id="edit">Edit</button>
+            <button type="button" id="remove">\u2716</button>
+        `;
+
+        shadow.innerHTML = template;
+
+        shadow.querySelector('#edit').onclick = () => {
+            document.body.appendChild(new GenericAddEditModal(obj["Name"], category, character));
+        }
+
+        shadow.querySelector('#remove').onclick = () => {
+            for (let obj2 of character[category]) {
+                if (obj["Name"] === obj2["Name"]) {
+                    let index = character[category].indexOf(obj2);
+                    
+                    character[category].splice(index, 1);
+
+                    this.remove();
+                }
+            }
+        }
+    }
+}
+
+customElements.define('name-description', NameDescription);
 
 /* Info Modals */
 
