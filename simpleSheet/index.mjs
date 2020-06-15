@@ -483,31 +483,6 @@ class CharacterSheet extends HTMLElement {
         let target = this.shadowRoot.querySelector("#traits");
         target.innerHTML = "";
 
-        /* if (this.Character["Race"]) {
-            let fieldset = document.createElement('fieldset');
-
-            let legend = document.createElement('legend');
-            legend.appendChild(document.createTextNode(`${this.Character["Race"]} - Racial Traits`));
-
-            fieldset.appendChild(legend);
-
-            for (let key in raceData[this.Character["Race"]]) {
-                let obj = raceData[this.Character["Race"]][key];
-
-                if (this.Character["Character Level"] >= obj["Level"]) {
-                    for (let trait in obj["Traits"]) {
-                        let a = document.createElement('a');
-                        a.appendChild(document.createTextNode(trait));
-                        a.onclick = () => document.body.appendChild(new TraitModal(trait, obj["Traits"][trait]));
-
-                        fieldset.appendChild(a);
-                    }
-                }
-            }
-
-            target.appendChild(fieldset);
-        } */
-
         if (this.Character["Racial Traits"].length > 0) {
             let fieldset = document.createElement('fieldset');
 
@@ -528,40 +503,46 @@ class CharacterSheet extends HTMLElement {
         let target = this.shadowRoot.querySelector("#features");
         target.innerHTML = "";
 
-        let fieldset = document.createElement('fieldset');
+        if (this.Character["Class Features"].length > 0) {
+            let fieldset = document.createElement('fieldset');
 
-        let legend = document.createElement('legend');
-        legend.appendChild(document.createTextNode(`Class Features`));
+            let legend = document.createElement('legend');
+            legend.appendChild(document.createTextNode(`Class Features`));
 
-        fieldset.appendChild(legend);
+            fieldset.appendChild(legend);
 
-        for (let obj of this.Character["Class Features"]) {
-            fieldset.appendChild(new SummaryDetail(obj, "Class Features", this.Character));
+            for (let obj of this.Character["Class Features"]) {
+                fieldset.appendChild(new SummaryDetail(obj, "Class Features", this.Character));
+            }
+
+            target.appendChild(fieldset);
         }
-
-        target.appendChild(fieldset);
     }
 
     UpdateFeats() {
         let target = this.shadowRoot.querySelector("#feats");
         target.innerHTML = "";
 
-        let fieldset = document.createElement('fieldset');
+        if (this.Character["Feats"].length > 0) {
+            let fieldset = document.createElement('fieldset');
 
-        let legend = document.createElement('legend');
-        legend.appendChild(document.createTextNode(`Feats`));
+            let legend = document.createElement('legend');
+            legend.appendChild(document.createTextNode(`Feats`));
 
-        fieldset.appendChild(legend);
+            fieldset.appendChild(legend);
 
-        for (let feat of this.Character["Feats"]) {
-            let a = document.createElement('a');
-                a.appendChild(document.createTextNode(feat));
-                a.onclick = () => document.body.appendChild(new FeatModal(feat, feats[feat]));
+            for (let feat of this.Character["Feats"]) {
+                /* let a = document.createElement('a');
+                    a.appendChild(document.createTextNode(feat));
+                    a.onclick = () => document.body.appendChild(new FeatModal(feat, feats[feat]));
 
-            fieldset.appendChild(a);
+                fieldset.appendChild(a); */
+
+                fieldset.appendChild(new SummaryDetail(feat, "Feats", this.Character));
+            }
+
+            target.appendChild(fieldset);            
         }
-
-        target.appendChild(fieldset);
     }
 
     UpdateSpells() {
@@ -672,7 +653,7 @@ class CharacterSheet extends HTMLElement {
             <div>
                 <h4>Race</h4>
 
-                <select id="race"></select>
+                <input type="text" id="race" value="${this.Character["Race"]}">
                 <label for="race">Race</label>
             </div>
 
@@ -819,94 +800,9 @@ class CharacterSheet extends HTMLElement {
         this.UpdateLanguages();
         this.UpdateSpells();
         this.UpdateAttacks();
-
-        let select = shadow.querySelector("#race");
-
-        let option = document.createElement('option');
-        option.value = "";
-        option.appendChild(document.createTextNode("Select a race"));
-
-        select.appendChild(option);
-
-        /* Racial Stuff */
-
-        for (let key in raceData) {
-            let option = document.createElement('option');
-            option.value = key;
-            option.appendChild(document.createTextNode(key));
-
-            if (key === this.Character["Race"]) {
-                option.selected = true;
-            }
-
-            select.appendChild(option);
-        }
-
-        select.onchange = () => {
-            this.Character["Race"] = select.value;
-
-            /* Write to memory */
-
-            for (let obj of raceData[this.Character["Race"]]) {
-                for (let key in obj) {
-                    if (key === "Saving Throws") {
-                        for (let savingThrow in obj[key]) {
-                            if (obj[key][savingThrow] === true) {
-                                this.Character["Saving Throws"][savingThrow] = obj[key][savingThrow];
-                            }
-                        }
-                    } else if (key === "Skills") {
-                        for (let skill in obj[key]) {
-                            if (obj[key][skill] !== "none") {
-                                this.Character["Skills"][skill] = obj[key][skill];
-                            }
-                        }
-                    } else if (key === "Weapon Proficiencies") {
-                        for (let weapon in obj[key]) {
-                            if (obj[key][weapon] === true) {
-                                this.Character["Weapon Proficiencies"][weapon] = obj[key][weapon];
-                            }
-                        }
-                    } else if (key === "Armor Proficiencies") {
-                        for (let armor in obj[key]) {
-                            if (obj[key][armor] === true) {
-                                this.Character["Armor Proficiencies"][armor] = obj[key][armor];
-                            }
-                        }
-                    } else if (key === "Tool Proficiencies") {
-                        for (let tool in obj[key]) {
-                            if (obj[key][tool] === true) {
-                                this.Character["Tool Proficiencies"][tool] = obj[key][tool];
-                            }
-                        }
-                    } else if (key === "Languages") {
-                        for (let language in obj[key]) {
-                            if (obj[key][language] === true) {
-                                this.Character["Languages"][language] = obj[key][language];
-                            }
-                        }
-                    }
-                }
-            }
-
-            /* Update the UI */
-
-            let savingThrows = shadow.querySelectorAll('saving-throw');
-
-            for (let node of savingThrows) {
-                node.UpdateElement(node.id);
-            }
-
-            let skills = shadow.querySelectorAll('skill-element');
-
-            for (let node of skills) {
-                node.UpdateElement(node.id);
-            }
-
-            this.UpdateOtherProficiencies();
-            this.UpdateRacialTraits();
-            this.UpdateLanguages();
-        }
+        this.UpdateRacialTraits();
+        this.UpdateClassFeatures();
+        this.UpdateFeats();
 
         /* Binding Links */
 
@@ -915,7 +811,8 @@ class CharacterSheet extends HTMLElement {
         shadow.querySelector("#addLanguage").onclick = () => document.body.appendChild(new EditLanguagesModal(this.Character));
         shadow.querySelector("#addRacialTrait").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Racial Traits", this.Character));
         shadow.querySelector("#addClassFeature").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Class Features", this.Character));
-        shadow.querySelector("#addFeat").onclick = () => document.body.appendChild(new AddFeatModal(this.Character));
+        /* shadow.querySelector("#addFeat").onclick = () => document.body.appendChild(new AddFeatModal(this.Character)); */
+        shadow.querySelector("#addFeat").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Feats", this.Character));
         shadow.querySelector("#addSpell").onclick = () => document.body.appendChild(new AddSpellModal(this.Character));
         shadow.querySelector("#addAttack").onclick = () => document.body.appendChild(new GenericAddEditModal(undefined, "Attacks", this.Character));
 
@@ -1660,7 +1557,7 @@ class TableModal extends HTMLElement {
 
 customElements.define("table-modal", TableModal);
 
-class FeatModal extends HTMLElement {
+/* class FeatModal extends HTMLElement {
     constructor(title, json) {
         super();
 
@@ -1863,7 +1760,7 @@ class FeatModal extends HTMLElement {
     }
 }
 
-customElements.define("feat-modal", FeatModal);
+customElements.define("feat-modal", FeatModal); */
 
 class SpellModal extends HTMLElement {
     constructor(name) {
@@ -2220,6 +2117,8 @@ class GenericAddEditModal extends HTMLElement {
                     document.querySelector('character-sheet').UpdateClassFeatures();
                 } else if (category === "Attacks") {
                     document.querySelector('character-sheet').UpdateAttacks();
+                } else if (category === "Feats") {
+                    document.querySelector('character-sheet').UpdateFeats();
                 }
                 
                 this.remove();
@@ -2746,7 +2645,6 @@ class EditProficienciesModal extends HTMLElement {
         
         shadow.querySelector('button').onclick = () => {
             document.querySelector('character-sheet').UpdateOtherProficiencies();
-            document.querySelector('character-sheet').UpdateWeaponAttacks();
 
             this.remove();
         }
