@@ -2,8 +2,8 @@ let bestiary;
 let spells;
 
 export async function load(creatureList, target, height, width) {
-    bestiary = await (await fetch("../json/bestiary.reference.json")).json();
-    spells = await (await fetch("../json/spells.reference.json")).json();
+    bestiary = await (await fetch("https://raw.githubusercontent.com/stfuad/5e-JSON/master/bestiary.reference.json")).json();
+    spells = await (await fetch("https://raw.githubusercontent.com/stfuad/5e-JSON/master/spells.reference.json")).json();
 
     target.appendChild(new InitiativeTracker(creatureList, height, width));
 }
