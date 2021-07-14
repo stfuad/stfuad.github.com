@@ -1,15 +1,13 @@
 let bestiary;
-let spells;
 
-export async function load(creatureList, target, height, width) {
-    bestiary = await (await fetch("https://raw.githubusercontent.com/stfuad/5e-JSON/master/bestiary.reference.json")).json();
-    spells = await (await fetch("https://raw.githubusercontent.com/stfuad/5e-JSON/master/spells.reference.json")).json();
+export async function load(target, height, width, list, source) {
+    bestiary = await (await fetch(source)).json();
 
-    target.appendChild(new InitiativeTracker(creatureList, height, width));
+    target.appendChild(new InitiativeTracker(height, width, list));
 }
 
 class InitiativeTracker extends HTMLElement {
-    constructor(creatureList, height, width) {
+    constructor(height, width, list) {
         super();
 
         let shadow = this.attachShadow({mode: 'open'});
@@ -96,25 +94,26 @@ class InitiativeTracker extends HTMLElement {
 
         shadow.innerHTML = template;
 
-        shadow.querySelector("#byName").onclick = () => wrapper(byName(bestiary));
-        shadow.querySelector("#byType").onclick = () => wrapper(byType(bestiary))
-        shadow.querySelector("#byCR").onclick = () => wrapper(byCR(bestiary));
-        shadow.querySelector("#byBook").onclick = () => wrapper(byBook(bestiary));
+        if (list) {
+            shadow.querySelector("#creatureListControls").remove();
+            shadow.querySelector("#creatureList").remove();
 
-        if (creatureList) {
-            shadow.querySelector("#byName").remove();
-            shadow.querySelector("#byType").remove();
-            shadow.querySelector("#byCR").remove();
-            shadow.querySelector("#byBook").remove();
-
-            createList(byName(creatureList));
+            list.forEach(item => {
+                let a = document.createElement('a');
+                a.appendChild(document.createTextNode(item));
+                a.onclick = () => {
+                    shadow.querySelector("#tracker").appendChild(new CreatureListItem(item));
+                };
+    
+                div.appendChild(a);
+            });
         } else {
             shadow.querySelector("#byName").onclick = () => wrapper(byName(bestiary));
-            shadow.querySelector("#byType").onclick = () => wrapper(byType(bestiary));
+            shadow.querySelector("#byType").onclick = () => wrapper(byType(bestiary))
             shadow.querySelector("#byCR").onclick = () => wrapper(byCR(bestiary));
             shadow.querySelector("#byBook").onclick = () => wrapper(byBook(bestiary));
 
-            createList(byName(bestiary));
+            createList(sorting.byName(bestiary));
         }
 
         shadow.querySelector("#sort").onclick = () => {
@@ -171,6 +170,8 @@ class InitiativeTracker extends HTMLElement {
                 shadow.querySelector("#creatureList").appendChild(div);
             }
         }
+        
+        // sorting
 
         function byName(json) {
             // Declare empty arrays
@@ -1074,9 +1075,9 @@ class CreatureModal extends HTMLElement {
         
                             let a = document.createElement('a');
                             a.appendChild(document.createTextNode(text));
-                                a.onclick = () => {
+                                /* a.onclick = () => {
                                     document.body.appendChild(new SpellModal(split[0]));
-                                };
+                                }; */
 
                             div2.appendChild(a);
                         } else {
@@ -1088,9 +1089,9 @@ class CreatureModal extends HTMLElement {
 
                             let a = document.createElement('a');
                             a.appendChild(document.createTextNode(text));
-                                a.onclick = () => {
+                                /* a.onclick = () => {
                                     document.body.appendChild(new SpellModal(spell));
-                                };
+                                }; */
 
                             div2.appendChild(a);
                         }
@@ -1223,16 +1224,16 @@ class CreatureModal extends HTMLElement {
         
                                 if(i > 0) {
                                     a.appendChild(document.createTextNode(`, ${spell}`))
-                                    a.addEventListener('click', () => {
+                                    /* a.addEventListener('click', () => {
                                         parent.appendChild(new SpellModal(spell));
-                                    }, false);
+                                    }, false); */
         
         
                                 } else {
                                     a.appendChild(document.createTextNode(spell))
-                                    a.addEventListener('click', () => {
+                                    /* a.addEventListener('click', () => {
                                         parent.appendChild(new SpellModal(spell));
-                                    }, false);
+                                    }, false); */
         
                                 }
         
@@ -1265,256 +1266,3 @@ class CreatureModal extends HTMLElement {
 }
 
 customElements.define('creature-modal', CreatureModal);
-
-class SpellModal extends HTMLElement {
-    constructor(name) {
-        super();
-
-        let shadow = this.attachShadow({mode: 'open'});
-
-        let template = `
-            <style>
-                :host {
-                    position: fixed;
-                    top: 0px;
-                    left: 0px;
-                    height: 100vh;
-                    width: 100vw;
-                    background-color: rgba(128,128,128,0.5);
-                }
-
-                #modal {
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    height: auto;
-                    max-height: 80vh;
-                    width: 80vw;
-                    border: 1px solid black;
-                    border-radius: 5px;
-                    padding: 10px;
-                    overflow: auto;
-                    background-color: white;
-                }
-
-                #modal, #content, #description{
-                    display: grid;
-                    grid-auto-rows: auto;
-                }
-
-                button {
-                    position: absolute;
-                    top: 20px;
-                    right: 20px;
-                }
-            </style>
-
-            <div id="modal">
-                <button type="button">\u2716</button>
-
-                <div id="header">
-                    <h3>${name}</h3>
-                    <i></i>
-                </div>
-                <div id="content">
-                    <span><b>Casting Time</b> ${spells[name]["Casting Time"]}</span>
-                    <span><b>Range</b> ${spells[name]["Range"]}</span>
-                    <span><b>Components</b> ${spells[name]["Components"]}</span>
-                    <span><b>Duration</b> ${spells[name]["Duration"]}</span>
-                </div>
-                <div id="description"></div>
-                <div id="footer">
-                    <i></i>
-                </div>
-            </div>
-        `;
-
-        shadow.innerHTML = template;
-
-        /* Set subheader */
-
-        let subheader = "";
-        
-        let level = spells[name]["Level"];
-    
-        if (level === 0) {
-            subheader = "";
-        } else if (level === 1) {
-            subheader = "1st-level";
-        } else if (level === 2) {
-            subheader = "2nd-level";
-        } else if (level === 3) {
-            subheader = "3rd-level";
-        } else if (level >= 4) {
-            subheader = `${level}th-level`;
-        }
-    
-        subheader += ` ${spells[name]["School"]}`;
-    
-        if (spells[name]["Cantrip"] === true) {
-            subheader += " cantrip";
-        }
-    
-        if (spells[name]["Ritual"] === true) {
-            subheader += " (ritual)";
-        }
-
-        shadow.querySelector('#header i').appendChild(document.createTextNode(subheader));
-
-        /* Spell(name, JSON.parse(localStorage.getItem("Spells"))[name], div); */
-
-        shadow.querySelector('button').onclick = () => {
-            this.remove();
-        };
-
-        let description = shadow.querySelector('#description');
-
-        for(let key in spells[name]) {
-            if(key.includes("Description")) {
-                paragraphs(spells[name][key], description);
-            } else if(key == "Higher Levels") {
-                paragraphsPrependBold(key, spells[name][key], description);
-            } else if(key.includes("Unordered List")) {
-                list(spells[name][key], "ul", description);
-            } else if(key.includes("Ordered List")) {
-                list(spells[name][key], "ol", description);
-            } else if(key.includes("Table")) {
-                table(spells[name][key], description)
-            }
-        }
-
-        shadow.querySelector('#footer i').appendChild(document.createTextNode(`${spells[name]["Book"]}, Pg. ${spells[name]["Page"]}`));
-
-        function paragraphs(array, parent) {
-            array.forEach(line => {
-                let p = document.createElement('p');
-        
-                if(line.includes('#')) {
-                    let split = line.split('#');
-        
-                    let b = document.createElement('b');
-                    b.appendChild(document.createTextNode(`${split[0]}. `));
-                    p.appendChild(b);
-        
-                    p.appendChild(document.createTextNode(split[1]));
-                } else if (line.includes('=')) {
-                    let split = line.split('=');
-        
-                    let b = document.createElement('b');
-                    b.appendChild(document.createTextNode(`${split[0]} `));
-                    p.appendChild(b);
-        
-                    p.appendChild(document.createTextNode(`= ${split[1]} `));
-                } else {
-                    p.appendChild(document.createTextNode(line));
-                }
-        
-                parent.appendChild(p);
-            });
-        }
-        
-        function paragraphsPrependBold(key, array, parent) {
-            let temp = [];
-
-            array.forEach(line => {
-                let p = document.createElement('p');
-                    p.appendChild(document.createTextNode(line));
-                    
-                temp.push(p);
-            });
-        
-            let p = document.createElement('p');
-        
-            let b = document.createElement('b');
-                b.appendChild(document.createTextNode(`${key}. `));
-        
-            p.appendChild(b);
-        
-            p.appendChild(document.createTextNode(temp[0].textContent));
-        
-            // Remove the first item in the array
-            temp.shift();
-        
-            // Insert the paragraph element with the bolded keyword into the first line of the array
-            temp.unshift(p);
-        
-            temp.forEach(element => {
-                parent.appendChild(element);
-            });
-        }
-
-        function list(array, listType, parent) {
-            let list = document.createElement(listType);
-        
-            array.forEach(item => {
-                let li = document.createElement('li');
-        
-                if(item.includes("#")) {
-                    let split = item.split("#");
-        
-                    let b = document.createElement('b');
-                    b.appendChild(document.createTextNode(`${split[0]}. `));
-                    li.appendChild(b);
-        
-                    li.appendChild(document.createTextNode(split[1]));
-                } else {
-                    li.appendChild(document.createTextNode(item));
-                }
-        
-                list.appendChild(li);
-            });
-        
-            parent.appendChild(list);
-        }
-        
-        function table(json, parent) {
-            let table = document.createElement('table');
-        
-            // Caption
-        
-            if(json["Title"] !== undefined) {
-                let caption = document.createElement('caption');
-                caption.appendChild(document.createTextNode(json["Title"]))
-        
-                table.appendChild(caption);
-            }
-        
-            // Headers
-        
-            if(json["Headers"] !== undefined) {
-                let headers = document.createElement('tr');
-        
-                json["Headers"].forEach(header => {
-                    let th = document.createElement('th');
-                    th.appendChild(document.createTextNode(header));
-                    
-                    headers.appendChild(th);
-                });
-        
-                table.appendChild(headers);
-            }
-            
-            // Rows
-        
-            if(json["Rows"] !== undefined) {
-                json["Rows"].forEach(row => {
-                    let tr = document.createElement('tr');
-        
-                    for(let key in row) {
-                        let td = document.createElement('td');
-                            td.appendChild(document.createTextNode(row[key]));
-
-                        tr.appendChild(td);
-                    }
-        
-                    table.appendChild(tr);
-                });
-            }
-        
-            parent.appendChild(table);
-        }
-    }
-}
-
-customElements.define('spell-modal', SpellModal);
