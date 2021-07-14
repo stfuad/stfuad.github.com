@@ -113,7 +113,7 @@ class InitiativeTracker extends HTMLElement {
             shadow.querySelector("#byCR").onclick = () => wrapper(byCR(bestiary));
             shadow.querySelector("#byBook").onclick = () => wrapper(byBook(bestiary));
 
-            createList(sorting.byName(bestiary));
+            createList(byName(bestiary));
         }
 
         shadow.querySelector("#sort").onclick = () => {
