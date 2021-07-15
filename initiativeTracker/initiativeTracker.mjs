@@ -94,18 +94,14 @@ class InitiativeTracker extends HTMLElement {
 
         shadow.innerHTML = template;
 
+        // If the list arg is true
+
         if (list) {
             shadow.querySelector("#creatureListControls").remove();
             shadow.querySelector("#creatureList").remove();
 
-            list.forEach(item => {
-                let a = document.createElement('a');
-                a.appendChild(document.createTextNode(item));
-                a.onclick = () => {
-                    shadow.querySelector("#tracker").appendChild(new CreatureListItem(item));
-                };
-    
-                div.appendChild(a);
+            list.forEach(creature => {
+                shadow.querySelector("#tracker").appendChild(new CreatureListItem(creature));
             });
         } else {
             shadow.querySelector("#byName").onclick = () => wrapper(byName(bestiary));
@@ -115,6 +111,8 @@ class InitiativeTracker extends HTMLElement {
 
             createList(byName(bestiary));
         }
+
+        // Tracker controls
 
         shadow.querySelector("#sort").onclick = () => {
             let host = shadow.querySelector("#tracker");
@@ -138,11 +136,7 @@ class InitiativeTracker extends HTMLElement {
             shadow.querySelector("#tracker").innerHTML = "";
         }
 
-        function wrapper(obj) {
-            shadow.querySelector("#creatureList").innerHTML = "";
-
-            createList(obj);
-        }
+        // Functions
 
         function createList(obj) {
             for (let array in obj) {
@@ -171,7 +165,13 @@ class InitiativeTracker extends HTMLElement {
             }
         }
         
-        // sorting
+        function wrapper(obj) {
+            shadow.querySelector("#creatureList").innerHTML = "";
+
+            createList(obj);
+        }
+
+        // Sorting functions
 
         function byName(json) {
             // Declare empty arrays
@@ -205,62 +205,62 @@ class InitiativeTracker extends HTMLElement {
                 "Z": []
             }
         
-            Object.keys(json).forEach(key => {
-                if (key.startsWith("A")) {
-                    obj["A"].push(key);
-                } else if (key.startsWith("B")) {
-                    obj["B"].push(key);
-                } else if (key.startsWith("C")) {
-                    obj["C"].push(key);
-                } else if (key.startsWith("D")) {
-                    obj["D"].push(key);
-                } else if (key.startsWith("E")) {
-                    obj["E"].push(key);
-                } else if (key.startsWith("F")) {
-                    obj["F"].push(key);
-                } else if (key.startsWith("G")) {
-                    obj["G"].push(key);
-                } else if (key.startsWith("H")) {
-                    obj["H"].push(key);
-                } else if (key.startsWith("I")) {
-                    obj["I"].push(key);
-                } else if (key.startsWith("J")) {
-                    obj["J"].push(key);
-                } else if (key.startsWith("K")) {
-                    obj["K"].push(key);
-                } else if (key.startsWith("L")) {
-                    obj["L"].push(key);
-                } else if (key.startsWith("M")) {
-                    obj["M"].push(key);
-                } else if (key.startsWith("N")) {
-                    obj["N"].push(key);
-                } else if (key.startsWith("O")) {
-                    obj["O"].push(key);
-                } else if (key.startsWith("P")) {
-                    obj["P"].push(key);
-                } else if (key.startsWith("Q")) {
-                    obj["Q"].push(key);
-                } else if (key.startsWith("R")) {
-                    obj["R"].push(key);
-                } else if (key.startsWith("S")) {
-                    obj["S"].push(key);
-                } else if (key.startsWith("T")) {
-                    obj["T"].push(key);
-                } else if (key.startsWith("U")) {
-                    obj["U"].push(key);
-                } else if (key.startsWith("V")) {
-                    obj["V"].push(key);
-                } else if (key.startsWith("W")) {
-                    obj["W"].push(key);
-                } else if (key.startsWith("X")) {
-                    obj["X"].push(key);
-                } else if (key.startsWith("Y")) {
-                    obj["Y"].push(key);
-                } else if (key.startsWith("Z")) {
-                    obj["Z"].push(key);
+            for(let creature in json) {
+                if (creature.startsWith("A")) {
+                    obj["A"].push(creature);
+                } else if (creature.startsWith("B")) {
+                    obj["B"].push(creature);
+                } else if (creature.startsWith("C")) {
+                    obj["C"].push(creature);
+                } else if (creature.startsWith("D")) {
+                    obj["D"].push(creature);
+                } else if (creature.startsWith("E")) {
+                    obj["E"].push(creature);
+                } else if (creature.startsWith("F")) {
+                    obj["F"].push(creature);
+                } else if (creature.startsWith("G")) {
+                    obj["G"].push(creature);
+                } else if (creature.startsWith("H")) {
+                    obj["H"].push(creature);
+                } else if (creature.startsWith("I")) {
+                    obj["I"].push(creature);
+                } else if (creature.startsWith("J")) {
+                    obj["J"].push(creature);
+                } else if (creature.startsWith("K")) {
+                    obj["K"].push(creature);
+                } else if (creature.startsWith("L")) {
+                    obj["L"].push(creature);
+                } else if (creature.startsWith("M")) {
+                    obj["M"].push(creature);
+                } else if (creature.startsWith("N")) {
+                    obj["N"].push(creature);
+                } else if (creature.startsWith("O")) {
+                    obj["O"].push(creature);
+                } else if (creature.startsWith("P")) {
+                    obj["P"].push(creature);
+                } else if (creature.startsWith("Q")) {
+                    obj["Q"].push(creature);
+                } else if (creature.startsWith("R")) {
+                    obj["R"].push(creature);
+                } else if (creature.startsWith("S")) {
+                    obj["S"].push(creature);
+                } else if (creature.startsWith("T")) {
+                    obj["T"].push(creature);
+                } else if (creature.startsWith("U")) {
+                    obj["U"].push(creature);
+                } else if (creature.startsWith("V")) {
+                    obj["V"].push(creature);
+                } else if (creature.startsWith("W")) {
+                    obj["W"].push(creature);
+                } else if (creature.startsWith("X")) {
+                    obj["X"].push(creature);
+                } else if (creature.startsWith("Y")) {
+                    obj["Y"].push(creature);
+                } else if (creature.startsWith("Z")) {
+                    obj["Z"].push(creature);
                 }
-            });
-        
+            }
+            
             // Merge arrays into a json object
         
             return obj;
@@ -639,7 +639,7 @@ class CreatureModal extends HTMLElement {
                 <div id="properties"></div>
 
                 <div id="footer">
-                    <i></i>
+                    <i>${creature["Book"]} Pg. ${creature["Page"]}</i>
                 </div>
             </div>
         `;
@@ -671,58 +671,10 @@ class CreatureModal extends HTMLElement {
 
         properties("Features", "Actions", "Legendary Actions", "Reactions");
 
-        shadow.querySelector("#footer i").appendChild(document.createTextNode(`${creature["Book"]} Pg. ${creature["Page"]}`));
-
         function modifier(ability) {
             return Math.floor((ability - 10) / 2);
         }
     
-        function proficiencyBonus(cr) {
-            let bonus = 0;
-        
-            if (cr == 0) {
-                bonus = 2;
-            } else if (cr == "1/8") {
-                bonus = 2;
-            } else if (cr == "1/4") {
-                bonus = 2;
-            } else if (cr == "1/2") {
-                bonus = 2;
-            } else if (cr < 4) {
-                bonus = 2;
-            } else if (cr < 9) {
-                bonus = 3;
-            } else if (cr < 13) {
-                bonus = 4;
-            } else if (cr < 17) {
-                bonus = 5;
-            } else if (cr < 21) {
-                bonus = 6;
-            } else if (cr < 25) {
-                bonus = 7;
-            } else if (cr < 29) {
-                bonus = 8;
-            } else if (cr < 31) {
-                bonus = 9;
-            }
-        
-            return bonus;
-        }
-        
-        function skilltoAbility(skill) {
-            if (skill == "Athletics") {
-                return "Strength";
-            } else if ((skill == "Acrobatics") || (skill == "Sleight of Hand") || (skill == "Stealth")) {
-                return "Dexterity";
-            } else if ((skill == "Arcana") || (skill == "History" || (skill == "Investigation") || (skill == "Nature") || (skill == "Religion"))) {
-                return "Intelligence";
-            } else if ((skill == "Animal Handling") || (skill == "Insight") || (skill == "Medicine") || (skill == "Perception") || skill == "Survival") {
-                return "Wisdom";
-            } else if ((skill == "Deception") || (skill == "Intimidation") || (skill == "Performance") || (skill == "Persuasion")) {
-                return "Charisma";
-            }
-        }
-
         function hitPoints() {
             let hitDice = creature["Hit Dice"];
 
@@ -752,31 +704,9 @@ class CreatureModal extends HTMLElement {
         function speeds() {
             let speeds = creature["Speed"];
 
-            let array = [];
-
-            array.push(`${speeds["Walk"]} ft.`);
-
-            if (speeds["Burrow"] !== 0) {
-                array.push(`burrow ${speeds["Burrow"]} ft.`);
+            if (speeds) {
+                shadow.querySelector("#speeds").appendChild(document.createTextNode(speeds.join(", ")));
             }
-
-            if (speeds["Climb"] !== 0) {
-                array.push(`climb ${speeds["Climb"]} ft.`);
-            }
-
-            if (speeds["Fly"] !== 0) {
-                if(speeds["Hover"]) {
-                    array.push(`fly ${speeds["Fly"]} ft. (hover)`);
-                } else {
-                    array.push(`fly ${speeds["Fly"]} ft.`);
-                }
-            }
-
-            if (speeds["Swim"] !== 0) {
-                array.push(`swim ${speeds["Swim"]} ft.`);
-            }
-
-            shadow.querySelector("#speeds").appendChild(document.createTextNode(array.join(", ")));
         }
 
         function abilityScores() {
@@ -794,34 +724,16 @@ class CreatureModal extends HTMLElement {
         function savingThrows() {
             let savingThrows = creature["Saving Throws"];
 
-            let div = document.createElement('div');
-        
-            let bool = false;
-        
-            let array = [];
-        
-            for (let key in savingThrows) {
-                if (savingThrows[key] === true) {
-                    bool = true;
-        
-                    let total = proficiencyBonus(creature["Challenge"]) + modifier(creature["Ability Scores"][key]);
-        
-                    if (total > 0) {
-                        array.push(`${key.substring(0, 3)} +${total}`);
-                    } else {
-                        array.push(`${key.substring(0, 3)} ${total}`);
-                    }
-                }
-            }
-        
-            if (bool) {
+            if (savingThrows) {
+                let div = document.createElement('div');
+
                 let b = document.createElement('b');
                     b.appendChild(document.createTextNode("Saving Throws "));
-                
+
                 div.appendChild(b);
 
-                div.appendChild(document.createTextNode(array.join(", ")));
-        
+                div.appendChild(document.createTextNode(savingThrows.join(", ")));
+
                 shadow.querySelector("#lowerBlock").appendChild(div);
             }
         }
@@ -829,34 +741,16 @@ class CreatureModal extends HTMLElement {
         function skills() {
             let skills = creature["Skills"];
 
-            let div = document.createElement('div');
-        
-            let bool = false;
-        
-            let array = [];
-        
-            for(let key in skills) {
-                if (skills[key] === true) {
-                    bool = true;
-        
-                    let total = proficiencyBonus(creature["Challenge"]) + modifier(creature["Ability Scores"][skilltoAbility(key)]);
-                    
-                    if (total > 0) {
-                        array.push(`${key} +${total}`);
-                    } else {
-                        array.push(`${key} ${total}`);
-                    }
-                }
-            }
-        
-            let b = document.createElement('b');
-                b.appendChild(document.createTextNode("Skills "));
+            if (skills) {
+                let div = document.createElement('div');
             
-            div.appendChild(b);
+                let b = document.createElement('b');
+                    b.appendChild(document.createTextNode("Skills "));
+                
+                div.appendChild(b);
 
-            div.appendChild(document.createTextNode(array.join(", ")));
-        
-            if (bool) {
+                div.appendChild(document.createTextNode(skills.join(", ")));
+            
                 shadow.querySelector("#lowerBlock").appendChild(div);
             }
         }
@@ -864,16 +758,16 @@ class CreatureModal extends HTMLElement {
         function damageVulnerabilities() {
             let vulnerabilities = creature["Damage Vulnerabilities"];
 
-            let div = document.createElement('div');
-        
-            let b = document.createElement('b');
-                b.appendChild(document.createTextNode("Damage Vulnerabilities "));
+            if (vulnerabilities) {
+                let div = document.createElement('div');
             
-            div.appendChild(b);
+                let b = document.createElement('b');
+                    b.appendChild(document.createTextNode("Damage Vulnerabilities "));
+                
+                div.appendChild(b);
 
-            div.appendChild(document.createTextNode(vulnerabilities.join(", ")));
-        
-            if (vulnerabilities.length > 0) {
+                div.appendChild(document.createTextNode(vulnerabilities.join(", ")));
+            
                 shadow.querySelector("#lowerBlock").appendChild(div);
             }
         }
@@ -881,16 +775,16 @@ class CreatureModal extends HTMLElement {
         function damageResistances() {
             let resistances = creature["Damage Resistances"];
 
-            let div = document.createElement('div');
-        
-            let b = document.createElement('b');
-                b.appendChild(document.createTextNode("Damage Resistances "));
-            
-            div.appendChild(b);
+            if (resistances) {
+                let div = document.createElement('div');
 
-            div.appendChild(document.createTextNode(resistances.join(", ")));
-        
-            if (resistances.length > 0) {
+                let b = document.createElement('b');
+                    b.appendChild(document.createTextNode("Damage Resistances "));
+                
+                div.appendChild(b);
+
+                div.appendChild(document.createTextNode(resistances.join(", ")));
+            
                 shadow.querySelector("#lowerBlock").appendChild(div);
             }
         }
@@ -898,16 +792,16 @@ class CreatureModal extends HTMLElement {
         function damageImmunities() {
             let immunities = creature["Damage Immunities"];
 
-            let div = document.createElement('div');
-        
-            let b = document.createElement('b');
-                b.appendChild(document.createTextNode("Damage Immunities "));
+            if (immunities) {
+                let div = document.createElement('div');
             
-            div.appendChild(b);
+                let b = document.createElement('b');
+                    b.appendChild(document.createTextNode("Damage Immunities "));
+                
+                div.appendChild(b);
 
-            div.appendChild(document.createTextNode(immunities.join(", ")));
-        
-            if (immunities.length > 0) {
+                div.appendChild(document.createTextNode(immunities.join(", ")));
+            
                 shadow.querySelector("#lowerBlock").appendChild(div);
             }
         }
@@ -915,16 +809,16 @@ class CreatureModal extends HTMLElement {
         function conditionImmunities() {
             let immunities = creature["Condition Immunities"];
 
-            let div = document.createElement('div');
-        
-            let b = document.createElement('b');
-                b.appendChild(document.createTextNode("Condition Immunities "));
+            if (immunities) {
+                let div = document.createElement('div');
             
-            div.appendChild(b);
+                let b = document.createElement('b');
+                    b.appendChild(document.createTextNode("Condition Immunities "));
+                
+                div.appendChild(b);
 
-            div.appendChild(document.createTextNode(immunities.join(", ")));
-        
-            if (immunities.length > 0) {
+                div.appendChild(document.createTextNode(immunities.join(", ")));
+            
                 shadow.querySelector("#lowerBlock").appendChild(div);
             }
         }
@@ -932,48 +826,18 @@ class CreatureModal extends HTMLElement {
         function senses() {
             let senses = creature["Senses"];
 
-            let div = document.createElement('div');
-        
-            let array = [];
-        
-            if (senses["Blindsight"] > 0) {
-                if (senses["Blind"]) {
-                    array.push(`blindsight ${senses["Blindsight"]} ft. (blind beyond this radius)`);
-                } else {
-                    array.push(`blindsight ${senses["Blindsight"]} ft.`);
-                }
-            }
-        
-            if (senses["Darkvision"] > 0) {
-                array.push(`darkvision ${senses["Darkvision"]} ft.`);
-            }
-        
-            if (senses["Tremorsense"] > 0) {
-                array.push(`tremorsense ${senses["Tremorsense"]} ft.`);
-            }
-        
-            if (senses["Truesight"] > 0) {
-                array.push(`truesight ${senses["Truesight"]} ft.`);
-            }
-        
-            let passivePerception = 0;
-        
-            if (creature["Skills"]["Perception"] === true) {
-                passivePerception = 10 + proficiencyBonus(creature["Challenege"]) + modifier(creature["Ability Scores"]["Wisdom"]);
-            } else {
-                passivePerception = 10 + modifier(creature["Ability Scores"]["Wisdom"]);
-            }
-        
-            array.push(`passive Perception ${passivePerception}`)
-        
-            let b = document.createElement('b');
-                b.appendChild(document.createTextNode("Senses "));
+            if (senses) {
+                let div = document.createElement('div');
             
-            div.appendChild(b);
+                let b = document.createElement('b');
+                    b.appendChild(document.createTextNode("Senses "));
+                
+                div.appendChild(b);
 
-            div.appendChild(document.createTextNode(array.join(", ")));
+                div.appendChild(document.createTextNode(senses.join(", ")));
 
-            shadow.querySelector("#lowerBlock").appendChild(div);
+                shadow.querySelector("#lowerBlock").appendChild(div);
+            }
         }
 
         function challenge() {
@@ -991,7 +855,7 @@ class CreatureModal extends HTMLElement {
 
         function properties(...sections) {
             sections.forEach(section => {
-                if (creature[section] !== undefined) {
+                if (creature[section]) {
                     // Create the container
         
                     let div = document.createElement('div');
