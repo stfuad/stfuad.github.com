@@ -45,8 +45,11 @@
                 <input type="file" id="file-input">
             </fieldset>
             
-            <fieldset>
+            <!-- <fieldset>
                 <legend>Image Controls</legend>
+
+                <button type="button" id="restoreImageButton">Restore Image</button>
+                <button type="button" id="fitViewportButton">Fit to Viewport</button>
 
                 <table>
                     <tr>
@@ -55,8 +58,8 @@
                     </tr>
                 </table>
                 
-                <!-- <button type="button" id="imageRotateClockwiseButton">Rotate Clockwise</button> -->
-            </fieldset>
+                <button type="button" id="imageRotateClockwiseButton">Rotate Clockwise</button>
+            </fieldset> -->
             
             <fieldset>
                 <legend>Grid Controls</legend>
@@ -95,7 +98,10 @@
         <script>
             let template = document.getElementById("gridTemplate");
             let clone = document.importNode(template.content, true);
+
             let image = document.createElement('img');
+            let imageWidth;
+            let imageHeight;
 
             document.getElementById("content").appendChild(clone);
 
@@ -116,21 +122,29 @@
                             content.innerHTML = "";
                         }
 
+                        imageWidth = image.width;
+                        imageHeight = image.height;
+
                         content.appendChild(image);
                     }
                 }
             }
 
-            let width = image.width;
-            let height = image.height;
-
-            let imageRange = document.getElementById("imageSize");
+            /* let imageRange = document.getElementById("imageSize");
             imageRange.onchange = () => {
-                if (image) {
+                if (image.src) {
+                    let width = image.width;
+                    let height = image.height;
+
                     image.width = width * (imageRange.value / 100);
                     image.height = height * (imageRange.value / 100);
                 }
-            };
+            }; */
+
+            /* let viewportButton = document.getElementById("fitViewportButton");
+                viewportButton.onclick = () => {
+                    
+            }; */
 
             let reloadButton = document.getElementById("reloadGridButton");
                 reloadButton.onclick = () => {
