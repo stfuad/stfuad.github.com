@@ -95,18 +95,19 @@
         <script>
             let template = document.getElementById("gridTemplate");
             let clone = document.importNode(template.content, true);
+            let image = document.createElement('img');
 
             document.getElementById("content").appendChild(clone);
 
             let importFile = document.getElementById("file-input");
-            importFile.onchange = e => {
+                importFile.onchange = e => {
+
                 let file = e.target.files[0];
 
                 if (/\.(jpe?g|png|gif)$/i.test(file.name)) { 
                     let reader = new FileReader();
                     reader.readAsDataURL(file);
                     reader.onload = () => {
-                        let image = document.createElement('img');
                         image.src = reader.result;
                         
                         let content = document.getElementById("content");
@@ -116,47 +117,44 @@
                         }
 
                         content.appendChild(image);
-
-                        let width = image.width;
-                        let height = image.height;
-
-                        console.log(width);
-                        console.log(height);
-
-                        let imageRange = document.getElementById("imageSize");
-                        imageRange.onchange = () => {
-                            if (image) {
-                                image.width = width * (imageRange.value / 100);
-                                image.height = height * (imageRange.value / 100);
-                            }
-                        };
                     }
                 }
             }
 
-            let reloadButton = document.getElementById("reloadGridButton");
-            reloadButton.onclick = () => {
-                let height = document.getElementById("gridHeightInput");
-                let width = document.getElementById("gridWidthInput");
+            let width = image.width;
+            let height = image.height;
 
-                if (document.querySelector("svg")) {
-                    document.querySelector("svg").remove();
+            let imageRange = document.getElementById("imageSize");
+            imageRange.onchange = () => {
+                if (image) {
+                    image.width = width * (imageRange.value / 100);
+                    image.height = height * (imageRange.value / 100);
                 }
+            };
 
-                let template = document.getElementById("gridTemplate");
-                let clone = document.importNode(template.content, true);
-                
-                let pattern = clone.querySelector("pattern");
-                pattern.setAttribute("width", width.value);
-                pattern.setAttribute("height", height.value);
+            let reloadButton = document.getElementById("reloadGridButton");
+                reloadButton.onclick = () => {
+                    let height = document.getElementById("gridHeightInput");
+                    let width = document.getElementById("gridWidthInput");
 
-                let rect = clone.querySelector("rect");
-                rect.setAttribute("width", width.value);
-                rect.setAttribute("height", height.value);
+                    if (document.querySelector("svg")) {
+                        document.querySelector("svg").remove();
+                    }
 
-                clone.querySelector("path").setAttribute("d", `M ${width.value} 0 L 0 0 0 ${height.value}`);
+                    let template = document.getElementById("gridTemplate");
+                    let clone = document.importNode(template.content, true);
+                    
+                    let pattern = clone.querySelector("pattern");
+                    pattern.setAttribute("width", width.value);
+                    pattern.setAttribute("height", height.value);
 
-                document.getElementById("content").appendChild(clone);
+                    let rect = clone.querySelector("rect");
+                    rect.setAttribute("width", width.value);
+                    rect.setAttribute("height", height.value);
+
+                    clone.querySelector("path").setAttribute("d", `M ${width.value} 0 L 0 0 0 ${height.value}`);
+
+                    document.getElementById("content").appendChild(clone);
             };
             
             let clearButton = document.getElementById("clearGridButton");
