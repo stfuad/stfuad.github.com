@@ -86,6 +86,8 @@ class InitiativeTracker extends HTMLElement {
                 <button id="addPC" title="Add PC">&#x1F464</button>
                 <button id="addGroup" title="Add PCs">&#x1F465</button>
                 <button id="sort" title="Sort by Initiative (descending)">&#x1F53B</button>
+                <button id="save" title="Save Encounter to LocalStorage">&#x1F4BE</button>
+                <button id="load" title="Load Encounter from LocalStorage">&#x1F4C1</button>
                 <button id="clear" title="Clear Tracker">&#9114</button>
             </div>
 
@@ -94,14 +96,21 @@ class InitiativeTracker extends HTMLElement {
 
         shadow.innerHTML = template;
 
+        // TBD
+
+        shadow.querySelector("#addGroup").remove();
+
         // If the list arg is true
 
         if (list) {
             shadow.querySelector("#creatureListControls").remove();
             shadow.querySelector("#creatureList").remove();
+            shadow.querySelector("#save").remove();
+            shadow.querySelector("#load").remove();
+            shadow.querySelector("#clear").remove();
 
             list.forEach(creature => {
-                shadow.querySelector("#tracker").appendChild(new CreatureListItem(creature));
+                shadow.querySelector("#tracker").appendChild(new CreatureListItem(creature, undefined, undefined));
             });
         } else {
             shadow.querySelector("#byName").onclick = () => wrapper(byName(bestiary));
@@ -113,6 +122,8 @@ class InitiativeTracker extends HTMLElement {
         }
 
         // Tracker controls
+
+        shadow.querySelector("#addPC").onclick = () => shadow.querySelector("#tracker").appendChild(new PCListItem(undefined, undefined, undefined));
 
         shadow.querySelector("#sort").onclick = () => {
             let host = shadow.querySelector("#tracker");
@@ -132,9 +143,11 @@ class InitiativeTracker extends HTMLElement {
             });
         }
 
-        shadow.querySelector("#clear").onclick = () => {
-            shadow.querySelector("#tracker").innerHTML = "";
-        }
+        shadow.querySelector("#save").onclick = () => document.body.appendChild(new SaveModal());
+
+        shadow.querySelector("#load").onclick = () => document.body.appendChild(new LoadModal());
+
+        shadow.querySelector("#clear").onclick = () => shadow.querySelector("#tracker").innerHTML = "";
 
         // Functions
 
@@ -155,7 +168,7 @@ class InitiativeTracker extends HTMLElement {
                     let a = document.createElement('a');
                     a.appendChild(document.createTextNode(item));
                     a.onclick = () => {
-                        shadow.querySelector("#tracker").appendChild(new CreatureListItem(item));
+                        shadow.querySelector("#tracker").appendChild(new CreatureListItem(item, undefined, undefined));
                     };
         
                     div.appendChild(a);
@@ -206,63 +219,11 @@ class InitiativeTracker extends HTMLElement {
             }
         
             for(let creature in json) {
-                if (creature.startsWith("A")) {
-                    obj["A"].push(creature);
-                } else if (creature.startsWith("B")) {
-                    obj["B"].push(creature);
-                } else if (creature.startsWith("C")) {
-                    obj["C"].push(creature);
-                } else if (creature.startsWith("D")) {
-                    obj["D"].push(creature);
-                } else if (creature.startsWith("E")) {
-                    obj["E"].push(creature);
-                } else if (creature.startsWith("F")) {
-                    obj["F"].push(creature);
-                } else if (creature.startsWith("G")) {
-                    obj["G"].push(creature);
-                } else if (creature.startsWith("H")) {
-                    obj["H"].push(creature);
-                } else if (creature.startsWith("I")) {
-                    obj["I"].push(creature);
-                } else if (creature.startsWith("J")) {
-                    obj["J"].push(creature);
-                } else if (creature.startsWith("K")) {
-                    obj["K"].push(creature);
-                } else if (creature.startsWith("L")) {
-                    obj["L"].push(creature);
-                } else if (creature.startsWith("M")) {
-                    obj["M"].push(creature);
-                } else if (creature.startsWith("N")) {
-                    obj["N"].push(creature);
-                } else if (creature.startsWith("O")) {
-                    obj["O"].push(creature);
-                } else if (creature.startsWith("P")) {
-                    obj["P"].push(creature);
-                } else if (creature.startsWith("Q")) {
-                    obj["Q"].push(creature);
-                } else if (creature.startsWith("R")) {
-                    obj["R"].push(creature);
-                } else if (creature.startsWith("S")) {
-                    obj["S"].push(creature);
-                } else if (creature.startsWith("T")) {
-                    obj["T"].push(creature);
-                } else if (creature.startsWith("U")) {
-                    obj["U"].push(creature);
-                } else if (creature.startsWith("V")) {
-                    obj["V"].push(creature);
-                } else if (creature.startsWith("W")) {
-                    obj["W"].push(creature);
-                } else if (creature.startsWith("X")) {
-                    obj["X"].push(creature);
-                } else if (creature.startsWith("Y")) {
-                    obj["Y"].push(creature);
-                } else if (creature.startsWith("Z")) {
-                    obj["Z"].push(creature);
+                if (creature) {
+                    obj[creature.charAt(0)].push(creature);
                 }
             }
             
-            // Merge arrays into a json object
-        
             return obj;
         }
         
@@ -464,16 +425,14 @@ class InitiativeTracker extends HTMLElement {
 customElements.define('initiative-tracker', InitiativeTracker);
 
 class CreatureListItem extends HTMLElement {
-    constructor(name) {
+    constructor(name, hp, init) {
         super();
 
         let creature = bestiary[name];
 
-        this.setAttribute('name', name);
-
-        this.setAttribute('hp', averageHitPoints());
-
-        this.setAttribute('init', modifier(creature["Ability Scores"]["Dexterity"]) + Math.floor(Math.random() * 20) + 1);
+        name ? this.setAttribute('name', name) : this.setAttribute('name', "Default PC");
+        hp ? this.setAttribute('hp', hp) : this.setAttribute('hp', averageHitPoints());
+        init ? this.setAttribute('init', init) : this.setAttribute('init', modifier(creature["Ability Scores"]["Dexterity"]) + Math.floor(Math.random() * 20) + 1);
 
         let shadow = this.attachShadow({mode: 'open'});
 
@@ -556,6 +515,78 @@ class CreatureListItem extends HTMLElement {
 }
 
 customElements.define('creature-listitem', CreatureListItem);
+
+class PCListItem extends HTMLElement {
+    constructor(name, init) {
+        super();
+
+        name ? this.setAttribute('name', name) : this.setAttribute('name', "Default PC");
+        init ? this.setAttribute('init', init) : this.setAttribute('init', 0);
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        const template = `
+            <style>
+                :host {
+                    display: grid;
+                    grid-template-columns: 1fr 100px auto;
+                    border: 1px solid black;
+                }
+
+                input {
+                    border: 0px;
+                }
+
+                #name {
+                    grid-column: 1;
+                    text-indent: 1em;
+                }
+
+                #initiative {
+                    grid-column: 2;
+                }
+
+                #buttons {
+                    grid-column: 3;
+                }
+
+                #buttons > button {
+                    background-color: white;
+                    border-radius: 5px;
+                }
+
+                input[type="number"] {
+                    width: 50px;
+                }
+            </style>
+            
+            <label for="name">Name</label>
+            <label for="initiative">Init</label>
+
+            <input type="text" id="name" value="${this.getAttribute("name")}">
+            <input type="number" id="initiative" value="${this.getAttribute("init")}">
+            
+            <div id="buttons">
+                <button id="view">\uD83D\uDCC4</button>
+                <button id="close">\u2716</button>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+
+        // inputs
+
+        shadow.querySelector("#name").onchange = () => this.setAttribute('name', shadow.querySelector("#name").value);
+        shadow.querySelector("#initiative").onchange = () => this.setAttribute('init', shadow.querySelector("#initiative").value);
+
+        // buttons
+
+        shadow.querySelector("#close").onclick = () => this.remove();
+    }
+}
+
+customElements.define('pc-listitem', PCListItem);
 
 class CreatureModal extends HTMLElement {
     constructor(name) {
@@ -1130,3 +1161,160 @@ class CreatureModal extends HTMLElement {
 }
 
 customElements.define('creature-modal', CreatureModal);
+
+class SaveModal extends HTMLElement {
+    constructor() {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        const template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    display: block;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    max-height: 80vh;
+                    width: auto;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                    overflow: auto;
+                }
+            </style>
+
+            <div id="modal">
+                <input type="text" id="textInput" required />
+                <button type="button" id="saveButton">Save</button>
+                <button type="button" id="cancelButton">Cancel</button>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        shadow.querySelector("#saveButton").onclick = () => {
+            let input = shadow.querySelector("#textInput")
+
+            if (!input.value) return;
+
+            let initTracker = document.body.querySelector("initiative-tracker");
+            let tracker = initTracker.shadowRoot.querySelector("#tracker");
+
+            let array = [];
+
+            for (let listItem of tracker.childNodes) {
+                let obj = {
+                    "Type": undefined,
+                    "Name": undefined,
+                    "HitPoints": 0,
+                    "Initiative": 0
+                }
+
+                if (listItem.nodeName === "CREATURE-LISTITEM") obj.Type = "creature";
+                if (listItem.nodeName === "PC-LISTITEM") obj.Type = "pc";
+
+                obj.Name = listItem.getAttribute("name");
+                obj.HitPoints = listItem.getAttribute("hp");
+                obj.Initiative = listItem.getAttribute("init");
+
+                array.push(obj);
+            }
+
+            localStorage.setItem(`${input.value} save`, JSON.stringify(array));
+
+            this.remove();
+        };
+
+        shadow.querySelector("#cancelButton").onclick = () => this.remove();
+    }
+}
+
+customElements.define('save-modal', SaveModal);
+
+class LoadModal extends HTMLElement {
+    constructor() {
+        super();
+
+        let shadow = this.attachShadow({mode: 'open'});
+
+        const template = `
+            <style>
+                :host {
+                    position: fixed;
+                    top: 0px;
+                    left: 0px;
+                    display: block;
+                    height: 100vh;
+                    width: 100vw;
+                    background-color: rgba(128,128,128,0.5);
+                }
+
+                #modal {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    height: auto;
+                    max-height: 80vh;
+                    width: auto;
+                    transform: translate(-50%, -50%);
+                    border: 1px solid black;
+                    padding: 10px;
+                    background-color: white;
+                    overflow: auto;
+                }
+            </style>
+
+            <div id="modal">
+                <select id="savesSelect"></select>
+                <button type="button" id="loadButton">Load</button>
+                <button type="button" id="cancelButton">Cancel</button>
+            </div>
+        `;
+
+        shadow.innerHTML = template;
+
+        let select = shadow.querySelector("#savesSelect");
+
+        for (let key in localStorage) {
+            if (key.includes("save")) {
+                let split = key.split("save");
+
+                let option = document.createElement('option');
+                    option.value = key;
+                    option.appendChild(document.createTextNode(split[0]));
+
+                select.appendChild(option);
+            }
+        }
+
+        shadow.querySelector("#loadButton").onclick = () => {
+            let array = JSON.parse(localStorage.getItem(select.value));
+
+            for (let obj of array) {
+                let initTracker = document.body.querySelector("initiative-tracker");
+                let tracker = initTracker.shadowRoot.querySelector("#tracker");
+
+                if (obj.Type === "pc") tracker.appendChild(new PCListItem(obj.Name, obj.Initiative));
+                if (obj.Type === "creature") tracker.appendChild(new CreatureListItem(obj.Name, obj.HitPoints, obj.Initiative));
+            }
+
+            this.remove();
+        };
+
+        shadow.querySelector("#cancelButton").onclick = () => this.remove();
+    }
+}
+
+customElements.define('load-modal', LoadModal);
