@@ -698,6 +698,7 @@ class CreatureModal extends HTMLElement {
         damageImmunities();
         conditionImmunities();
         senses();
+        languages();
         challenge();
 
         properties("Features", "Actions", "Legendary Actions", "Reactions");
@@ -869,6 +870,21 @@ class CreatureModal extends HTMLElement {
 
                 shadow.querySelector("#lowerBlock").appendChild(div);
             }
+        }
+
+        function languages() {
+            let languages = creature["Languages"];
+
+            let div = document.createElement('div');
+
+            let b = document.createElement('b');
+                b.appendChild(document.createTextNode("Languages "));
+
+            div.appendChild(b);
+
+            div.appendChild(document.createTextNode(languages.join(", ")));
+
+            shadow.querySelector("#lowerBlock").appendChild(div);
         }
 
         function challenge() {
