@@ -567,7 +567,6 @@ class PCListItem extends HTMLElement {
             <input type="number" id="initiative" value="${this.getAttribute("init")}">
             
             <div id="buttons">
-                <button id="view">\uD83D\uDCC4</button>
                 <button id="close">\u2716</button>
             </div>
         `;
